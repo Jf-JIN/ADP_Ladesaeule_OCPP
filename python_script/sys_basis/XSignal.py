@@ -3,10 +3,6 @@ class XSignal(object):
     def __init__(self):
         self.__slots = []
 
-    @property
-    def slots(self):
-        return self.__slots
-
     def connect(self, slot):
         """连接信号到槽"""
         if callable(slot):
