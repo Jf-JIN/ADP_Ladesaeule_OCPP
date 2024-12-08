@@ -1,7 +1,7 @@
 
 class Base_OCPP_Struct_V2_0_1(object):
     @staticmethod
-    def get_custom_data(self, vendor_id: str) -> dict:
+    def get_custom_data(vendor_id: str) -> dict:
         """
         生成 CustomData
 
