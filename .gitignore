@@ -1,6 +1,7 @@
 # 快捷方式
 *.lnk
-
+# exe文件
+/python_script/中文标点转英文(含子目录).exe
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
