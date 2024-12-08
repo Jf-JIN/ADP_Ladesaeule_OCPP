@@ -1,0 +1,28 @@
+import os
+
+dirpath = os.path.dirname(__file__)
+
+v16 = ['Authorize', 'AuthorizeResponse', 'BootNotification', 'BootNotificationResponse', 'CancelReservation', 'CancelReservationResponse', 'ChangeAvailability', 'ChangeAvailabilityResponse', 'ChangeConfiguration', 'ChangeConfigurationResponse', 'ClearCache', 'ClearCacheResponse', 'ClearChargingProfile', 'ClearChargingProfileResponse', 'DataTransfer', 'DataTransferResponse', 'DiagnosticsStatusNotification', 'DiagnosticsStatusNotificationResponse', 'FirmwareStatusNotification', 'FirmwareStatusNotificationResponse', 'GetCompositeSchedule', 'GetCompositeScheduleResponse', 'GetConfiguration', 'GetConfigurationResponse', 'GetDiagnostics', 'GetDiagnosticsResponse',
+       'GetLocalListVersion', 'GetLocalListVersionResponse', 'Heartbeat', 'HeartbeatResponse', 'MeterValues', 'MeterValuesResponse', 'RemoteStartTransaction', 'RemoteStartTransactionResponse', 'RemoteStopTransaction', 'RemoteStopTransactionResponse', 'ReserveNow', 'ReserveNowResponse', 'Reset', 'ResetResponse', 'SendLocalList', 'SendLocalListResponse', 'SetChargingProfile', 'SetChargingProfileResponse', 'StartTransaction', 'StartTransactionResponse', 'StatusNotification', 'StatusNotificationResponse', 'StopTransaction', 'StopTransactionResponse', 'TriggerMessage', 'TriggerMessageResponse', 'UnlockConnector', 'UnlockConnectorResponse', 'UpdateFirmware', 'UpdateFirmwareResponse']
+
+v201 = ['UpdateFirmwareResponse', 'UpdateFirmwareRequest', 'UnpublishFirmwareResponse', 'UnpublishFirmwareRequest', 'UnlockConnectorResponse', 'UnlockConnectorRequest', 'TriggerMessageResponse', 'TriggerMessageRequest', 'TransactionEventResponse', 'TransactionEventRequest', 'StatusNotificationResponse', 'StatusNotificationRequest', 'SignCertificateResponse', 'SignCertificateRequest', 'SetVariablesResponse', 'SetVariablesRequest', 'SetVariableMonitoringResponse', 'SetVariableMonitoringRequest', 'SetNetworkProfileResponse', 'SetNetworkProfileRequest', 'SetMonitoringLevelResponse', 'SetMonitoringLevelRequest', 'SetMonitoringBaseResponse', 'SetMonitoringBaseRequest', 'SetDisplayMessageResponse', 'SetDisplayMessageRequest', 'SetChargingProfileResponse', 'SetChargingProfileRequest', 'SendLocalListResponse', 'SendLocalListRequest', 'SecurityEventNotificationResponse', 'SecurityEventNotificationRequest', 'ResetResponse', 'ResetRequest', 'ReserveNowResponse', 'ReserveNowRequest', 'ReservationStatusUpdateResponse', 'ReservationStatusUpdateRequest', 'RequestStopTransactionResponse', 'RequestStopTransactionRequest', 'RequestStartTransactionResponse', 'RequestStartTransactionRequest', 'ReportChargingProfilesResponse', 'ReportChargingProfilesRequest', 'PublishFirmwareStatusNotificationResponse', 'PublishFirmwareStatusNotificationRequest', 'PublishFirmwareResponse', 'PublishFirmwareRequest', 'NotifyReportResponse', 'NotifyReportRequest', 'NotifyMonitoringReportResponse', 'NotifyMonitoringReportRequest', 'NotifyEventResponse', 'NotifyEventRequest', 'NotifyEVChargingScheduleResponse', 'NotifyEVChargingScheduleRequest', 'NotifyEVChargingNeedsResponse', 'NotifyEVChargingNeedsRequest', 'NotifyDisplayMessagesResponse', 'NotifyDisplayMessagesRequest', 'NotifyCustomerInformationResponse', 'NotifyCustomerInformationRequest', 'NotifyChargingLimitResponse',
+        'NotifyChargingLimitRequest', 'MeterValuesResponse', 'MeterValuesRequest', 'LogStatusNotificationResponse', 'LogStatusNotificationRequest', 'InstallCertificateResponse', 'InstallCertificateRequest', 'HeartbeatResponse', 'HeartbeatRequest', 'GetVariablesResponse', 'GetVariablesRequest', 'GetTransactionStatusResponse', 'GetTransactionStatusRequest', 'GetReportResponse', 'GetReportRequest', 'GetMonitoringReportResponse', 'GetMonitoringReportRequest', 'GetLogResponse', 'GetLogRequest', 'GetLocalListVersionResponse', 'GetLocalListVersionRequest', 'GetInstalledCertificateIdsResponse', 'GetInstalledCertificateIdsRequest', 'GetDisplayMessagesResponse', 'GetDisplayMessagesRequest', 'GetCompositeScheduleResponse', 'GetCompositeScheduleRequest', 'GetChargingProfilesResponse', 'GetChargingProfilesRequest', 'GetCertificateStatusResponse', 'GetCertificateStatusRequest', 'GetBaseReportResponse', 'GetBaseReportRequest', 'Get15118EVCertificateResponse', 'Get15118EVCertificateRequest', 'FirmwareStatusNotificationResponse', 'FirmwareStatusNotificationRequest', 'DeleteCertificateResponse', 'DeleteCertificateRequest', 'DataTransferResponse', 'DataTransferRequest', 'CustomerInformationResponse', 'CustomerInformationRequest', 'CostUpdatedResponse', 'CostUpdatedRequest', 'ClearVariableMonitoringResponse', 'ClearVariableMonitoringRequest', 'ClearedChargingLimitResponse', 'ClearedChargingLimitRequest', 'ClearDisplayMessageResponse', 'ClearDisplayMessageRequest', 'ClearChargingProfileResponse', 'ClearChargingProfileRequest', 'ClearCacheResponse', 'ClearCacheRequest', 'ChangeAvailabilityResponse', 'ChangeAvailabilityRequest', 'CertificateSignedResponse', 'CertificateSignedRequest', 'CancelReservationResponse', 'CancelReservationRequest', 'BootNotificationResponse', 'BootNotificationRequest', 'AuthorizeResponse', 'AuthorizeRequest']
+
+
+def camel_to_snake(name):
+    result = []
+    for char in name:
+        char: str
+        if char.isupper():
+            if result:
+                result.append('_')
+            result.append(char.lower())
+        else:
+            result.append(char)
+    return ''.join(result)
+
+
+for i in v201:
+    file_path = os.path.join(dirpath, f'_{i}.py')
+    with open(file_path, 'w', encoding='utf-8') as f:
+        f.write(f'import jsonschema\ntry: \n from ._Base import *\nexcept: \n from _Base import * \n\n\nclass {camel_to_snake(i)}(Base_OCPP_Struct_V2_0_1): \n    def generate(self):\n        pass\n')
