@@ -1,8 +1,6 @@
 import jsonschema
-try: 
- from ._Base import *
-except: 
- from _Base import * 
+from ._Base import *
+from const.Ocpp_Struct_Standard.V2_0_1.OCPP_Valid_Const import *
 
 
 class set_variable_monitoring_response(Base_OCPP_Struct_V2_0_1): 
