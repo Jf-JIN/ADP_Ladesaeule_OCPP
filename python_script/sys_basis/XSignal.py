@@ -16,6 +16,6 @@ class XSignal(object):
             self.__slots.remove(slot)
 
     def emit(self, *args, **kwargs):
-        """发射信号，调用所有连接的槽"""
+        """发射信号, 调用所有连接的槽"""
         for slot in self.__slots:
             slot(*args, **kwargs)

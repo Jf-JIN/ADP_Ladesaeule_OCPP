@@ -10,13 +10,13 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
         """ 
         生成 AuthorizeRequest
 
-        参数：
+        参数: 
         - id_token(str): 推荐使用 `get_id_tocken()` 传入
         - custom_data(dict|None): 推荐使用 `get_custom_data()` 传入
         - certificate(str|None): 长度为 1-5500 个字符
         - hash_data(list|None): 推荐使用 `get_hash_data_list()` 传入
 
-        返回值：
+        返回值: 
         - AuthorizeRequest
         """
         temp_dict = {
@@ -39,13 +39,13 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
         """
         生成 IdToken
 
-        参数：
-        - id_token(str): id令牌，长度为 1-36 个字符
-        - type(str): 类型 候选：`Central` `eMAID` `ISO14443` `ISO15693` `KeyCode` `Local` `MacAddress` `NoAuthorization`
+        参数: 
+        - id_token(str): id令牌, 长度为 1-36 个字符
+        - type(str): 类型 候选: `Central` `eMAID` `ISO14443` `ISO15693` `KeyCode` `Local` `MacAddress` `NoAuthorization`
         - custom_data(dict|None): 推荐使用 `get_custom_data()` 传入
         - additional_info(list|None): 推荐使用 `get_additional_info_list()` 传入
 
-        返回值：
+        返回值: 
         - IdToken(dict)
         """
         temp_dict = {
@@ -63,10 +63,10 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
         """ 
         生成 AdditionalInfo列表
 
-        参数：
+        参数: 
         - *additional_info(dict): 推荐使用 `get_additional_info()` 传入
 
-        返回值：
+        返回值: 
         - AdditionalInfo(list)
         """
         return [*additional_info]
@@ -76,12 +76,12 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
         """ 
         生成 AdditionalInfo
 
-        参数：
-        - additional_id_token(str): 附加的ID令牌，长度为 1-36 个字符
+        参数: 
+        - additional_id_token(str): 附加的ID令牌, 长度为 1-36 个字符
         - type(str): 类型 (1-36 个字符)
         - custom_data(dict|None): 推荐使用 get_custom_data() 传入
 
-        返回值：
+        返回值: 
         - AdditionalInfo(dict)
         """
         temp_dict = {
@@ -97,10 +97,10 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
         """ 
         生成 iso15118CertificateHashData
 
-        参数：
+        参数: 
         - *hash_data(dict): 推荐使用 `get_hash_data()` 传入
 
-        返回值：
+        返回值: 
         - iso15118CertificateHashData(list)
         """
         return [*hash_data]
@@ -110,7 +110,7 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
         """ 
         生成 HashData
 
-        参数：
+        参数: 
         - hash_algorithm(str): 哈希算法 `SHA256` `SHA384` `SHA512`
         - issuer_name_hash(str): 发行者名称哈希 (1-128 个字符)
         - issuer_key_hash(str): 发行者密钥哈希 (1-128 个字符)

@@ -34,11 +34,11 @@ def try_except_log(logger_error=None, *func) -> Callable[..., Any | None]:
                         if callable(fcn):
                             fcn(e)
                         else:
-                            print(f'请传入函数/方法，或者方法名称(属性名), 当前为 {type(fcn)}')
+                            print(f'请传入函数/方法, 或者方法名称(属性名), 当前为 {type(fcn)}')
                     elif callable(item):
                         item(e)
                     else:
-                        print(f'请传入函数/方法，或者方法名称(属性名), 当前为 {type(fcn)}')
+                        print(f'请传入函数/方法, 或者方法名称(属性名), 当前为 {type(fcn)}')
                 except:
                     print(traceback.format_exc())
             return None

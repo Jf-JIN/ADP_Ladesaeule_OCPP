@@ -7,7 +7,7 @@ class Base_OCPP_Struct_V2_0_1(object):
         参数:
             vendor_id(str): 厂商ID (1-255 个字符)
 
-        返回值：
+        返回值: 
             CustomData(dict)
         """
         return {
