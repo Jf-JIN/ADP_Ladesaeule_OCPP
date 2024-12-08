@@ -4,7 +4,9 @@ from const.Ocpp_Struct_Standard.V2_0_1.OCPP_Valid_Const import *
 
 
 class authorize_request(Base_OCPP_Struct_V2_0_1):
-    def generate(self, id_token, custom_data: dict | None = None, certificate: str | None = None, hash_data: list | None = None) -> dict:
+
+    @staticmethod
+    def generate(id_token, custom_data: dict | None = None, certificate: str | None = None, hash_data: list | None = None) -> dict:
         """ 
         生成 AuthorizeRequest
 
@@ -32,7 +34,8 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
             raise jsonschema.ValidationError(f"<authorize_request> 生成器 错误: {e.message}")
         return temp_dict
 
-    def get_id_tocken(self, id_token: str, type: str, custom_data: dict | None = None, additional_info: dict | None = None) -> dict:
+    @staticmethod
+    def get_id_tocken(id_token: str, type: str, custom_data: dict | None = None, additional_info: dict | None = None) -> dict:
         """
         生成 IdToken
 
@@ -55,7 +58,8 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
             temp_dict["additionalInfo"] = additional_info
         return temp_dict
 
-    def get_additional_info_list(self, *additional_info: dict) -> list:
+    @staticmethod
+    def get_additional_info_list(*additional_info: dict) -> list:
         """ 
         生成 AdditionalInfo列表
 
@@ -67,7 +71,8 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
         """
         return [*additional_info]
 
-    def get_additional_info(self, additional_id_token: str, type: str, custom_data: dict | None = None) -> dict:
+    @staticmethod
+    def get_additional_info(additional_id_token: str, type: str, custom_data: dict | None = None) -> dict:
         """ 
         生成 AdditionalInfo
 
@@ -87,7 +92,8 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
             temp_dict["customData"] = custom_data
         return temp_dict
 
-    def get_hash_data_list(self, *hash_data: dict) -> list:
+    @staticmethod
+    def get_hash_data_list(*hash_data: dict) -> list:
         """ 
         生成 iso15118CertificateHashData
 
@@ -99,7 +105,8 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
         """
         return [*hash_data]
 
-    def get_hash_data(self, hash_algorithm: str, issuer_name_hash: str, issuer_key_hash: str, serial_number: str, responder_url: str, custom_data: dict | None = None) -> dict:
+    @staticmethod
+    def get_hash_data(hash_algorithm: str, issuer_name_hash: str, issuer_key_hash: str, serial_number: str, responder_url: str, custom_data: dict | None = None) -> dict:
         """ 
         生成 HashData
 
