@@ -6,12 +6,12 @@ from const.Ocpp_Struct_Standard.V2_0_1.OCPP_Valid_Const import *
 class authorize_request(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
-    def generate(id_token, custom_data: dict | None = None, certificate: str | None = None, hash_data: list | None = None) -> dict:
+    def generate(id_token: dict, custom_data: dict | None = None, certificate: str | None = None, hash_data: list | None = None) -> dict:
         """ 
         生成 AuthorizeRequest
 
         参数: 
-        - id_token(str): 推荐使用 `get_id_tocken()` 传入
+        - id_token(dict): 推荐使用 `get_id_tocken()` 传入
         - custom_data(dict|None): 推荐使用 `get_custom_data()` 传入
         - certificate(str|None): 长度为 1-5500 个字符
         - hash_data(list|None): 推荐使用 `get_hash_data_list()` 传入
