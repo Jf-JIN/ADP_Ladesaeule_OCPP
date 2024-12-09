@@ -1,24 +1,20 @@
 import asyncio
+from urllib import response
 from sys_basis.WebSocket_Server import WebSocketServer
 from ocpp.routing import on
-from ocpp.v201 import ChargePoint
-
-from ocpp.v16.enums import Action
-
-# 自定义ChargePoint类, 处理接收到的消息
+from ocpp.v201 import ChargePoint, call
+from sys_basis.Generator_Ocpp_Std.V2_0_1 import *
 
 
 class MyChargePoint(ChargePoint):
     # 监听 BootNotification 消息
-    @on('BootNotification')
-    async def on_boot_notification(self, charge_point_model, charge_point_vendor):
-        print(f"Received BootNotification from {charge_point_model} - {charge_point_vendor}")
-        # 返回响应
-        return {
-            'status': 'Accepted',
-            'currentTime': '2024-12-05T12:00:00Z',
-            'interval': 10
-        }
+    @on('Authorize')
+    async def on_authorize_request(self, id_token: dict):
+        print(f'Received AuthorizeRequest from {id_token}\n')
+        response_obj = authorize_response.generate(
+            authorize_response.get_id_token_info('Accepted'),
+        )
+        return response_obj
 
 # 处理WebSocket连接并启动ChargePoint
 
@@ -34,6 +30,7 @@ async def start_server():
     server = WebSocketServer('localhost', 12345)
     server.signal_recv.connect(out)
     async with server:
+        await on_connect(server)
         await asyncio.Future()
 
 
