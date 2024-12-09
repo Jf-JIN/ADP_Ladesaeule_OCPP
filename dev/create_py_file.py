@@ -19,10 +19,35 @@ def camel_to_snake(name):
             result.append(char.lower())
         else:
             result.append(char)
-    return ''.join(result)
+    result_str = ''.join(result)
+    return result_str.replace('_e_v_', '_ev_')
 
 
-for i in v201:
-    file_path = os.path.join(dirpath, f'_{i}.py')
-    with open(file_path, 'w', encoding='utf-8') as f:
-        f.write(f'import jsonschema\ntry: \n from ._Base import *\nexcept: \n from _Base import * \n\n\nclass {camel_to_snake(i)}(Base_OCPP_Struct_V2_0_1): \n    def generate(self):\n        pass\n')
+def create_file(version):
+    if version == '201' or version == 201:
+        list_f = v201
+        import_str = 'V2_0_1'
+        call_import = 'from ocpp.v201 import '
+        enums_import = 'from ocpp.v201.enums import *'
+    elif version == 16 or version == '16':
+        list_f = v16
+        import_str = 'V1_6'
+        call_import = 'from ocpp.v16 import '
+        enums_import = 'from ocpp.v201.enums import *'
+    else:
+        print(f'重新输入版本, 可供候选: 201 16')
+    for i in list_f:
+        file_path = os.path.join(dirpath, f'_{i}.py')
+        std_dataclass_name = os.path.basename(file_path).replace('Response.py', '').replace('Request.py', '').strip('_').replace('.py', '')
+        if 'Response' in i:
+            call_struct_import = 'call_result'
+            data_class_name = 'call_result.' + std_dataclass_name
+        else:
+            call_struct_import = 'call'
+            data_class_name = 'call.' + std_dataclass_name
+        with open(file_path, 'w', encoding='utf-8') as f:
+            f.write(
+                f'\n{enums_import}\n{call_import}{call_struct_import}\nfrom ._Base import *\nfrom const.Ocpp_Struct_Standard.{import_str}.OCPP_Valid_Const import *\n\n\nclass {camel_to_snake(i)}(Base_OCPP_Struct_{import_str}): \n\n    @staticmethod\n    def generate(**kwargs) -> {data_class_name}:\n        """\n        生成 {i}\n\n        参数:\n        - \n\n        返回值:\n        - {data_class_name}\n        """\n        return {data_class_name}(\n            \n        )\n\n')
+
+
+create_file(16)
