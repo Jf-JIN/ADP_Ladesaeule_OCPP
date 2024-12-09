@@ -13,12 +13,12 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
 
         参数:
         - id_token(dict): 推荐使用 `get_id_tocken()` 传入
-        - custom_data(dict|None): 推荐使用 `get_custom_data()` 传入
-        - certificate(str|None): 长度为 1-5500 个字符
-        - hash_data(list|None): 推荐使用 `get_hash_data_list()` 传入
+        - custom_data(dict): 推荐使用 `get_custom_data()` 传入
+        - certificate(str): 长度为 1-5500 个字符
+        - hash_data(list): 推荐使用 `get_hash_data_list()` 传入
 
         返回值:
-        - AuthorizeRequest
+        - call.Authorize
         """
         temp_dict = {
             "idToken": id_token
@@ -30,16 +30,16 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
         if hash_data is not None:
             temp_dict["hashData"] = hash_data
 
-        try:
+        try:  # 官方数据类是下划线表示法, 官方检查文件用的是小驼峰, 注意区别! (-.-")
             jsonschema.validate(temp_dict, STD_v2_0_1.AuthorizeRequest)
         except jsonschema.ValidationError as e:
             raise jsonschema.ValidationError(f"<authorize_request> 生成器 错误: {e.message}")
 
         return call.Authorize(
             id_token=temp_dict["idToken"],
-            certificate=temp_dict.get("certificate"),
-            iso15118_certificate_hash_data=temp_dict.get("hashData"),
-            custom_data=temp_dict.get("customData"))
+            certificate=temp_dict.get("certificate", None),
+            iso15118_certificate_hash_data=temp_dict.get("hashData", None),
+            custom_data=temp_dict.get("customData", None))
 
     @staticmethod
     def get_id_tocken(id_token: str, type: str, custom_data: dict | None = None, additional_info: dict | None = None) -> dict:
@@ -48,9 +48,9 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
 
         参数:
         - id_token(str): id令牌, 长度为 1-36 个字符
-        - type(str): 类型 候选: `Central` `eMAID` `ISO14443` `ISO15693` `KeyCode` `Local` `MacAddress` `NoAuthorization`
-        - custom_data(dict|None): 推荐使用 `get_custom_data()` 传入
-        - additional_info(list|None): 推荐使用 `get_additional_info_list()` 传入
+        - type(str): 类型 候选: `Central`, `eMAID`, `ISO14443`, `ISO15693`, `KeyCode`, `Local`, `MacAddress`, `NoAuthorization`
+        - custom_data(dict): 推荐使用 `get_custom_data()` 传入
+        - additional_info(list): 推荐使用 `get_additional_info_list()` 传入
 
         返回值:
         - IdToken(dict)
@@ -86,7 +86,7 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
         参数:
         - additional_id_token(str): 附加的ID令牌, 长度为 1-36 个字符
         - type(str): 类型 (1-36 个字符)
-        - custom_data(dict|None): 推荐使用 get_custom_data() 传入
+        - custom_data(dict): 推荐使用 get_custom_data() 传入
 
         返回值:
         - AdditionalInfo(dict)
@@ -118,12 +118,12 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
         生成 HashData
 
         参数:
-        - hash_algorithm(str): 哈希算法 `SHA256` `SHA384` `SHA512`
+        - hash_algorithm(str): 哈希算法 `SHA256`, `SHA384`, `SHA512`
         - issuer_name_hash(str): 发行者名称哈希 (1-128 个字符)
         - issuer_key_hash(str): 发行者密钥哈希 (1-128 个字符)
         - serial_number(str): 序列号 (1-40 个字符)
         - responder_url(str): 响应者 URL (1-512 个字符)
-        - custom_data(dict|None): 推荐使用 get_custom_data() 传入
+        - custom_data(dict): 推荐使用 get_custom_data() 传入
 
         """
         temp = {
