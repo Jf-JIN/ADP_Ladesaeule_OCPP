@@ -7,7 +7,7 @@ from datetime import datetime
 
 class authorize_response(Base_OCPP_Struct_V2_0_1):
     @staticmethod
-    def generate(id_token_info: dict, certificate_status: str | None = None, custom_data: dict | None = None) -> call_result.Authorize:
+    def generate(id_token_info: dict, certificate_status: str | None = None, custom_data: dict | None = None, **kwargs) -> call_result.Authorize:
         """ 
         生成AuthorizeResponse
 
@@ -19,23 +19,10 @@ class authorize_response(Base_OCPP_Struct_V2_0_1):
         返回值:
         - call_result.Authorize
         """
-        temp_dict = {
-            'idTokenInfo': id_token_info
-        }
-        if certificate_status is not None:
-            temp_dict['certificateStatus'] = certificate_status
-        if custom_data is not None:
-            temp_dict['customData'] = custom_data
-
-        try:
-            jsonschema.validate(temp_dict, STD_v2_0_1.AuthorizeResponse)
-        except jsonschema.ValidationError as e:
-            raise jsonschema.ValidationError(f"<authorize_response> 生成器 错误: {e.message}")
-
         return call_result.Authorize(
-            id_token_info=temp_dict['idTokenInfo'],
-            certificate_status=temp_dict.get('certificateStatus', None),
-            custom_data=temp_dict.get('customData', None))
+            id_token_info=id_token_info or kwargs.get('idTokenInfo', None),
+            certificate_status=certificate_status or kwargs.get('certificateStatus', None),
+            custom_data=custom_data or kwargs.get('customData', None))
 
     @staticmethod
     def get_id_token_info(status: str, customData: dict | None = None, cacheExpiryDateTime: str | None = None, chargingPriority: int | None = None, evseId: list | None = None, groupIdToken: dict | None = None, language1: str | None = None, language2: str | None = None, personalMessage: dict | None = None) -> dict:
