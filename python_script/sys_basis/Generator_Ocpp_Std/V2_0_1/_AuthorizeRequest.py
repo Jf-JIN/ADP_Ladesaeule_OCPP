@@ -2,12 +2,12 @@ import jsonschema
 from ocpp.v201 import call
 from ._Base import *
 from const.Ocpp_Struct_Standard.V2_0_1.OCPP_Valid_Const import *
-
+from ocpp.v201.enums import IdTokenType, HashAlgorithmType
 
 class authorize_request(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
-    def generate(id_token: dict, custom_data: dict | None = None, certificate: str | None = None, hash_data: list | None = None) -> dict:
+    def generate(id_token: dict, custom_data: dict | None = None, certificate: str | None = None, hash_data: list | None = None) -> call.Authorize:
         """
         生成 AuthorizeRequest
 
@@ -42,13 +42,13 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
             custom_data=temp_dict.get("customData", None))
 
     @staticmethod
-    def get_id_tocken(id_token: str, type: str, custom_data: dict | None = None, additional_info: dict | None = None) -> dict:
+    def get_id_tocken(id_token: str, type: IdTokenType | str, custom_data: dict | None = None, additional_info: dict | None = None) -> dict:
         """
         生成 IdToken
 
         参数:
         - id_token(str): id令牌, 长度为 1-36 个字符
-        - type(str): 类型 候选: `Central`, `eMAID`, `ISO14443`, `ISO15693`, `KeyCode`, `Local`, `MacAddress`, `NoAuthorization`
+        - type(str): 直接使用IdTokenType枚举类或者自选: `Central`, `eMAID`, `ISO14443`, `ISO15693`, `KeyCode`, `Local`, `MacAddress`, `NoAuthorization`
         - custom_data(dict): 推荐使用 `get_custom_data()` 传入
         - additional_info(list): 推荐使用 `get_additional_info_list()` 传入
 
@@ -113,12 +113,12 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
         return [*hash_data]
 
     @staticmethod
-    def get_hash_data(hash_algorithm: str, issuer_name_hash: str, issuer_key_hash: str, serial_number: str, responder_url: str, custom_data: dict | None = None) -> dict:
+    def get_hash_data(hash_algorithm: HashAlgorithmType | str, issuer_name_hash: str, issuer_key_hash: str, serial_number: str, responder_url: str, custom_data: dict | None = None) -> dict:
         """
         生成 HashData
 
         参数:
-        - hash_algorithm(str): 哈希算法 `SHA256`, `SHA384`, `SHA512`
+        - hash_algorithm(str): 使用HashAlgorithmType枚举类或自选哈希算法 `SHA256`, `SHA384`, `SHA512`
         - issuer_name_hash(str): 发行者名称哈希 (1-128 个字符)
         - issuer_key_hash(str): 发行者密钥哈希 (1-128 个字符)
         - serial_number(str): 序列号 (1-40 个字符)
