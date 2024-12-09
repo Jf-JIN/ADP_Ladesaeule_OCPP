@@ -36,7 +36,7 @@ class WebSocketClient(Context):
         """
         连接服务器
         """
-        print('--<connecting>')
+        print('--<connecting>\n')
         retries = 0
         while retries < self.__max_retries or self.__max_retries < 0:
             try:
@@ -45,12 +45,12 @@ class WebSocketClient(Context):
                 return self
             except (ConnectionRefusedError, websockets.exceptions.WebSocketException) as e:
                 if self.__max_retries < 0:
-                    print(f'--<Connection_failed> : {e} Reconnecting...')
+                    print(f'--<Connection_failed> : {e} Reconnecting...\n')
                 elif retries <= self.__max_retries:
-                    print(f'--<Connection_failed>: {e} Reconnecting... ({retries}/{self.__max_retries})...')
+                    print(f'--<Connection_failed>: {e} Reconnecting... ({retries}/{self.__max_retries})...\n')
                     retries += 1
                 else:
-                    print(f'--<Connection_failed>: Unable to connect to the server. Maximum retry attempts reached. ({self.__max_retries})')
+                    print(f'--<Connection_failed>: Unable to connect to the server. Maximum retry attempts reached. ({self.__max_retries})\n')
                 await asyncio.sleep(self.__retry_interval_s)
 
     async def send(self, message):
@@ -59,10 +59,10 @@ class WebSocketClient(Context):
         """
         if self.__websocket is not None:
             try:
-                print(f'<-send<: {message}')
+                print(f'<-send<: {message}\n')
                 await self.__websocket.send(message)
             except (ConnectionAbortedError, websockets.exceptions.ConnectionClosedError) as e:
-                print(f'--<Connection_failed>: Connection closed, reconnecting... ({e})')
+                print(f'--<Connection_failed>: Connection closed, reconnecting... ({e})\n')
                 self.__websocket = None
                 await self.__connection()
                 await self.send(message)
@@ -72,17 +72,17 @@ class WebSocketClient(Context):
         if self.__websocket is not None:
             try:
                 response = await asyncio.wait_for(self.__websocket.recv(), timeout=self.__recv_timeout_s)
-                print(f'>-recieved> {response}')
+                print(f'->recieved> {response}\n')
                 return response
             except asyncio.TimeoutError as e:
                 await self.__websocket.ping()
             except websockets.exceptions.ConnectionClosedError as e:
-                print(f'--<Connection_failed>: Connection closed, reconnecting... ({e})')
+                print(f'--<Connection_failed>: Connection closed, reconnecting... ({e})\n')
                 if self.__websocket is not None:
                     await self.__websocket.close()
                     self.__websocket = None
                 await self.__connection()
-                return await self.recieve()
+                return await self.recv()
 
 
 # 使用示例
@@ -93,8 +93,8 @@ if __name__ == '__main__':
         client = WebSocketClient(uri)  # 创建客户端
         async with client:  # 上下文管理器启动客户端
 
-            # 这段注释的代码可以解注后运行，用于测试
-            # async def periodic_send():  # 一个测试，每隔一秒发送一条消息
+            # 这段注释的代码可以解注后运行, 用于测试
+            # async def periodic_send():  # 一个测试, 每隔一秒发送一条消息
             #     while True:
             #         await client.send("Client message")  # 发送消息
             #         await asyncio.sleep(1)  # 等待一秒
@@ -102,7 +102,8 @@ if __name__ == '__main__':
 
             async def listen():  # 监听服务器返回的消息
                 while client:
-                    await client.recv()  # 接收消息
+                    a = await client.recv()  # 接收消息
+                    print(a)
 
             asyncio.create_task(listen())  # 启动监听任务
             await asyncio.Future()  # 保持运行
