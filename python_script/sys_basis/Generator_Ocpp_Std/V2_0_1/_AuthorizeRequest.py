@@ -14,7 +14,7 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
         参数:
         - id_token(dict): 推荐使用 `get_id_tocken()` 传入
         - custom_data(dict): 推荐使用 `get_custom_data()` 传入
-        - certificate(str): 长度为 1-5500 个字符
+        - certificate(str): 长度为 [1-5500] 个字符
         - hash_data(list): 推荐使用 `get_hash_data_list()` 传入
 
         返回值:
@@ -28,13 +28,15 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
         )
 
     @staticmethod
-    def get_id_tocken(id_token: str, type: str, custom_data: dict | None = None, additional_info: dict | None = None) -> dict:
+    def get_id_tocken(id_token: str, type: str | IdTokenType, custom_data: dict | None = None, additional_info: dict | None = None) -> dict:
         """
         生成 IdToken
 
         参数:
-        - id_token(str): id令牌, 长度为 1-36 个字符
-        - type(str): 类型 候选: `Central`, `eMAID`, `ISO14443`, `ISO15693`, `KeyCode`, `Local`, `MacAddress`, `NoAuthorization`
+        - id_token(str): id令牌, 长度为 [1-36] 个字符
+        - type(str|IdTokenType): 类型 候选: 
+            - `Central`, `eMAID`, `ISO14443`, `ISO15693`, `KeyCode`, `Local`, `MacAddress`, `NoAuthorization` .
+            - 或者可以使用 `IdTokenType` 枚举, 例如: `IdTokenType.Central` .
         - custom_data(dict): 推荐使用 `get_custom_data()` 传入
         - additional_info(list): 推荐使用 `get_additional_info_list()` 传入
 
@@ -70,8 +72,8 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
         生成 AdditionalInfo
 
         参数:
-        - additional_id_token(str): 附加的ID令牌, 长度为 1-36 个字符
-        - type(str): 类型 (1-36 个字符)
+        - additional_id_token(str): 附加的ID令牌, 长度为 [1-36] 个字符
+        - type(str): 类型, 长度为 [1-36] 个字符
         - custom_data(dict): 推荐使用 get_custom_data() 传入
 
         返回值:
@@ -99,16 +101,18 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
         return [*hash_data]
 
     @staticmethod
-    def get_hash_data(hash_algorithm: str, issuer_name_hash: str, issuer_key_hash: str, serial_number: str, responder_url: str, custom_data: dict | None = None) -> dict:
+    def get_hash_data(hash_algorithm: str | HashAlgorithmType, issuer_name_hash: str, issuer_key_hash: str, serial_number: str, responder_url: str, custom_data: dict | None = None) -> dict:
         """
         生成 HashData
 
         参数:
-        - hash_algorithm(str): 哈希算法 `SHA256`, `SHA384`, `SHA512`
-        - issuer_name_hash(str): 发行者名称哈希 (1-128 个字符)
-        - issuer_key_hash(str): 发行者密钥哈希 (1-128 个字符)
-        - serial_number(str): 序列号 (1-40 个字符)
-        - responder_url(str): 响应者 URL (1-512 个字符)
+        - hash_algorithm(str|HashAlgorithmType): 哈希算法 
+            - `SHA256`, `SHA384`, `SHA512` .
+            - 或者使用 `HashAlgorithmType` 枚举, 例如 `HashAlgorithmType.SHA256` .
+        - issuer_name_hash(str): 发行者名称哈希, 长度为 [1-128] 个字符
+        - issuer_key_hash(str): 发行者密钥哈希, 长度为 [1-128] 个字符
+        - serial_number(str): 序列号, 长度为 [1-40] 个字符
+        - responder_url(str): 响应者 URL, 长度为 [1-512] 个字符
         - custom_data(dict): 推荐使用 get_custom_data() 传入
 
         """
