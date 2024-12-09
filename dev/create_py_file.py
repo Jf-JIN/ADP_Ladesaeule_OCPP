@@ -33,7 +33,7 @@ def create_file(version):
         list_f = v16
         import_str = 'V1_6'
         call_import = 'from ocpp.v16 import '
-        enums_import = 'from ocpp.v201.enums import *'
+        enums_import = 'from ocpp.v16.enums import *'
     else:
         print(f'重新输入版本, 可供候选: 201 16')
     for i in list_f:
