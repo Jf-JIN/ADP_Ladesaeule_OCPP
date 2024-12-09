@@ -1,19 +1,21 @@
-import jsonschema
+
+from ocpp.v201.enums import *
 from ocpp.v201 import call_result
 from ._Base import *
 from const.Ocpp_Struct_Standard.V2_0_1.OCPP_Valid_Const import *
-from datetime import datetime
 
 
 class authorize_response(Base_OCPP_Struct_V2_0_1):
     @staticmethod
-    def generate(id_token_info: dict, certificate_status: str | None = None, custom_data: dict | None = None, **kwargs) -> call_result.Authorize:
+    def generate(id_token_info: dict, certificate_status: str | AuthorizeCertificateStatusType | None = None, custom_data: dict | None = None, **kwargs) -> call_result.Authorize:
         """ 
         生成AuthorizeResponse
 
         参数: 
         - id_token_info(dict): 推荐使用 `id_token_info.generate()` 生成
-        - certificate_status(str): `Accepted`, `SignatureError`, `CertificateExpired`, `CertificateRevoked`, `NoCertificateAvailable`, `CertChainError`, `ContractCancelled`
+        - certificate_status(str|AuthorizeCertificateStatusType): 证书状态
+            - `Accepted`, `SignatureError`, `CertificateExpired`, `CertificateRevoked`, `NoCertificateAvailable`, `CertChainError`, `ContractCancelled` .
+            - 或者使用 `AuthorizeCertificateStatusType` 枚举, 例如 `AuthorizeCertificateStatusType.Accepted` .
         - custom_data(dict): 推荐使用 `get_custom_data()` 生成
 
         返回值:
@@ -25,20 +27,22 @@ class authorize_response(Base_OCPP_Struct_V2_0_1):
             custom_data=custom_data or kwargs.get('customData', None))
 
     @staticmethod
-    def get_id_token_info(status: str, customData: dict | None = None, cacheExpiryDateTime: str | None = None, chargingPriority: int | None = None, evseId: list | None = None, groupIdToken: dict | None = None, language1: str | None = None, language2: str | None = None, personalMessage: dict | None = None) -> dict:
+    def get_id_token_info(status: str | AuthorizationStatusType, customData: dict | None = None, cacheExpiryDateTime: str | None = None, chargingPriority: int | None = None, evseId: list | None = None, groupIdToken: dict | None = None, language1: str | None = None, language2: str | None = None, personalMessage: dict | None = None) -> dict:
         """ 
         获取id_token_info
 
         参数: 
-        - status(str): 状态 `Accepted`, `Blocked`, `ConcurrentTx`, `Expired`, `Invalid`, `NoCredit`, `NotAllowedTypeEVSE`, `NotAtThisLocation`, `NotAtThisTime`, `Unknown`
-        - customData(dict): 推荐使用 `get_custom_data()` 生成
-        - cacheExpiryDateTime(str): 过期时间(格式如:2024-12-09). 推荐通过 
-        - chargingPriority(int): 充电优先级
-        - evseId(list): 推荐使用 `get_evse_id()` 生成
-        - groupIdToken(dict): 推荐使用 `get_group_id_token()` 生成
+        - status(str): 状态 
+            - `Accepted`, `Blocked`, `ConcurrentTx`, `Expired`, `Invalid`, `NoCredit`, `NotAllowedTypeEVSE`, `NotAtThisLocation`, `NotAtThisTime`, `Unknown` .
+            - 或者使用 `AuthorizationStatusType` 枚举, 如 `AuthorizationStatusType.Accepted` .
+        - customData(dict): 自定义数据, 推荐使用 `get_custom_data()` 生成
+        - cacheExpiryDateTime(str): 过期时间, 格式如:2024-12-09
+        - chargingPriority(int): 充电优先级, 范围: [-9, 9], 默认值: 0
+        - evseId(list): 充电桩id, 推荐使用 `get_evse_id()` 生成
+        - groupIdToken(dict): 组id令牌, 推荐使用 `get_group_id_token()` 生成
         - language1(str): 首选界面语言, 标准为`RFC 5646`, 格式如: en-US, 最大长度为 8 个字符
         - language2(str): 备选界面语言, 标准为`RFC 5646`, 格式如: en-US, 最大长度为 8 个字符
-        - personalMessage(dict): 推荐使用 `get_personal_message()` 生成
+        - personalMessage(dict): 个人消息, 推荐使用 `get_personal_message()` 生成
 
         返回值:
         - id_token_info(dict)
@@ -78,13 +82,15 @@ class authorize_response(Base_OCPP_Struct_V2_0_1):
         return [*evse_id]
 
     @staticmethod
-    def get_group_id_tocken(id_token: str, type: str, custom_data: dict | None = None, additional_info: dict | None = None) -> dict:
+    def get_group_id_tocken(id_token: str, type: str | IdTokenType, custom_data: dict | None = None, additional_info: dict | None = None) -> dict:
         """
         生成 groupIdToken
 
         参数:
-        - id_token(str): id令牌, 长度为 1-36 个字符
-        - type(str): 类型 候选: `Central`, `eMAID`, `ISO14443`, `ISO15693`, `KeyCode`, `Local`, `MacAddress`, `NoAuthorization`
+        - id_token(str): id令牌, 长度为 [1-36] 个字符
+        - type(str|IdTokenType): 类型 
+            - `Central`, `eMAID`, `ISO14443`, `ISO15693`, `KeyCode`, `Local`, `MacAddress`, `NoAuthorization` .
+            - 或者使用 `IdTokenType` 枚举类, 例如 `IdTokenType.Central` .
         - custom_data(dict|None): 推荐使用 `get_custom_data()` 传入
         - additional_info(list|None): 推荐使用 `get_additional_info_list()` 传入
 
@@ -120,8 +126,8 @@ class authorize_response(Base_OCPP_Struct_V2_0_1):
         生成 AdditionalInfo
 
         参数:
-        - additional_id_token(str): 附加的ID令牌, 长度为 1-36 个字符
-        - type(str): 类型 (1-36 个字符)
+        - additional_id_token(str): 附加的ID令牌, 长度为 [1-36] 个字符
+        - type(str): 类型, 长度为 [1-36] 个字符
         - custom_data(dict|None): 推荐使用 get_custom_data() 传入
 
         返回值:
@@ -136,14 +142,16 @@ class authorize_response(Base_OCPP_Struct_V2_0_1):
         return temp_dict
 
     @staticmethod
-    def get_personal_message(format, content: str, language: str | None = None, customData: str | None = None) -> dict:
+    def get_personal_message(format: str | MessageFormatType, content: str, language: str | None = None, customData: str | None = None) -> dict:
         """ 
         生成 PersonalMessage
 
         参数:
-        - format(str): 格式 `ASCII`, `HTML`, `URI`, `UTF8`
-        - content(str): 内容 (1-512 个字符)
-        - language(str): 语言, 标准为`RFC 5646`, 格式如: en-US, 最大长度为 8 个字符
+        - format(str): 格式 
+            - `ASCII`, `HTML`, `URI`, `UTF8` .
+            - 或者使用 `MessageFormatType` 枚举, 如: `MessageFormatType.ASCII` .
+        - content(str): 内容, 长度为 [1-512] 个字符
+        - language(str): 语言, 标准为`RFC 5646`, 格式如: en-US, 长度为 [0-8] 个字符
         - customData(dict): 推荐使用 `get_custom_data()` 生成
 
         返回值:
