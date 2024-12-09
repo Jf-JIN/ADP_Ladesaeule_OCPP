@@ -1,8 +1,10 @@
 import jsonschema
+from ocpp.v201 import call
 from ._Base import *
 from const.Ocpp_Struct_Standard.V2_0_1.OCPP_Valid_Const import *
 
 
 class cleared_charging_limit_request(Base_OCPP_Struct_V2_0_1): 
-    def generate(self):
+    @staticmethod
+    def generate():
         pass

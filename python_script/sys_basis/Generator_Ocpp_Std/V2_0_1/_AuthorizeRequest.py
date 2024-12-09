@@ -1,4 +1,5 @@
 import jsonschema
+from ocpp.v201 import call
 from ._Base import *
 from const.Ocpp_Struct_Standard.V2_0_1.OCPP_Valid_Const import *
 
@@ -7,16 +8,16 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(id_token: dict, custom_data: dict | None = None, certificate: str | None = None, hash_data: list | None = None) -> dict:
-        """ 
+        """
         生成 AuthorizeRequest
 
-        参数: 
+        参数:
         - id_token(dict): 推荐使用 `get_id_tocken()` 传入
         - custom_data(dict|None): 推荐使用 `get_custom_data()` 传入
         - certificate(str|None): 长度为 1-5500 个字符
         - hash_data(list|None): 推荐使用 `get_hash_data_list()` 传入
 
-        返回值: 
+        返回值:
         - AuthorizeRequest
         """
         temp_dict = {
@@ -28,24 +29,38 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
             temp_dict["certificate"] = certificate
         if hash_data is not None:
             temp_dict["hashData"] = hash_data
+
         try:
             jsonschema.validate(temp_dict, STD_v2_0_1.AuthorizeRequest)
         except jsonschema.ValidationError as e:
             raise jsonschema.ValidationError(f"<authorize_request> 生成器 错误: {e.message}")
-        return temp_dict
+
+        # @dataclass
+        # class Authorize:
+        #     id_token: dict
+        #     certificate: str | None
+        #     iso15118_certificate_hash_data: list | None
+        #     custom_data: dict | None
+
+        # 创建并返回 AuthorizeRequest 实例
+        return call.Authorize(
+            id_token=temp_dict["idToken"],
+            certificate=temp_dict.get("certificate"),
+            iso15118_certificate_hash_data=temp_dict.get("hashData"),
+            custom_data=temp_dict.get("customData"))
 
     @staticmethod
     def get_id_tocken(id_token: str, type: str, custom_data: dict | None = None, additional_info: dict | None = None) -> dict:
         """
         生成 IdToken
 
-        参数: 
+        参数:
         - id_token(str): id令牌, 长度为 1-36 个字符
         - type(str): 类型 候选: `Central` `eMAID` `ISO14443` `ISO15693` `KeyCode` `Local` `MacAddress` `NoAuthorization`
         - custom_data(dict|None): 推荐使用 `get_custom_data()` 传入
         - additional_info(list|None): 推荐使用 `get_additional_info_list()` 传入
 
-        返回值: 
+        返回值:
         - IdToken(dict)
         """
         temp_dict = {
@@ -60,28 +75,28 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def get_additional_info_list(*additional_info: dict) -> list:
-        """ 
+        """
         生成 AdditionalInfo列表
 
-        参数: 
+        参数:
         - *additional_info(dict): 推荐使用 `get_additional_info()` 传入
 
-        返回值: 
+        返回值:
         - AdditionalInfo(list)
         """
         return [*additional_info]
 
     @staticmethod
     def get_additional_info(additional_id_token: str, type: str, custom_data: dict | None = None) -> dict:
-        """ 
+        """
         生成 AdditionalInfo
 
-        参数: 
+        参数:
         - additional_id_token(str): 附加的ID令牌, 长度为 1-36 个字符
         - type(str): 类型 (1-36 个字符)
         - custom_data(dict|None): 推荐使用 get_custom_data() 传入
 
-        返回值: 
+        返回值:
         - AdditionalInfo(dict)
         """
         temp_dict = {
@@ -94,23 +109,23 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def get_hash_data_list(*hash_data: dict) -> list:
-        """ 
+        """
         生成 iso15118CertificateHashData
 
-        参数: 
+        参数:
         - *hash_data(dict): 推荐使用 `get_hash_data()` 传入
 
-        返回值: 
+        返回值:
         - iso15118CertificateHashData(list)
         """
         return [*hash_data]
 
     @staticmethod
     def get_hash_data(hash_algorithm: str, issuer_name_hash: str, issuer_key_hash: str, serial_number: str, responder_url: str, custom_data: dict | None = None) -> dict:
-        """ 
+        """
         生成 HashData
 
-        参数: 
+        参数:
         - hash_algorithm(str): 哈希算法 `SHA256` `SHA384` `SHA512`
         - issuer_name_hash(str): 发行者名称哈希 (1-128 个字符)
         - issuer_key_hash(str): 发行者密钥哈希 (1-128 个字符)
