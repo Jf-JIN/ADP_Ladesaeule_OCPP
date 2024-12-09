@@ -35,14 +35,6 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
         except jsonschema.ValidationError as e:
             raise jsonschema.ValidationError(f"<authorize_request> 生成器 错误: {e.message}")
 
-        # @dataclass
-        # class Authorize:
-        #     id_token: dict
-        #     certificate: str | None
-        #     iso15118_certificate_hash_data: list | None
-        #     custom_data: dict | None
-
-        # 创建并返回 AuthorizeRequest 实例
         return call.Authorize(
             id_token=temp_dict["idToken"],
             certificate=temp_dict.get("certificate"),
