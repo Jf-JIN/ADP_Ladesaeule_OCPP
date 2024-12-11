@@ -6,8 +6,7 @@ from const.Ocpp_Struct_Standard.V2_0_1.OCPP_Valid_Const import *
 
 class notify_ev_charging_needs_request(Base_OCPP_Struct_V2_0_1):
     @staticmethod
-    def generate(evse_id: int, charging_needs: dict, custom_data: dict | None = None,
-                 max_schedule_tuples: int | None = None, **kwargs) -> call.NotifyEVChargingNeeds:
+    def generate(evse_id: int, charging_needs: dict, custom_data: dict | None = None, max_schedule_tuples: int | None = None, **kwargs) -> call.NotifyEVChargingNeeds:
         """
         生成 NotifyEVChargingNeedsRequest
 
