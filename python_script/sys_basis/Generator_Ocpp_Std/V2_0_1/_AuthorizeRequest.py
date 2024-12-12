@@ -1,7 +1,7 @@
+
 from ocpp.v201.enums import *
 from ocpp.v201 import call
 from ._Base import *
-from const.Ocpp_Struct_Standard.V2_0_1.OCPP_Valid_Const import *
 
 
 class authorize_request(Base_OCPP_Struct_V2_0_1):
@@ -36,7 +36,7 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
         - id_token(str): id令牌, 长度为 [1-36] 个字符
         - type(str|IdTokenType): 类型 候选: 
             - `Central`, `eMAID`, `ISO14443`, `ISO15693`, `KeyCode`, `Local`, `MacAddress`, `NoAuthorization` .
-            - 或者可以使用 `IdTokenType` 枚举, 例如: `IdTokenType.Central` .
+            - 或者可以使用 `IdTokenType` 枚举, 例如: `IdTokenType.central` .
         - custom_data(dict): 推荐使用 `get_custom_data()` 传入
         - additional_info(list): 推荐使用 `get_additional_info_list()` 传入
 
@@ -108,7 +108,7 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
         参数:
         - hash_algorithm(str|HashAlgorithmType): 哈希算法 
             - `SHA256`, `SHA384`, `SHA512` .
-            - 或者使用 `HashAlgorithmType` 枚举, 例如 `HashAlgorithmType.SHA256` .
+            - 或者使用 `HashAlgorithmType` 枚举, 例如 `HashAlgorithmType.sha256` .
         - issuer_name_hash(str): 发行者名称哈希, 长度为 [1-128] 个字符
         - issuer_key_hash(str): 发行者密钥哈希, 长度为 [1-128] 个字符
         - serial_number(str): 序列号, 长度为 [1-40] 个字符
