@@ -74,7 +74,7 @@ class authorize_response(Base_OCPP_Struct_V2_0_1):
         生成 evse_id
 
         参数:
-        - evse_id(int)，可接受多个参数
+        - evse_id(int), 可接受多个参数
 
         返回值:
         - evse_id(list)
