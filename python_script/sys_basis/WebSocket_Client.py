@@ -1,9 +1,12 @@
 import asyncio
 from decimal import Context
+from .XSignal import XSignal
 import websockets
 
 
 class WebSocketClient(Context):
+    signal_recv = XSignal()
+
     def __init__(self, uri, recv_timeout_s=30, retry_interval_s=1, max_retries=-1):
         self.__uri = uri
         self.__websocket = None
@@ -36,7 +39,7 @@ class WebSocketClient(Context):
         """
         连接服务器
         """
-        print('--<connecting>\n')
+        self.__send_signal_recv('\n--<connecting>')
         retries = 0
         while retries < self.__max_retries or self.__max_retries < 0:
             try:
@@ -45,12 +48,12 @@ class WebSocketClient(Context):
                 return self
             except (ConnectionRefusedError, websockets.exceptions.WebSocketException) as e:
                 if self.__max_retries < 0:
-                    print(f'--<Connection_failed> : {e} Reconnecting...\n')
+                    self.__send_signal_recv(f'--<Connection_failed>: {e} Reconnecting...')
                 elif retries <= self.__max_retries:
-                    print(f'--<Connection_failed>: {e} Reconnecting... ({retries}/{self.__max_retries})...\n')
+                    self.__send_signal_recv(f'--<Connection_failed>: {e} Reconnecting... ({retries}/{self.__max_retries})...')
                     retries += 1
                 else:
-                    print(f'--<Connection_failed>: Unable to connect to the server. Maximum retry attempts reached. ({self.__max_retries})\n')
+                    self.__send_signal_recv(f'--<Connection_failed>: Unable to connect to the server. Maximum retry attempts reached. ({self.__max_retries})')
                 await asyncio.sleep(self.__retry_interval_s)
 
     async def send(self, message):
@@ -59,10 +62,10 @@ class WebSocketClient(Context):
         """
         if self.__websocket is not None:
             try:
-                print(f'<-send<: {message}\n')
+                self.__send_signal_recv(f'<<<- send< {message}')
                 await self.__websocket.send(message)
             except (ConnectionAbortedError, websockets.exceptions.ConnectionClosedError) as e:
-                print(f'--<Connection_failed>: Connection closed, reconnecting... ({e})\n')
+                self.__send_signal_recv(f'--<Connection_failed>: Connection closed, reconnecting... ({e})')
                 self.__websocket = None
                 await self.__connection()
                 await self.send(message)
@@ -72,17 +75,35 @@ class WebSocketClient(Context):
         if self.__websocket is not None:
             try:
                 response = await asyncio.wait_for(self.__websocket.recv(), timeout=self.__recv_timeout_s)
-                print(f'->recieved> {response}\n')
+                self.__send_signal_recv(f'->>> received> {response}')
                 return response
             except asyncio.TimeoutError as e:
                 await self.__websocket.ping()
             except websockets.exceptions.ConnectionClosedError as e:
-                print(f'--<Connection_failed>: Connection closed, reconnecting... ({e})\n')
+                self.__send_signal_recv(f'--<Connection_failed>: Connection closed, reconnecting... ({e})')
                 if self.__websocket is not None:
                     await self.__websocket.close()
                     self.__websocket = None
                 await self.__connection()
                 return await self.recv()
+
+    def __send_signal_recv(self, *args):
+        """
+        发送/打印 接收信号
+
+        涵盖发送前的检查
+
+        参数: 
+        - args: 可变数量的参数, 每个参数都应该是能够被转换为字符串的对象. 建议传递字符串、数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式. 
+        """
+        try:
+            temp = ''.join([str(*args)]) + '\n'
+            self.signal_recv.emit(temp)
+            print(temp)
+        except Exception as e:
+            error_text = f'********************\n<Error - send_signal_info> {e}\n********************'
+            self.signal_recv.emit(error_text)
+            print(error_text)
 
 
 # 使用示例
@@ -103,7 +124,7 @@ if __name__ == '__main__':
             async def listen():  # 监听服务器返回的消息
                 while client:
                     a = await client.recv()  # 接收消息
-                    print(a)
+                    print(f'listen\t{a}\n')
 
             asyncio.create_task(listen())  # 启动监听任务
             await asyncio.Future()  # 保持运行
