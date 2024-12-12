@@ -13,12 +13,18 @@ class ChargePointBase(object):
     该类主要提供其与主线程的通讯机制
 
     信号: 
-    - signal_ocpp_request: OCPP请求消息信号
+    - signal_ocpp_request: OCPP请求消息信号, 内容为字典, 结构如下
+        - `action`: 消息类型
+        - `data`: OCPP消息的字典形式
+        - `send_time`: 请求收到时间 / 向系统发送时间, 这里的 send 含义是从 OCPP端口 向系统发送的动作
     - signal_ocpp_response: OCPP响应消息信号
+        - `action`: 消息类型
+        - `data`: OCPP消息的字典形式
+        - `send_time`: 请求发送时间,  这里send 含义是从 OCPP端口 向外部发送的动作
     - signal_info: 普通信号, 用于信息显示, 调试等
 
     属性: 
-    - response_timeout_in_baseclass
+    - response_timeout_in_baseclass(int|float)
 
     方法: 
     - send_response_message: 发送响应消息
@@ -99,12 +105,12 @@ class ChargePointBase(object):
         """ 
         更改响应超时时间
 
-        参数：
+        参数: 
         - response_timeout(int|float): 响应超时时间, 单位为 `秒`
 
-        返回：
+        返回: 
         - True: 更改成功
-        - False: 更改失败，响应时间维持原来的值
+        - False: 更改失败, 响应时间维持原来的值
         """
         if not isinstance(response_timeout_s, (int, float)):
             self._send_signal_info('<Error - Type - response_timeout> response_timeout must be int or float')
@@ -256,3 +262,31 @@ class ChargePointBase(object):
                 'recv_time': 0}
         else:
             self.__time_table_for_send_message[message_action]['send_time'] = send_time
+
+    def _unpack_data_and_send_signal_ocpp_response(self, data, send_time: float) -> None:
+        """ 
+        解包数据并发送信号
+
+        数据将通过 `self._send_signal_ocpp_response` 发送, 数据格式为: 
+            - `action`: 消息类型
+            - `data`: 解包后的数据
+            - `send_time`: 请求发送时间
+
+        参数:
+        - `data`: ocpp数据类, 类型如:  `call_result.Authorize`
+        - `send_time`: 发送时间
+
+        返回: 
+        - 无
+        """
+        temp_dict = {
+            'action': data.__class__.__name__,
+            'data': {},
+            'send_time': send_time
+        }
+        info_text = f'->>> <Response> received - {temp_dict["action"]}\n'
+        for item in data.__class__.__dict__['__match_args__']:
+            temp_dict['data'][item] = getattr(data, item)
+            info_text += f'\t - {item}: {temp_dict["data"][item]}\n'
+        self.signal_ocpp_response.emit(temp_dict)
+        self.signal_info.emit(info_text)
