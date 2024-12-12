@@ -186,7 +186,7 @@ class notify_ev_charging_schedule_request(Base_OCPP_Struct_V2_0_1):
         - *consumption_cost(dict): 推荐使用 `get_consumption_cost()` 传入
 
         返回值:
-        - consumptionCost(list)
+        - consumption_cost(list)
         """
         return [*consumption_cost]
 
@@ -201,7 +201,7 @@ class notify_ev_charging_schedule_request(Base_OCPP_Struct_V2_0_1):
         - custom_data(dict): 自定义数据, 推荐使用 `get_custom_data()` 传入
 
         返回值:
-        - consumptionCost(dict)
+        - consumption_cost(dict)
         """
         temp_dict = {
             "startValue": start_value,
@@ -234,6 +234,9 @@ class notify_ev_charging_schedule_request(Base_OCPP_Struct_V2_0_1):
         - amount(int): 每KWh的估计或实际成本
         - custom_data(dict): 自定义数据, 推荐使用 `get_custom_data()` 传入
         - amountMultiplier(int): 成本乘数, 取值范围: [-3,3]
+
+        返回值:
+        - cost(dict)
         """
         temp_dict = {
             "costKind": cost_kind,

@@ -27,7 +27,7 @@ class authorize_response(Base_OCPP_Struct_V2_0_1):
             custom_data=custom_data or kwargs.get('customData', None))
 
     @staticmethod
-    def get_id_token_info(status: str | AuthorizationStatusType, customData: dict | None = None, cacheExpiryDateTime: str | None = None, chargingPriority: int | None = None, evseId: list | None = None, groupIdToken: dict | None = None, language1: str | None = None, language2: str | None = None, personalMessage: dict | None = None) -> dict:
+    def get_id_token_info(status: str | AuthorizationStatusType, custom_data: dict | None = None, cache_expiry_date_time: str | None = None, charging_priority: int | None = None, evse_id: list | None = None, group_id_token: dict | None = None, language1: str | None = None, language2: str | None = None, personal_message: dict | None = None) -> dict:
         """ 
         获取id_token_info
 
@@ -35,14 +35,14 @@ class authorize_response(Base_OCPP_Struct_V2_0_1):
         - status(str): 状态 
             - `Accepted`, `Blocked`, `ConcurrentTx`, `Expired`, `Invalid`, `NoCredit`, `NotAllowedTypeEVSE`, `NotAtThisLocation`, `NotAtThisTime`, `Unknown` .
             - 或者使用 `AuthorizationStatusType` 枚举, 如 `AuthorizationStatusType.Accepted` .
-        - customData(dict): 自定义数据, 推荐使用 `get_custom_data()` 生成
-        - cacheExpiryDateTime(str): 过期时间, 格式如:2024-12-09
-        - chargingPriority(int): 充电优先级, 范围: [-9, 9], 默认值: 0
-        - evseId(list): 充电桩id, 推荐使用 `get_evse_id()` 生成
-        - groupIdToken(dict): 组id令牌, 推荐使用 `get_group_id_token()` 生成
+        - custom_data(dict): 自定义数据, 推荐使用 `get_custom_data()` 生成
+        - cache_expiry_date_time(str): 过期时间, 格式如:2024-12-09
+        - charging_priority(int): 充电优先级, 范围: [-9, 9], 默认值: 0
+        - evse_id(list): 充电桩id, 推荐使用 `get_evse_id()` 生成
+        - group_id_token(dict): 组id令牌, 推荐使用 `get_group_id_token()` 生成
         - language1(str): 首选界面语言, 标准为`RFC 5646`, 格式如: en-US, 最大长度为 8 个字符
         - language2(str): 备选界面语言, 标准为`RFC 5646`, 格式如: en-US, 最大长度为 8 个字符
-        - personalMessage(dict): 个人消息, 推荐使用 `get_personal_message()` 生成
+        - personal_message(dict): 个人消息, 推荐使用 `get_personal_message()` 生成
 
         返回值:
         - id_token_info(dict)
@@ -50,31 +50,31 @@ class authorize_response(Base_OCPP_Struct_V2_0_1):
         temp_dict = {
             'status': status
         }
-        if customData is not None:
-            temp_dict['customData'] = customData
-        if cacheExpiryDateTime is not None:
-            temp_dict['cacheExpiryDateTime'] = cacheExpiryDateTime
-        if chargingPriority is not None:
-            temp_dict['chargingPriority'] = chargingPriority
-        if evseId is not None:
-            temp_dict['evseId'] = evseId
-        if groupIdToken is not None:
-            temp_dict['groupIdToken'] = groupIdToken
+        if custom_data is not None:
+            temp_dict['customData'] = custom_data
+        if cache_expiry_date_time is not None:
+            temp_dict['cacheExpiryDateTime'] = cache_expiry_date_time
+        if charging_priority is not None:
+            temp_dict['chargingPriority'] = charging_priority
+        if evse_id is not None:
+            temp_dict['evseId'] = evse_id
+        if group_id_token is not None:
+            temp_dict['groupIdToken'] = group_id_token
         if language1 is not None:
             temp_dict['language1'] = language1
         if language2 is not None:
             temp_dict['language2'] = language2
-        if personalMessage is not None:
-            temp_dict['personalMessage'] = personalMessage
+        if personal_message is not None:
+            temp_dict['personalMessage'] = personal_message
         return temp_dict
 
     @staticmethod
-    def get_evse_id(self, *evse_id: int) -> list:
+    def get_evse_id(*evse_id: int) -> list:
         """ 
         生成 evse_id
 
         参数:
-        - evse_id(int)
+        - evse_id(int)，可接受多个参数
 
         返回值:
         - evse_id(list)
@@ -95,7 +95,7 @@ class authorize_response(Base_OCPP_Struct_V2_0_1):
         - additional_info(list|None): 推荐使用 `get_additional_info_list()` 传入
 
         返回值:
-        - IdToken(dict)
+        - group_id_tocken(dict)
         """
         temp_dict = {
             "idToken": id_token,
@@ -116,7 +116,7 @@ class authorize_response(Base_OCPP_Struct_V2_0_1):
         - *additional_info(dict): 推荐使用 `get_additional_info()` 传入
 
         返回值:
-        - AdditionalInfo(list)
+        - additional_info(list)
         """
         return [*additional_info]
 
@@ -131,7 +131,7 @@ class authorize_response(Base_OCPP_Struct_V2_0_1):
         - custom_data(dict|None): 推荐使用 get_custom_data() 传入
 
         返回值:
-        - AdditionalInfo(dict)
+        - additional_info(dict)
         """
         temp_dict = {
             "additionalIdToken": additional_id_token,
@@ -142,7 +142,7 @@ class authorize_response(Base_OCPP_Struct_V2_0_1):
         return temp_dict
 
     @staticmethod
-    def get_personal_message(format: str | MessageFormatType, content: str, language: str | None = None, customData: str | None = None) -> dict:
+    def get_personal_message(format: str | MessageFormatType, content: str, language: str | None = None, custom_data: str | None = None) -> dict:
         """ 
         生成 PersonalMessage
 
@@ -152,10 +152,10 @@ class authorize_response(Base_OCPP_Struct_V2_0_1):
             - 或者使用 `MessageFormatType` 枚举, 如: `MessageFormatType.ASCII` .
         - content(str): 内容, 长度为 [1-512] 个字符
         - language(str): 语言, 标准为`RFC 5646`, 格式如: en-US, 长度为 [0-8] 个字符
-        - customData(dict): 推荐使用 `get_custom_data()` 生成
+        - custom_data(dict): 推荐使用 `get_custom_data()` 生成
 
         返回值:
-        - PersonalMessage(dict)
+        - personal_message(dict)
         """
         temp_dict = {
             'format': format,
@@ -163,6 +163,6 @@ class authorize_response(Base_OCPP_Struct_V2_0_1):
         }
         if language is not None:
             temp_dict['language'] = language
-        if customData is not None:
-            temp_dict['customData'] = customData
+        if custom_data is not None:
+            temp_dict['customData'] = custom_data
         return temp_dict
