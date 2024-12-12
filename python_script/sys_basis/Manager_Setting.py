@@ -28,9 +28,9 @@ class SettingManager():
             filename = '.setting'
         else:
             filename = f'.setting_{default_name}'
+        self.__default_setting_dict = default_setting_dict
         self.__setting_path: str = os.path.join(self.__exe_folder_path, filename)
         self.__setting_data: dict = self.__check_file()
-        self.__default_setting_dict = default_setting_dict
 
     @property
     def setting_data(self):
