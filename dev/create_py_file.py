@@ -44,7 +44,6 @@ def create_file(version):
             call_struct_import = 'call'
             data_class_name = 'call.' + std_dataclass_name
         text = f'''
-
 from {ocpp_version}.enums import *
 from {ocpp_version} import {call_struct_import}
 from ._Base import *
@@ -56,21 +55,20 @@ class {camel_to_snake(i)}(Base_OCPP_Struct_{import_str}):
     def generate(**kwargs) -> {data_class_name}:
         """
         生成 {i}
-        
+
         参数:
         - 
-        
+
         返回值:
         - {data_class_name}
         """
         return {data_class_name}(
-
+            
         )
-
 
 '''
         with open(file_path, 'w', encoding='utf-8') as f:
             f.write(text)
 
 
-create_file(16)
+create_file(201)
