@@ -27,13 +27,11 @@ def create_file(version):
     if version == '201' or version == 201:
         list_f = v201
         import_str = 'V2_0_1'
-        call_import = 'from ocpp.v201 import '
-        enums_import = 'from ocpp.v201.enums import *'
+        ocpp_version = 'ocpp.v201'
     elif version == 16 or version == '16':
         list_f = v16
         import_str = 'V1_6'
-        call_import = 'from ocpp.v16 import '
-        enums_import = 'from ocpp.v16.enums import *'
+        ocpp_version = 'ocpp.v16'
     else:
         print(f'重新输入版本, 可供候选: 201 16')
     for i in list_f:
@@ -45,9 +43,34 @@ def create_file(version):
         else:
             call_struct_import = 'call'
             data_class_name = 'call.' + std_dataclass_name
+        text = f'''
+
+from {ocpp_version}.enums import *
+from {ocpp_version} import {call_struct_import}
+from ._Base import *
+
+
+class {camel_to_snake(i)}(Base_OCPP_Struct_{import_str}): 
+
+    @staticmethod
+    def generate(**kwargs) -> {data_class_name}:
+        """
+        生成 {i}
+        
+        参数:
+        - 
+        
+        返回值:
+        - {data_class_name}
+        """
+        return {data_class_name}(
+
+        )
+
+
+'''
         with open(file_path, 'w', encoding='utf-8') as f:
-            f.write(
-                f'\n{enums_import}\n{call_import}{call_struct_import}\nfrom ._Base import *\nfrom const.Ocpp_Struct_Standard.{import_str}.OCPP_Valid_Const import *\n\n\nclass {camel_to_snake(i)}(Base_OCPP_Struct_{import_str}): \n\n    @staticmethod\n    def generate(**kwargs) -> {data_class_name}:\n        """\n        生成 {i}\n\n        参数:\n        - \n\n        返回值:\n        - {data_class_name}\n        """\n        return {data_class_name}(\n            \n        )\n\n')
+            f.write(text)
 
 
 create_file(16)
