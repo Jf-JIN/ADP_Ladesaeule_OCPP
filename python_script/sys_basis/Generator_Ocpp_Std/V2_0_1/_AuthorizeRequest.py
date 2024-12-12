@@ -41,7 +41,7 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
         - additional_info(list): 推荐使用 `get_additional_info_list()` 传入
 
         返回值:
-        - IdToken(dict)
+        - id_tocken(dict)
         """
         temp_dict = {
             "idToken": id_token,
@@ -62,7 +62,7 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
         - *additional_info(dict): 推荐使用 `get_additional_info()` 传入
 
         返回值:
-        - AdditionalInfo(list)
+        - additional_info(list)
         """
         return [*additional_info]
 
@@ -77,7 +77,7 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
         - custom_data(dict): 推荐使用 get_custom_data() 传入
 
         返回值:
-        - AdditionalInfo(dict)
+        - additional_info(dict)
         """
         temp_dict = {
             "additionalIdToken": additional_id_token,
@@ -96,7 +96,7 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
         - *hash_data(dict): 推荐使用 `get_hash_data()` 传入
 
         返回值:
-        - iso15118CertificateHashData(list)
+        - hash_data(list)
         """
         return [*hash_data]
 
@@ -115,6 +115,8 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
         - responder_url(str): 响应者 URL, 长度为 [1-512] 个字符
         - custom_data(dict): 推荐使用 get_custom_data() 传入
 
+        返回值:
+        - hash_data(dict)
         """
         temp = {
             "hashAlgorithm": hash_algorithm,

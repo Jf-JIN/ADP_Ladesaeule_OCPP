@@ -67,7 +67,7 @@ class notify_ev_charging_needs_request(Base_OCPP_Struct_V2_0_1):
         - custom_data(dict): 自定义数据, 推荐使用 `get_custom_data()` 传入
 
         返回值:
-        - acChargingParameters(dict)
+        - ac_charging_parameters(dict)
         """
         temp_dict = {
             "energyAmount": energy_amount,
@@ -96,7 +96,7 @@ class notify_ev_charging_needs_request(Base_OCPP_Struct_V2_0_1):
         - bulk_SoC(int): 电动汽车认为的快速充电过程结束时的SoC百分比(单位: %), 取值范围: [0,100]
 
         返回值:
-        - dcChargingParameters(dict)
+        - dc_charging_parameters(dict)
         """
         temp_dict = {
             "evMaxCurrent": ev_max_current,
