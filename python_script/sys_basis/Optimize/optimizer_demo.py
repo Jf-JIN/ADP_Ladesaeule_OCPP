@@ -22,9 +22,9 @@ class PeakShavingOptimizer:
         优化错峰充电计划
         :return: 充电计划 (numpy array)
         """
-        # 决策变量：每个充电桩在每个时间段的充电功率
+        # 决策变量: 每个充电桩在每个时间段的充电功率
         num_variables = self.num_chargers * self.time_slots
-        c = np.ones(num_variables)  # 目标函数，尽量平滑功率，简化为总功率最小化
+        c = np.ones(num_variables)  # 目标函数, 尽量平滑功率, 简化为总功率最小化
 
         # 约束条件
         A_eq = []  # 满足每个充电桩的总需求
@@ -71,5 +71,5 @@ if __name__ == "__main__":
 
     optimizer = PeakShavingOptimizer(demand, time_slots, max_power, max_grid_power)
     schedule = optimizer.optimize()
-    print("充电计划：")
+    print("充电计划: ")
     print(schedule)
