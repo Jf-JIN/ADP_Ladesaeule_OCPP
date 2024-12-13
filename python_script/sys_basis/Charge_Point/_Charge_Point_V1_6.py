@@ -14,15 +14,15 @@ class ChargePointV16(cpv16, ChargePointBase):
     用于监听 ocpp 消息, 以及发送 ocpp 消息
 
     信号: 
-    - signal_ocpp_request: OCPP请求消息信号, 内容为字典, 结构如下
+    - signal_charge_point_ocpp_request: OCPP请求消息信号, 内容为字典, 结构如下
         - `action`: 消息类型
         - `data`: OCPP消息的字典形式
         - `send_time`: 请求收到时间 / 向系统发送时间, 这里的 send 含义是从 OCPP端口 向系统发送的动作
-    - signal_ocpp_response: OCPP响应消息信号
+    - signal_charge_point_ocpp_response: OCPP响应消息信号
         - `action`: 消息类型
         - `data`: OCPP消息的字典形式
         - `send_time`: 请求发送时间,  这里send 含义是从 OCPP端口 向外部发送的动作
-    - signal_info: 普通信号, 用于信息显示, 调试等
+    - signal_charge_point_info: 普通信号, 用于信息显示, 调试等
 
     属性: 
     - response_timeout_in_baseclass(int|float)
