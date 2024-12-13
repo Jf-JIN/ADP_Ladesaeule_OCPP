@@ -13,15 +13,15 @@ class ChargePointBase(object):
     该类主要提供其与主线程的通讯机制
 
     信号: 
-    - signal_ocpp_request: OCPP请求消息信号, 内容为字典, 结构如下
+    - signal_charge_point_ocpp_request: OCPP请求消息信号, 内容为字典, 结构如下
         - `action`: 消息类型
         - `data`: OCPP消息的字典形式
         - `send_time`: 请求收到时间 / 向系统发送时间, 这里的 send 含义是从 OCPP端口 向系统发送的动作
-    - signal_ocpp_response: OCPP响应消息信号
+    - signal_charge_point_ocpp_response: OCPP响应消息信号
         - `action`: 消息类型
         - `data`: OCPP消息的字典形式
         - `send_time`: 请求发送时间,  这里send 含义是从 OCPP端口 向外部发送的动作
-    - signal_info: 普通信号, 用于信息显示, 调试等
+    - signal_charge_point_info: 普通信号, 用于信息显示, 调试等
 
     属性: 
     - response_timeout_in_baseclass(int|float)
@@ -37,9 +37,17 @@ class ChargePointBase(object):
     - _set_network_buffer_time_in_baseclass `<保护>`: 设置网络缓冲时间, 命名in_baseclass主要区分于子类的方法
     - _init_parameters_in_baseclass `<保护>`: 初始化参数, 因继承问题不得已而为之
     """
-    signal_ocpp_request = XSignal()  # OCPP请求消息信号
-    signal_ocpp_response = XSignal()  # OCPP响应消息信号
-    signal_info = XSignal()  # 普通信号, 用于信息显示, 调试等
+    @property
+    def signal_charge_point_ocpp_request(self):  # OCPP请求消息信号
+        return self.__signal_charge_point_ocpp_request
+
+    @property
+    def signal_charge_point_ocpp_response(self):  # OCPP响应消息信号
+        return self.__signal_charge_point_ocpp_response
+
+    @property
+    def signal_charge_point_info(self):  # 普通信号, 用于信息显示, 调试等
+        return self.__signal_charge_point_info
 
     @property
     def response_timeout_in_baseclass(self):
@@ -156,7 +164,7 @@ class ChargePointBase(object):
         - message_action: 消息类型, 建议使用 Action 的枚举值, 如 Action.authorize
         - info_action: 信息动作, 默认为None, 输出 <Request> received
 
-        该函数将通过 signal_info 和 signal_ocpp_request 发送信号, 并在控制台打印信息.
+        该函数将通过 signal_charge_point_info 和 signal_charge_point_ocpp_request 发送信号, 并在控制台打印信息.
 
         ocpp_message 信号将携带一个字典, 包含
 
@@ -183,7 +191,7 @@ class ChargePointBase(object):
             temp_dict['data'][name] = value
         self.__set_time_table_for_send_message(message_action, temp_dict['send_time'])
         self._send_signal_info(struct_params_info)
-        self.signal_ocpp_request.emit(temp_dict)
+        self.signal_charge_point_ocpp_request.emit(temp_dict)
 
     def _send_signal_info(self, *args) -> None:
         """
@@ -196,17 +204,20 @@ class ChargePointBase(object):
         """
         try:
             temp = ''.join([str(*args)]) + '\n'
-            self.signal_info.emit(temp)
+            self.signal_charge_point_info.emit(temp)
             print(temp)
         except Exception as e:
             error_text = f'********************\n<Error - send_signal_info> {e}\n********************'
-            self.signal_info.emit(error_text)
+            self.signal_charge_point_info.emit(error_text)
             print(error_text)
 
     def _set_network_buffer_time_in_baseclass(self, network_buffer_time) -> None:
         self.__network_buffer_time = network_buffer_time
 
     def _init_parameters_in_baseclass(self) -> None:
+        self.__signal_charge_point_ocpp_request = XSignal()  # OCPP请求消息信号
+        self.__signal_charge_point_ocpp_response = XSignal()  # OCPP响应消息信号
+        self.__signal_charge_point_info = XSignal()  # 普通信号, 用于信息显示, 调试等
         self.__current_message_to_send = {}
         self.__time_table_for_send_message = {}
         self.__network_buffer_time = 2
@@ -267,7 +278,7 @@ class ChargePointBase(object):
         """ 
         解包数据并发送信号
 
-        数据将通过 `self._send_signal_ocpp_response` 发送, 数据格式为: 
+        数据将通过 `self._send_signal_charge_point_ocpp_response` 发送, 数据格式为: 
             - `action`: 消息类型
             - `data`: 解包后的数据
             - `send_time`: 请求发送时间
@@ -288,5 +299,5 @@ class ChargePointBase(object):
         for item in data.__class__.__dict__['__match_args__']:
             temp_dict['data'][item] = getattr(data, item)
             info_text += f'\t - {item}: {temp_dict["data"][item]}\n'
-        self.signal_ocpp_response.emit(temp_dict)
-        self.signal_info.emit(info_text)
+        self.signal_charge_point_ocpp_response.emit(temp_dict)
+        self.signal_charge_point_info.emit(info_text)
