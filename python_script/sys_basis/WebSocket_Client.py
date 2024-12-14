@@ -84,10 +84,10 @@ class WebSocketClient(object):
         """
         if self.__websocket is not None:
             try:
-                self.__send_signal_recv(f'<<<- send< {message}')
+                self.__send_signal_info(f'<<<- send< {message}')
                 await self.__websocket.send(message)
             except (ConnectionAbortedError, websockets.exceptions.ConnectionClosedError) as e:
-                self.__send_signal_recv(f'--<Connection_failed>: Connection closed, reconnecting... ({e})')
+                self.__send_signal_info(f'--<Connection_failed>: Connection closed, reconnecting... ({e})')
                 self.__websocket = None
                 await self.__connect()
                 await self.send(message)
@@ -99,12 +99,13 @@ class WebSocketClient(object):
         if self.__websocket is not None:
             try:
                 response = await asyncio.wait_for(self.__websocket.recv(), timeout=self.__recv_timeout_s)
-                self.__send_signal_recv(f'->>> received> {response}')
+                self.__send_signal_recv(response)
+                self.__send_signal_info(f'->>> received> {response}')
                 return response
             except asyncio.TimeoutError as e:
                 await self.__websocket.ping()
             except websockets.exceptions.ConnectionClosedError as e:
-                self.__send_signal_recv(f'--<Connection_failed>: Connection closed, reconnecting... ({e})')
+                self.__send_signal_info(f'--<Connection_failed>: Connection closed, reconnecting... ({e})')
                 if self.__websocket is not None:
                     await self.__websocket.close()
                     self.__websocket = None
@@ -129,7 +130,7 @@ class WebSocketClient(object):
         """
         连接服务器
         """
-        self.__send_signal_recv('\n--<connecting>')
+        self.__send_signal_info('--<connecting>')
         retries = 0
         while retries < self.__max_retries or self.__max_retries < 0:
             try:
@@ -138,12 +139,12 @@ class WebSocketClient(object):
                 return self
             except (ConnectionRefusedError, websockets.exceptions.WebSocketException) as e:
                 if self.__max_retries < 0:
-                    self.__send_signal_recv(f'--<Connection_failed>: {e} Reconnecting...')
+                    self.__send_signal_info(f'--<Connection_failed>: {e} Reconnecting...')
                 elif retries <= self.__max_retries:
-                    self.__send_signal_recv(f'--<Connection_failed>: {e} Reconnecting... ({retries}/{self.__max_retries})...')
+                    self.__send_signal_info(f'--<Connection_failed>: {e} Reconnecting... ({retries}/{self.__max_retries})...')
                     retries += 1
                 else:
-                    self.__send_signal_recv(f'--<Connection_failed>: Unable to connect to the server. Maximum retry attempts reached. ({self.__max_retries})')
+                    self.__send_signal_info(f'--<Connection_failed>: Unable to connect to the server. Maximum retry attempts reached. ({self.__max_retries})')
                 await asyncio.sleep(self.__retry_interval_s)
 
     def __send_signal_recv(self, *args) -> None:
@@ -155,7 +156,7 @@ class WebSocketClient(object):
         参数: 
         - args: 可变数量的参数, 每个参数都应该是能够被转换为字符串的对象. 建议传递字符串、数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式. 
         """
-        self.__send_signal(signal=self.signal_websocket_client_recv, error_hint='send_signal_recv', show_title=False, log=None, *args)
+        self.__send_signal(signal=self.signal_websocket_client_recv, error_hint='send_signal_recv', log=None, doShowTitle=False, doPrintInfo=False, args=args)
 
     def __send_signal_info(self, *args) -> None:
         """
@@ -166,9 +167,9 @@ class WebSocketClient(object):
         参数:
         - args: 可变数量的参数, 每个参数都应该是能够被转换为字符串的对象. 建议传递字符串、数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式. 
         """
-        self.__send_signal(signal=self.signal_websocket_client_info, error_hint='send_signal_info', show_title=True, log=None, *args)
+        self.__send_signal(signal=self.signal_websocket_client_info, error_hint='send_signal_info', log=None, doShowTitle=True, doPrintInfo=True, args=args)
 
-    def __send_signal(self, signal: XSignal, error_hint: str, show_title: bool = False, log=None, *args) -> None:
+    def __send_signal(self, signal: XSignal, error_hint: str, log=None, doShowTitle: bool = False, doPrintInfo: bool = False, args=[]) -> None:
         """
         发送/打印 信号
 
@@ -177,29 +178,32 @@ class WebSocketClient(object):
         参数:
         - signal(XSignal): 信号对象
         - error_hint(str): 错误提示
-        - show_title(bool): 是否显示标题
         - log: 日志器动作
-        - args: 可变数量的参数, 每个参数都应该是能够被转换为字符串的对象. 建议传递字符串、数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式. 
+        - doShowTitle(bool): 是否显示标题
+        - doPrintInfo(bool): 是否打印信息
+        - args: 元组或列表或可解包对象，每个参数都应该是能够被转换为字符串的对象. 建议传递字符串、数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式. 
         """
         try:
             temp = ''.join([str(*args)]) + '\n'
-            if self.__info_title and show_title:
+            if self.__info_title and doShowTitle:
                 temp = f'< {self.__info_title} >\n' + temp
             signal.emit(temp)
-            print(temp)
+            if doPrintInfo:
+                print(temp)
             if log:
                 log(temp)
         except Exception as e:
             error_text = f'********************\n<Error - {error_hint}> {e}\n********************'
-            if self.__info_title and show_title:
+            if self.__info_title and doShowTitle:
                 error_text = f'< {self.__info_title} >\n' + error_text
             signal.emit(error_text)
-            print(error_text)
+            if doPrintInfo:
+                print(error_text)
             if log:
                 log(temp)
 
-
 # 使用示例
+
 
 if __name__ == '__main__':
     async def websocket_client():

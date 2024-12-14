@@ -65,10 +65,10 @@ class WebSocketServer(object):
             client: ServerConnection
             try:
                 await client.ping()
-                self.__send_signal_recv(f'<<<- send_to< {client.remote_address}\t{message}')
+                self.__send_signal_info(f'<<<- send_to< {client.remote_address}\t{message}')
                 asyncio.create_task(client.send(message))
             except websockets.ConnectionClosed:
-                self.__send_signal_recv(f'--<Client_disconnected> {client.remote_address}')
+                self.__send_signal_info(f'--<Client_disconnected> {client.remote_address}')
                 self.__clients.remove(client)
 
     async def recv(self):
@@ -83,7 +83,7 @@ class WebSocketServer(object):
         with 进入口
         """
         self.__server = await websockets.serve(self.__handle_client, self.__host, self.__port)
-        self.__send_signal_recv('\n--<WebSocket_started> - <Server>')
+        self.__send_signal_info('\n--<WebSocket_started> - <Server>')
         return self
 
     async def __aexit__(self, exc_type, exc_value, traceback) -> None:
@@ -92,22 +92,22 @@ class WebSocketServer(object):
         """
         await self.__server.close()
         await self.__server.wait_closed()
-        self.__send_signal_recv('--<WebSocket_closed>')
+        self.__send_signal_info('--<WebSocket_closed>')
 
     async def __handle_client(self, websocket: ServerConnection) -> None:
         if websocket not in self.__clients:
             self.__clients.add(websocket)
         await websocket.send(f'<Responde> {websocket.remote_address}')
         await self.send(f'<Responde> {websocket.remote_address}')
-        self.__send_signal_recv(f'--<Client_connected> {websocket.remote_address}')
+        self.__send_signal_info(f'--<Client_connected> {websocket.remote_address}')
         try:
             while True:
                 message = await websocket.recv()
-                self.__send_signal_recv(f'->>> received> {message}')
-                self.signal_websocket_server_recv.emit(message)
+                self.__send_signal_info(f'->>> received> {message}')
+                self.__send_signal_recv(message)
                 await self.__filter_for_ocpp(message=message)
         except websockets.ConnectionClosed as e:
-            self.__send_signal_recv(f'--<Connection_closed> {e}')
+            self.__send_signal_info(f'--<Connection_closed> {e}')
 
     async def __filter_for_ocpp(self, message: str):
         """ 
@@ -136,7 +136,7 @@ class WebSocketServer(object):
         参数: 
         - args: 可变数量的参数, 每个参数都应该是能够被转换为字符串的对象. 建议传递字符串、数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式. 
         """
-        self.__send_signal(signal=self.signal_websocket_server_recv, error_hint='send_signal_recv', show_title=False, log=None, *args)
+        self.__send_signal(signal=self.signal_websocket_server_recv, error_hint='send_signal_recv', log=None, doShowTitle=False, doPrintInfo=False, args=args)
 
     def __send_signal_info(self, *args) -> None:
         """
@@ -147,9 +147,9 @@ class WebSocketServer(object):
         参数:
         - args: 可变数量的参数, 每个参数都应该是能够被转换为字符串的对象. 建议传递字符串、数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式. 
         """
-        self.__send_signal(signal=self.signal_websocket_server_info, error_hint='send_signal_info', show_title=True, log=None, *args)
+        self.__send_signal(signal=self.signal_websocket_server_info, error_hint='send_signal_info', log=None, doShowTitle=True, doPrintInfo=True, args=args)
 
-    def __send_signal(self, signal: XSignal, error_hint: str, show_title: bool = False, log=None, *args) -> None:
+    def __send_signal(self, signal: XSignal, error_hint: str, log=None, doShowTitle: bool = False, doPrintInfo: bool = False, args=[]) -> None:
         """
         发送/打印 信号
 
@@ -158,24 +158,27 @@ class WebSocketServer(object):
         参数:
         - signal(XSignal): 信号对象
         - error_hint(str): 错误提示
-        - show_title(bool): 是否显示标题
         - log: 日志器动作
-        - args: 可变数量的参数, 每个参数都应该是能够被转换为字符串的对象. 建议传递字符串、数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式. 
+        - doShowTitle(bool): 是否显示标题
+        - doPrintInfo(bool): 是否打印信息
+        - args: 元组或列表或可解包对象，每个参数都应该是能够被转换为字符串的对象. 建议传递字符串、数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式. 
         """
         try:
             temp = ''.join([str(*args)]) + '\n'
-            if self.__info_title and show_title:
+            if self.__info_title and doShowTitle:
                 temp = f'< {self.__info_title} >\n' + temp
             signal.emit(temp)
-            print(temp)
+            if doPrintInfo:
+                print(temp)
             if log:
                 log(temp)
         except Exception as e:
             error_text = f'********************\n<Error - {error_hint}> {e}\n********************'
-            if self.__info_title and show_title:
+            if self.__info_title and doShowTitle:
                 error_text = f'< {self.__info_title} >\n' + error_text
             signal.emit(error_text)
-            print(error_text)
+            if doPrintInfo:
+                print(error_text)
             if log:
                 log(temp)
 
