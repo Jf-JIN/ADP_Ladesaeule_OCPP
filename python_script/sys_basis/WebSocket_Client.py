@@ -55,7 +55,7 @@ class WebSocketClient(object):
             self.__max_retries = max_retries
         try:
             if info_title is not None:
-                self.__info_title = info_title
+                self.__info_title = str(info_title)
         except:
             self.__send_signal_info(f'<Error - __init__> info_title must be convertible to a string. It has been set to None. The provided type is {type(info_title)}')
             self.__info_title = None
@@ -181,7 +181,7 @@ class WebSocketClient(object):
         - log: 日志器动作
         - doShowTitle(bool): 是否显示标题
         - doPrintInfo(bool): 是否打印信息
-        - args: 元组或列表或可解包对象，每个参数都应该是能够被转换为字符串的对象. 建议传递字符串、数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式. 
+        - args: 元组或列表或可解包对象, 每个参数都应该是能够被转换为字符串的对象. 建议传递字符串、数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式. 
         """
         try:
             temp = ''.join([str(*args)]) + '\n'
