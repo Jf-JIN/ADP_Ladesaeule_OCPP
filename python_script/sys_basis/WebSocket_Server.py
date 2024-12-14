@@ -24,7 +24,7 @@ class WebSocketServer(object):
 
     方法: 
     - send(异步): 发送消息
-    - recv(异步): 接收消息
+    - recv(异步): 接收消息. 注意! 该函数是供OCPP使用, 不应被手动调用, 需要获取消息, 请通过信号 `signal_websocket_server_recv` 获取
     """
 
     def __init__(self, host: str, port: int, info_title: str | None = 'WebSocket Server') -> None:
@@ -74,6 +74,8 @@ class WebSocketServer(object):
     async def recv(self):
         """ 
         接收消息
+
+        ### 注意! 该函数是供OCPP使用, 不应被手动调用, 需要获取消息, 请通过信号 `signal_websocket_server_recv` 获取
         """
         message = await self.__message_queue.get()
         return message
@@ -161,7 +163,7 @@ class WebSocketServer(object):
         - log: 日志器动作
         - doShowTitle(bool): 是否显示标题
         - doPrintInfo(bool): 是否打印信息
-        - args: 元组或列表或可解包对象，每个参数都应该是能够被转换为字符串的对象. 建议传递字符串、数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式. 
+        - args: 元组或列表或可解包对象, 每个参数都应该是能够被转换为字符串的对象. 建议传递字符串、数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式. 
         """
         try:
             temp = ''.join([str(*args)]) + '\n'
