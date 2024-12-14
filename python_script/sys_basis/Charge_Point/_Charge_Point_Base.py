@@ -13,11 +13,11 @@ class ChargePointBase(object):
     该类主要提供其与主线程的通讯机制
 
     信号: 
-    - signal_charge_point_ocpp_request: OCPP请求消息信号, 内容为字典, 结构如下
+    - signal_charge_point_ocpp_request: OCPP请求消息信号(向系统传递外部请求), 内容为字典, 结构如下
         - `action`: 消息类型
         - `data`: OCPP消息的字典形式
         - `send_time`: 请求收到时间 / 向系统发送时间, 这里的 send 含义是从 OCPP端口 向系统发送的动作
-    - signal_charge_point_ocpp_response: OCPP响应消息信号
+    - signal_charge_point_ocpp_response: OCPP响应消息信号(向系统传递外部响应), 内容为字典, 结构如下
         - `action`: 消息类型
         - `data`: OCPP消息的字典形式
         - `send_time`: 请求发送时间,  这里send 含义是从 OCPP端口 向外部发送的动作
@@ -80,11 +80,11 @@ class ChargePointBase(object):
 
         # 情况1
         if message_action in self.__time_table_for_send_message and self.__time_table_for_send_message[message_action]['send_time'] > send_time:
-            self._send_signal_info(f'<Error - send_time> the send time of the message {message_action} is less than the recorded send time, the message will be ignored')
+            self._send_signal_info(f'<Error - send_time> the send time of the message {message_action} is less than the recorded send time, the message will be ignored\n\t{message}')
             return False
         # 情况2
         if message_action in self.__time_table_for_send_message and self.__time_table_for_send_message[message_action]['receive_time'] < current_time:
-            self._send_signal_info(f'<Error - receive_time> the receive time of the message {message_action} is greater than the current time, the message will be ignored')
+            self._send_signal_info(f'<Error - receive_time> the receive time of the message {message_action} is greater than the current time, the message will be ignored\n\t{message}')
             return False
         # 可以发送消息
         if message_action not in self.__time_table_for_send_message:
@@ -220,7 +220,7 @@ class ChargePointBase(object):
         self.__signal_charge_point_info = XSignal()  # 普通信号, 用于信息显示, 调试等
         self.__current_message_to_send = {}
         self.__time_table_for_send_message = {}
-        self.__network_buffer_time = 2
+        self.__network_buffer_time = 0
 
     def __init__(self, response_timeout=30):
         self._response_timeout = response_timeout
