@@ -48,7 +48,7 @@ class ChargePointV16(cpv16, ChargePointBase):
 
         当请求发送后, 将等待响应数据. 有如下三种情况: 
 
-        1. 成功接收响应数据, 数据将通过信号 `signal_charge_point_ocpp_response` 发送出去, 数据格式如下: 
+        1. 成功接收响应数据, 数据将通过信号 `signal_charge_point_ocpp_response` 发送回来, 数据格式如下: 
             - `action`: 消息类型
             - `data`: OCPP消息的字典形式
             - `send_time`: 请求发送时间
