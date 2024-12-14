@@ -12,11 +12,13 @@ class OCPPClientPort(Thread):
         self.__signal_thread_client_info = XSignal()
         self.__signal_thread_client_recv_request = XSignal()
         self.__signal_thread_client_recv_response = XSignal()
+        self.__signal_thread_client_recv_response_result = XSignal()
         self.__websocket = WebSocketClient(uri)
         self.__list_request_message = []
         self.__list_response_message = []
         self.__event_request_message = asyncio.Event()
         self.__event_response_message = asyncio.Event()
+        self.__isRunning = True
         try:
             if info_title is not None:
                 self.__info_title = str(info_title)
@@ -34,6 +36,7 @@ class OCPPClientPort(Thread):
                 f'Invalid charge point version: {charge_point_version}. Valid versions are: \n\t- "v16", "v1.6", "v1_6", "ocpp16", "ocpp1.6", "ocpp1_6", \n\t- "v2.0.1", "v2_0_1", "ocpp201", "ocpp2.0.1", "ocpp2_0_1".')
         self.__charge_point.signal_charge_point_ocpp_request.connect(self.signal_thread_client_recv_request.emit)
         self.__charge_point.signal_charge_point_ocpp_response.connect(self.signal_thread_client_recv_response.emit)
+        self.__charge_point.signal_charge_point_ocpp_response_result.connect(self.signal_thread_client_recv_response_result.emit)
         self.__charge_point.signal_charge_point_info.connect(self.signal_thread_client_info.emit)
 
     @property
@@ -48,6 +51,14 @@ class OCPPClientPort(Thread):
     def signal_thread_client_recv_response(self):
         return self.__signal_thread_client_recv_response
 
+    @property
+    def signal_thread_client_recv_response_result(self):
+        return self.__signal_thread_client_recv_response_result
+
+    @property
+    def isRunning(self):
+        return self.__isRunning
+
     def send_request_message(self, message):
         """ 
         发送请求信息
@@ -55,7 +66,7 @@ class OCPPClientPort(Thread):
         self.__list_request_message.append(message)
         self.__event_request_message.set()
 
-    def send_response_message(self, message):  # TODO 缺少成功与否的返回值
+    def send_response_message(self, message):
         """ 
         发送响应信息
         """
@@ -107,13 +118,13 @@ class OCPPClientPort(Thread):
                 log(temp)
 
     async def __listen_for_messages(self):
-        while True:
+        while self.__isRunning:
             message = await self.__websocket.recv()
             if (isinstance(message, str) and message.startswith('[')):  # 信息过滤
                 await self.__charge_point.route_message(message)
 
     async def __send_request_messages(self):
-        while True:
+        while self.__isRunning:
             await self.__event_request_message.wait()
             try:
                 # 此处结果将由 __charge_point.signal_charge_point_ocpp_response 传递, 无需手动处理
@@ -124,10 +135,11 @@ class OCPPClientPort(Thread):
                 self.__event_request_message.clear()
 
     async def __send_response_messages(self):
-        while True:
+        while self.__isRunning:
             await self.__event_response_message.wait()
             try:
-                result = await self.__charge_point.send_response_message(self.__list_response_message.pop(0))  # result 为 True 或 False, 分别表示成功或失败
+                # 此处结果将通过信号 signal_thread_client_recv_response_result 传递, 无需手动处理
+                result = await self.__charge_point.send_response_message(self.__list_response_message.pop(0))
             except:
                 self.__send_signal_info(f'<Error - send_request_message>\n{traceback.format_exc}')
             if self.__list_response_message:
@@ -146,10 +158,16 @@ class OCPPClientPort(Thread):
 
     def stop(self):
         """取消监听任务"""
+        self.__isRunning = False
         for task in [self.__task_listening, self.__task_send_request_messages, self.__task_send_response_messages]:
             if task:
                 task.cancel()
                 self.__send_signal_info(f'<Task Cancel> {task.task_name} is canceled')
 
     def run(self):
-        asyncio.run(self.__start_charge_point_loop())
+        # asyncio.run(self.__start_charge_point_loop())
+        self.loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(self.loop)
+        # self.__tasks.append(self.loop.create_task(self.__start_charge_point_loop()))
+        self.loop.create_task(self.__start_charge_point_loop())
+        self.loop.run_forever()
