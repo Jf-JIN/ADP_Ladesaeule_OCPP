@@ -14,11 +14,11 @@ class ChargePointV201(cpv201, ChargePointBase):
     用于监听 ocpp 消息, 以及发送 ocpp 消息
 
     信号: 
-    - signal_charge_point_ocpp_request: OCPP请求消息信号, 内容为字典, 结构如下
+    - signal_charge_point_ocpp_request: OCPP请求消息信号(向系统传递外部请求), 内容为字典, 结构如下
         - `action`: 消息类型
         - `data`: OCPP消息的字典形式
         - `send_time`: 请求收到时间 / 向系统发送时间, 这里的 send 含义是从 OCPP端口 向系统发送的动作
-    - signal_charge_point_ocpp_response: OCPP响应消息信号
+    - signal_charge_point_ocpp_response: OCPP响应消息信号(向系统传递外部响应), 内容为字典, 结构如下
         - `action`: 消息类型
         - `data`: OCPP消息的字典形式
         - `send_time`: 请求发送时间,  这里send 含义是从 OCPP端口 向外部发送的动作
@@ -39,6 +39,7 @@ class ChargePointV201(cpv201, ChargePointBase):
     def __init__(self, id, connection, response_timeout: int | float = 30):
         super().__init__(id, connection, response_timeout)
         self._init_parameters_in_baseclass()
+        self._set_network_buffer_time_in_baseclass(5)
 
     async def send_request_message(self, message):
         """ 
@@ -46,12 +47,12 @@ class ChargePointV201(cpv201, ChargePointBase):
 
         当请求发送后, 将等待响应数据. 有如下三种情况: 
 
-        1. 成功接收响应数据, 数据将通过信号 `signal_ocpp_response` 发送出去, 数据格式如下: 
+        1. 成功接收响应数据, 数据将通过信号 `signal_charge_point_ocpp_response` 发送出去, 数据格式如下: 
             - `action`: 消息类型
             - `data`: OCPP消息的字典形式
             - `send_time`: 请求发送时间
-        2. 超时未接收到响应数据, 将通过信号 `signal_info` 发送报错信息, `signal_ocpp_response` 不发送信息
-        3. 其他错误, 将通过信号 `signal_info` 发送报错信息, `signal_ocpp_response` 不发送信息
+        2. 超时未接收到响应数据, 将通过信号 `signal_charge_point_info` 发送报错信息, `signal_charge_point_ocpp_response` 不发送信息
+        3. 其他错误, 将通过信号 `signal_charge_point_info` 发送报错信息, `signal_charge_point_ocpp_response` 不发送信息
 
         参数: 
         - message: 请求消息对象, OCPP数据类, 如: `call.Authorize`
