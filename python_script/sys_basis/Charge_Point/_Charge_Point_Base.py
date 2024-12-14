@@ -21,6 +21,11 @@ class ChargePointBase(object):
         - `action`: 消息类型
         - `data`: OCPP消息的字典形式
         - `send_time`: 请求发送时间,  这里send 含义是从 OCPP端口 向外部发送的动作
+    - signal_charge_point_ocpp_response_result: OCPP响应消息结果信号。向系统反馈消息是否在响应时间内发送出去了, 内容为字典, 结构如下
+        - `action`: 消息类型
+        - `data`: OCPP消息的字典形式
+        - `send_time`: 接收的信号中的时间戳
+        - `result`: 发送结果, True/False
     - signal_charge_point_info: 普通信号, 用于信息显示, 调试等
 
     属性: 
@@ -46,6 +51,10 @@ class ChargePointBase(object):
         return self.__signal_charge_point_ocpp_response
 
     @property
+    def signal_charge_point_ocpp_response_result(self):
+        return self.__signal_charge_point_ocpp_response_result
+
+    @property
     def signal_charge_point_info(self):  # 普通信号, 用于信息显示, 调试等
         return self.__signal_charge_point_info
 
@@ -53,9 +62,13 @@ class ChargePointBase(object):
     def response_timeout_in_baseclass(self):
         return self._response_timeout
 
-    def send_response_message(self, message_action: str | Action, message, send_time) -> bool:
+    def send_response_message(self, message_action: str | Action, message, send_time: float) -> bool:
         """
-        发送响应消息
+        发送响应消息，结果将通过信号 signal_charge_point_ocpp_response_result 以字典形式发送，结构如下：
+        - `action`: 消息类型
+        - `data`: OCPP消息的字典形式
+        - `send_time`: 接收的信号中的时间戳
+        - `result`: 发送结果, True/False
 
         发送时间指 从当前实例通过信号发送给主线程的时间戳. 
         接收时间指 主线程调用该函数传递消息的时间
@@ -81,10 +94,20 @@ class ChargePointBase(object):
         # 情况1
         if message_action in self.__time_table_for_send_message and self.__time_table_for_send_message[message_action]['send_time'] > send_time:
             self._send_signal_info(f'<Error - send_time> the send time of the message {message_action} is less than the recorded send time, the message will be ignored\n\t{message}')
+            self.signal_charge_point_ocpp_response_result.emit({
+                'action': message_action,
+                'data': message,
+                'send_time': send_time,
+                'statis': False})
             return False
         # 情况2
         if message_action in self.__time_table_for_send_message and self.__time_table_for_send_message[message_action]['receive_time'] < current_time:
             self._send_signal_info(f'<Error - receive_time> the receive time of the message {message_action} is greater than the current time, the message will be ignored\n\t{message}')
+            self.signal_charge_point_ocpp_response_result.emit({
+                'action': message_action,
+                'data': message,
+                'send_time': send_time,
+                'statis': False})
             return False
         # 可以发送消息
         if message_action not in self.__time_table_for_send_message:
@@ -93,6 +116,11 @@ class ChargePointBase(object):
                 'receive_time': current_time
             }
         self.__current_message_to_send[message_action].append(message)
+        self.signal_charge_point_ocpp_response_result.emit({
+            'action': message_action,
+            'data': message,
+            'send_time': send_time,
+            'statis': True})
         return True
 
     def show_current_message_to_send(self) -> None:
@@ -217,6 +245,7 @@ class ChargePointBase(object):
     def _init_parameters_in_baseclass(self) -> None:
         self.__signal_charge_point_ocpp_request = XSignal()  # OCPP请求消息信号
         self.__signal_charge_point_ocpp_response = XSignal()  # OCPP响应消息信号
+        self.__signal_charge_point_ocpp_response_result = XSignal()  # OCPP响应结果信号
         self.__signal_charge_point_info = XSignal()  # 普通信号, 用于信息显示, 调试等
         self.__current_message_to_send = {}
         self.__time_table_for_send_message = {}
