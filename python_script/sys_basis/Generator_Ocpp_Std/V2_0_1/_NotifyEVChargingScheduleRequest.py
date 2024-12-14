@@ -6,7 +6,7 @@ from ._Base import *
 
 class notify_ev_charging_schedule_request(Base_OCPP_Struct_V2_0_1):
     @staticmethod
-    def generate(time_base: str, evse_id: int, charging_schedule: dict | None = None, custom_data: dict | None = None, **kwargs) -> call.NotifyEVChargingSchedule:
+    def generate(time_base: str, evse_id: int, charging_schedule: dict, custom_data: dict | None = None, **kwargs) -> call.NotifyEVChargingSchedule:
         """
         生成 NotifyEVChargingScheduleRequest
 
