@@ -83,7 +83,7 @@ class WebSocketServer(object):
         with 进入口
         """
         self.__server = await websockets.serve(self.__handle_client, self.__host, self.__port)
-        self.__send_signal_info('\n--<WebSocket_started> - <Server>')
+        self.__send_signal_info('--<WebSocket_started> - <Server>')
         return self
 
     async def __aexit__(self, exc_type, exc_value, traceback) -> None:
