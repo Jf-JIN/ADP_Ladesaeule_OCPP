@@ -21,7 +21,7 @@ class ChargePointBase(object):
         - `action`: 消息类型
         - `data`: OCPP消息的字典形式
         - `send_time`: 请求发送时间,  这里send 含义是从 OCPP端口 向外部发送的动作
-    - signal_charge_point_ocpp_response_result: OCPP响应消息结果信号。向系统反馈消息是否在响应时间内发送出去了, 内容为字典, 结构如下
+    - signal_charge_point_ocpp_response_result: OCPP响应消息结果信号. 向系统反馈消息是否在响应时间内发送出去了, 内容为字典, 结构如下
         - `action`: 消息类型
         - `data`: OCPP消息的字典形式
         - `send_time`: 接收的信号中的时间戳
@@ -64,7 +64,7 @@ class ChargePointBase(object):
 
     def send_response_message(self, message_action: str | Action, message, send_time: float) -> bool:
         """
-        发送响应消息，结果将通过信号 signal_charge_point_ocpp_response_result 以字典形式发送，结构如下：
+        发送响应消息, 结果将通过信号 signal_charge_point_ocpp_response_result 以字典形式发送, 结构如下: 
         - `action`: 消息类型
         - `data`: OCPP消息的字典形式
         - `send_time`: 接收的信号中的时间戳
