@@ -99,13 +99,13 @@ class WebSocketServer(object):
     async def __handle_client(self, websocket: ServerConnection) -> None:
         if websocket not in self.__clients:
             self.__clients.add(websocket)
-        await websocket.send(f'<Responde> {websocket.remote_address}')
-        await self.send(f'<Responde> {websocket.remote_address}')
+        await websocket.send(f'<Response> {websocket.remote_address}')
+        await self.send(f'<Response> {websocket.remote_address}')
         self.__send_signal_info(f'--<Client_connected> {websocket.remote_address}')
         try:
             while True:
                 message = await websocket.recv()
-                self.__send_signal_info(f'->>> received> {message}')
+                self.__send_signal_info(f'->>> received from {websocket.remote_address}> {message}')
                 self.__send_signal_recv(message)
                 await self.__filter_for_ocpp(message=message)
         except websockets.ConnectionClosed as e:
