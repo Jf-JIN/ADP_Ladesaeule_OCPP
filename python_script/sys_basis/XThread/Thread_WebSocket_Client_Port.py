@@ -93,9 +93,9 @@ class WebSocketClientPort(Thread):
         """
         处理接收到的消息
 
-        消息内容将通过信号 signal_thread_websocket_client_recv 发送出去，其类型可能为 str 或 dict
+        消息内容将通过信号 signal_thread_websocket_client_recv 发送出去, 其类型可能为 str 或 dict
 
-        参数：
+        参数: 
         - message: 接收到的消息
         """
         if message.startswith(f='{'):
