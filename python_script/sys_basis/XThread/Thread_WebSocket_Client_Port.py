@@ -9,12 +9,14 @@ from sys_basis.WebSocket_Client import WebSocketClient
 
 
 class WebSocketClientPort(Thread):
-    def __init__(self, uri, info_title='WebSocket Client Port'):
+    def __init__(self, uri, info_title='Info_Client_Port'):
         super().__init__()
         self.__signal_thread_websocket_client_info = XSignal()
         self.__signal_thread_websocket_client_recv = XSignal()
         self.__signal_thread_websocket_client_finished = XSignal()
-        self.__websocket = WebSocketClient(uri)
+        self.__websocket = WebSocketClient(uri, info_title='Info_WebSocket_Client')
+        self.__websocket.signal_websocket_client_info.connect(self.signal_thread_websocket_client_info.emit)
+        self.__websocket.signal_websocket_client_recv.connect(self.__handle_recv_message)
         self.__list_send_data = []  # 存储待发送消息, 当列表非空则持续发送, 当列表为空则相应事件(__event_request_message)等待
         self.__event_send_data = asyncio.Event()  # 发送消息事件
         self.__isRunning = True
@@ -40,6 +42,10 @@ class WebSocketClientPort(Thread):
     @property
     def signal_thread_websocket_client_recv(self) -> XSignal:
         return self.__signal_thread_websocket_client_recv
+
+    @property
+    def signal_thread_websocket_client_finished(self) -> XSignal:
+        return self.__signal_thread_websocket_client_finished
 
     def send_data(self, data):
         self.__list_send_data.append(data)
