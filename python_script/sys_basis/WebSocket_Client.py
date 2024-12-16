@@ -1,6 +1,5 @@
 
 import asyncio
-from flask.cli import F
 import websockets
 from .XSignal import XSignal
 from websockets.asyncio.client import ClientConnection  # 用于类型注释
