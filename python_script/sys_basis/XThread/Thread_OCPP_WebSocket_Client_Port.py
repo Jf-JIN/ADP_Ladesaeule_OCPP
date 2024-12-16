@@ -35,14 +35,21 @@ class OCPPWebsocketClientPort(Thread):
     - stop(): 停止线程
     """
 
-    def __init__(self, uri: str, charge_point_name: str, charge_point_version: str = 'v2.0.1', info_title: str = 'OCPP Client'):
+    def __init__(self, uri: str, charge_point_name: str, charge_point_version: str = 'v2.0.1', recv_timeout_s: int | float = 30, retry_interval_s: int | float = 1, max_retries: int = -1, ping_interval_s: int | float = 20, ping_timeout_s: int | float = 20, info_title: str = 'OCPP_Server_Port',):
         super().__init__()
         self.__signal_thread_ocpp_client_info = XSignal()
         self.__signal_thread_ocpp_client_recv_request = XSignal()
         self.__signal_thread_ocpp_client_recv_response = XSignal()
         self.__signal_thread_ocpp_client_recv_response_result = XSignal()
         self.__signal_thread_ocpp_client_finished = XSignal()
-        self.__websocket = WebSocketClient(uri)
+        self.__websocket = WebSocketClient(uri=uri,
+                                           recv_timeout_s=recv_timeout_s,
+                                           retry_interval_s=retry_interval_s,
+                                           max_retries=max_retries,
+                                           info_title='OCPP_WebSocket_Server',
+                                           ping_interval_s=ping_interval_s,
+                                           ping_timeout_s=ping_timeout_s)
+        self.__websocket.signal_websocket_client_info.connect(self.signal_thread_ocpp_client_info.emit)
         self.__list_request_message = []  # 存储待发送请求消息, 当列表非空则持续发送, 当列表为空则相应事件(__event_request_message)等待
         self.__list_response_message = []  # 存储待发送响应消息, 当列表非空则持续发送, 当列表为空则相应事件(__event_response_message)等待
         self.__event_request_message = asyncio.Event()  # 请求消息事件

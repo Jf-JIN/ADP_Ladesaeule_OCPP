@@ -36,14 +36,15 @@ class OCPPWebsocketServerPort(Thread):
     - stop(): 停止线程
     """
 
-    def __init__(self, host: str, port: int, charge_point_name: str, charge_point_version: str = 'v2.0.1', info_title: str = 'OCPP Server'):
+    def __init__(self, host: str, port: int, charge_point_name: str, charge_point_version: str = 'v2.0.1', info_title: str = 'OCPP_Server_Port'):
         super().__init__()
         self.__signal_thread_ocpp_server_info = XSignal()
         self.__signal_thread_ocpp_server_recv_request = XSignal()
         self.__signal_thread_ocpp_server_recv_response = XSignal()
         self.__signal_thread_ocpp_server_recv_response_result = XSignal()
         self.__signal_thread_ocpp_server_finished = XSignal()
-        self.__websocket = WebSocketServer(host, port)
+        self.__websocket = WebSocketServer(host=host, port=port, info_title='OCPP_WebSocket_Server')
+        self.__websocket.signal_websocket_server_info.connect(self.signal_thread_ocpp_server_info.emit)
         self.__list_request_message = []  # 存储待发送请求消息, 当列表非空则持续发送, 当列表为空则相应事件(__event_request_message)等待
         self.__list_response_message = []  # 存储待发送响应消息, 当列表非空则持续发送, 当列表为空则相应事件(__event_response_message)等待
         self.__event_request_message = asyncio.Event()  # 请求消息事件
