@@ -1,15 +1,13 @@
 
-import ocpp
 import asyncio
 import traceback
-from threading import Thread
-from script.sys_basis.XSignal import XSignal
-from sys_basis.WebSocket_Server import WebSocketServer
+from sys_basis.XSignal import XSignal
+from sys_basis.Ports.Core_WebSocket.WebSocket_Server import WebSocketServer
 
 
-class OCPPWebsocketServerPort(Thread):
+class PortOCPPWebsocketServer(object):
     """ 
-    充电桩ocpp WebSocket客户端线程
+    充电桩ocpp WebSocket客户端 端口
 
     参数:
     - host(str): 充电桩ocpp WebSocket服务器地址
@@ -21,19 +19,18 @@ class OCPPWebsocketServerPort(Thread):
     - info_title(str): 信息标题, 默认为 "OCPP Server"
 
     信号: 
-    - signal_thread_ocpp_server_info: 线程信息信号
+    - signal_thread_ocpp_server_info: 信息信号
     - signal_thread_ocpp_server_recv_request: 接收请求信号
     - signal_thread_ocpp_server_recv_response: 接收响应信号
     - signal_thread_ocpp_server_recv_response_result: 接收响应结果信号
-    - signal_thread_ocpp_server_finished: 线程完成信号
 
     属性: 
     - isRunning: 是否正在运行
 
     方法: 
+    - run(): 启动方法, 请通过传入给 asyncio.gather() 进行调用
     - send_request_message(message): 发送请求消息
     - send_response_message(message_action, message, send_time): 发送响应消息
-    - stop(): 停止线程
     """
 
     def __init__(self, host: str, port: int, charge_point_name: str, charge_point_version: str = 'v2.0.1', info_title: str = 'OCPP_Server_Port'):
@@ -42,14 +39,13 @@ class OCPPWebsocketServerPort(Thread):
         self.__signal_thread_ocpp_server_recv_request = XSignal()
         self.__signal_thread_ocpp_server_recv_response = XSignal()
         self.__signal_thread_ocpp_server_recv_response_result = XSignal()
-        self.__signal_thread_ocpp_server_finished = XSignal()
         self.__websocket = WebSocketServer(host=host, port=port, info_title='OCPP_WebSocket_Server')
         self.__websocket.signal_websocket_server_info.connect(self.signal_thread_ocpp_server_info.emit)
         self.__list_request_message = []  # 存储待发送请求消息, 当列表非空则持续发送, 当列表为空则相应事件(__event_request_message)等待
         self.__list_response_message = []  # 存储待发送响应消息, 当列表非空则持续发送, 当列表为空则相应事件(__event_response_message)等待
         self.__event_request_message = asyncio.Event()  # 请求消息事件
         self.__event_response_message = asyncio.Event()  # 响应消息事件
-        self.__isRunning = True  # 是否正在运行, 用于控制线程运行的开关
+        self.__isRunning = True  # 是否正在运行, 用于控制协程/循环运行的开关
         try:
             if info_title is not None:
                 self.__info_title = str(info_title)
@@ -88,12 +84,28 @@ class OCPPWebsocketServerPort(Thread):
         return self.__signal_thread_ocpp_server_recv_response_result
 
     @property
-    def signal_thread_ocpp_server_finished(self) -> XSignal:
-        return self.__signal_thread_ocpp_server_finished
-
-    @property
     def isRunning(self) -> bool:
         return self.__isRunning
+
+    async def run(self) -> None:
+        """
+        异步协程主体
+        """
+        try:
+            async with self.__websocket:
+                self.__task_listening = asyncio.create_task(self.__charge_point.start())
+                self.__task_send_request_messages = asyncio.create_task(self.__send_request_message())
+                self.__task_send_response_messages = asyncio.create_task(self.__send_response_message())
+                await asyncio.gather(
+                    self.__task_listening,
+                    self.__task_send_request_messages,
+                    self.__task_send_response_messages,
+                )
+                await asyncio.Future()
+        except Exception as e:
+            self.__send_signal_info(f"<Error - OCPP_Server_Port>\n{traceback.format_exc()}")
+        finally:
+            self.__isRunning = False
 
     def send_request_message(self, message: str) -> None:
         """ 
@@ -223,41 +235,3 @@ class OCPPWebsocketServerPort(Thread):
                 self.__send_signal_info(f'<Error - send_response_message>\n{traceback.format_exc}')
             if self.__list_response_message:
                 self.__event_response_message.clear()
-
-    async def __start_charge_point_loop(self) -> None:
-        """ 
-        异步协程主体
-        """
-        async with self.__websocket:
-            self.__task_listening = asyncio.create_task(self.__charge_point.start())
-            setattr(self.__task_listening, 'task_name', 'task_listening')
-            self.__task_send_request_messages = asyncio.create_task(self.__send_request_message())
-            setattr(self.__task_listening, 'task_name', 'task_send_request_messages')
-            self.__task_send_response_messages = asyncio.create_task(self.__send_response_message())
-            setattr(self.__task_listening, 'task_name', 'task_send_response_messages')
-            await asyncio.gather(self.__task_listening, self.__task_send_request_messages, self.__task_send_response_messages)
-            await asyncio.Future()
-
-    def stop(self) -> None:
-        """
-        终止线程
-
-        `__isRunning` 将设置为 `False` , 并取消所有任务
-        所有阻塞的信号量将被释放
-        """
-        self.__isRunning = False
-        self.__event_request_message.set()
-        self.__event_response_message.set()
-        for task in [self.__task_listening, self.__task_send_request_messages, self.__task_send_response_messages]:
-            if task:
-                task.cancel()
-                self.__send_signal_info(f'<Task Cancel> {task.task_name} is canceled')
-        self.signal_thread_ocpp_server_finished.emit()
-
-    def run(self) -> None:
-        # asyncio.run(self.__start_charge_point_loop())
-        self.loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(self.loop)
-        # self.__tasks.append(self.loop.create_task(self.__start_charge_point_loop()))
-        self.loop.create_task(self.__start_charge_point_loop())
-        self.loop.run_forever()

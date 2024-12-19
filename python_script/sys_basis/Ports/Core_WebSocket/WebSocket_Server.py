@@ -1,7 +1,7 @@
 
 import asyncio
 import websockets
-from .XSignal import XSignal
+from sys_basis.XSignal import XSignal
 from websockets.asyncio.server import Server, ServerConnection  # 用于类型注释
 
 

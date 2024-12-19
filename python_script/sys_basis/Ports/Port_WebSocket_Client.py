@@ -1,19 +1,17 @@
 
 
 import asyncio
-import traceback
 import json
-from threading import Thread
-from script.sys_basis.XSignal import XSignal
-from sys_basis.WebSocket_Client import WebSocketClient
+import traceback
+from sys_basis.XSignal import XSignal
+from sys_basis.Ports.Core_WebSocket.WebSocket_Client import WebSocketClient
 
 
-class WebSocketClientPort(Thread):
+class WebSocketClientPort(object):
     def __init__(self, uri, info_title='Info_Client_Port'):
         super().__init__()
         self.__signal_thread_websocket_client_info = XSignal()
         self.__signal_thread_websocket_client_recv = XSignal()
-        self.__signal_thread_websocket_client_finished = XSignal()
         self.__websocket = WebSocketClient(uri, info_title='Info_WebSocket_Client')
         self.__websocket.signal_websocket_client_info.connect(self.signal_thread_websocket_client_info.emit)
         self.__websocket.signal_websocket_client_recv.connect(self.__handle_recv_message)
@@ -43,9 +41,23 @@ class WebSocketClientPort(Thread):
     def signal_thread_websocket_client_recv(self) -> XSignal:
         return self.__signal_thread_websocket_client_recv
 
-    @property
-    def signal_thread_websocket_client_finished(self) -> XSignal:
-        return self.__signal_thread_websocket_client_finished
+    async def run(self) -> None:
+        """
+        异步协程主体
+        """
+        try:
+            async with self.__websocket:
+                self.__task_listening = asyncio.create_task(self.__listen_for_messages())
+                self.__task_send_data = asyncio.create_task(self.__send_data())
+                await asyncio.gather(
+                    self.__task_listening,
+                    self.__task_send_data
+                )
+                await asyncio.Future()
+        except Exception as e:
+            self.__send_signal_info(f"<Error - Websocket_Client_Port>\n{traceback.format_exc()}")
+        finally:
+            self.__isRunning = False
 
     def send_data(self, data):
         self.__list_send_data.append(data)
@@ -138,32 +150,3 @@ class WebSocketClientPort(Thread):
                 self.__send_signal_info(f'<<<- Sent> {message}')
             if len(self.__list_send_data) == 0:
                 self.__event_send_data.clear()
-
-    def stop(self) -> None:
-        """
-        终止线程
-
-        `__isRunning` 将设置为 `False` , 并取消所有任务
-        所有阻塞的信号量将被释放
-        """
-        self.__isRunning = False
-        self.__event_send_data.set()
-        for task in [self.__task_listening, self.__task_send_data]:
-            if task:
-                task.cancel()
-                self.__send_signal_info(f'<Task Cancel> {task.task_name} is canceled')
-        self.__signal_thread_websocket_client_finished.emit()
-
-    async def __start_loop(self) -> None:
-        """
-        异步协程主体
-        """
-        self.__task_listening = asyncio.create_task(self.__listen_for_messages())
-        setattr(self.__task_listening, 'task_name', 'task_listening')
-        self.__task_send_data = asyncio.create_task(self.__send_data())
-        setattr(self.__task_send_data, 'task_name', 'task_send_data')
-        await asyncio.gather(self.__task_listening, self.__task_send_data)
-        await asyncio.Future()
-
-    def run(self):
-        asyncio.run(self.__start_loop())
