@@ -143,9 +143,9 @@ class set_charging_profile_request(Base_OCPP_Struct_V2_0_1):
     def get_charging_schedule_period_list(*args) -> list:
         """
         生成 Charging Schedule Period 列表
-        Charging Schedule结构 定义了充电周期列表，如在 GetCompositeSchedule.conf 和 ChargingProfile 中使用的
+        Charging Schedule结构 定义了充电周期列表, 如在 GetCompositeSchedule.conf 和 ChargingProfile 中使用的
 
-        参数：
+        参数: 
         - 多项(list): 推荐使用 `get_charging_schedule_period()` 传入, 参数个数范围为 [1, 1024]
         """
         return [*args]
@@ -154,7 +154,7 @@ class set_charging_profile_request(Base_OCPP_Struct_V2_0_1):
     def get_charging_schedule_period(start_period: int, limit: float, custom_data: dict | None = None, number_phases: int | None = None, phase_to_use: int | None = None) -> dict:
         """
         生成 Charging Schedule Period
-        充电计划结构定义了充电周期列表，如在 GetCompositeSchedule.conf 和 ChargingProfile 中使用的
+        充电计划结构定义了充电周期列表, 如在 GetCompositeSchedule.conf 和 ChargingProfile 中使用的
 
         参数:
         - startPeriod(int): 充电计划表的周期开始时间, 也代表了上一周期的结束时间(单位: 秒)
@@ -330,7 +330,7 @@ class set_charging_profile_request(Base_OCPP_Struct_V2_0_1):
         参数:
         - cost_kind(str): 成本类型,
             - `CarbonDioxideEmission`, `RelativePricePercentage`, `RenewableGenerationPercentage`
-            - 可以使用 `CostKindType` 枚举类，例如： `CostKindType.carbon_dioxide_emission`
+            - 可以使用 `CostKindType` 枚举类, 例如:  `CostKindType.carbon_dioxide_emission`
         - amount(int): 每KWh的估计或实际成本
         - custom_data(dict): 自定义数据, 推荐使用 `get_custom_data()` 传入
         - amountMultiplier(int): 成本乘数, 取值范围: [-3,3]
