@@ -1,23 +1,32 @@
 
 
-const main_console = document.getElementById('main_console_contain');
-const opt_console= document.getElementById('opt_console_contain');
 const client_console = document.getElementById('client_console_contain');
+const opt_console= document.getElementById('opt_console_contain');
+const gui_websocket_console = document.getElementById('gui_websocket_console_contain');
 
 socket.on('update_data', (data) => {
-    const json_data = JSON.stringify(data, null, 2);
+    console.log(data);
+    console.log(data.main_console);
 
-    function updateConsole (console, logKey) {
-        const wasAtBottom = console.scrollHeight - console.scrollTop === console.clientHeight;
-        console.textContent += `\n${json_data[logKey]}\n`;
+    function updateConsole (consoleElement, content) {
+        console.log(consoleElement.scrollHeight - consoleElement.scrollTop);
+        console.log(consoleElement.clientHeight);
+        console.log(Math.abs(consoleElement.scrollHeight - consoleElement.scrollTop - consoleElement.clientHeight) < 1)
+        const wasAtBottom = Math.abs(consoleElement.scrollHeight - consoleElement.scrollTop - consoleElement.clientHeight) < 1;
+        consoleElement.textContent += `\n${content}\n`;
         if (wasAtBottom) {
-            console.scrollTop = console.scrollHeight;
+            consoleElement.scrollTop = consoleElement.scrollHeight;
         }
     }
-
-    updateConsole(main_console, 'main_console');
-    updateConsole(opt_console, 'opt_console');
-    updateConsole(client_console, 'client_console');
+    if (data.client_console) {
+        updateConsole(client_console, data.client_console);
+    }
+    if (data.opt_console) {
+        updateConsole(opt_console, data.opt_console);
+    }
+    if (data.gui_websocket_console) {
+        updateConsole(gui_websocket_console, data.gui_websocket_console);
+    }
 });
 
 const title_home = document.getElementById('title_home');
@@ -52,6 +61,7 @@ function handleTitleClick (selectedElement) {
 
 title_home.addEventListener('click', () => {
     handleTitleClick(title_home);
+    socket.emit('input_data', 'home');
 });
 
 title_console.addEventListener('click', () => {

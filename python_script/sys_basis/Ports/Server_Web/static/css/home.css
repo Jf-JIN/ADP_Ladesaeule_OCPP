@@ -118,7 +118,7 @@ body {
 
 
 .console_contain {
-    height: 20vh;
+    height: 40vh;
     padding: 10px;
     /* margin: 10px; */
     background-color: var(--console_bg_color);
