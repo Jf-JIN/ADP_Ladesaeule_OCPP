@@ -16,30 +16,37 @@ html {
 /* 登录表单样式 */
 .login-box {
     background-color: #88D66C;
-    padding: 30px;
+    padding: 5vh 5vw;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    width: 300px;
-    height: 350px;
+    width: 20vw;;
+    height: 40vh;
     min-width: 120px;
 }
 
 .login-box h2 {
     margin-bottom: 20px;
     color: #333;
+    font-size: 2vh;
 }
 
 .login-box input {
     width: 14vw;
+    height: 3vh;
+    max-height: 40px;
     padding: 10px;
     margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
+    font-size: 2vh;
+    
 }
 
 .login-box button {
     width: 15vw;
+    height: 5vh;
+    max-height: 40px;
     padding: 10px;
     margin: 10px 0;
     background-color: #FF8343;
@@ -47,6 +54,8 @@ html {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 2vh;
+    
 }
 
 .login-box button:hover {
@@ -65,6 +74,6 @@ html {
     height: 5vh;
     color: red;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 2;
+    font-size: 2vh;
     text-align: center;
 }
