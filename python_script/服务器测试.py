@@ -1,9 +1,10 @@
 import asyncio
 import time
-from sys_basis.WebSocket_Server import WebSocketServer
+from sys_basis.Ports.Port_WebSocket_Server import WebSocketServer
 from ocpp.routing import on
 from sys_basis.Generator_Ocpp_Std.V2_0_1 import *
 from sys_basis.Charge_Point import ChargePointV201
+from sys_basis.Ports.Server_Web import ServerWeb
 
 
 class MyChargePoint_S(ChargePointV201):
@@ -45,4 +46,7 @@ def out(message):  # 槽函数
     print(f'out\t{message}')
 
 
-asyncio.run(start_server())
+# asyncio.run(start_server())
+
+a = ServerWeb()
+a.start()
