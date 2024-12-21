@@ -1,37 +1,38 @@
 
 import asyncio
-from flask.cli import F
 import websockets
-from .XSignal import XSignal
+from sys_basis.XSignal import XSignal
 from websockets.asyncio.client import ClientConnection  # 用于类型注释
 
 
 class WebSocketClient(object):
-    """ 
+    """
     WebSocket 客户端类
     - 使用上下文管理器
 
-    参数: 
+    参数:
     - uri (str): WebSocket 服务器地址
-    - recv_timeout_s (int|float): 接收消息超时时间, 单位为秒, 须大于0, 默认值为 30. 
+    - recv_timeout_s (int|float): 接收消息超时时间, 单位为秒, 须大于0, 默认值为 30.
     - retry_interval_s (int|float): 重试间隔时间, 单位为秒, 须大于0, 默认值为 1
     - max_retries (int): 最大重试次数, 默认值为-1, 表示无限重试
     - info_title (str): WebSocket 客户端信息标题, 用于发送信号时显示信息来源, 默认为 `WebSocket Client`
+    - ping_interval_s (int|float): 心跳间隔时间, 单位为秒, 须大于0, 默认值为 20
+    - ping_timeout_s (int|float): 心跳超时时间, 单位为秒, 须大于0, 默认值为 20
 
-    信号: 
+    信号:
     - signal_websocket_client_recv: WebSocket 客户端接收信号
     - signal_websocket_client_info: 普通信号, 用于信息显示, 调试等
 
-    属性: 
+    属性:
     - websocket(ClientConnection): WebSocket 连接对象
 
-    方法: 
+    方法:
     - connect(异步): 连接服务器
     - send(异步): 发送消息
     - recv(异步): 接收消息
     """
 
-    def __init__(self, uri, recv_timeout_s: int | float = 30, retry_interval_s: int | float = 1, max_retries: int = -1, info_title: str | None = 'WebSocket Client') -> None:
+    def __init__(self, uri, recv_timeout_s: int | float = 30, retry_interval_s: int | float = 1, max_retries: int = -1, info_title: str | None = 'WebSocket_Client', ping_interval_s: int | float = 20, ping_timeout_s=20) -> None:
         self.__signal_websocket_client_recv = XSignal()  # WebSocket 客户端接收信号
         self.__signal_websocket_client_info = XSignal()  # 普通信号, 用于信息显示, 调试等
         self.__uri = uri
@@ -59,6 +60,18 @@ class WebSocketClient(object):
         except:
             self.__send_signal_info(f'<Error - __init__> info_title must be convertible to a string. It has been set to None. The provided type is {type(info_title)}')
             self.__info_title = None
+        if not isinstance(ping_interval_s, (int, float)) or ping_interval_s <= 0:
+            self.__send_signal_info(
+                f'<Error - __init__> ping_interval_s must be a positive integer or float. It has been set to 20. The provided type and value are {type(ping_interval_s)} | {ping_interval_s}')
+            self.__ping_interval_s = 20
+        else:
+            self.__ping_interval_s = ping_interval_s
+        if not isinstance(ping_timeout_s, (int, float)) or ping_timeout_s <= 0:
+            self.__send_signal_info(
+                f'<Error - __init__> ping_timeout_s must be a positive integer or float. It has been set to 20. The provided type and value are {type(ping_timeout_s)} | {ping_timeout_s}')
+            self.__ping_timeout_s = 20
+        else:
+            self.__ping_timeout_s = ping_timeout_s
 
     @property
     def websocket(self) -> ClientConnection:
@@ -79,7 +92,7 @@ class WebSocketClient(object):
         """
         发送消息到服务器
 
-        参数: 
+        参数:
         - message (str): 要发送的消息, 建议传递字符串、数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式
         """
         if self.__websocket is not None:
@@ -134,7 +147,7 @@ class WebSocketClient(object):
         retries = 0
         while retries < self.__max_retries or self.__max_retries < 0:
             try:
-                self.__websocket = await websockets.connect(self.__uri, ping_interval=self.__recv_timeout_s, ping_timeout=1)
+                self.__websocket = await websockets.connect(self.__uri, ping_interval=self.__ping_interval_s, ping_timeout=self.__ping_timeout_s)
                 await self.__websocket.send('Successfully connected to the server')
                 return self
             except (ConnectionRefusedError, websockets.exceptions.WebSocketException) as e:
@@ -153,8 +166,8 @@ class WebSocketClient(object):
 
         涵盖发送前的检查
 
-        参数: 
-        - args: 可变数量的参数, 每个参数都应该是能够被转换为字符串的对象. 建议传递字符串、数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式. 
+        参数:
+        - args: 可变数量的参数, 每个参数都应该是能够被转换为字符串的对象. 建议传递字符串、数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式.
         """
         self.__send_signal(signal=self.signal_websocket_client_recv, error_hint='send_signal_recv', log=None, doShowTitle=False, doPrintInfo=False, args=args)
 
@@ -165,7 +178,7 @@ class WebSocketClient(object):
         涵盖发送前的检查
 
         参数:
-        - args: 可变数量的参数, 每个参数都应该是能够被转换为字符串的对象. 建议传递字符串、数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式. 
+        - args: 可变数量的参数, 每个参数都应该是能够被转换为字符串的对象. 建议传递字符串、数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式.
         """
         self.__send_signal(signal=self.signal_websocket_client_info, error_hint='send_signal_info', log=None, doShowTitle=True, doPrintInfo=True, args=args)
 
@@ -181,7 +194,7 @@ class WebSocketClient(object):
         - log: 日志器动作
         - doShowTitle(bool): 是否显示标题
         - doPrintInfo(bool): 是否打印信息
-        - args: 元组或列表或可解包对象, 每个参数都应该是能够被转换为字符串的对象. 建议传递字符串、数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式. 
+        - args: 元组或列表或可解包对象, 每个参数都应该是能够被转换为字符串的对象. 建议传递字符串、数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式.
         """
         try:
             temp = ''.join([str(*args)]) + '\n'

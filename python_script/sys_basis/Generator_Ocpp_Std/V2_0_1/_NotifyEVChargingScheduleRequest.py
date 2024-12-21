@@ -6,14 +6,14 @@ from ._Base import *
 
 class notify_ev_charging_schedule_request(Base_OCPP_Struct_V2_0_1):
     @staticmethod
-    def generate(time_base: str, evse_id: int, charging_schedule: dict, custom_data: dict | None = None, **kwargs) -> call.NotifyEVChargingSchedule:
+    def generate(time_base: str, evse_id: int, charging_schedule: list | None = None, custom_data: dict | None = None, **kwargs) -> call.NotifyEVChargingSchedule:
         """
         生成 NotifyEVChargingScheduleRequest
 
         参数:
         - time_base(str): 充电配置文件中的时间基准
         - evse_id(int): 充电计划表中使用中的EvseId. EvseId 必须 > 0. 
-        - charging_schedule(dict): 充电计划表,  推荐使用 `get_charging_schedule()` 传入
+        - charging_schedule(list): 充电计划表,  推荐使用 `get_charging_schedule_list()` 传入
         - custom_data(dict): 自定义数据, 推荐使用 `get_custom_data()` 传入
 
         返回值:
@@ -26,6 +26,16 @@ class notify_ev_charging_schedule_request(Base_OCPP_Struct_V2_0_1):
             charging_schedule=charging_schedule or kwargs.get('charging_schedule', None),
             custom_data=custom_data or kwargs.get('custom_data', None)
         )
+
+    @staticmethod
+    def get_charging_schedule_list(*args) -> list:
+        """
+        生成 charging Schedule List
+
+        参数:
+        - 多项(dict): 推荐使用 `get_charging_schedule` 方法, 参数个数范围为 [1, 1024]
+        """
+        return [*args]
 
     @staticmethod
     def get_charging_schedule(id: int, charging_rate_unit: ChargingRateUnitType | str, charging_schedule_period: dict, custom_data: dict | None = None, start_schedule: str | None = None, duration: int | None = None, min_charging_rate: float | None = None, sales_tariff: dict | None = None) -> dict:
@@ -182,7 +192,7 @@ class notify_ev_charging_schedule_request(Base_OCPP_Struct_V2_0_1):
         生成 consumptionCost列表
 
         参数:
-        - *consumption_cost(dict): 推荐使用 `get_consumption_cost()` 传入
+        - *consumption_cost(dict): 推荐使用 `get_consumption_cost()` 传入, 参数个数范围为 [1, 3]
 
         返回值:
         - consumption_cost(list)
@@ -216,7 +226,7 @@ class notify_ev_charging_schedule_request(Base_OCPP_Struct_V2_0_1):
         生成 cost列表
 
         参数:
-        - *cost(dict): 推荐使用 `get_cost()` 传入
+        - *cost(dict): 推荐使用 `get_cost()` 传入, 参数个数范围为 [1, 3]
 
         返回值:
         - cost(list)

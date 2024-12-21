@@ -1,7 +1,7 @@
 
 import asyncio
 import websockets
-from .XSignal import XSignal
+from sys_basis.XSignal import XSignal
 from websockets.asyncio.server import Server, ServerConnection  # 用于类型注释
 
 
@@ -14,6 +14,8 @@ class WebSocketServer(object):
     - host (str): WebSocket 服务器地址
     - port (int): WebSocket 服务器端口
     - info_title (str): WebSocket 服务器信息标题, 用于发送信号时显示信息来源, 默认为 `WebSocket Server`
+    - ping_interval_s (int|float): 心跳间隔时间, 单位为秒, 须大于0, 默认值为 20
+    - ping_timeout_s (int|float): 心跳超时时间, 单位为秒, 须大于0, 默认值为 20
 
     信号: 
     - signal_websocket_server_recv: WebSocket 客户端接收信号
@@ -27,7 +29,7 @@ class WebSocketServer(object):
     - recv(异步): 接收消息. 注意! 该函数是供OCPP使用, 不应被手动调用, 需要获取消息, 请通过信号 `signal_websocket_server_recv` 获取
     """
 
-    def __init__(self, host: str, port: int, info_title: str | None = 'WebSocket Server') -> None:
+    def __init__(self, host: str, port: int, info_title: str | None = 'WebSocket_Server', ping_interval_s: int | float = 20, ping_timeout_s=20) -> None:
         self.__signal_websocket_server_recv = XSignal()
         self.__signal_websocket_server_info = XSignal()
         self.__host = host
@@ -41,6 +43,18 @@ class WebSocketServer(object):
         except:
             self.__send_signal_info(f'<Error - __init__> info_title must be convertible to a string. It has been set to None. The provided type is {type(info_title)}')
             self.__info_title = None
+        if not isinstance(ping_interval_s, (int, float)) or ping_interval_s <= 0:
+            self.__send_signal_info(
+                f'<Error - __init__> ping_interval_s must be a positive integer or float. It has been set to 20. The provided type and value are {type(ping_interval_s)} | {ping_interval_s}')
+            self.__ping_interval_s = 20
+        else:
+            self.__ping_interval_s = ping_interval_s
+        if not isinstance(ping_timeout_s, (int, float)) or ping_timeout_s <= 0:
+            self.__send_signal_info(
+                f'<Error - __init__> ping_timeout_s must be a positive integer or float. It has been set to 20. The provided type and value are {type(ping_timeout_s)} | {ping_timeout_s}')
+            self.__ping_timeout_s = 20
+        else:
+            self.__ping_timeout_s = ping_timeout_s
 
     @property
     def signal_websocket_server_recv(self):
@@ -84,7 +98,7 @@ class WebSocketServer(object):
         """
         with 进入口
         """
-        self.__server = await websockets.serve(self.__handle_client, self.__host, self.__port)
+        self.__server = await websockets.serve(self.__handle_client, self.__host, self.__port, ping_interval=self.__ping_interval_s, ping_timeout=self.__ping_timeout_s)
         self.__send_signal_info('--<WebSocket_started> - <Server>')
         return self
 
@@ -99,13 +113,13 @@ class WebSocketServer(object):
     async def __handle_client(self, websocket: ServerConnection) -> None:
         if websocket not in self.__clients:
             self.__clients.add(websocket)
-        await websocket.send(f'<Responde> {websocket.remote_address}')
-        await self.send(f'<Responde> {websocket.remote_address}')
+        await websocket.send(f'<Response> {websocket.remote_address}')
+        await self.send(f'<Response> {websocket.remote_address}')
         self.__send_signal_info(f'--<Client_connected> {websocket.remote_address}')
         try:
             while True:
                 message = await websocket.recv()
-                self.__send_signal_info(f'->>> received> {message}')
+                self.__send_signal_info(f'->>> received from {websocket.remote_address}> {message}')
                 self.__send_signal_recv(message)
                 await self.__filter_for_ocpp(message=message)
         except websockets.ConnectionClosed as e:
