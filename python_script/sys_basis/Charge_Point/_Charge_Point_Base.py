@@ -9,7 +9,7 @@ import time
 
 class ChargePointBase(object):
     """
-    充电桩服务器基类
+    充电桩基类
     该类主要提供其与主线程的通讯机制
 
     信号: 
