@@ -7,17 +7,31 @@ from ._Base import *
 class status_notification_request(Base_OCPP_Struct_V2_0_1): 
 
     @staticmethod
-    def generate(**kwargs) -> call.StatusNotification:
+    def generate(timestamp: str,
+                 connector_status: str | ConnectorStatusType,
+                 evse_id: int,
+                 connector_id: int,
+                 custom_data: dict | None = None,
+                 **kwargs) -> call.StatusNotification:
         """
         生成 StatusNotificationRequest
 
         参数:
-        - 
+        - time_stamp(str):状态被报告的时间，若未能收到消息，则时间将会被设为默认时间，字符形式是"date-time"。
+        - custom_data(dict): 推荐使用 `get_custom_data()` 传入
+        - connector_status（str|ConnectorStatusType): 类型 候选:
+            - `Available`,`Occupied`,`Reserved`,`Unavailable`,`Faulted`.
+            - 或者可以使用 `ConnectorStatusType` 枚举，例如` ConnectorStatusType.available`.
+        - evse_id(int): evse的id.
+        - connector_id(int): evse中的connector的id.
 
         返回值:
         - call.StatusNotification
         """
         return call.StatusNotification(
-            
+            timestamp=timestamp or kwargs.get("timestamp", None),
+            custom_data=custom_data or kwargs.get("custom_data", None),
+            connector_status=connector_status or kwargs.get("connector_status", None),
+            evse_id=evse_id or kwargs.get("evse_id", None),
+            connector_id=connector_id or kwargs.get("connector_id", None),
         )
-
