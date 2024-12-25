@@ -4,10 +4,10 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class data_transfer_request(Base_OCPP_Struct_V2_0_1): 
+class data_transfer_request(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
-    def generate(vendor_id: str, message_id: str, data: any,
+    def generate(vendor_id: str, message_id: str | None = None, data=None,
                  custom_data: dict | None = None, **kwargs) -> call.DataTransfer:
         """
         生成 DataTransferRequest
@@ -22,8 +22,8 @@ class data_transfer_request(Base_OCPP_Struct_V2_0_1):
         - call.DataTransfer
         """
         return call.DataTransfer(
-            vendor_id=vendor_id or kwargs.get("vendor_id", None),
-            message_id=message_id or kwargs.get("message_id", None),
+            vendor_id=vendor_id or kwargs["vendorId"],
+            message_id=message_id or kwargs.get("messageId", None),
             data=data or kwargs.get("data", None),
-            custom_data=custom_data or kwargs.get("custom_data", None)
+            custom_data=custom_data or kwargs.get("customData", None)
         )

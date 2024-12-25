@@ -4,7 +4,7 @@ from ocpp.v201 import call_result
 from ._Base import *
 
 
-class status_notification_response(Base_OCPP_Struct_V2_0_1): 
+class status_notification_response(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(custom_data: dict | None = None, **kwargs) -> call_result.StatusNotification:

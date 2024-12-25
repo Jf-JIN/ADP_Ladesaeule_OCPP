@@ -18,7 +18,5 @@ class heartbeat_request(Base_OCPP_Struct_V2_0_1):
         - call.Heartbeat
         """
         return call.Heartbeat(
-
             custom_data=custom_data or kwargs.get("custom_data", None),
-            
         )
