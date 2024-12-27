@@ -4,6 +4,10 @@ const client_console = document.getElementById('client_console_contain');
 const opt_console= document.getElementById('opt_console_contain');
 const gui_websocket_console = document.getElementById('gui_websocket_console_contain');
 
+const page_zh = document.getElementById("svg_zh");
+const page_en = document.getElementById("svg_en");
+const page_de = document.getElementById("svg_de");
+
 socket.on('update_data', (data) => {
     console.log(data);
     console.log(data.main_console);
@@ -70,4 +74,19 @@ title_console.addEventListener('click', () => {
 
 title_image.addEventListener('click', () => {
     handleTitleClick(title_image);
+});
+
+page_zh.addEventListener("click", () => {
+    localStorage.setItem("display_language", "zh");
+    update_language();
+});
+
+page_en.addEventListener("click", () => {
+    localStorage.setItem("display_language", "en");
+    update_language();
+});
+
+page_de.addEventListener("click", () => {
+    localStorage.setItem("display_language", "de");
+    update_language();
 });

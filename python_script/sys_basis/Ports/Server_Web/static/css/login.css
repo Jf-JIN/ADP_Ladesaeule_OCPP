@@ -1,9 +1,25 @@
 
+
+:root {
+    --time_font_size: 26px;
+}
 body,
 html {
     height: 100%;
     font-family: Arial, sans-serif;
     background-color: #f5f5f5;
+}
+
+#language_selection {
+    width: calc((var(--time_font_size)+20) * 3);
+    height: var(--time_font_size);
+    display: inline-block;
+}
+
+#language_selection svg {
+    width: calc(2*var(--time_font_size));
+    height: var(--time_font_size);
+    cursor: pointer;
 }
 
 .login-container {
