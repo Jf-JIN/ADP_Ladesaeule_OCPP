@@ -22,7 +22,7 @@ class MyChargePoint_S(ChargePointV201):
 
 
 async def start_server():
-    server = WebSocketServer('localhost', 12345)
+    server = WebSocketServer('localhost', 12346)
     server.signal_websocket_server_recv.connect(out)
     charge_point = MyChargePoint_S('CP1', server, 10)
     async with server:
@@ -46,7 +46,7 @@ def out(message):  # 槽函数
     print(f'out\t{message}')
 
 
-# asyncio.run(start_server())
+asyncio.run(start_server())
 
-a = ServerWeb()
-a.start()
+# a = ServerWeb()
+# a.start()
