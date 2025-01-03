@@ -20,7 +20,7 @@ class notify_ev_charging_schedule_response(Base_OCPP_Struct_V2_0_1):
             - call_result.NotifyEVChargingSchedule
         """
         return call_result.NotifyEVChargingSchedule(
-            status=status or kwargs.get('status', None),
+            status=status or kwargs['status'],
             custom_data=custom_data or kwargs.get('customData', None),
             status_info=status_info or kwargs.get('statusInfo', None)
         )
