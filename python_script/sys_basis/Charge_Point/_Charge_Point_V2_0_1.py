@@ -77,3 +77,58 @@ class ChargePointV201(cpv201, ChargePointBase):
             id_token_info=authorize_response.get_id_token_info('Unknown')
         )  # 词条需要修改, 根据实际需求考虑, 选择默认消息, 这个只是示例
         return await self._wait_for_result(Action.authorize, default_message)
+
+    @on(Action.boot_notification)
+    async def _on_boot_notification_request(self, charging_station: dict, reason: str | BootReasonType, custom_data: dict | None = None):
+        self._send_signal_info_and_ocpp_request(Action.boot_notification)
+
+        default_message = boot_notification_response.generate(
+            id_token_info=authorize_response.get_id_token_info('Unknown')
+        )  # 词条需要修改, 根据实际需求考虑, 选择默认消息, 这个只是示例
+        return await self._wait_for_result(Action.boot_notification, default_message)
+
+    @on(Action.status_notification)
+    async def _on_status_notification_request(self, timestamp: str, connector_status: str | ConnectorStatusType, evse_id: int, connector_id: int, custom_data: dict | None = None):
+        self._send_signal_info_and_ocpp_request(Action.status_notification)
+
+        default_message = status_notification_response.generate(
+            id_token_info=authorize_response.get_id_token_info('Unknown')
+        )  # 词条需要修改, 根据实际需求考虑, 选择默认消息, 这个只是示例
+        return await self._wait_for_result(Action.status_notification, default_message)
+
+    @on(Action.heartbeat)
+    async def _on_heartbeat_request(self, custom_data: dict | None = None):
+        self._send_signal_info_and_ocpp_request(Action.heartbeat)
+
+        default_message = heartbeat_response.generate(
+            id_token_info=authorize_response.get_id_token_info('Unknown')
+        )  # 词条需要修改, 根据实际需求考虑, 选择默认消息, 这个只是示例
+        return await self._wait_for_result(Action.heartbeat, default_message)
+
+    @on(Action.transaction_event)
+    async def _on_transaction_event_request(self, event_type: str | TransactionEventType, timestamp: str, trigger_reason: str | TriggerReasonType, seq_no: int, transaction_info: dict, custom_data: dict | None = None, meter_value: list | None = None,
+                                            offline: bool = False, number_of_phases_used: int | None = None, cable_max_current: int | None = None, reservation_id: int | None = None, evse: dict | None = None, id_token: dict | None = None):
+        self._send_signal_info_and_ocpp_request(Action.transaction_event)
+
+        default_message = transaction_event_response.generate(
+            id_token_info=authorize_response.get_id_token_info('Unknown')
+        )  # 词条需要修改, 根据实际需求考虑, 选择默认消息, 这个只是示例
+        return await self._wait_for_result(Action.transaction_event, default_message)
+
+    @on(Action.data_transfer)
+    async def _on_data_transfer_request(self, vendor_id: str, message_id: str | None = None, data=None, custom_data: dict | None = None):
+        self._send_signal_info_and_ocpp_request(Action.data_transfer)
+
+        default_message = data_transfer_response.generate(
+            id_token_info= authorize_response.get_id_token_info('Unknown')
+        )  # 词条需要修改, 根据实际需求考虑, 选择默认消息, 这个只是示例
+        return await self._wait_for_result(Action.data_transfer, default_message)
+
+    @on(Action.meter_values)
+    async def _on_meter_values_request(self, evse_id: int, meter_value: list, custom_data: dict | None = None):
+        self._send_signal_info_and_ocpp_request(Action.meter_values)
+
+        default_message = meter_values_response.generate(
+            id_token_info= authorize_response.get_id_token_info('Unknown')
+        )  # 词条需要修改, 根据实际需求考虑, 选择默认消息, 这个只是示例
+        return await self._wait_for_result(Action.meter_values, default_message)
