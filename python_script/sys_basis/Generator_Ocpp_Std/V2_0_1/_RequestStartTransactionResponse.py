@@ -12,10 +12,10 @@ class request_start_transaction_response(Base_OCPP_Struct_V2_0_1):
         生成 RequestStartTransactionResponse
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call_result.RequestStartTransaction
+            - call_result.RequestStartTransaction
         """
         return call_result.RequestStartTransaction(
             

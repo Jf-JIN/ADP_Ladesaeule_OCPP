@@ -12,10 +12,10 @@ class unpublish_firmware_response(Base_OCPP_Struct_V2_0_1):
         生成 UnpublishFirmwareResponse
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call_result.UnpublishFirmware
+            - call_result.UnpublishFirmware
         """
         return call_result.UnpublishFirmware(
             

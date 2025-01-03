@@ -12,10 +12,10 @@ class certificate_signed_response(Base_OCPP_Struct_V2_0_1):
         生成 CertificateSignedResponse
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call_result.CertificateSigned
+            - call_result.CertificateSigned
         """
         return call_result.CertificateSigned(
             

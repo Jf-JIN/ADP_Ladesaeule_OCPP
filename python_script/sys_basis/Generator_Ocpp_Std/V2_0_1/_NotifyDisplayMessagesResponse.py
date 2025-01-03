@@ -12,10 +12,10 @@ class notify_display_messages_response(Base_OCPP_Struct_V2_0_1):
         生成 NotifyDisplayMessagesResponse
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call_result.NotifyDisplayMessages
+            - call_result.NotifyDisplayMessages
         """
         return call_result.NotifyDisplayMessages(
             

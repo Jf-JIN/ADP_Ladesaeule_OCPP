@@ -12,10 +12,10 @@ class get_report_response(Base_OCPP_Struct_V2_0_1):
         生成 GetReportResponse
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call_result.GetReport
+            - call_result.GetReport
         """
         return call_result.GetReport(
             

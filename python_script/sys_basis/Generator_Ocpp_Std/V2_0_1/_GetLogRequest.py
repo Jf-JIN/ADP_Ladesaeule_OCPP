@@ -12,10 +12,10 @@ class get_log_request(Base_OCPP_Struct_V2_0_1):
         生成 GetLogRequest
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call.GetLog
+            - call.GetLog
         """
         return call.GetLog(
             

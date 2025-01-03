@@ -12,10 +12,10 @@ class set_display_message_request(Base_OCPP_Struct_V2_0_1):
         生成 SetDisplayMessageRequest
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call.SetDisplayMessage
+            - call.SetDisplayMessage
         """
         return call.SetDisplayMessage(
             

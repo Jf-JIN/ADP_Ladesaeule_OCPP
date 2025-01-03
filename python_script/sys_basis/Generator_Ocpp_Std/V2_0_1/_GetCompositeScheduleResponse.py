@@ -12,10 +12,10 @@ class get_composite_schedule_response(Base_OCPP_Struct_V2_0_1):
         生成 GetCompositeScheduleResponse
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call_result.GetCompositeSchedule
+            - call_result.GetCompositeSchedule
         """
         return call_result.GetCompositeSchedule(
             

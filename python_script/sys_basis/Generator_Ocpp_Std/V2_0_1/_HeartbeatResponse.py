@@ -12,11 +12,11 @@ class heartbeat_response(Base_OCPP_Struct_V2_0_1):
         生成 HeartbeatResponse
 
         参数:
-        - current_time(str): 现在的时间, 格式为date-time
-        - custom_data(dict): 自定义数据, 推荐使用 `get_custom_data()` 传入
+            - current_time(str): 现在的时间, 格式为date-time
+            - custom_data(dict): 自定义数据, 推荐使用 `get_custom_data()` 传入
 
         返回值:
-        - call_result.Heartbeat
+            - call_result.Heartbeat
         """
         return call_result.Heartbeat(
             current_time=current_time or kwargs["currentTime"],

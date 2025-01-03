@@ -12,10 +12,10 @@ class cleared_charging_limit_response(Base_OCPP_Struct_V2_0_1):
         生成 ClearedChargingLimitResponse
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call_result.ClearedChargingLimit
+            - call_result.ClearedChargingLimit
         """
         return call_result.ClearedChargingLimit(
             

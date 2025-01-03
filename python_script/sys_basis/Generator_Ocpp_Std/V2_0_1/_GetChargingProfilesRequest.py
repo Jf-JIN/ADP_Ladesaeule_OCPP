@@ -12,10 +12,10 @@ class get_charging_profiles_request(Base_OCPP_Struct_V2_0_1):
         生成 GetChargingProfilesRequest
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call.GetChargingProfiles
+            - call.GetChargingProfiles
         """
         return call.GetChargingProfiles(
             

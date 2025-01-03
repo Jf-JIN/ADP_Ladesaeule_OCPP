@@ -12,10 +12,10 @@ class get_installed_certificate_ids_request(Base_OCPP_Struct_V2_0_1):
         生成 GetInstalledCertificateIdsRequest
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call.GetInstalledCertificateIds
+            - call.GetInstalledCertificateIds
         """
         return call.GetInstalledCertificateIds(
             

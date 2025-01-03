@@ -12,10 +12,10 @@ class notify_event_response(Base_OCPP_Struct_V2_0_1):
         生成 NotifyEventResponse
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call_result.NotifyEvent
+            - call_result.NotifyEvent
         """
         return call_result.NotifyEvent(
             

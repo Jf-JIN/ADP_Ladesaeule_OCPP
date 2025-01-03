@@ -12,10 +12,10 @@ class get_certificate_status_response(Base_OCPP_Struct_V2_0_1):
         生成 GetCertificateStatusResponse
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call_result.GetCertificateStatus
+            - call_result.GetCertificateStatus
         """
         return call_result.GetCertificateStatus(
             

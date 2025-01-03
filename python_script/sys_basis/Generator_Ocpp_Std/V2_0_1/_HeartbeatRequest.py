@@ -12,10 +12,10 @@ class heartbeat_request(Base_OCPP_Struct_V2_0_1):
         生成 HeartbeatRequest
 
         参数:
-        - vendorID (str): vendor的ID, 不可为0
+            - vendorID (str): vendor的ID, 不可为0
 
         返回值:
-        - call.Heartbeat
+            - call.Heartbeat
         """
         return call.Heartbeat(
             custom_data=custom_data or kwargs.get("custom_data", None),

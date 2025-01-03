@@ -12,10 +12,10 @@ class reservation_status_update_response(Base_OCPP_Struct_V2_0_1):
         生成 ReservationStatusUpdateResponse
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call_result.ReservationStatusUpdate
+            - call_result.ReservationStatusUpdate
         """
         return call_result.ReservationStatusUpdate(
             

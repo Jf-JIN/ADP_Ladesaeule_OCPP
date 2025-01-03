@@ -12,10 +12,10 @@ class customer_information_request(Base_OCPP_Struct_V2_0_1):
         生成 CustomerInformationRequest
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call.CustomerInformation
+            - call.CustomerInformation
         """
         return call.CustomerInformation(
             

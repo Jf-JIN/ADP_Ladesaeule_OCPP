@@ -12,10 +12,10 @@ class publish_firmware_status_notification_request(Base_OCPP_Struct_V2_0_1):
         生成 PublishFirmwareStatusNotificationRequest
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call.PublishFirmwareStatusNotification
+            - call.PublishFirmwareStatusNotification
         """
         return call.PublishFirmwareStatusNotification(
             

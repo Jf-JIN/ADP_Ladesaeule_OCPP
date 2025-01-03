@@ -12,10 +12,10 @@ class set_network_profile_response(Base_OCPP_Struct_V2_0_1):
         生成 SetNetworkProfileResponse
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call_result.SetNetworkProfile
+            - call_result.SetNetworkProfile
         """
         return call_result.SetNetworkProfile(
             

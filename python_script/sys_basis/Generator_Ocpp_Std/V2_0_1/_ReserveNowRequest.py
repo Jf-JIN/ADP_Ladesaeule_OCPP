@@ -12,10 +12,10 @@ class reserve_now_request(Base_OCPP_Struct_V2_0_1):
         生成 ReserveNowRequest
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call.ReserveNow
+            - call.ReserveNow
         """
         return call.ReserveNow(
             
