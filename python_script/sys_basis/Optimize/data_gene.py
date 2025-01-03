@@ -9,16 +9,16 @@ class DataGene:
     @staticmethod
     def gene_eprices(price1: float, price2: float = None, time1: int = None, time2: int = None) -> list:
         """
-        生成电价列表（区分日间，夜间电价）
+        生成电价列表(区分日间, 夜间电价)
 
-        参数：
+        参数: 
         - price1(float): 日间电价
-        - price2(float): 夜间电价（可选，如果没有提供则默认所有时间段都使用日间电价）
-        - time1(int): 夜间电价结束时间（小时，可选）
-        - time2(int): 夜间电价开始时间（小时，可选）
+        - price2(float): 夜间电价(可选, 如果没有提供则默认所有时间段都使用日间电价)
+        - time1(int): 夜间电价结束时间(小时, 可选)
+        - time2(int): 夜间电价开始时间(小时, 可选)
 
-        返回：
-        - price_schedule(list): 电价列表（每隔15分钟）
+        返回: 
+        - price_schedule(list): 电价列表(每隔15分钟)
         """
 
         # 默认夜间电价参数
@@ -36,40 +36,40 @@ class DataGene:
     @staticmethod
     def time2str(time: datetime) -> str:
         """
-        生成指定字符串格式的柏林时间。
+        生成指定字符串格式的柏林时间. 
 
-        参数：
+        参数: 
         - time(datetime): 需要转换的时间对象
 
-        返回：
-        - str: 格式化后的柏林时间字符串（ISO 8601 格式，德国时区）
+        返回: 
+        - str: 格式化后的柏林时间字符串(ISO 8601 格式, 德国时区)
         """
         return time.astimezone(pytz.timezone('Europe/Berlin')).strftime('%Y-%m-%dT%H:%M:%SZ')
 
     @staticmethod
     def str2time(time_str: str) -> datetime:
         """
-        将字符串格式时间（柏林时间）转换为 datetime 对象
+        将字符串格式时间(柏林时间)转换为 datetime 对象
 
-        参数：
-        - time_str(str): 格式化的时间字符串（'%Y-%m-%dT%H:%M:%SZ'）
+        参数: 
+        - time_str(str): 格式化的时间字符串('%Y-%m-%dT%H:%M:%SZ')
 
-        返回：
-        - datetime: 转换后的 datetime 对象（无时区信息）
+        返回: 
+        - datetime: 转换后的 datetime 对象(无时区信息)
         """
         return datetime.strptime(time_str, '%Y-%m-%dT%H:%M:%SZ')
 
     @staticmethod
     def gene_his_usage() -> list[int]:
         """
-        生成一天家庭的用电数据，每隔15分钟一个数据点，单位为Wh。
+        生成一天家庭的用电数据, 每隔15分钟一个数据点, 单位为Wh. 
 
-        返回：
+        返回: 
         - list[int]: 一天的用电数据
         """
 
         def generate_usage(hour: int) -> int:
-            """根据小时生成用电量（单位：Wh）。"""
+            """根据小时生成用电量(单位: Wh). """
             if 6 <= hour < 18:  # 白天
                 usage = np.random.normal(5000, 500)
                 if 7 <= hour < 9:  # 早餐时间
@@ -94,13 +94,13 @@ class DataGene:
         """
         根据用电记录绘制家庭用电曲线图
 
-        参数：
-        - usage_record: 一个包含每15分钟用电数据的列表（单位：Wh）
+        参数: 
+        - usage_record: 一个包含每15分钟用电数据的列表(单位: Wh)
         """
-        # 确定时间段，24小时内，每小时4个数据点，总共96个数据点
-        time_slots = np.arange(len(usage_record))  # 生成0到95的时间段（每15分钟一个数据点）
+        # 确定时间段, 24小时内, 每小时4个数据点, 总共96个数据点
+        time_slots = np.arange(len(usage_record))  # 生成0到95的时间段(每15分钟一个数据点)
 
-        # 每小时的标签（显示小时数）
+        # 每小时的标签(显示小时数)
         hours_labels = np.arange(0, 24, 2)  # 每2小时一个标签
         time_labels = [f"{hour}:00" for hour in hours_labels]  # 创建小时标签
 
@@ -113,10 +113,10 @@ class DataGene:
         plt.ylabel('Electricity Usage (Wh)')
         plt.title('Electricity Usage Throughout the Day (15-Minute Intervals)')
 
-        # 设置X轴刻度为每小时，并调整显示
+        # 设置X轴刻度为每小时, 并调整显示
         plt.xticks(np.arange(0, 96, 8), labels=time_labels)  # 每8个点为2个小时
         plt.grid(True)
-        plt.tight_layout()  # 自适应调整布局，避免标签重叠
+        plt.tight_layout()  # 自适应调整布局, 避免标签重叠
         plt.show()
 
     @staticmethod
@@ -124,14 +124,14 @@ class DataGene:
         """
         根据优化前和优化后的用电记录绘制家庭用电曲线图
 
-        参数：
-        - his_usage_before: 优化前的用电记录列表，每15分钟一个数据点（单位：Wh）
-        - his_usage_after: 优化后的用电记录列表，每15分钟一个数据点（单位：Wh）
+        参数: 
+        - his_usage_before: 优化前的用电记录列表, 每15分钟一个数据点(单位: Wh)
+        - his_usage_after: 优化后的用电记录列表, 每15分钟一个数据点(单位: Wh)
         """
-        # 确定时间段，24小时内，每小时4个数据点，总共96个数据点
+        # 确定时间段, 24小时内, 每小时4个数据点, 总共96个数据点
         time_slots = np.arange(len(his_usage_before))  # 假设两组数据长度相等
 
-        # 每小时的标签（显示小时数）
+        # 每小时的标签(显示小时数)
         hours_labels = np.arange(0, 24, 2)  # 每2小时一个标签
         time_labels = [f"{hour}:00" for hour in hours_labels]  # 创建小时标签
 
@@ -145,11 +145,11 @@ class DataGene:
         plt.ylabel('Electricity Usage (Wh)')
         plt.title('Electricity Usage Comparison: Before vs. After Optimization')
 
-        # 设置X轴刻度为每2小时，并调整显示
+        # 设置X轴刻度为每2小时, 并调整显示
         plt.xticks(np.arange(0, 96, 8), labels=time_labels)  # 每8个点为2小时
         plt.grid(True)
         plt.legend(loc='upper right')  # 显示图例在右上角
-        plt.tight_layout()  # 自适应调整布局，避免标签重叠
+        plt.tight_layout()  # 自适应调整布局, 避免标签重叠
 
         # 显示图像
         plt.show()
@@ -157,9 +157,9 @@ class DataGene:
     @staticmethod
     def split_time(start_time: datetime, end_time: datetime, eprices: list, his_usage: list, max_grid_power: int, max_power: int, min_power: int) -> list:
         """
-        将开始时间和结束时间按照15分钟间隔分割，返回每段时间的持续时间、电价和可用功率。
+        将开始时间和结束时间按照15分钟间隔分割, 返回每段时间的持续时间、电价和可用功率. 
 
-        参数：
+        参数: 
         - start_time(datetime): 开始时间
         - end_time(datetime): 结束时间
         - eprices(list): 电价列表
@@ -168,7 +168,7 @@ class DataGene:
         - max_power(int): 最大功率
         - min_power(int): 最小功率
 
-        返回：
+        返回: 
         - list: 包含每段时间的持续时间、电价和可用功率的列表
         """
         result_time = []

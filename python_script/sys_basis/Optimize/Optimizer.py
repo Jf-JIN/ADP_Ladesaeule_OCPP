@@ -10,13 +10,13 @@ class Optimizer:
     """
     充电优化器
     
-    参数：
+    参数: 
     - charging_needs(dict): 充电需求
-    - eprices(list): 电价（间隔为15分钟）
-    - his_usage(list): 历史的一天用电量（间隔为15分钟）
+    - eprices(list): 电价(间隔为15分钟)
+    - his_usage(list): 历史的一天用电量(间隔为15分钟)
     - max_grid_power(int): 允许的最大电网功率
-    - interval(int): 时间间隔（默认为15分钟）
-    - mod(int): 模式（默认为0，0表示动态调整，1表示最小充电时间，2表示最少电费花销）
+    - interval(int): 时间间隔(默认为15分钟)
+    - mod(int): 模式(默认为0, 0表示动态调整, 1表示最小充电时间, 2表示最少电费花销)
     """
 
     def __init__(self, charging_needs: dict, eprices: list, his_usage: list, max_grid_power: int = 3000,
@@ -63,7 +63,7 @@ class Optimizer:
 
     def _get_weight(self):
         """
-        根据模式返回权重（默认为0，0表示动态调整，1表示最小充电时间，2表示最少电费花销）
+        根据模式返回权重(默认为0, 0表示动态调整, 1表示最小充电时间, 2表示最少电费花销)
         """
         if self._mod == 0:
             return [0.5, 0.5]
@@ -74,9 +74,9 @@ class Optimizer:
 
     def _split_time(self, start_time: datetime, end_time: datetime, eprices: list, his_usage: list, max_grid_power: int, max_power: int, min_power: int) -> list:
         """
-        将开始时间和结束时间按照15分钟间隔分割，返回每段时间的持续时间、电价和可用功率。
+        将开始时间和结束时间按照15分钟间隔分割, 返回每段时间的持续时间、电价和可用功率. 
 
-        参数：
+        参数: 
         - start_time(datetime): 开始时间
         - end_time(datetime): 结束时间
         - eprices(list): 电价列表
@@ -85,7 +85,7 @@ class Optimizer:
         - max_power(int): 最大功率
         - min_power(int): 最小功率
 
-        返回：
+        返回: 
         - list: 包含每段时间的持续时间、电价和可用功率的列表
         """
         result_time = []
@@ -117,13 +117,13 @@ class Optimizer:
 
     def _calculate_charging_list(self):
         """
-        生成充电计划，综合考虑以下因素：
+        生成充电计划, 综合考虑以下因素: 
         1. 最短充电时间
         2. 最少电费花销
         3. 最大家庭充电负载限制
         """
         # T = self._num_split  # 总时间段
-        E_target = self._energy_amount / 1000  # 目标充电量（kWh）
+        E_target = self._energy_amount / 1000  # 目标充电量(kWh)
         # C = self._eprices_split  # 随机生成电价列表
         # w_over = self._weight[0]  # 充电时长权重
         # w_cost = self._weight[1]  # 充电成本权重
@@ -168,7 +168,7 @@ class Optimizer:
                 self._charging_list[self._over_time + 1:] = P_min[self._over_time + 1:]
             self._cumulative_energy = np.cumsum(self._charging_list) * time_step
             self._cost = np.sum(self._charging_list * self._eprices_split * time_step)
-            print("优化的充电功率列表：", "\n", self._charging_list)
+            print("优化的充电功率列表: ", "\n", self._charging_list)
             print("累计充电:", "\n", self._cumulative_energy)
             print(f"充电完成时间段索引 (over): {self._over_time}")
             print(f"总成本 (cost): {self._cost:.2f}")
