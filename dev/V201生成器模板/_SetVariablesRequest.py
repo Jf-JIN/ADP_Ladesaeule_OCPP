@@ -1,0 +1,38 @@
+
+from ocpp.v201.enums import *
+from ocpp.v201 import call
+from ._Base import *
+
+
+class set_variables_request(Base_OCPP_Struct_V2_0_1): 
+
+    @staticmethod
+    def generate() -> call.SetVariables:
+        """
+        生成 SetVariablesRequest
+
+        参数:
+            - 
+
+        返回值:
+            - call.SetVariables
+        """
+        return call.SetVariables(
+            
+        )
+    
+    @staticmethod
+    def load_dict(dict_data: dict) -> call.SetVariables:
+        """ 
+        加载字典数据，将字典转换为数据类
+
+        参数:
+            - dict_data(dict): 字典数据
+
+        返回值:
+            - call.SetVariables
+        """
+        return call.SetVariables(
+            
+        )
+
