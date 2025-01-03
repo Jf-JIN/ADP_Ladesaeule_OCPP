@@ -12,10 +12,10 @@ class set_charging_profile_response(Base_OCPP_Struct_V1_6):
         生成 SetChargingProfileResponse
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call_result.SetChargingProfile
+            - call_result.SetChargingProfile
         """
         return call_result.SetChargingProfile(
             

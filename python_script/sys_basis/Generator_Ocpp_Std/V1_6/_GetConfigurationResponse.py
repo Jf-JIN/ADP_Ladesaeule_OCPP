@@ -12,10 +12,10 @@ class get_configuration_response(Base_OCPP_Struct_V1_6):
         生成 GetConfigurationResponse
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call_result.GetConfiguration
+            - call_result.GetConfiguration
         """
         return call_result.GetConfiguration(
             

@@ -12,10 +12,10 @@ class send_local_list(Base_OCPP_Struct_V1_6):
         生成 SendLocalList
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call.SendLocalList
+            - call.SendLocalList
         """
         return call.SendLocalList(
             

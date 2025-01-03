@@ -12,10 +12,10 @@ class get_local_list_version_response(Base_OCPP_Struct_V1_6):
         生成 GetLocalListVersionResponse
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call_result.GetLocalListVersion
+            - call_result.GetLocalListVersion
         """
         return call_result.GetLocalListVersion(
             

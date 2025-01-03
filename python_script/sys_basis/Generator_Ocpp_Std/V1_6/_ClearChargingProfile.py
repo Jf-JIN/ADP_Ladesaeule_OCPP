@@ -12,10 +12,10 @@ class clear_charging_profile(Base_OCPP_Struct_V1_6):
         生成 ClearChargingProfile
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call.ClearChargingProfile
+            - call.ClearChargingProfile
         """
         return call.ClearChargingProfile(
             

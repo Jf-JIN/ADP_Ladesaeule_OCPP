@@ -12,10 +12,10 @@ class clear_cache_response(Base_OCPP_Struct_V1_6):
         生成 ClearCacheResponse
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call_result.ClearCache
+            - call_result.ClearCache
         """
         return call_result.ClearCache(
             

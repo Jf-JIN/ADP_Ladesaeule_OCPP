@@ -12,10 +12,10 @@ class trigger_message(Base_OCPP_Struct_V1_6):
         生成 TriggerMessage
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call.TriggerMessage
+            - call.TriggerMessage
         """
         return call.TriggerMessage(
             

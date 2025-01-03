@@ -12,10 +12,10 @@ class status_notification_response(Base_OCPP_Struct_V1_6):
         生成 StatusNotificationResponse
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call_result.StatusNotification
+            - call_result.StatusNotification
         """
         return call_result.StatusNotification(
             

@@ -12,10 +12,10 @@ class start_transaction_response(Base_OCPP_Struct_V1_6):
         生成 StartTransactionResponse
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call_result.StartTransaction
+            - call_result.StartTransaction
         """
         return call_result.StartTransaction(
             

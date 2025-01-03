@@ -12,10 +12,10 @@ class boot_notification_response(Base_OCPP_Struct_V1_6):
         生成 BootNotificationResponse
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call_result.BootNotification
+            - call_result.BootNotification
         """
         return call_result.BootNotification(
             

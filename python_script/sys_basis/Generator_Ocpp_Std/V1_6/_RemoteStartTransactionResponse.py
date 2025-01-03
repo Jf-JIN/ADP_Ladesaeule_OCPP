@@ -12,10 +12,10 @@ class remote_start_transaction_response(Base_OCPP_Struct_V1_6):
         生成 RemoteStartTransactionResponse
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call_result.RemoteStartTransaction
+            - call_result.RemoteStartTransaction
         """
         return call_result.RemoteStartTransaction(
             

@@ -12,10 +12,10 @@ class change_availability(Base_OCPP_Struct_V1_6):
         生成 ChangeAvailability
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call.ChangeAvailability
+            - call.ChangeAvailability
         """
         return call.ChangeAvailability(
             
