@@ -53,7 +53,7 @@ class ChargingSchedulePeriod:
 @dataclass
 class ChargingSchedule:
     id: int = 0
-    charging_rate_unit: ChargingRateUnitType | str = ""
+    charging_rate_unit: ChargingRateUnitType | str = "w"
     charging_schedule_period: ChargingSchedulePeriod = field(default_factory=ChargingSchedulePeriod)
     custom_data: dict | None = None
     start_schedule: str | None = None
@@ -63,8 +63,21 @@ class ChargingSchedule:
 
 
 @dataclass
-class ChargingScheduleRequest:
-    time_base: str = ""
+class ChargingProfile:
+    id: int = 0
+    stack_level: int = 0
+    charging_profile_purpose: str | ChargingProfilePurposeType = ""
+    charging_profile_kind: str | ChargingProfileKindType = ""
+    charging_schedule: list[ChargingSchedule] = field(default_factory=list)
+    custom_data: dict | None = None
+    recurrency_kind: str | RecurrencyKindType | None = None
+    valid_from: str | None = None
+    valid_to: str | None = None
+    transaction_id: str | None = None
+
+
+@dataclass
+class ChargingProfileRequest:
     evse_id: int = 0
-    charging_schedule: ChargingSchedule = field(default_factory=ChargingSchedule)
+    charging_profile: ChargingProfile = field(default_factory=ChargingProfile)
     custom_data: dict | None = None
