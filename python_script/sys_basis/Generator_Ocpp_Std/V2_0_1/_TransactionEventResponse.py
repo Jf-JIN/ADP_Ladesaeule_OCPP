@@ -17,10 +17,10 @@ class transaction_event_response(Base_OCPP_Struct_V2_0_1):
         生成 TransactionEventResponse
 
         参数:
-            - total_cost(int|float): 只有充电结束后才会发送总的花费，含税.
-            - charging_priority(int): 充电优先级,范围从-9到+9，默认为0.
             - id_token_info(dict): 推荐使用 `get_id_token_info()` 传入
             - updated_personal_message(dict): 推荐使用 `get_personal_message()` 传入
+            - total_cost(int|float): 只有充电结束后才会发送总的花费, 含税.
+            - charging_priority(int): 充电优先级,范围从-9到+9, 默认为0.
             - custom_data(dict): 推荐使用 `get_custom_data()` 传入
 
         返回值:
@@ -41,7 +41,7 @@ class transaction_event_response(Base_OCPP_Struct_V2_0_1):
 
         参数:
             - message_format(str): 信息目录的格式, `ASCII`,`HTML`,`URI`,`UTF8`
-            - content（str）: 信息的目录，字符串长度为[1-512]
+            - content(str): 信息的目录, 字符串长度为[1-512]
             - language(str): 信息目录的语言, 字符串长度为[1-8]
             - custom_data(dict): 推荐使用 `get_custom_data()` 传入
 
@@ -69,16 +69,16 @@ class transaction_event_response(Base_OCPP_Struct_V2_0_1):
         生成 IdTokenInfo
 
         参数:
-            -status(str|AuthorizationStatusType):ID_ Token的状态（授权状态）
+            -status(str|AuthorizationStatusType):ID_ Token的状态(授权状态)
                 - 字符串, 无先后顺序和分组, 仅是逻辑分组:
                 - `Accepted`,`Blocked`,`ConcurrentTx`,`Expired`,`Invalid`,`NoCredit`,`NotAllowedTypeEVSE`,
                 - `NotAtThisLocation`,`NotAtThisTime`,`Unknown`
             -cache_expiry_date_time(str): 有效日期,字符串格式为"date-time"
-            -charging_priority(int): 充电优先级，范围是-9到+9，默认是0.
-            -language_1(str): 语言1，字符串长度为[1-8]
-            -evse_id(int):仅在 IdToken 仅对一个或多个特定的 EVSE有效，而非整个充电站时使用.????关于evse_id的我可能有写错，指的是正文而不是注释！
+            -charging_priority(int): 充电优先级, 范围是-9到+9, 默认是0.
+            -language_1(str): 语言1, 字符串长度为[1-8]
+            -evse_id(int):仅在 IdToken 仅对一个或多个特定的 EVSE有效, 而非整个充电站时使用.????关于evse_id的我可能有写错, 指的是正文而不是注释! 
             -group_id_token(dict):推荐使用 `get_id_tocken()` 传入
-            -language_2(str):语言2，字符串长度为[1-8]
+            -language_2(str):语言2, 字符串长度为[1-8]
             -personal_message(ditc):推荐使用 `get_personal_message()` 传入
             -custom_data(dict): 推荐使用 `get_custom_data()` 传入
 
