@@ -4,26 +4,26 @@ from ocpp.v201 import call_result
 from ._Base import *
 
 
-class log_status_notification_response(Base_OCPP_Struct_V2_0_1): 
+class log_status_notification_response(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
-    def generate() -> call_result.LogStatusNotification:
+    def generate(custom_data=None) -> call_result.LogStatusNotification:
         """
         生成 LogStatusNotificationResponse
 
         参数:
-            - 
+            -
 
         返回值:
             - call_result.LogStatusNotification
         """
         return call_result.LogStatusNotification(
-            
+            custom_data = custom_data
         )
-    
+
     @staticmethod
     def load_dict(dict_data: dict) -> call_result.LogStatusNotification:
-        """ 
+        """
         加载字典数据，将字典转换为数据类
 
         参数:
@@ -33,6 +33,6 @@ class log_status_notification_response(Base_OCPP_Struct_V2_0_1):
             - call_result.LogStatusNotification
         """
         return call_result.LogStatusNotification(
-            
+            custom_data = dict_data.get('customData', None)
         )
 

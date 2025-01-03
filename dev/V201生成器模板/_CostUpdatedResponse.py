@@ -4,26 +4,26 @@ from ocpp.v201 import call_result
 from ._Base import *
 
 
-class cost_updated_response(Base_OCPP_Struct_V2_0_1): 
+class cost_updated_response(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
-    def generate() -> call_result.CostUpdated:
+    def generate(custom_data=None) -> call_result.CostUpdated:
         """
         生成 CostUpdatedResponse
 
         参数:
-            - 
+            -
 
         返回值:
             - call_result.CostUpdated
         """
         return call_result.CostUpdated(
-            
+            custom_data = custom_data
         )
-    
+
     @staticmethod
     def load_dict(dict_data: dict) -> call_result.CostUpdated:
-        """ 
+        """
         加载字典数据，将字典转换为数据类
 
         参数:
@@ -33,6 +33,6 @@ class cost_updated_response(Base_OCPP_Struct_V2_0_1):
             - call_result.CostUpdated
         """
         return call_result.CostUpdated(
-            
+            custom_data = dict_data.get('customData', None)
         )
 

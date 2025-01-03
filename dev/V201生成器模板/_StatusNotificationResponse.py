@@ -4,26 +4,26 @@ from ocpp.v201 import call_result
 from ._Base import *
 
 
-class status_notification_response(Base_OCPP_Struct_V2_0_1): 
+class status_notification_response(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
-    def generate() -> call_result.StatusNotification:
+    def generate(custom_data=None) -> call_result.StatusNotification:
         """
         生成 StatusNotificationResponse
 
         参数:
-            - 
+            -
 
         返回值:
             - call_result.StatusNotification
         """
         return call_result.StatusNotification(
-            
+            custom_data = custom_data
         )
-    
+
     @staticmethod
     def load_dict(dict_data: dict) -> call_result.StatusNotification:
-        """ 
+        """
         加载字典数据，将字典转换为数据类
 
         参数:
@@ -33,6 +33,6 @@ class status_notification_response(Base_OCPP_Struct_V2_0_1):
             - call_result.StatusNotification
         """
         return call_result.StatusNotification(
-            
+            custom_data = dict_data.get('customData', None)
         )
 

@@ -4,26 +4,27 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class cancel_reservation_request(Base_OCPP_Struct_V2_0_1): 
+class cancel_reservation_request(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
-    def generate() -> call.CancelReservation:
+    def generate(reservation_id, custom_data=None) -> call.CancelReservation:
         """
         生成 CancelReservationRequest
 
         参数:
-            - 
+            -
 
         返回值:
             - call.CancelReservation
         """
         return call.CancelReservation(
-            
+            reservation_id = reservation_id,
+            custom_data = custom_data
         )
-    
+
     @staticmethod
     def load_dict(dict_data: dict) -> call.CancelReservation:
-        """ 
+        """
         加载字典数据，将字典转换为数据类
 
         参数:
@@ -33,6 +34,7 @@ class cancel_reservation_request(Base_OCPP_Struct_V2_0_1):
             - call.CancelReservation
         """
         return call.CancelReservation(
-            
+            reservation_id = dict_data['reservationId'],
+            custom_data = dict_data.get('customData', None)
         )
 

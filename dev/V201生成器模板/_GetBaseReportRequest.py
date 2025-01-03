@@ -4,26 +4,28 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class get_base_report_request(Base_OCPP_Struct_V2_0_1): 
+class get_base_report_request(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
-    def generate() -> call.GetBaseReport:
+    def generate(request_id, report_base, custom_data=None) -> call.GetBaseReport:
         """
         生成 GetBaseReportRequest
 
         参数:
-            - 
+            -
 
         返回值:
             - call.GetBaseReport
         """
         return call.GetBaseReport(
-            
+            request_id = request_id,
+            report_base = report_base,
+            custom_data = custom_data
         )
-    
+
     @staticmethod
     def load_dict(dict_data: dict) -> call.GetBaseReport:
-        """ 
+        """
         加载字典数据，将字典转换为数据类
 
         参数:
@@ -33,6 +35,8 @@ class get_base_report_request(Base_OCPP_Struct_V2_0_1):
             - call.GetBaseReport
         """
         return call.GetBaseReport(
-            
+            request_id = dict_data['requestId'],
+            report_base = dict_data['reportBase'],
+            custom_data = dict_data.get('customData', None)
         )
 

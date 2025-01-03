@@ -4,26 +4,28 @@ from ocpp.v201 import call_result
 from ._Base import *
 
 
-class install_certificate_response(Base_OCPP_Struct_V2_0_1): 
+class install_certificate_response(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
-    def generate() -> call_result.InstallCertificate:
+    def generate(status, status_info=None, custom_data=None) -> call_result.InstallCertificate:
         """
         生成 InstallCertificateResponse
 
         参数:
-            - 
+            -
 
         返回值:
             - call_result.InstallCertificate
         """
         return call_result.InstallCertificate(
-            
+            status = status,
+            status_info = status_info,
+            custom_data = custom_data
         )
-    
+
     @staticmethod
     def load_dict(dict_data: dict) -> call_result.InstallCertificate:
-        """ 
+        """
         加载字典数据，将字典转换为数据类
 
         参数:
@@ -33,6 +35,8 @@ class install_certificate_response(Base_OCPP_Struct_V2_0_1):
             - call_result.InstallCertificate
         """
         return call_result.InstallCertificate(
-            
+            status = dict_data['status'],
+            status_info = dict_data.get('statusInfo', None),
+            custom_data = dict_data.get('customData', None)
         )
 

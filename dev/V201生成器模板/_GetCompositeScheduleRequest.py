@@ -4,26 +4,29 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class get_composite_schedule_request(Base_OCPP_Struct_V2_0_1): 
+class get_composite_schedule_request(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
-    def generate() -> call.GetCompositeSchedule:
+    def generate(duration, evse_id, charging_rate_unit=None, custom_data=None) -> call.GetCompositeSchedule:
         """
         生成 GetCompositeScheduleRequest
 
         参数:
-            - 
+            -
 
         返回值:
             - call.GetCompositeSchedule
         """
         return call.GetCompositeSchedule(
-            
+            duration = duration,
+            evse_id = evse_id,
+            charging_rate_unit = charging_rate_unit,
+            custom_data = custom_data
         )
-    
+
     @staticmethod
     def load_dict(dict_data: dict) -> call.GetCompositeSchedule:
-        """ 
+        """
         加载字典数据，将字典转换为数据类
 
         参数:
@@ -33,6 +36,9 @@ class get_composite_schedule_request(Base_OCPP_Struct_V2_0_1):
             - call.GetCompositeSchedule
         """
         return call.GetCompositeSchedule(
-            
+            duration = dict_data['duration'],
+            evse_id = dict_data['evseId'],
+            charging_rate_unit = dict_data.get('chargingRateUnit', None),
+            custom_data = dict_data.get('customData', None)
         )
 
