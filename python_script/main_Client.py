@@ -1,3 +1,5 @@
+#! /usr/bin/python3.11
+
 from server.Client import Client
 
 
