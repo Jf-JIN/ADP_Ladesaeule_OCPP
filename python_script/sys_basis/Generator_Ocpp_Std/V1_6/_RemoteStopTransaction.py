@@ -12,10 +12,10 @@ class remote_stop_transaction(Base_OCPP_Struct_V1_6):
         生成 RemoteStopTransaction
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call.RemoteStopTransaction
+            - call.RemoteStopTransaction
         """
         return call.RemoteStopTransaction(
             

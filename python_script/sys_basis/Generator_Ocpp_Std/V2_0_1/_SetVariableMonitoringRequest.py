@@ -12,10 +12,10 @@ class set_variable_monitoring_request(Base_OCPP_Struct_V2_0_1):
         生成 SetVariableMonitoringRequest
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call.SetVariableMonitoring
+            - call.SetVariableMonitoring
         """
         return call.SetVariableMonitoring(
             

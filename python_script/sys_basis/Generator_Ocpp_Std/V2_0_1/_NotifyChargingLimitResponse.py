@@ -12,10 +12,10 @@ class notify_charging_limit_response(Base_OCPP_Struct_V2_0_1):
         生成 NotifyChargingLimitResponse
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call_result.NotifyChargingLimit
+            - call_result.NotifyChargingLimit
         """
         return call_result.NotifyChargingLimit(
             

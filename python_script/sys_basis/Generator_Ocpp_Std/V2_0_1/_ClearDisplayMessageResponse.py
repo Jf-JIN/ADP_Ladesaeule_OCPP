@@ -4,7 +4,7 @@ from ocpp.v201 import call_result
 from ._Base import *
 
 
-class clear_display_message_response(Base_OCPP_Struct_V2_0_1): 
+class clear_display_message_response(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(**kwargs) -> call_result.ClearDisplayMessage:
@@ -12,12 +12,11 @@ class clear_display_message_response(Base_OCPP_Struct_V2_0_1):
         生成 ClearDisplayMessageResponse
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call_result.ClearDisplayMessage
+            - call_result.ClearDisplayMessage
         """
         return call_result.ClearDisplayMessage(
-            
-        )
 
+        )

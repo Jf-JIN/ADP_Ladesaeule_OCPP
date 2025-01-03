@@ -10,13 +10,13 @@ class notify_ev_charging_needs_request(Base_OCPP_Struct_V2_0_1):
         生成 NotifyEVChargingNeedsRequest
 
         参数:
-        - evse_id(int): EVSE的id, EvseId不可为0
-        - charging_needs(dict): 充电需求, 推荐使用 `get_charging_needs()` 传入
-        - custom_data(dict): 自定义数据, 推荐使用 `get_custom_data()` 传入
-        - max_schedule_tuples(int): 车辆支持的每张计划表可容纳的最大元祖数
+            - evse_id(int): EVSE的id, EvseId不可为0
+            - charging_needs(dict): 充电需求, 推荐使用 `get_charging_needs()` 传入
+            - custom_data(dict): 自定义数据, 推荐使用 `get_custom_data()` 传入
+            - max_schedule_tuples(int): 车辆支持的每张计划表可容纳的最大元祖数
 
         返回值:
-        - call.NotifyEVChargingNeeds
+            - call.NotifyEVChargingNeeds
         """
         return call.NotifyEVChargingNeeds(
             charging_needs=charging_needs or kwargs.get("chargingNeeds", None),
@@ -31,14 +31,14 @@ class notify_ev_charging_needs_request(Base_OCPP_Struct_V2_0_1):
         生成 Charging Needs
 
         参数:
-        - requested_energy_transfer(str): 能量传输模式, 直接使用EnergyTransferModeType枚举类或者自选: `DC`,`AC_single_phase`,`AC_two_phase`,`AC_three_phase`
-        - custom_data(dict): 自定义数据, 推荐使用 `get_custom_data()` 传入
-        - ac_charging_parameters(dict): AC充电参数, 推荐使用 `get_ac_charging_parameters()` 传入
-        - dc_charging_parameters(dict): DC充电参数, 推荐使用 `get_dc_charging_parameters()` 传入
-        - departure_time(str): 预计离开时间, 格式为`date-time`
+            - requested_energy_transfer(str): 能量传输模式, 直接使用EnergyTransferModeType枚举类或者自选: `DC`,`AC_single_phase`,`AC_two_phase`,`AC_three_phase`
+            - custom_data(dict): 自定义数据, 推荐使用 `get_custom_data()` 传入
+            - ac_charging_parameters(dict): AC充电参数, 推荐使用 `get_ac_charging_parameters()` 传入
+            - dc_charging_parameters(dict): DC充电参数, 推荐使用 `get_dc_charging_parameters()` 传入
+            - departure_time(str): 预计离开时间, 格式为`date-time`
 
         返回值:
-        - charging_needs(dict)
+            - charging_needs(dict)
         """
         temp_dict = {
             "requestedEnergyTransfer": requested_energy_transfer
@@ -59,14 +59,14 @@ class notify_ev_charging_needs_request(Base_OCPP_Struct_V2_0_1):
         生成 AC Charging Parameters
 
         参数:
-        - energy_amount(int): 能量需求总数(单位: Wh)
-        - ev_min_current(int): 电动汽车支持的每相最小电流(单位: A)
-        - ev_max_current(int): 电动汽车支持的每相最大电流(单位: A)
-        - ev_max_voltage(int): 电动汽车支持的每相最大电压(单位: V)
-        - custom_data(dict): 自定义数据, 推荐使用 `get_custom_data()` 传入
+            - energy_amount(int): 能量需求总数(单位: Wh)
+            - ev_min_current(int): 电动汽车支持的每相最小电流(单位: A)
+            - ev_max_current(int): 电动汽车支持的每相最大电流(单位: A)
+            - ev_max_voltage(int): 电动汽车支持的每相最大电压(单位: V)
+            - custom_data(dict): 自定义数据, 推荐使用 `get_custom_data()` 传入
 
         返回值:
-        - ac_charging_parameters(dict)
+            - ac_charging_parameters(dict)
         """
         temp_dict = {
             "energyAmount": energy_amount,
@@ -84,18 +84,18 @@ class notify_ev_charging_needs_request(Base_OCPP_Struct_V2_0_1):
         生成 DC Charging Parameters
 
         参数:
-        - ev_max_current(int): 电动汽车支持的最大电流(单位: A)
-        - ev_max_voltage(int): 电动汽车支持的最大电压(单位: V)
-        - custom_data(dict): 自定义数据, 推荐使用 `get_custom_data()` 传入
-        - energy_amount(int): 能量需求总数(单位: Wh), 包含预处理所需能量
-        - ev_max_power(int): 电动汽车支持的最大功率(单位: W)
-        - state_of_charge(int): 电动汽车的当前充电状态(单位: %), 取值范围: [0,100]
-        - ev_energy_capacity(int): 电动汽车的总能量容量(单位: Wh)
-        - full_SoC(int): 电动汽车认为的充满电时的SoC百分比(单位: %), 取值范围: [0,100]
-        - bulk_SoC(int): 电动汽车认为的快速充电过程结束时的SoC百分比(单位: %), 取值范围: [0,100]
+            - ev_max_current(int): 电动汽车支持的最大电流(单位: A)
+            - ev_max_voltage(int): 电动汽车支持的最大电压(单位: V)
+            - custom_data(dict): 自定义数据, 推荐使用 `get_custom_data()` 传入
+            - energy_amount(int): 能量需求总数(单位: Wh), 包含预处理所需能量
+            - ev_max_power(int): 电动汽车支持的最大功率(单位: W)
+            - state_of_charge(int): 电动汽车的当前充电状态(单位: %), 取值范围: [0,100]
+            - ev_energy_capacity(int): 电动汽车的总能量容量(单位: Wh)
+            - full_SoC(int): 电动汽车认为的充满电时的SoC百分比(单位: %), 取值范围: [0,100]
+            - bulk_SoC(int): 电动汽车认为的快速充电过程结束时的SoC百分比(单位: %), 取值范围: [0,100]
 
         返回值:
-        - dc_charging_parameters(dict)
+            - dc_charging_parameters(dict)
         """
         temp_dict = {
             "evMaxCurrent": ev_max_current,

@@ -12,10 +12,10 @@ class notify_report_response(Base_OCPP_Struct_V2_0_1):
         生成 NotifyReportResponse
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call_result.NotifyReport
+            - call_result.NotifyReport
         """
         return call_result.NotifyReport(
             

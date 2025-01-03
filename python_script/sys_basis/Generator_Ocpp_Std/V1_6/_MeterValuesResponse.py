@@ -12,10 +12,10 @@ class meter_values_response(Base_OCPP_Struct_V1_6):
         生成 MeterValuesResponse
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call_result.MeterValues
+            - call_result.MeterValues
         """
         return call_result.MeterValues(
             

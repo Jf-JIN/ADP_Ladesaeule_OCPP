@@ -12,10 +12,10 @@ class get_transaction_status_response(Base_OCPP_Struct_V2_0_1):
         生成 GetTransactionStatusResponse
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call_result.GetTransactionStatus
+            - call_result.GetTransactionStatus
         """
         return call_result.GetTransactionStatus(
             

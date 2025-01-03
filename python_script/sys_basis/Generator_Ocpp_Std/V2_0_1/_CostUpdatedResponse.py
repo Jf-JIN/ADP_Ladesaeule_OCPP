@@ -12,10 +12,10 @@ class cost_updated_response(Base_OCPP_Struct_V2_0_1):
         生成 CostUpdatedResponse
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call_result.CostUpdated
+            - call_result.CostUpdated
         """
         return call_result.CostUpdated(
             

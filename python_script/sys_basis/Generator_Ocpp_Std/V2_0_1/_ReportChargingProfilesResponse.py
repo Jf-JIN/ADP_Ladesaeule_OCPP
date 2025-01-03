@@ -12,10 +12,10 @@ class report_charging_profiles_response(Base_OCPP_Struct_V2_0_1):
         生成 ReportChargingProfilesResponse
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call_result.ReportChargingProfiles
+            - call_result.ReportChargingProfiles
         """
         return call_result.ReportChargingProfiles(
             

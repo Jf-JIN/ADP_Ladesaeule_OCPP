@@ -12,10 +12,10 @@ class notify_customer_information_response(Base_OCPP_Struct_V2_0_1):
         生成 NotifyCustomerInformationResponse
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call_result.NotifyCustomerInformation
+            - call_result.NotifyCustomerInformation
         """
         return call_result.NotifyCustomerInformation(
             

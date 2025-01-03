@@ -12,10 +12,10 @@ class transaction_event_response(Base_OCPP_Struct_V2_0_1):
         生成 TransactionEventResponse
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call_result.TransactionEvent
+            - call_result.TransactionEvent
         """
         return call_result.TransactionEvent(
             

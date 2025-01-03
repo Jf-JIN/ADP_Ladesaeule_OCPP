@@ -13,12 +13,12 @@ class meter_values_request(Base_OCPP_Struct_V2_0_1):
         生成 MeterValuesRequest
 
         参数:
-        - evse_id(int): evse的id.
-        - meter_value(list): 推荐使用 `get_meter_value_list()` 传入
-        - custom_data(dict): 推荐使用 `get_custom_data()` 传入
+            - evse_id(int): evse的id.
+            - meter_value(list): 推荐使用 `get_meter_value_list()` 传入
+            - custom_data(dict): 推荐使用 `get_custom_data()` 传入
 
         返回值:
-        - call.MeterValues
+            - call.MeterValues
         """
         return call.MeterValues(
             evse_id=evse_id or kwargs["evseId"],

@@ -4,7 +4,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class clear_cache_request(Base_OCPP_Struct_V2_0_1): 
+class clear_cache_request(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(**kwargs) -> call.ClearCache:
@@ -12,12 +12,11 @@ class clear_cache_request(Base_OCPP_Struct_V2_0_1):
         生成 ClearCacheRequest
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call.ClearCache
+            - call.ClearCache
         """
         return call.ClearCache(
-            
-        )
 
+        )

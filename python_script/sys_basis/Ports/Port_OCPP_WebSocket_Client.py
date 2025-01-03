@@ -19,7 +19,8 @@ class PortOCPPWebsocketClient(object):
 
     信号:
     - signal_thread_ocpp_client_info: 信息信号
-    - __signal_thread_ocpp_client_recv: 接收内容信号
+    - signal_thread_ocpp_client_recv: 接收内容信号, 此内容为所有内容
+    - signal_thread_ocpp_client_normal_message: 普通消息信号, 此内容为除OCPP外的内容
     - signal_thread_ocpp_client_recv_request: 接收请求信号
     - signal_thread_ocpp_client_recv_response: 接收响应信号
     - signal_thread_ocpp_client_recv_response_result: 接收响应结果信号
@@ -29,6 +30,7 @@ class PortOCPPWebsocketClient(object):
 
     方法:
     - run(): 启动方法, 请通过传入给 asyncio.gather() 进行调用
+    - send_normal_message(message): 发送普通消息
     - send_request_message(message): 发送请求消息
     - send_response_message(message_action, message, send_time): 发送响应消息
     """
@@ -37,6 +39,7 @@ class PortOCPPWebsocketClient(object):
         super().__init__()
         self.__signal_thread_ocpp_client_info = XSignal()
         self.__signal_thread_ocpp_client_recv = XSignal()
+        self.__signal_thread_ocpp_client_normal_message = XSignal()
         self.__signal_thread_ocpp_client_recv_request = XSignal()
         self.__signal_thread_ocpp_client_recv_response = XSignal()
         self.__signal_thread_ocpp_client_recv_response_result = XSignal()
@@ -51,8 +54,10 @@ class PortOCPPWebsocketClient(object):
         self.__websocket.signal_websocket_client_recv.connect(self.signal_thread_ocpp_client_recv.emit)
         self.__list_request_message = []  # 存储待发送请求消息, 当列表非空则持续发送, 当列表为空则相应事件(__event_request_message)等待
         self.__list_response_message = []  # 存储待发送响应消息, 当列表非空则持续发送, 当列表为空则相应事件(__event_response_message)等待
+        self.__list_normal_message = []  # 存储待发送普通消息, 当列表非空则持续发送, 当列表为空则相应事件(__event_normal_message)等待
         self.__event_request_message = asyncio.Event()  # 请求消息事件
         self.__event_response_message = asyncio.Event()  # 响应消息事件
+        self.__event_normal_message = asyncio.Event()  # 普通消息事件
         self.__isRunning = True  # 是否正在运行, 用于控制协程/循环运行的开关
         try:
             if info_title is not None:
@@ -84,6 +89,10 @@ class PortOCPPWebsocketClient(object):
         return self.__signal_thread_ocpp_client_recv
 
     @property
+    def signal_thread_ocpp_client_normal_message(self) -> XSignal:
+        return self.__signal_thread_ocpp_client_normal_message
+
+    @property
     def signal_thread_ocpp_client_recv_request(self) -> XSignal:
         return self.__signal_thread_ocpp_client_recv_request
 
@@ -108,10 +117,12 @@ class PortOCPPWebsocketClient(object):
                 self.__task_listening = asyncio.create_task(self.__listen_for_messages())
                 self.__task_send_request_messages = asyncio.create_task(self.__send_request_message())
                 self.__task_send_response_messages = asyncio.create_task(self.__send_response_message())
+                self.__task_send_normal_messages = asyncio.create_task(self.__send_normal_message())
                 await asyncio.gather(
                     self.__task_listening,
                     self.__task_send_request_messages,
                     self.__task_send_response_messages,
+                    self.__task_send_normal_messages,
                 )
                 await asyncio.Future()
         except Exception as e:
@@ -163,6 +174,17 @@ class PortOCPPWebsocketClient(object):
         """
         self.__list_response_message.append((message_action, message, send_time))
         self.__event_response_message.set()
+
+    def send_normal_message(self, message: str) -> None:
+        """
+        发送普通消息
+
+        参数:
+        - message(str): 普通消息, 该消息不得以 "`[`" 开头, 以免和OCPP消息混淆
+        """
+        if isinstance(message, str) and not message.startswith('['):
+            self.__list_normal_message.append(message)
+            self.__event_normal_message.set()
 
     def __send_signal_info(self, *args) -> None:
         """
@@ -218,6 +240,8 @@ class PortOCPPWebsocketClient(object):
             message = await self.__websocket.recv()
             if (isinstance(message, str) and message.startswith('[')):  # 信息过滤
                 await self.__charge_point.route_message(message)
+            else:
+                self.__signal_thread_ocpp_client_normal_message.emit(message)
 
     async def __send_request_message(self) -> None:
         """
@@ -258,3 +282,22 @@ class PortOCPPWebsocketClient(object):
                 self.__send_signal_info(f'<Error - send_response_message>\n{traceback.format_exc}')
             if self.__list_response_message:
                 self.__event_response_message.clear()
+
+    async def __send_normal_message(self) -> None:
+        """
+        发送请求消息, 循环执行
+
+        当 send_normal_message 被调用时, 会将消息放入队列中, 然后通过此方法发送
+
+        当信息列表 __list_normal_message 为空时, 将等待事件 __event_request_message 触发
+        """
+        while self.__isRunning:
+            await self.__event_normal_message.wait()
+            if not self.__isRunning:  # 提前终止
+                break
+            try:
+                await self.__websocket.send(self.__list_normal_message.pop(0))
+            except:
+                self.__send_signal_info(f'<Error - send_normal_message>\n{traceback.format_exc}')
+            if self.__list_normal_message:
+                self.__event_normal_message.clear()

@@ -12,10 +12,10 @@ class get15118_ev_certificate_response(Base_OCPP_Struct_V2_0_1):
         生成 Get15118EVCertificateResponse
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call_result.Get15118EVCertificate
+            - call_result.Get15118EVCertificate
         """
         return call_result.Get15118EVCertificate(
             

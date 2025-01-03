@@ -12,10 +12,10 @@ class set_variables_request(Base_OCPP_Struct_V2_0_1):
         生成 SetVariablesRequest
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call.SetVariables
+            - call.SetVariables
         """
         return call.SetVariables(
             

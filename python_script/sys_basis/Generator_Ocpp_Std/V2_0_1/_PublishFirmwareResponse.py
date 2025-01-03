@@ -12,10 +12,10 @@ class publish_firmware_response(Base_OCPP_Struct_V2_0_1):
         生成 PublishFirmwareResponse
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call_result.PublishFirmware
+            - call_result.PublishFirmware
         """
         return call_result.PublishFirmware(
             

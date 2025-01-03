@@ -12,10 +12,10 @@ class diagnostics_status_notification(Base_OCPP_Struct_V1_6):
         生成 DiagnosticsStatusNotification
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call.DiagnosticsStatusNotification
+            - call.DiagnosticsStatusNotification
         """
         return call.DiagnosticsStatusNotification(
             

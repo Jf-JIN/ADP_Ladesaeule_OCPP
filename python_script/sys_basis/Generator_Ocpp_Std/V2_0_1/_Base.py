@@ -7,6 +7,7 @@ class Base_OCPP_Struct_V2_0_1(object):
 
         参数:
             vendor_id(str): 厂商ID (1-255 个字符)
+            **kwargs: 额外的关键字参数内容
 
         返回值: 
             CustomData(dict)
@@ -16,4 +17,3 @@ class Base_OCPP_Struct_V2_0_1(object):
         }
         custom_data.update(kwargs)  # 将额外的关键字参数加入字典
         return custom_data
-

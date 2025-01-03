@@ -12,10 +12,10 @@ class stop_transaction_response(Base_OCPP_Struct_V1_6):
         生成 StopTransactionResponse
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call_result.StopTransaction
+            - call_result.StopTransaction
         """
         return call_result.StopTransaction(
             

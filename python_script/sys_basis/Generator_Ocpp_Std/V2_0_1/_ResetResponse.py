@@ -12,10 +12,10 @@ class reset_response(Base_OCPP_Struct_V2_0_1):
         生成 ResetResponse
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call_result.Reset
+            - call_result.Reset
         """
         return call_result.Reset(
             

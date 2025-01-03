@@ -12,10 +12,10 @@ class log_status_notification_request(Base_OCPP_Struct_V2_0_1):
         生成 LogStatusNotificationRequest
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call.LogStatusNotification
+            - call.LogStatusNotification
         """
         return call.LogStatusNotification(
             

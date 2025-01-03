@@ -12,10 +12,10 @@ class cancel_reservation_request(Base_OCPP_Struct_V2_0_1):
         生成 CancelReservationRequest
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call.CancelReservation
+            - call.CancelReservation
         """
         return call.CancelReservation(
             

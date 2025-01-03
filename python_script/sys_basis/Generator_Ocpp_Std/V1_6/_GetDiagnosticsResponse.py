@@ -12,10 +12,10 @@ class get_diagnostics_response(Base_OCPP_Struct_V1_6):
         生成 GetDiagnosticsResponse
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call_result.GetDiagnostics
+            - call_result.GetDiagnostics
         """
         return call_result.GetDiagnostics(
             

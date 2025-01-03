@@ -12,10 +12,10 @@ class unlock_connector_response(Base_OCPP_Struct_V2_0_1):
         生成 UnlockConnectorResponse
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call_result.UnlockConnector
+            - call_result.UnlockConnector
         """
         return call_result.UnlockConnector(
             

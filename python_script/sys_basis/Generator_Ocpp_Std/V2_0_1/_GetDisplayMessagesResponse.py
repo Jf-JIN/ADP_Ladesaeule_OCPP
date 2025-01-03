@@ -12,10 +12,10 @@ class get_display_messages_response(Base_OCPP_Struct_V2_0_1):
         生成 GetDisplayMessagesResponse
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call_result.GetDisplayMessages
+            - call_result.GetDisplayMessages
         """
         return call_result.GetDisplayMessages(
             

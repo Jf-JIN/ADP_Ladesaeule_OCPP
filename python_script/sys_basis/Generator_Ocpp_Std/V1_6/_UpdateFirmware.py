@@ -12,10 +12,10 @@ class update_firmware(Base_OCPP_Struct_V1_6):
         生成 UpdateFirmware
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call.UpdateFirmware
+            - call.UpdateFirmware
         """
         return call.UpdateFirmware(
             

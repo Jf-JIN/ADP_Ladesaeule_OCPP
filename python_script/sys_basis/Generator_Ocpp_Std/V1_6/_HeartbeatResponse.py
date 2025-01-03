@@ -12,10 +12,10 @@ class heartbeat_response(Base_OCPP_Struct_V1_6):
         生成 HeartbeatResponse
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call_result.Heartbeat
+            - call_result.Heartbeat
         """
         return call_result.Heartbeat(
             

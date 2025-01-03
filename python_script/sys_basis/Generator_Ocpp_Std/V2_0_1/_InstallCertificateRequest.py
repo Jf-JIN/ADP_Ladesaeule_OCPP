@@ -12,10 +12,10 @@ class install_certificate_request(Base_OCPP_Struct_V2_0_1):
         生成 InstallCertificateRequest
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call.InstallCertificate
+            - call.InstallCertificate
         """
         return call.InstallCertificate(
             

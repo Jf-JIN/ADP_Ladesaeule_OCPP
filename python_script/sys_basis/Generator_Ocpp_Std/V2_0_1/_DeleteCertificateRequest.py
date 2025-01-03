@@ -12,10 +12,10 @@ class delete_certificate_request(Base_OCPP_Struct_V2_0_1):
         生成 DeleteCertificateRequest
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call.DeleteCertificate
+            - call.DeleteCertificate
         """
         return call.DeleteCertificate(
             

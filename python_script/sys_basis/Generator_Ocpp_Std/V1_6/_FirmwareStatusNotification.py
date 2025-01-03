@@ -12,10 +12,10 @@ class firmware_status_notification(Base_OCPP_Struct_V1_6):
         生成 FirmwareStatusNotification
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call.FirmwareStatusNotification
+            - call.FirmwareStatusNotification
         """
         return call.FirmwareStatusNotification(
             

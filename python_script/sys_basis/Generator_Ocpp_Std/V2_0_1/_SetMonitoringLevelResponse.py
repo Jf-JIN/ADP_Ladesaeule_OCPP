@@ -12,10 +12,10 @@ class set_monitoring_level_response(Base_OCPP_Struct_V2_0_1):
         生成 SetMonitoringLevelResponse
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call_result.SetMonitoringLevel
+            - call_result.SetMonitoringLevel
         """
         return call_result.SetMonitoringLevel(
             

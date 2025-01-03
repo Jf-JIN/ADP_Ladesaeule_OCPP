@@ -12,10 +12,10 @@ class sign_certificate_request(Base_OCPP_Struct_V2_0_1):
         生成 SignCertificateRequest
 
         参数:
-        - 
+            - 
 
         返回值:
-        - call.SignCertificate
+            - call.SignCertificate
         """
         return call.SignCertificate(
             
