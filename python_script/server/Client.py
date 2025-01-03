@@ -12,6 +12,7 @@ class Client:
         self.__init_coroutines()
         self.__init_signal_connections()
         self.__thread_web_server.start()
+        print(self.__thread_web_server.signal_thread_web_server_info)
         self.__manager_coroutines.start()
 
         # self.__coroutine_OCPP_client.start()
@@ -37,8 +38,7 @@ class Client:
         pass
 
     def __init_threads(self):
-
-        self.__thread_web_server = PortWebServer()
+        self.__thread_web_server = PortWebServerChargePoint()
 
     def __init_coroutines(self):
         self.__coroutine_OCPP_client = PortOCPPWebsocketClient('ws://localhost:12345', 'CP1')
@@ -63,5 +63,5 @@ class Client:
         }
         self.__thread_web_server.send_message(temp_dict)
 
-    def handle_web_server_message(self, message):
+    def __handle_gpio_data(self, data):
         pass
