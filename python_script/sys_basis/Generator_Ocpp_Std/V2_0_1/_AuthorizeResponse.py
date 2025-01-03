@@ -7,7 +7,7 @@ from ._Base import *
 class authorize_response(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
-    def generate(id_token_info: dict, certificate_status: str | AuthorizeCertificateStatusType | None = None, custom_data: dict | None = None, **kwargs) -> call_result.Authorize:
+    def generate(id_token_info: dict, certificate_status: str | AuthorizeCertificateStatusType | None = None, custom_data: dict | None = None) -> call_result.Authorize:
         """ 
         生成AuthorizeResponse
 
@@ -22,9 +22,27 @@ class authorize_response(Base_OCPP_Struct_V2_0_1):
             - call_result.Authorize
         """
         return call_result.Authorize(
-            id_token_info=id_token_info or kwargs.get('idTokenInfo', None),
-            certificate_status=certificate_status or kwargs.get('certificateStatus', None),
-            custom_data=custom_data or kwargs.get('customData', None))
+            id_token_info=id_token_info,
+            certificate_status=certificate_status,
+            custom_data=custom_data
+        )
+
+    @staticmethod
+    def load_dict(dict_data: dict) -> call_result.Authorize:
+        """
+        加载字典数据, 将字典转换为数据类
+
+        参数:
+            - dict_data(dict): 字典数据
+
+        返回值:
+            - call_result.Authorize
+        """
+        return call_result.Authorize(
+            id_token_info=dict_data['idTokenInfo'],
+            certificate_status=dict_data.get('certificateStatus', None),
+            custom_data=dict_data.get('customData', None)
+        )
 
     @staticmethod
     def get_id_token_info(status: str | AuthorizationStatusType, custom_data: dict | None = None, cache_expiry_date_time: str | None = None, charging_priority: int | None = None, evse_id: list | None = None, group_id_token: dict | None = None, language1: str | None = None, language2: str | None = None, personal_message: dict | None = None) -> dict:

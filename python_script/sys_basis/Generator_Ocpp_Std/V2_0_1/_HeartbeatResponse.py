@@ -7,7 +7,7 @@ from ._Base import *
 class heartbeat_response(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
-    def generate(current_time: str | None = None, custom_data: dict | None = None, **kwargs) -> call_result.Heartbeat:
+    def generate(current_time: str | None = None, custom_data: dict | None = None) -> call_result.Heartbeat:
         """
         生成 HeartbeatResponse
 
@@ -19,6 +19,22 @@ class heartbeat_response(Base_OCPP_Struct_V2_0_1):
             - call_result.Heartbeat
         """
         return call_result.Heartbeat(
-            current_time=current_time or kwargs["currentTime"],
-            custom_data=custom_data or kwargs.get("customData", None)
+            current_time=current_time,
+            custom_data=custom_data
+        )
+
+    @staticmethod
+    def load_dict(dict_data: dict) -> call_result.Heartbeat:
+        """
+        加载字典数据, 将字典转换为数据类
+
+        参数:
+            - dict_data(dict): 字典数据
+
+        返回值:
+            - call_result.Heartbeat
+        """
+        return call_result.Heartbeat(
+            current_time=dict_data['currentTime'],
+            custom_data=dict_data.get('customData', None)
         )

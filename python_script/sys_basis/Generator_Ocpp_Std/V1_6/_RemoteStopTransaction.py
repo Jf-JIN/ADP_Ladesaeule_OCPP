@@ -4,27 +4,27 @@ from ocpp.v16 import call
 from ._Base import *
 
 
-class remote_stop_transaction(Base_OCPP_Struct_V1_6): 
+class remote_stop_transaction(Base_OCPP_Struct_V1_6):
 
     @staticmethod
-    def generate() -> call.RemoteStopTransaction:
+    def generate(transaction_id) -> call.RemoteStopTransaction:
         """
         生成 RemoteStopTransaction
 
         参数:
-            - 
+            -
 
         返回值:
             - call.RemoteStopTransaction
         """
         return call.RemoteStopTransaction(
-            
+            transaction_id = transaction_id
         )
-    
+
     @staticmethod
     def load_dict(dict_data: dict) -> call.RemoteStopTransaction:
-        """ 
-        加载字典数据，将字典转换为数据类
+        """
+        加载字典数据, 将字典转换为数据类
 
         参数:
             - dict_data(dict): 字典数据
@@ -33,6 +33,6 @@ class remote_stop_transaction(Base_OCPP_Struct_V1_6):
             - call.RemoteStopTransaction
         """
         return call.RemoteStopTransaction(
-            
+            transaction_id = dict_data['transactionId']
         )
 

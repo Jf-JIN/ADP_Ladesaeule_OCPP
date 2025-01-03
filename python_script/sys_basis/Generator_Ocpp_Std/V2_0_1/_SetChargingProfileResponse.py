@@ -7,7 +7,7 @@ from ._Base import *
 class set_charging_profile_response(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
-    def generate(status: str | ChargingProfileStatus, status_info: dict | None = None, custom_data: dict | None = None, **kwargs) -> call_result.SetChargingProfile:
+    def generate(status: str | ChargingProfileStatus, status_info: dict | None = None, custom_data: dict | None = None) -> call_result.SetChargingProfile:
         """
         生成 SetChargingProfileResponse
 
@@ -22,9 +22,26 @@ class set_charging_profile_response(Base_OCPP_Struct_V2_0_1):
             - call_result.SetChargingProfile
         """
         return call_result.SetChargingProfile(
-            status=status or kwargs['status'],
-            status_info=status_info or kwargs.get('statusInfo', None),
-            custom_data=custom_data or kwargs.get('customData', None)
+            status=status,
+            status_info=status_info,
+            custom_data=custom_data
+        )
+
+    @staticmethod
+    def load_dict(dict_data: dict) -> call_result.SetChargingProfile:
+        """
+        加载字典数据, 将字典转换为数据类
+
+        参数:
+            - dict_data(dict): 字典数据
+
+        返回值:
+            - call_result.SetChargingProfile
+        """
+        return call_result.SetChargingProfile(
+            status=dict_data['status'],
+            status_info=dict_data.get('statusInfo', None),
+            custom_data=dict_data.get('customData', None)
         )
 
     @staticmethod

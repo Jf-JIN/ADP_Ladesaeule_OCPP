@@ -6,7 +6,7 @@ from ._Base import *
 
 class notify_ev_charging_schedule_request(Base_OCPP_Struct_V2_0_1):
     @staticmethod
-    def generate(time_base: str, evse_id: int, charging_schedule: list | None = None, custom_data: dict | None = None, **kwargs) -> call.NotifyEVChargingSchedule:
+    def generate(time_base: str, evse_id: int, charging_schedule: list | None = None, custom_data: dict | None = None) -> call.NotifyEVChargingSchedule:
         """
         生成 NotifyEVChargingScheduleRequest
 
@@ -19,12 +19,29 @@ class notify_ev_charging_schedule_request(Base_OCPP_Struct_V2_0_1):
         返回值:
             - call_result.NotifyEVChargingSchedule
         """
-
         return call.NotifyEVChargingSchedule(
-            time_base=time_base or kwargs.get('time_base', None),
-            evse_id=evse_id or kwargs.get('evse_id', None),
-            charging_schedule=charging_schedule or kwargs.get('charging_schedule', None),
-            custom_data=custom_data or kwargs.get('custom_data', None)
+            time_base=time_base,
+            charging_schedule=charging_schedule,
+            evse_id=evse_id,
+            custom_data=custom_data
+        )
+
+    @staticmethod
+    def load_dict(dict_data: dict) -> call.NotifyEVChargingSchedule:
+        """
+        加载字典数据, 将字典转换为数据类
+
+        参数:
+            - dict_data(dict): 字典数据
+
+        返回值:
+            - call.NotifyEVChargingSchedule
+        """
+        return call.NotifyEVChargingSchedule(
+            time_base=dict_data['timeBase'],
+            charging_schedule=dict_data['chargingSchedule'],
+            evse_id=dict_data['evseId'],
+            custom_data=dict_data.get('customData', None)
         )
 
     @staticmethod

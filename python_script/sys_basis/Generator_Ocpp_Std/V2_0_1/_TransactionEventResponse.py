@@ -4,15 +4,16 @@ from ocpp.v201 import call_result
 from ._Base import *
 
 
-class transaction_event_response(Base_OCPP_Struct_V2_0_1): 
+class transaction_event_response(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
-    def generate(id_token_info: dict | None,
-                 updated_personal_message: dict | None,
-                 total_cost: int | float | None = None,
-                 charging_priority: int | None = None,
-                 custom_data: dict | None = None,
-                 **kwargs) -> call_result.TransactionEvent:
+    def generate(
+            id_token_info: dict | None,
+            updated_personal_message: dict | None,
+            total_cost: int | float | None = None,
+            charging_priority: int | None = None,
+            custom_data: dict | None = None,
+            **kwargs) -> call_result.TransactionEvent:
         """
         生成 TransactionEventResponse
 
@@ -27,11 +28,30 @@ class transaction_event_response(Base_OCPP_Struct_V2_0_1):
             - call_result.TransactionEvent
         """
         return call_result.TransactionEvent(
-            total_cost=total_cost or kwargs.get("total_cost", None),
-            charging_priority=charging_priority or kwargs.get("charging_priority", None),
-            id_token_info=id_token_info or kwargs.get("id_token_info", None),
-            updated_personal_message=updated_personal_message or kwargs.get("updated_personal_message", None),
-            custom_data=custom_data or kwargs.get("custom_data", None),
+            total_cost=total_cost,
+            charging_priority=charging_priority,
+            id_token_info=id_token_info,
+            updated_personal_message=updated_personal_message,
+            custom_data=custom_data
+        )
+
+    @staticmethod
+    def load_dict(dict_data: dict) -> call_result.TransactionEvent:
+        """
+        加载字典数据, 将字典转换为数据类
+
+        参数:
+            - dict_data(dict): 字典数据
+
+        返回值:
+            - call_result.TransactionEvent
+        """
+        return call_result.TransactionEvent(
+            total_cost=dict_data.get('totalCost', None),
+            charging_priority=dict_data.get('chargingPriority', None),
+            id_token_info=dict_data.get('idTokenInfo', None),
+            updated_personal_message=dict_data.get('updatedPersonalMessage', None),
+            custom_data=dict_data.get('customData', None)
         )
 
     @staticmethod
@@ -60,11 +80,10 @@ class transaction_event_response(Base_OCPP_Struct_V2_0_1):
         return temp_dict
 
     @staticmethod
-    def get_id_token_info(status: str | AuthorizationStatusType, cache_expiry_date_time: str | None = None, 
+    def get_id_token_info(status: str | AuthorizationStatusType, cache_expiry_date_time: str | None = None,
                           charging_priority: int | None = None, language_1: str | None = None,
                           evse_id: int | None = None, group_id_token: dict | None = None, language_2: str | None = None,
                           personal_message: dict | None = None, custom_data: dict | None = None) -> dict:
-
         """
         生成 IdTokenInfo
 

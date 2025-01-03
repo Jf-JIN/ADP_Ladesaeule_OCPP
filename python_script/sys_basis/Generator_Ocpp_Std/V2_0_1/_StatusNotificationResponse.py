@@ -7,7 +7,7 @@ from ._Base import *
 class status_notification_response(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
-    def generate(custom_data: dict | None = None, **kwargs) -> call_result.StatusNotification:
+    def generate(custom_data: dict | None = None) -> call_result.StatusNotification:
         """
         生成 StatusNotificationResponse
 
@@ -18,6 +18,20 @@ class status_notification_response(Base_OCPP_Struct_V2_0_1):
             - call_result.StatusNotification
         """
         return call_result.StatusNotification(
-            custom_data=custom_data or kwargs.get("custom_data", None),
+            custom_data=custom_data
+        )
 
+    @staticmethod
+    def load_dict(dict_data: dict) -> call_result.StatusNotification:
+        """
+        加载字典数据, 将字典转换为数据类
+
+        参数:
+            - dict_data(dict): 字典数据
+
+        返回值:
+            - call_result.StatusNotification
+        """
+        return call_result.StatusNotification(
+            custom_data=dict_data.get('customData', None)
         )

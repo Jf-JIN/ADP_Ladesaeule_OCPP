@@ -10,8 +10,7 @@ class boot_notification_request(Base_OCPP_Struct_V2_0_1):
     def generate(
         charging_station: dict,
         reason: str | BootReasonType,
-        custom_data: dict | None = None,
-        **kwargs
+        custom_data: dict | None = None
     ) -> call.BootNotification:
         """
         生成 BootNotificationRequest
@@ -27,9 +26,26 @@ class boot_notification_request(Base_OCPP_Struct_V2_0_1):
             - call.BootNotification
         """
         return call.BootNotification(
-            charging_station=charging_station or kwargs["chargingStation"],
-            reason=reason or kwargs["reason"],
-            custom_data=custom_data or kwargs.get("customData", None)
+            charging_station=charging_station,
+            reason=reason,
+            custom_data=custom_data
+        )
+
+    @staticmethod
+    def load_dict(dict_data: dict) -> call.BootNotification:
+        """
+        加载字典数据, 将字典转换为数据类
+
+        参数:
+            - dict_data(dict): 字典数据
+
+        返回值:
+            - call.BootNotification
+        """
+        return call.BootNotification(
+            charging_station=dict_data['chargingStation'],
+            reason=dict_data['reason'],
+            custom_data=dict_data.get('customData', None)
         )
 
     @staticmethod

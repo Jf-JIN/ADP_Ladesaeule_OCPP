@@ -146,7 +146,7 @@ class {camel_to_snake(i)}(Base_OCPP_Struct_{import_str}):
     @staticmethod
     def load_dict(dict_data: dict) -> {data_class_name}:
         """
-        加载字典数据，将字典转换为数据类
+        加载字典数据, 将字典转换为数据类
 
         参数:
             - dict_data(dict): 字典数据
@@ -199,4 +199,4 @@ def create_print_import_init(version):
 # create_print_import_init(201)
 
 
-create_file(201)
+create_file(16)

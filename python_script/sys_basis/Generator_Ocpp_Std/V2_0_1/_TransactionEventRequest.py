@@ -4,23 +4,24 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class transaction_event_request(Base_OCPP_Struct_V2_0_1): 
+class transaction_event_request(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
-    def generate(event_type: str | TransactionEventType,
-                 timestamp: str,
-                 trigger_reason: str | TriggerReasonType,
-                 seq_no: int,
-                 transaction_info: dict,
-                 custom_data: dict | None = None,
-                 meter_value: list | None = None,
-                 offline: bool = False,
-                 number_of_phases_used: int | None = None,
-                 cable_max_current: int | None = None,
-                 reservation_id: int | None = None,
-                 evse: dict | None = None,
-                 id_token: dict | None = None,
-                 **kwargs) -> call.TransactionEvent:
+    def generate(
+        event_type: str | TransactionEventType,
+        timestamp: str,
+        trigger_reason: str | TriggerReasonType,
+        seq_no: int,
+        transaction_info: dict,
+        custom_data: dict | None = None,
+        meter_value: list | None = None,
+        offline: bool = False,
+        number_of_phases_used: int | None = None,
+        cable_max_current: int | None = None,
+        reservation_id: int | None = None,
+        evse: dict | None = None,
+        id_token: dict | None = None,
+    ) -> call.TransactionEvent:
         """
         生成 TransactionEventRequest
 
@@ -48,19 +49,46 @@ class transaction_event_request(Base_OCPP_Struct_V2_0_1):
             - call.TransactionEvent
         """
         return call.TransactionEvent(
-            event_type=event_type or kwargs.get("event_type"),
-            timestamp=timestamp or kwargs.get("timestamp"),
-            trigger_reason=trigger_reason or kwargs.get("trigger_reason"),
-            seq_no=seq_no or kwargs.get("seq_no"),
-            transaction_info=transaction_info or kwargs.get("transaction_info"),
-            custom_data=custom_data or kwargs.get("custom_data", None),
-            meter_value=meter_value or kwargs.get("meter_value", None),
-            offline=offline or kwargs.get("offline", None),
-            number_of_phases_used=number_of_phases_used or kwargs.get("number_of_phases_used", None),
-            cable_max_current=cable_max_current or kwargs.get("cable_max_current", None),
-            reservation_id=reservation_id or kwargs.get("reservation_id", None),
-            evse=evse or kwargs.get("evse", None),
-            id_token=id_token or kwargs.get("id_token", None),
+            event_type=event_type,
+            timestamp=timestamp,
+            trigger_reason=trigger_reason,
+            seq_no=seq_no,
+            transaction_info=transaction_info,
+            meter_value=meter_value,
+            offline=offline,
+            number_of_phases_used=number_of_phases_used,
+            cable_max_current=cable_max_current,
+            reservation_id=reservation_id,
+            evse=evse,
+            id_token=id_token,
+            custom_data=custom_data
+        )
+
+    @staticmethod
+    def load_dict(dict_data: dict) -> call.TransactionEvent:
+        """
+        加载字典数据, 将字典转换为数据类
+
+        参数:
+            - dict_data(dict): 字典数据
+
+        返回值:
+            - call.TransactionEvent
+        """
+        return call.TransactionEvent(
+            event_type=dict_data['eventType'],
+            timestamp=dict_data['timestamp'],
+            trigger_reason=dict_data['triggerReason'],
+            seq_no=dict_data['seqNo'],
+            transaction_info=dict_data['transactionInfo'],
+            meter_value=dict_data.get('meterValue', None),
+            offline=dict_data.get('offline', None),
+            number_of_phases_used=dict_data.get('numberOfPhasesUsed', None),
+            cable_max_current=dict_data.get('cableMaxCurrent', None),
+            reservation_id=dict_data.get('reservationId', None),
+            evse=dict_data.get('evse', None),
+            id_token=dict_data.get('idToken', None),
+            custom_data=dict_data.get('customData', None)
         )
 
     @staticmethod
@@ -108,9 +136,9 @@ class transaction_event_request(Base_OCPP_Struct_V2_0_1):
             - time_spent_charging(int): 在交易过程中从 EVSE向 EV(电动车)传输能量的总时间(以秒为单位). 请注意, timeSpentCharging(充电时间)小于或等于交易的持续时间.
             - stopped_reason(str|ReasonType): 交易结束原因,
                 - 字符串, 无先后顺序和分组, 仅是逻辑分组:
-                     -`DeAuthorized`,`EmergencyStop`,`EnergyLimitReached`,`EVDisconnected`,`GroundFault`,`ImmediateReset`,
-                     -`Local`,`LocalOutOfCredit`,`MasterPass`,`Other`,`OvercurrentFault`,`PowerLoss`,`PowerQuality`,
-                     -`Reboot`,`Remote`,`SOCLimitReached`,`StoppedByEV`,`TimeLimitReached`,`Timeout`
+                    -`DeAuthorized`,`EmergencyStop`,`EnergyLimitReached`,`EVDisconnected`,`GroundFault`,`ImmediateReset`,
+                    -`Local`,`LocalOutOfCredit`,`MasterPass`,`Other`,`OvercurrentFault`,`PowerLoss`,`PowerQuality`,
+                    -`Reboot`,`Remote`,`SOCLimitReached`,`StoppedByEV`,`TimeLimitReached`,`Timeout`
             - remote_startId(int): 分配给远程启动请求的 ID.
             - custom_data(dict): 推荐使用 `get_custom_data()` 传入
 
@@ -180,4 +208,3 @@ class transaction_event_request(Base_OCPP_Struct_V2_0_1):
         if additional_info is not None:
             temp_dict["additionalInfo"] = additional_info
         return temp_dict
-

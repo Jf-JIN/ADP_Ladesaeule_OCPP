@@ -7,7 +7,7 @@ from ._Base import *
 class authorize_request(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
-    def generate(id_token: dict, custom_data: dict | None = None, certificate: str | None = None, hash_data: list | None = None, **kwargs) -> call.Authorize:
+    def generate(id_token: dict, custom_data: dict | None = None, certificate: str | None = None, hash_data: list | None = None) -> call.Authorize:
         """
         生成 AuthorizeRequest
 
@@ -21,10 +21,46 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
             - call.Authorize
         """
         return call.Authorize(
-            id_token=id_token or kwargs.get("id_token", None),
-            custom_data=custom_data or kwargs.get("custom_data", None),
-            certificate=certificate or kwargs.get("certificate", None),
-            iso15118_certificate_hash_data=hash_data or kwargs.get("iso15118_certificate_hash_data", None),
+            id_token=id_token,
+            custom_data=custom_data,
+            certificate=certificate,
+            iso15118_certificate_hash_data=hash_data,
+        )
+
+    @staticmethod
+    def load_dict(dict_data: dict) -> call.Authorize:
+        """
+        加载字典数据, 将字典转换为数据类
+
+        参数:
+            - dict_data(dict): 字典数据
+
+        返回值:
+            - call.Authorize
+        """
+        return call.Authorize(
+            id_token=dict_data['idToken'],
+            certificate=dict_data.get('certificate', None),
+            iso15118_certificate_hash_data=dict_data.get('iso15118CertificateHashData', None),
+            custom_data=dict_data.get('customData', None)
+        )
+
+    @staticmethod
+    def load_dict(dict_data: dict) -> call.Authorize:
+        """ 
+        加载字典数据, 将字典转换为数据类
+
+        参数:
+            - dict_data(dict): 字典数据
+
+        返回值:
+            - call.Authorize
+        """
+        return call.Authorize(
+            id_token=dict_data["idToken"],
+            custom_data=dict_data.get("customData", None),
+            certificate=dict_data.get("certificate", None),
+            iso15118_certificate_hash_data=dict_data.get("iso15118CertificateHashData", None),
         )
 
     @staticmethod

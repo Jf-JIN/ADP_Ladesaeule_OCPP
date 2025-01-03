@@ -4,27 +4,27 @@ from ocpp.v16 import call
 from ._Base import *
 
 
-class get_configuration(Base_OCPP_Struct_V1_6): 
+class get_configuration(Base_OCPP_Struct_V1_6):
 
     @staticmethod
-    def generate() -> call.GetConfiguration:
+    def generate(key=None) -> call.GetConfiguration:
         """
         生成 GetConfiguration
 
         参数:
-            - 
+            -
 
         返回值:
             - call.GetConfiguration
         """
         return call.GetConfiguration(
-            
+            key = key
         )
-    
+
     @staticmethod
     def load_dict(dict_data: dict) -> call.GetConfiguration:
-        """ 
-        加载字典数据，将字典转换为数据类
+        """
+        加载字典数据, 将字典转换为数据类
 
         参数:
             - dict_data(dict): 字典数据
@@ -33,6 +33,6 @@ class get_configuration(Base_OCPP_Struct_V1_6):
             - call.GetConfiguration
         """
         return call.GetConfiguration(
-            
+            key = dict_data.get('key', None)
         )
 

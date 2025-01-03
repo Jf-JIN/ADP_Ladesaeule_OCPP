@@ -7,8 +7,12 @@ from ._Base import *
 class data_transfer_request(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
-    def generate(vendor_id: str, message_id: str | None = None, data=None,
-                 custom_data: dict | None = None, **kwargs) -> call.DataTransfer:
+    def generate(
+        vendor_id: str,
+        message_id: str | None = None,
+        data=None,
+        custom_data: dict | None = None
+    ) -> call.DataTransfer:
         """
         生成 DataTransferRequest
 
@@ -22,8 +26,26 @@ class data_transfer_request(Base_OCPP_Struct_V2_0_1):
             - call.DataTransfer
         """
         return call.DataTransfer(
-            vendor_id=vendor_id or kwargs["vendorId"],
-            message_id=message_id or kwargs.get("messageId", None),
-            data=data or kwargs.get("data", None),
-            custom_data=custom_data or kwargs.get("customData", None)
+            vendor_id=vendor_id,
+            message_id=message_id,
+            data=data,
+            custom_data=custom_data
+        )
+
+    @staticmethod
+    def load_dict(dict_data: dict) -> call.DataTransfer:
+        """
+        加载字典数据, 将字典转换为数据类
+
+        参数:
+            - dict_data(dict): 字典数据
+
+        返回值:
+            - call.DataTransfer
+        """
+        return call.DataTransfer(
+            vendor_id=dict_data['vendorId'],
+            message_id=dict_data.get('messageId', None),
+            data=dict_data.get('data', None),
+            custom_data=dict_data.get('customData', None)
         )
