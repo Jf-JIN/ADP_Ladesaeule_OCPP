@@ -2,10 +2,10 @@
 
 from threading import Thread
 from sys_basis.XSignal import XSignal
-from sys_basis.Ports.Server_Web import ServerWeb
+from sys_basis.Ports.Server_Web_Charge_Point import ServerWeb
 
 
-class PortWebServer(Thread):
+class PortWebServerChargePoint(Thread):
     def __init__(self, host='0.0.0.0', port=2311, info_title='Web_Server_Port'):
         super().__init__()
         self.__signal_thread_web_server_info = XSignal()
