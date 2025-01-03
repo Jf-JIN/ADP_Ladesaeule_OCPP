@@ -28,13 +28,13 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
         )
 
     @staticmethod
-    def get_id_tocken(id_token: str, type: str | IdTokenType, custom_data: dict | None = None, additional_info: dict | None = None) -> dict:
+    def get_id_tocken(id_token: str, id_token_type: str | IdTokenType, custom_data: dict | None = None, additional_info: dict | None = None) -> dict:
         """
         生成 IdToken
 
         参数:
         - id_token(str): id令牌, 长度为 [1-36] 个字符
-        - type(str|IdTokenType): 类型 候选: 
+        - id_token_type(str|IdTokenType): 类型 候选:
             - `Central`, `eMAID`, `ISO14443`, `ISO15693`, `KeyCode`, `Local`, `MacAddress`, `NoAuthorization` .
             - 或者可以使用 `IdTokenType` 枚举, 例如: `IdTokenType.central` .
         - custom_data(dict): 推荐使用 `get_custom_data()` 传入
@@ -45,7 +45,7 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
         """
         temp_dict = {
             "idToken": id_token,
-            "type": type
+            "idTokenType": id_token_type
         }
         if custom_data is not None:
             temp_dict["customData"] = custom_data
@@ -67,13 +67,13 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
         return [*additional_info]
 
     @staticmethod
-    def get_additional_info(additional_id_token: str, type: str, custom_data: dict | None = None) -> dict:
+    def get_additional_info(additional_id_token: str, additional_id_token_type: str, custom_data: dict | None = None) -> dict:
         """
         生成 AdditionalInfo
 
         参数:
         - additional_id_token(str): 附加的ID令牌, 长度为 [1-36] 个字符
-        - type(str): 类型, 长度为 [1-36] 个字符
+        - additional_id_token_type(str): 类型, 长度为 [1-36] 个字符
         - custom_data(dict): 推荐使用 get_custom_data() 传入
 
         返回值:
@@ -81,7 +81,7 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
         """
         temp_dict = {
             "additionalIdToken": additional_id_token,
-            "type": type
+            "additionalIdTokenType": additional_id_token_type
         }
         if custom_data:
             temp_dict["customData"] = custom_data
