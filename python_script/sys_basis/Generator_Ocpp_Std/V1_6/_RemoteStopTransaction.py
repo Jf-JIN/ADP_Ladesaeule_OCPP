@@ -7,12 +7,27 @@ from ._Base import *
 class remote_stop_transaction(Base_OCPP_Struct_V1_6): 
 
     @staticmethod
-    def generate(**kwargs) -> call.RemoteStopTransaction:
+    def generate() -> call.RemoteStopTransaction:
         """
         生成 RemoteStopTransaction
 
         参数:
             - 
+
+        返回值:
+            - call.RemoteStopTransaction
+        """
+        return call.RemoteStopTransaction(
+            
+        )
+    
+    @staticmethod
+    def load_dict(dict_data: dict) -> call.RemoteStopTransaction:
+        """ 
+        加载字典数据，将字典转换为数据类
+
+        参数:
+            - dict_data(dict): 字典数据
 
         返回值:
             - call.RemoteStopTransaction
