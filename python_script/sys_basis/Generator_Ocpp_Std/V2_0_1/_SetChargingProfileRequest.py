@@ -41,7 +41,7 @@ class set_charging_profile_request(Base_OCPP_Struct_V2_0_1):
         charging_schedule: list,
         recurrency_kind: str | RecurrencyKindType | None = None,
         valid_from: str | None = None,
-        valied_to: str | None = None,
+        valid_to: str | None = None,
         transaction_id: str | None = None,
         custom_data: dict | None = None
     ) -> dict:
@@ -57,12 +57,12 @@ class set_charging_profile_request(Base_OCPP_Struct_V2_0_1):
             - charging_profile_kind: 表示日程表的种类
                 - `Absolute` `Recurring` `Relative`
                 - 推荐使用 `ChargingProfileKindType` 枚举类型, 例如 `ChargingProfileKindType.absolute`
-            - charging_schedule: 推荐使用 get_charging_schedule_list 方法
+            - charging_schedule: 推荐使用 get_charging_schedule_list 方法, 最少1条, 最多3条
             - recurrency_kind: 指示重复的起点
                 - `Daily` `Weekly`
                 - 推荐使用 `RecurrencyKindType` 枚举类型, 例如 `RecurrencyKindType.daily`
             - valid_from: 配置文件开始生效的时间点. 如果不存在, 则配置文件在充电站收到后立即生效. 格式date-time
-            - valied_to: 配置文件停止有效的时间点. 如果不存在, 则该配置文件一直有效, 直到被另一个配置文件替换为止. 格式date-time
+            - valid_to: 配置文件停止有效的时间点. 如果不存在, 则该配置文件一直有效, 直到被另一个配置文件替换为止. 格式date-time
             - transaction_id: 仅当 ChargingProfilePurpose 设置为 TxProfile 时才应包含在内.  transactionId 用于将配置文件与特定交易进行匹配. 长度 [0, 36]
             - custom_data: 自定义数据, 推荐使用 `get_custom_data` 方法
 
@@ -81,12 +81,13 @@ class set_charging_profile_request(Base_OCPP_Struct_V2_0_1):
             temp['recurrencyKind'] = recurrency_kind
         if valid_from is not None:
             temp['validFrom'] = valid_from
-        if valied_to is not None:
-            temp['valiedTo'] = valied_to
+        if valid_to is not None:
+            temp['validTo'] = valid_to
         if transaction_id is not None:
             temp['transactionId'] = transaction_id
         if custom_data is not None:
             temp['customData'] = custom_data
+        return temp
 
     @staticmethod
     def get_charging_schedule_list(*args) -> list:
@@ -105,7 +106,7 @@ class set_charging_profile_request(Base_OCPP_Struct_V2_0_1):
     def get_charging_schedule(
         id: int,
         charging_rate_unit: ChargingRateUnitType | str,
-        charging_schedule_period: dict,
+        charging_schedule_period: list,
         start_schedule: str | None = None,
         duration: int | None = None,
         min_charging_rate: float | None = None,
@@ -118,7 +119,7 @@ class set_charging_profile_request(Base_OCPP_Struct_V2_0_1):
         参数:
             - id(int): 充电计划表的标识
             - charging_rate_unit(str): 充电速率单位, 直接使用ChargingRateUnitType枚举类或者自选: `W`, `A`
-            - charging_schedule_period(dict): 充电计划表周期, 推荐使用 `get_charging_schedule_period()` 传入
+            - charging_schedule_period(list): 充电计划表周期, 推荐使用 `get_charging_schedule_period_list()` 传入
             - start_schedule(str): 充电计划表的绝对起始时间, 如果缺失, 则等同于充电开始时间
             - duration(int): 充电计划表持续时间(单位: 秒), 如果缺失, 最后一个周期将无限循环, 直到交易结束
             - min_charging_rate(float): 电动汽车支持的最小充电速率
