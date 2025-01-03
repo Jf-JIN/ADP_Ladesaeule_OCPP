@@ -22,7 +22,7 @@ class set_charging_profile_response(Base_OCPP_Struct_V2_0_1):
             - call_result.SetChargingProfile
         """
         return call_result.SetChargingProfile(
-            status=status,
+            status=status or kwargs['status'],
             status_info=status_info or kwargs.get('statusInfo', None),
             custom_data=custom_data or kwargs.get('customData', None)
         )
