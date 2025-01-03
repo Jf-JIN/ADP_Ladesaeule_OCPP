@@ -32,10 +32,10 @@ class meter_values_request(Base_OCPP_Struct_V2_0_1):
         生成 meterValue列表
 
         参数:
-        - *meter_value(dict): 推荐使用 `get_meter_value()` 传入, 最少一项, 无上限
+            - *meter_value(dict): 推荐使用 `get_meter_value()` 传入, 最少一项, 无上限
 
         返回值:
-        - meter_value(list)
+            - meter_value(list)
         """
         return [*meter_value]
 
@@ -45,12 +45,12 @@ class meter_values_request(Base_OCPP_Struct_V2_0_1):
         生成 MeterValue
 
         参数:
-        - sampled_value(list): 推荐使用 `get_sampled_value_list()` 传入
-        - time_stamp(str): 被测量的数值的时间戳, 字符形式为"date-time"
-        - custom_data(dict): 推荐使用 `get_custom_data()` 传入
+            - sampled_value(list): 推荐使用 `get_sampled_value_list()` 传入
+            - time_stamp(str): 被测量的数值的时间戳, 字符形式为"date-time"
+            - custom_data(dict): 推荐使用 `get_custom_data()` 传入
 
         返回值:
-        - meter_value(dict)
+            - meter_value(dict)
         """
         temp_dict = {
             "sampledValue": sampled_value,
@@ -66,10 +66,10 @@ class meter_values_request(Base_OCPP_Struct_V2_0_1):
         生成 sampledValue列表
 
         参数:
-        - *sampled_value(dict): 推荐使用 `get_sampled_value()` 传入, 最少一项, 无上限
+            - *sampled_value(dict): 推荐使用 `get_sampled_value()` 传入, 最少一项, 无上限
 
         返回值:
-        - sampled_value(list)
+            - sampled_value(list)
         """
         return [*sampled_value]
 
@@ -88,29 +88,29 @@ class meter_values_request(Base_OCPP_Struct_V2_0_1):
         生成 SampledValue
 
         参数:
-        - value(float): 采样值, 数值.
-        - context(str|ReadingContextType): 上下文类型, 默认值为 `ReadingContextType.sample_periodic`, 可选值为: 
-            - `Interruption.Begin`,`Interruption.End`,`Other`,`Sample.Clock`,`Sample.Periodic`, `Transaction.Begin`,`Transaction.End`,`Trigger`.
-            - 或者使用 `ReadingContextType` 枚举, 例如 `ReadingContextType.interruption_begin`.
-        - measurand(str|MeasurandType): 测量类型, 默认值为 MeasurandType.energy_active_import_register, 可选项为: 
-            - 字符串, 无先后顺序和分组, 仅是逻辑分组: 
-                - `Current.Export`, `Current.Import`, `Current.Offered`,
-                - `Energy.Active.Export.Register`, `Energy.Active.Import.Register`, `Energy.Reactive.Export.Register`, `Energy.Reactive.Import.Register`, `Energy.Active.Export.Interval`, `Energy.Active.Import.Interval`, `Energy.Active.Net`, `Energy.Reactive.Export.Interval`, `Energy.Reactive.Import.Interval`, `Energy.Reactive.Net`, `Energy.Apparent.Net`, `Energy.Apparent.Import`, `Energy.Apparent.Export`, 
-                - `Power.Active.Export`, `Power.Active.Import`, `Power.Factor`, `Power.Offered`, `Power.Reactive.Export`, `Power.Reactive.Import`,
-                - `Frequency`,`SoC`, `Voltag`
-            - 或者使用 `MeasurandType` 枚举, 例如 `MeasurandType.current_export`.
-        - location(str|LocationType): 指示测量值的采样位置, 默认值为 LocationType.outlet, 可选值为: 
-            - `Body`, `Cable`, `EV`, `Inlet`, `Outlet`.
-            - 或者使用 `LocationType` 枚举, 例如 `LocationType.body`.
-        - phase(str|PhaseType): 相位, 指示如何解释测量值. 例如, L1 和中性线之间 (L1-N). 请注意, 并非所有相位值都适用于所有被测量. 当不存在相位时, 测量值被解释为整体值. 
-            - `L1`, `L2`, `L3`, `N`, `L1-N`, `L2-N`, `L3-N`, `L1-L2`, `L2-L3`, `L3-L1`.
-            - 或者使用 `PhaseType` 枚举, 例如 `PhaseType.l1`.
-        - signed_meter_value(dict): 表示计量值的带符号版本, 推荐使用 `get_signed_meter_value()` 传入
-        - unit_of_measure(dict): 用乘数表示测量单位, 推荐使用 `get_unit_of_measure()` 传入
-        - custom_data(dict): 推荐使用 `get_custom_data()` 传入
+            - value(float): 采样值, 数值.
+            - context(str|ReadingContextType): 上下文类型, 默认值为 `ReadingContextType.sample_periodic`, 可选值为: 
+                - `Interruption.Begin`,`Interruption.End`,`Other`,`Sample.Clock`,`Sample.Periodic`, `Transaction.Begin`,`Transaction.End`,`Trigger`.
+                - 或者使用 `ReadingContextType` 枚举, 例如 `ReadingContextType.interruption_begin`.
+            - measurand(str|MeasurandType): 测量类型, 默认值为 MeasurandType.energy_active_import_register, 可选项为: 
+                - 字符串, 无先后顺序和分组, 仅是逻辑分组: 
+                    - `Current.Export`, `Current.Import`, `Current.Offered`,
+                    - `Energy.Active.Export.Register`, `Energy.Active.Import.Register`, `Energy.Reactive.Export.Register`, `Energy.Reactive.Import.Register`, `Energy.Active.Export.Interval`, `Energy.Active.Import.Interval`, `Energy.Active.Net`, `Energy.Reactive.Export.Interval`, `Energy.Reactive.Import.Interval`, `Energy.Reactive.Net`, `Energy.Apparent.Net`, `Energy.Apparent.Import`, `Energy.Apparent.Export`, 
+                    - `Power.Active.Export`, `Power.Active.Import`, `Power.Factor`, `Power.Offered`, `Power.Reactive.Export`, `Power.Reactive.Import`,
+                    - `Frequency`,`SoC`, `Voltag`
+                - 或者使用 `MeasurandType` 枚举, 例如 `MeasurandType.current_export`.
+            - location(str|LocationType): 指示测量值的采样位置, 默认值为 LocationType.outlet, 可选值为: 
+                - `Body`, `Cable`, `EV`, `Inlet`, `Outlet`.
+                - 或者使用 `LocationType` 枚举, 例如 `LocationType.body`.
+            - phase(str|PhaseType): 相位, 指示如何解释测量值. 例如, L1 和中性线之间 (L1-N). 请注意, 并非所有相位值都适用于所有被测量. 当不存在相位时, 测量值被解释为整体值. 
+                - `L1`, `L2`, `L3`, `N`, `L1-N`, `L2-N`, `L3-N`, `L1-L2`, `L2-L3`, `L3-L1`.
+                - 或者使用 `PhaseType` 枚举, 例如 `PhaseType.l1`.
+            - signed_meter_value(dict): 表示计量值的带符号版本, 推荐使用 `get_signed_meter_value()` 传入
+            - unit_of_measure(dict): 用乘数表示测量单位, 推荐使用 `get_unit_of_measure()` 传入
+            - custom_data(dict): 推荐使用 `get_custom_data()` 传入
 
         返回值:
-        - sampled_value(dict)
+            - sampled_value(dict)
         """
         temp_dict = {
         }
@@ -143,14 +143,14 @@ class meter_values_request(Base_OCPP_Struct_V2_0_1):
         生成 signedMeterValue
 
         参数:
-        - signed_meter_data(str):Base64 编码, 包含签名数据, 这些数据可能不仅仅包含meterValue. 它可能还包含诸如时间戳、客户参考等信息, 字符长度为[1-2500].
-        - signing_method(str): 创造电子签名的方法, 字符长度为[1-50].
-        - public_key(str): Base64 编码, 发送取决于变量_PublicKeyWithSignedMeterValue_的设置, 字符长度为[1-2500].
-        - encoding_method(str): 在使用电子签名算法前的编码meterValue的方法, 字符长度为[1-50].
-        - custom_data(dict): 推荐使用 `get_custom_data()` 传入
+            - signed_meter_data(str):Base64 编码, 包含签名数据, 这些数据可能不仅仅包含meterValue. 它可能还包含诸如时间戳、客户参考等信息, 字符长度为[1-2500].
+            - signing_method(str): 创造电子签名的方法, 字符长度为[1-50].
+            - public_key(str): Base64 编码, 发送取决于变量_PublicKeyWithSignedMeterValue_的设置, 字符长度为[1-2500].
+            - encoding_method(str): 在使用电子签名算法前的编码meterValue的方法, 字符长度为[1-50].
+            - custom_data(dict): 推荐使用 `get_custom_data()` 传入
 
         返回值:
-        - signed_meter_value(dict)
+            - signed_meter_value(dict)
         """
 
         temp_dict = {
@@ -170,12 +170,12 @@ class meter_values_request(Base_OCPP_Struct_V2_0_1):
         生成 UnitOfMeasure
 
         参数:
-        - unit(str): 数值的单位, 默认是Wh, 字符长度[1-20].
-        - multiplier(int): 该值表示以 10 为底的指数. 例如, 乘数为 3 表示 10 的 3 次方. 默认值为 0.
-        - custom_data(dict): 推荐使用 `get_custom_data()` 传入
+            - unit(str): 数值的单位, 默认是Wh, 字符长度[1-20].
+            - multiplier(int): 该值表示以 10 为底的指数. 例如, 乘数为 3 表示 10 的 3 次方. 默认值为 0.
+            - custom_data(dict): 推荐使用 `get_custom_data()` 传入
 
         返回值:
-        - unit_of_measure(dict)
+            - unit_of_measure(dict)
         """
 
         temp_dict = {
