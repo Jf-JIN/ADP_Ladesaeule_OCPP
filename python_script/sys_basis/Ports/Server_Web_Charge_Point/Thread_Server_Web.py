@@ -5,6 +5,7 @@ from flask_socketio import SocketIO
 from threading import Thread, Timer
 from sys_basis.XSignal import XSignal
 from datetime import datetime
+from tools.Inner_Decorators import *
 
 
 class ServerWeb(Thread):
