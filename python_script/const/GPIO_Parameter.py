@@ -8,4 +8,4 @@ APP_WORKSPACE_PATH = os.getcwd()
 
 
 class GPIOParams(AnalogDefine):
-    MESSAGE_SEND_INTERVAL = 3600
+    MESSAGE_SEND_INTERVAL = 60  # seconds

@@ -8,4 +8,4 @@ APP_WORKSPACE_PATH = os.getcwd()
 
 
 class OptParams(AnalogDefine):
-    CHARGING_NEEDS_REQUEST_INTERVAL = 3600
+    CHARGING_NEEDS_REQUEST_INTERVAL = 3600  # seconds
