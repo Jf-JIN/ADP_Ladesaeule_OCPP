@@ -47,7 +47,7 @@ class PortOCPPWebsocketClient(object):
                                            recv_timeout_s=recv_timeout_s,
                                            retry_interval_s=retry_interval_s,
                                            max_retries=max_retries,
-                                           info_title='OCPP_WebSocket_Server',
+                                           info_title='OCPP_WebSocket_Client',
                                            ping_interval_s=ping_interval_s,
                                            ping_timeout_s=ping_timeout_s)
         self.__websocket.signal_websocket_client_info.connect(self.signal_thread_ocpp_client_info.emit)
