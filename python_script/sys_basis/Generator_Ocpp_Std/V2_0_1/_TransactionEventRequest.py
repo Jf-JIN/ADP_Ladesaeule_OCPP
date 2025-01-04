@@ -13,7 +13,6 @@ class transaction_event_request(Base_OCPP_Struct_V2_0_1):
         trigger_reason: str | TriggerReasonType,
         seq_no: int,
         transaction_info: dict,
-        custom_data: dict | None = None,
         meter_value: list | None = None,
         offline: bool = False,
         number_of_phases_used: int | None = None,
@@ -21,29 +20,32 @@ class transaction_event_request(Base_OCPP_Struct_V2_0_1):
         reservation_id: int | None = None,
         evse: dict | None = None,
         id_token: dict | None = None,
+        custom_data: dict | None = None
     ) -> call.TransactionEvent:
         """
         生成 TransactionEventRequest
 
         参数:
             - event_type(str|TransactionEventType): 时间的类型
-                - 字符串, 无先后顺序和分组, 仅是逻辑分组: `Ended`,`Started`,`Updated`.
+                - `Ended`, `Started`, `Updated`.
+                - 或者使用 `TransactionEventType` 枚举, 例如 `TransactionEventType.ended`.
             - timestamp(str): 交易时间出现的日期和时间, 字符串, 格式为"date-time".
             - trigger_reason(str|TriggerReasonType):充电桩向CSMS发送此消息的原因.
-                - 字符串, 无先后顺序和分组, 仅是逻辑分组:
-                    - `Authorized`,`CablePluggedIn`,`ChargingRateChanged`,`ChargingStateChanged`,`Deauthorized`,`EnergyLimitReached`,`EVCommunicationLost`,
-                    - `EVConnectTimeout`,`MeterValueClock`,`MeterValuePeriodic`,`TimeLimitReached`,`Trigger`,`UnlockCommand`,`StopAuthorized`,`EVDeparted`,`EVDetected`,`RemoteStop`,
-                    - `RemoteStart`,`AbnormalCondition`,`SignedDataReceived`,`ResetCommand`
-            - seq_no(int): 递增的序列号, 有助于确定是否已接收到交易的所有消息.
+                - 字符串, 无先后顺序和分组, 仅是逻辑分组: # TODO ++++++++++++++++++++++ 请清晰化此处分组逻辑 ++++++++++++++++++++++
+                    - `Authorized`, `CablePluggedIn`, `ChargingRateChanged`, `ChargingStateChanged`, `Deauthorized`, `EnergyLimitReached`, `EVCommunicationLost`,
+                    - `EVConnectTimeout`, `MeterValueClock`, `MeterValuePeriodic`, `TimeLimitReached`, `Trigger`, `UnlockCommand`, `StopAuthorized`, `EVDeparted`,`EVDetected`, `RemoteStop`,
+                    - `RemoteStart`, `AbnormalCondition`, `SignedDataReceived`, `ResetCommand`
+                - 或者使用 `TriggerReasonType` 枚举, 例如: `TriggerReasonType.authorized`
+            - seq_no(int): 递增的序列号, 有助于确定是否已接收到交易的所有消息
             - transaction_info(dict): 交易, 推荐使用`get_transaction_info()` 传入
-            - custom_data(dict):推荐使用 `get_custom_data()` 传入
             - meter_value(list): 推荐使用 `get_meter_value_list()` 传入
-            - offline(bool): 表示此交易事件是否发生在充电站离线时.默认值为 false, 表示该事件发生在充电站在线时.
-            - number_of_phases_used(int): 如果充电站能够报告使用的相位数量, 则必须提供该信息.如果未提供, CSMS(充电站管理系统)可能能够通过设备管理确定使用的相位数量.
+            - offline(bool): 表示此交易事件是否发生在充电站离线时.默认值为 false, 表示该事件发生在充电站在线时
+            - number_of_phases_used(int): 如果充电站能够报告使用的相位数量, 则必须提供该信息.如果未提供, CSMS(充电站管理系统)可能能够通过设备管理确定使用的相位数量
             - cable_max_current(int): 连接线束中最大电流值, 单位为A.
-            - reservation_id(int): 终止此次交易的预约id.
+            - reservation_id(int): 终止此次交易的预约id
             - evse(dict): 推荐使用 `get_evse()` 传入
             - id_token(dict): 推荐使用 `get_id_tocken()` 传入
+            - custom_data(dict):推荐使用 `get_custom_data()` 传入
 
         返回值:
             - call.TransactionEvent
@@ -132,13 +134,16 @@ class transaction_event_request(Base_OCPP_Struct_V2_0_1):
 
         参数:
             - transaction_id(str): 交易的id, 字符串长度为[1-36]
-            - charging_state(str|ChargingStateType): 交易状态, `Charging`,`EVConnected`,`SuspendedEV`,`SuspendedEVSE`,`Idle`
+            - charging_state(str|ChargingStateType): 交易状态, 
+                - `Charging`, `EVConnected`, `SuspendedEV`, `SuspendedEVSE`, `Idle`
+                - 或者 `ChargingStateType` 枚举, 例如: `ChargingStateType.charging`
             - time_spent_charging(int): 在交易过程中从 EVSE向 EV(电动车)传输能量的总时间(以秒为单位). 请注意, timeSpentCharging(充电时间)小于或等于交易的持续时间.
             - stopped_reason(str|ReasonType): 交易结束原因,
-                - 字符串, 无先后顺序和分组, 仅是逻辑分组:
+                - 字符串, 无先后顺序和分组, 仅是逻辑分组: TODO ++++++++++++++++++++++ 请清晰化此处分组逻辑 ++++++++++++++++++++++
                     -`DeAuthorized`,`EmergencyStop`,`EnergyLimitReached`,`EVDisconnected`,`GroundFault`,`ImmediateReset`,
                     -`Local`,`LocalOutOfCredit`,`MasterPass`,`Other`,`OvercurrentFault`,`PowerLoss`,`PowerQuality`,
                     -`Reboot`,`Remote`,`SOCLimitReached`,`StoppedByEV`,`TimeLimitReached`,`Timeout`
+                - 或者使用 `ReasonType` 枚举, 例如: `ReasonType.de_authorized`
             - remote_startId(int): 分配给远程启动请求的 ID.
             - custom_data(dict): 推荐使用 `get_custom_data()` 传入
 
@@ -171,6 +176,8 @@ class transaction_event_request(Base_OCPP_Struct_V2_0_1):
             - connector_id(int): connector的id.
             - custom_data(dict): 推荐使用 `get_custom_data()` 传入
 
+        返回值:
+            - evse(dict)
         """
 
         temp_dict = {
@@ -183,8 +190,12 @@ class transaction_event_request(Base_OCPP_Struct_V2_0_1):
         return temp_dict
 
     @staticmethod
-    def get_id_tocken(id_token: str, id_token_type: str | IdTokenType, custom_data: dict | None = None,
-                      additional_info: dict | None = None) -> dict:
+    def get_id_tocken(
+        id_token: str,
+        id_token_type: str | IdTokenType,
+        custom_data: dict | None = None,
+        additional_info: dict | None = None
+    ) -> dict:
         """
         生成 IdToken
 

@@ -8,12 +8,12 @@ class transaction_event_response(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
-            id_token_info: dict | None,
-            updated_personal_message: dict | None,
+            id_token_info: dict | None = None,
+            updated_personal_message: dict | None = None,
             total_cost: int | float | None = None,
             charging_priority: int | None = None,
-            custom_data: dict | None = None,
-            **kwargs) -> call_result.TransactionEvent:
+            custom_data: dict | None = None
+    ) -> call_result.TransactionEvent:
         """
         生成 TransactionEventResponse
 
