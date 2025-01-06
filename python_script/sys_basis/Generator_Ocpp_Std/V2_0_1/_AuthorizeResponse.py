@@ -19,7 +19,7 @@ class authorize_response(Base_OCPP_Struct_V2_0_1):
                 - ID_ Token 包含有关标识符的状态信息. 建议不要停止对计费期间过期的令牌进行计费, 因为 ExpiryDate 仅用于缓存目的. 如果未给出 ExpiryDate, 则状态没有结束日期. 
                 - 推荐使用 `get_id_token_info()` 传入
             - certificate_status(str||None): 
-                - 证书状态信息. -如果所有证书均有效: 返回“已接受”. -如果其中一份证书被撤销, 则返回'CertificateRevoked'. 
+                - 证书状态信息. -如果所有证书均有效: 返回"已接受". -如果其中一份证书被撤销, 则返回'CertificateRevoked'. 
                 - 枚举值: `Accepted`, `SignatureError`, `CertificateExpired`, `CertificateRevoked`, `NoCertificateAvailable`, `CertChainError`, `ContractCancelled`
                 - 或使用枚举类(推荐)`AuthorizeCertificateStatusType`. e.g. `AuthorizeCertificateStatusType.accepted`
             - custom_data(dict|None): 

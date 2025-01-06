@@ -26,7 +26,7 @@ class notify_event_request(Base_OCPP_Struct_V2_0_1):
                 - Class to report an event notification for a component-variable. 
                 - recommended to use `get_event_data()` to set element or to build a custom list.
             - tbc(bool|None): 
-                - “to be continued” indicator. Indicates whether another part of the report follows in an upcoming notifyEventRequest message. Default value when omitted is false.  
+                - "to be continued" indicator. Indicates whether another part of the report follows in an upcoming notifyEventRequest message. Default value when omitted is false.  
             - custom_data(dict|None): 
                 - This class does not get 'AdditionalProperties = false' in the schema generation, so it can be extended with arbitrary JSON properties to allow adding custom data.
                 - recommended to use `get_custom_data()` to set element
