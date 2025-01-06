@@ -1,4 +1,3 @@
-
 from ocpp.v201.enums import *
 from ocpp.v201 import call
 from ._Base import *
@@ -7,14 +6,26 @@ from ._Base import *
 class get_base_report_request(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
-    def generate(request_id, report_base, custom_data=None) -> call.GetBaseReport:
+    def generate(
+        request_id: int,
+        report_base: str | ReportBaseType,
+        custom_data: dict | None = None
+    ) -> call.GetBaseReport:
         """
-        生成 GetBaseReportRequest
+        Generate GetBaseReportRequest
 
-        参数:
-            -
+        - Args: 
+            - request_id(int): 
+                - The Id of the request. 
+            - report_base(str): 
+                - This field specifies the report base. 
+                - Enum: `ConfigurationInventory`, `FullInventory`, `SummaryInventory`
+                - Or use EnumClass (Recommended): `ReportBaseType`. e.g. `ReportBaseType.configuration_inventory`
+            - custom_data(dict|None): 
+                - This class does not get 'AdditionalProperties = false' in the schema generation, so it can be extended with arbitrary JSON properties to allow adding custom data.
+                - recommended to use `get_custom_data()` to set element
 
-        返回值:
+        - Returns:
             - call.GetBaseReport
         """
         return call.GetBaseReport(
@@ -26,12 +37,12 @@ class get_base_report_request(Base_OCPP_Struct_V2_0_1):
     @staticmethod
     def load_dict(dict_data: dict) -> call.GetBaseReport:
         """
-        加载字典数据, 将字典转换为数据类
+        Load dictionary data and convert the dictionary into the ocpp dataclass.
 
-        参数:
-            - dict_data(dict): 字典数据
+        - Args:
+            - dict_data(dict): data of dictionary. It should comply with the OCPP message format (JSON).
 
-        返回值:
+        - Returns:
             - call.GetBaseReport
         """
         return call.GetBaseReport(

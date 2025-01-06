@@ -1,4 +1,3 @@
-
 from ocpp.v201.enums import *
 from ocpp.v201 import call
 from ._Base import *
@@ -7,14 +6,26 @@ from ._Base import *
 class cleared_charging_limit_request(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
-    def generate(charging_limit_source, evse_id=None, custom_data=None) -> call.ClearedChargingLimit:
+    def generate(
+        charging_limit_source: str | ChargingLimitSourceType,
+        evse_id: int | None = None,
+        custom_data: dict | None = None
+    ) -> call.ClearedChargingLimit:
         """
-        生成 ClearedChargingLimitRequest
+        Generate ClearedChargingLimitRequest
 
-        参数:
-            -
+        - Args: 
+            - charging_limit_source(str): 
+                - Source of the charging limit. 
+                - Enum: `EMS`, `Other`, `SO`, `CSO`
+                - Or use EnumClass (Recommended): `ChargingLimitSourceType`. e.g. `ChargingLimitSourceType.ems`
+            - evse_id(int|None): 
+                - EVSE Identifier. 
+            - custom_data(dict|None): 
+                - This class does not get 'AdditionalProperties = false' in the schema generation, so it can be extended with arbitrary JSON properties to allow adding custom data.
+                - recommended to use `get_custom_data()` to set element
 
-        返回值:
+        - Returns:
             - call.ClearedChargingLimit
         """
         return call.ClearedChargingLimit(
@@ -26,12 +37,12 @@ class cleared_charging_limit_request(Base_OCPP_Struct_V2_0_1):
     @staticmethod
     def load_dict(dict_data: dict) -> call.ClearedChargingLimit:
         """
-        加载字典数据, 将字典转换为数据类
+        Load dictionary data and convert the dictionary into the ocpp dataclass.
 
-        参数:
-            - dict_data(dict): 字典数据
+        - Args:
+            - dict_data(dict): data of dictionary. It should comply with the OCPP message format (JSON).
 
-        返回值:
+        - Returns:
             - call.ClearedChargingLimit
         """
         return call.ClearedChargingLimit(

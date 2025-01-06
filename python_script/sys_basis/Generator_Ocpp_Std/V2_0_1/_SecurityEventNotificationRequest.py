@@ -1,4 +1,3 @@
-
 from ocpp.v201.enums import *
 from ocpp.v201 import call
 from ._Base import *
@@ -7,14 +6,30 @@ from ._Base import *
 class security_event_notification_request(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
-    def generate(type, timestamp, tech_info=None, custom_data=None) -> call.SecurityEventNotification:
+    def generate(
+        type: str,
+        timestamp: str,
+        tech_info: str | None = None,
+        custom_data: dict | None = None
+    ) -> call.SecurityEventNotification:
         """
-        生成 SecurityEventNotificationRequest
+        Generate SecurityEventNotificationRequest
 
-        参数:
-            -
+        - Args: 
+            - type(str): 
+                - Type of the security event. This value should be taken from the Security events list. 
+                - length limit: [1, 50]
+            - timestamp(str): 
+                - Date and time at which the event occurred. 
+                - format: date-time
+            - tech_info(str|None): 
+                - Additional information about the occurred security event. 
+                - length limit: [1, 255]
+            - custom_data(dict|None): 
+                - This class does not get 'AdditionalProperties = false' in the schema generation, so it can be extended with arbitrary JSON properties to allow adding custom data.
+                - recommended to use `get_custom_data()` to set element
 
-        返回值:
+        - Returns:
             - call.SecurityEventNotification
         """
         return call.SecurityEventNotification(
@@ -27,12 +42,12 @@ class security_event_notification_request(Base_OCPP_Struct_V2_0_1):
     @staticmethod
     def load_dict(dict_data: dict) -> call.SecurityEventNotification:
         """
-        加载字典数据, 将字典转换为数据类
+        Load dictionary data and convert the dictionary into the ocpp dataclass.
 
-        参数:
-            - dict_data(dict): 字典数据
+        - Args:
+            - dict_data(dict): data of dictionary. It should comply with the OCPP message format (JSON).
 
-        返回值:
+        - Returns:
             - call.SecurityEventNotification
         """
         return call.SecurityEventNotification(

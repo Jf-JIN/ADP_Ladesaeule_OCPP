@@ -1,4 +1,3 @@
-
 from ocpp.v201.enums import *
 from ocpp.v201 import call
 from ._Base import *
@@ -7,14 +6,21 @@ from ._Base import *
 class clear_display_message_request(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
-    def generate(id, custom_data=None) -> call.ClearDisplayMessage:
+    def generate(
+        id: int,
+        custom_data: dict | None = None
+    ) -> call.ClearDisplayMessage:
         """
-        生成 ClearDisplayMessageRequest
+        Generate ClearDisplayMessageRequest
 
-        参数:
-            -
+        - Args: 
+            - id(int): 
+                - Id of the message that SHALL be removed from the Charging Station. 
+            - custom_data(dict|None): 
+                - This class does not get 'AdditionalProperties = false' in the schema generation, so it can be extended with arbitrary JSON properties to allow adding custom data.
+                - recommended to use `get_custom_data()` to set element
 
-        返回值:
+        - Returns:
             - call.ClearDisplayMessage
         """
         return call.ClearDisplayMessage(
@@ -25,12 +31,12 @@ class clear_display_message_request(Base_OCPP_Struct_V2_0_1):
     @staticmethod
     def load_dict(dict_data: dict) -> call.ClearDisplayMessage:
         """
-        加载字典数据, 将字典转换为数据类
+        Load dictionary data and convert the dictionary into the ocpp dataclass.
 
-        参数:
-            - dict_data(dict): 字典数据
+        - Args:
+            - dict_data(dict): data of dictionary. It should comply with the OCPP message format (JSON).
 
-        返回值:
+        - Returns:
             - call.ClearDisplayMessage
         """
         return call.ClearDisplayMessage(

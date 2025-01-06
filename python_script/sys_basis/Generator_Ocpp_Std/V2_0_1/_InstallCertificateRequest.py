@@ -1,4 +1,3 @@
-
 from ocpp.v201.enums import *
 from ocpp.v201 import call
 from ._Base import *
@@ -7,14 +6,27 @@ from ._Base import *
 class install_certificate_request(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
-    def generate(certificate_type, certificate, custom_data=None) -> call.InstallCertificate:
+    def generate(
+        certificate_type: str | InstallCertificateUseType,
+        certificate: str,
+        custom_data: dict | None = None
+    ) -> call.InstallCertificate:
         """
-        生成 InstallCertificateRequest
+        Generate InstallCertificateRequest
 
-        参数:
-            -
+        - Args: 
+            - certificate_type(str): 
+                - Indicates the certificate type that is sent. 
+                - Enum: `V2GRootCertificate`, `MORootCertificate`, `CSMSRootCertificate`, `ManufacturerRootCertificate`
+                - Or use EnumClass (Recommended): `InstallCertificateUseType`. e.g. `InstallCertificateUseType._v2g_root_certificate`
+            - certificate(str): 
+                - A PEM encoded X.509 certificate. 
+                - length limit: [1, 5500]
+            - custom_data(dict|None): 
+                - This class does not get 'AdditionalProperties = false' in the schema generation, so it can be extended with arbitrary JSON properties to allow adding custom data.
+                - recommended to use `get_custom_data()` to set element
 
-        返回值:
+        - Returns:
             - call.InstallCertificate
         """
         return call.InstallCertificate(
@@ -26,12 +38,12 @@ class install_certificate_request(Base_OCPP_Struct_V2_0_1):
     @staticmethod
     def load_dict(dict_data: dict) -> call.InstallCertificate:
         """
-        加载字典数据, 将字典转换为数据类
+        Load dictionary data and convert the dictionary into the ocpp dataclass.
 
-        参数:
-            - dict_data(dict): 字典数据
+        - Args:
+            - dict_data(dict): data of dictionary. It should comply with the OCPP message format (JSON).
 
-        返回值:
+        - Returns:
             - call.InstallCertificate
         """
         return call.InstallCertificate(

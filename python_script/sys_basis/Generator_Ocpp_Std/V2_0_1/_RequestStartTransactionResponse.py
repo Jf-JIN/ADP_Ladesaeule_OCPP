@@ -1,4 +1,3 @@
-
 from ocpp.v201.enums import *
 from ocpp.v201 import call_result
 from ._Base import *
@@ -7,14 +6,31 @@ from ._Base import *
 class request_start_transaction_response(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
-    def generate(status, status_info=None, transaction_id=None, custom_data=None) -> call_result.RequestStartTransaction:
+    def generate(
+        status: str | RequestStartStopStatusType,
+        status_info: dict | None = None,
+        transaction_id: str | None = None,
+        custom_data: dict | None = None
+    ) -> call_result.RequestStartTransaction:
         """
-        生成 RequestStartTransactionResponse
+        Generate RequestStartTransactionResponse
 
-        参数:
-            -
+        - Args: 
+            - status(str): 
+                - Status indicating whether the Charging Station accepts the request to start a transaction. 
+                - Enum: `Accepted`, `Rejected`
+                - Or use EnumClass (Recommended): `RequestStartStopStatusType`. e.g. `RequestStartStopStatusType.accepted`
+            - status_info(dict|None): 
+                - Element providing more information about the status. 
+                - recommended to use `get_status_info()` to set element
+            - transaction_id(str|None): 
+                - When the transaction was already started by the Charging Station before the RequestStartTransactionRequest was received, for example: cable plugged in first. This contains the transactionId of the already started transaction. 
+                - length limit: [1, 36]
+            - custom_data(dict|None): 
+                - This class does not get 'AdditionalProperties = false' in the schema generation, so it can be extended with arbitrary JSON properties to allow adding custom data.
+                - recommended to use `get_custom_data()` to set element
 
-        返回值:
+        - Returns:
             - call_result.RequestStartTransaction
         """
         return call_result.RequestStartTransaction(
@@ -27,12 +43,12 @@ class request_start_transaction_response(Base_OCPP_Struct_V2_0_1):
     @staticmethod
     def load_dict(dict_data: dict) -> call_result.RequestStartTransaction:
         """
-        加载字典数据, 将字典转换为数据类
+        Load dictionary data and convert the dictionary into the ocpp dataclass.
 
-        参数:
-            - dict_data(dict): 字典数据
+        - Args:
+            - dict_data(dict): data of dictionary. It should comply with the OCPP message format (JSON).
 
-        返回值:
+        - Returns:
             - call_result.RequestStartTransaction
         """
         return call_result.RequestStartTransaction(
@@ -41,4 +57,37 @@ class request_start_transaction_response(Base_OCPP_Struct_V2_0_1):
             transaction_id = dict_data.get('transactionId', None),
             custom_data = dict_data.get('customData', None)
         )
+
+
+    @staticmethod
+    def get_status_info(
+        reason_code: str,
+        additional_info: str | None = None,
+        custom_data: dict | None = None
+    ) -> dict:
+        """
+        Get status info
+
+        - Args: 
+            - reason_code(str): 
+                - A predefined code for the reason why the status is returned in this response. The string is case-insensitive. 
+                - length limit: [1, 20]
+            - additional_info(str|None): 
+                - Additional text to provide detailed information. 
+                - length limit: [1, 512]
+            - custom_data(dict|None): 
+                - This class does not get 'AdditionalProperties = false' in the schema generation, so it can be extended with arbitrary JSON properties to allow adding custom data.
+                - recommended to use `get_custom_data()` to set element
+
+        - Returns:
+            - temp_dict(dict)
+        """
+        temp_dict:dict = {
+            'reasonCode': reason_code
+        }
+        if additional_info is not None:
+            temp_dict['additionalInfo'] = additional_info
+        if custom_data is not None:
+            temp_dict['customData'] = custom_data
+        return temp_dict
 
