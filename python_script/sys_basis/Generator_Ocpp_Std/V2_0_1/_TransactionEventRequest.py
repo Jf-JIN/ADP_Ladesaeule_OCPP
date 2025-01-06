@@ -26,7 +26,7 @@ class transaction_event_request(Base_OCPP_Struct_V2_0_1):
 
         - 参数: 
             - event_type(str): 
-                - 这包含此事件的类型. 事务的第一个 TransactionEvent 应包含: “开始” 事务的最后一个 TransactionEvent 应包含: “结束” 所有其他事务应包含: “更新” 
+                - 这包含此事件的类型. 事务的第一个 TransactionEvent 应包含: "开始" 事务的最后一个 TransactionEvent 应包含: "结束" 所有其他事务应包含: "更新" 
                 - 枚举值: `Ended`, `Started`, `Updated`
                 - 或使用枚举类(推荐)`TransactionEventType`. e.g. `TransactionEventType.ended`
             - timestamp(str): 
@@ -160,7 +160,7 @@ class transaction_event_request(Base_OCPP_Struct_V2_0_1):
 
         - 参数: 
             - unit(str|None): 
-                - 值的单位. 如果(默认)被测量是“能量”类型, 则默认 =“Wh”. 该字段应使用第 2 部分附录中标准化测量单位列表中的值. 如果该列表中有适用的单位, 否则可能会使用“自定义”单位. 
+                - 值的单位. 如果(默认)被测量是"能量"类型, 则默认 ="Wh". 该字段应使用第 2 部分附录中标准化测量单位列表中的值. 如果该列表中有适用的单位, 否则可能会使用"自定义"单位. 
                 - 长度范围: [1, 20]
             - multiplier(int|None): 
                 - 乘数, 该值表示以 10 为底的指数. 即乘数 3 表示 10 的 3 次方. 默认值为 0. 
@@ -301,7 +301,7 @@ class transaction_event_request(Base_OCPP_Struct_V2_0_1):
             - time_spent_charging(int|None): 
                 - 在交易过程中从 EVSE向 EV(电动车)传输能量的总时间(以秒为单位). 请注意, timeSpentCharging(充电时间)小于或等于交易的持续时间.. 
             - stopped_reason(str||None): 
-                - 交易结束原因, 仅当 Reason 为“Local”时才可以省略. 
+                - 交易结束原因, 仅当 Reason 为"Local"时才可以省略. 
                 - 枚举值: `DeAuthorized`, `EmergencyStop`, `EnergyLimitReached`, `EVDisconnected`, `GroundFault`, `ImmediateReset`, `Local`, `LocalOutOfCredit`, `MasterPass`, `Other`, `OvercurrentFault`, `PowerLoss`, `PowerQuality`, `Reboot`, `Remote`, `SOCLimitReached`, `StoppedByEV`, `TimeLimitReached`, `Timeout`
                 - 或使用枚举类(推荐)`ReasonType`. e.g. `ReasonType.de_authorized`
             - remote_start_id(int|None): 
