@@ -63,7 +63,7 @@ class meter_values_request(Base_OCPP_Struct_V2_0_1):
 
         - 参数: 
             - signed_meter_data(str): 
-                - Base64 编码, 包含签名数据, 其中可能包含的不仅仅包含meterValue. 它可以包含时间戳, 客户参考等信息. 
+                - Base64 编码, 包含签名数据, 其中可能包含的不仅仅包含meterValue. 它可以包含时间戳、客户参考等信息. 
                 - 长度范围: [1, 2500]
             - signing_method(str): 
                 - 用于创建数字签名的方法. 
