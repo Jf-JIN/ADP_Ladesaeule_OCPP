@@ -142,7 +142,7 @@ class meter_values_request(Base_OCPP_Struct_V2_0_1):
             - value(int|float): 
                 - 采样值. 测量值. 
             - context(str||None): 
-                - 上下文类型. Reading_Context_Code 详细值类型: 开始, 结束或样本. 默认值=`ReadingContextType.sample_periodic`
+                - 上下文类型. Reading_Context_Code 详细值类型: 开始、结束或样本. 默认值=`ReadingContextType.sample_periodic`
                 - 枚举值: `Interruption.Begin`, `Interruption.End`, `Other`, `Sample.Clock`, `Sample.Periodic`, `Transaction.Begin`, `Transaction.End`, `Trigger`
                 - 或使用枚举类(推荐)`ReadingContextType`. e.g. `ReadingContextType.interruption.begin`
             - measurand(str||None): 
