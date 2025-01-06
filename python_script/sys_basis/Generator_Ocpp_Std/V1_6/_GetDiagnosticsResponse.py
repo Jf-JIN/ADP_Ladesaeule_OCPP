@@ -1,4 +1,3 @@
-
 from ocpp.v16.enums import *
 from ocpp.v16 import call_result
 from ._Base import *
@@ -7,14 +6,17 @@ from ._Base import *
 class get_diagnostics_response(Base_OCPP_Struct_V1_6):
 
     @staticmethod
-    def generate(file_name=None) -> call_result.GetDiagnostics:
+    def generate(
+        file_name: str | None = None
+    ) -> call_result.GetDiagnostics:
         """
-        生成 GetDiagnosticsResponse
+        Generate GetDiagnosticsResponse
 
-        参数:
-            -
+        - Args: 
+            - file_name(str|None): 
+                - length limit: [1, 255]
 
-        返回值:
+        - Returns:
             - call_result.GetDiagnostics
         """
         return call_result.GetDiagnostics(
@@ -24,12 +26,12 @@ class get_diagnostics_response(Base_OCPP_Struct_V1_6):
     @staticmethod
     def load_dict(dict_data: dict) -> call_result.GetDiagnostics:
         """
-        加载字典数据, 将字典转换为数据类
+        Load dictionary data and convert the dictionary into the ocpp dataclass.
 
-        参数:
-            - dict_data(dict): 字典数据
+        - Args:
+            - dict_data(dict): data of dictionary. It should comply with the OCPP message format (JSON).
 
-        返回值:
+        - Returns:
             - call_result.GetDiagnostics
         """
         return call_result.GetDiagnostics(

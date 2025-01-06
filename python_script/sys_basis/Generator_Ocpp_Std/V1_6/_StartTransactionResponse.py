@@ -1,4 +1,3 @@
-
 from ocpp.v16.enums import *
 from ocpp.v16 import call_result
 from ._Base import *
@@ -7,34 +6,39 @@ from ._Base import *
 class start_transaction_response(Base_OCPP_Struct_V1_6):
 
     @staticmethod
-    def generate(transaction_id, id_tag_info) -> call_result.StartTransaction:
+    def generate(
+        id_tag_info: dict,
+        transaction_id: int
+    ) -> call_result.StartTransaction:
         """
-        生成 StartTransactionResponse
+        Generate StartTransactionResponse
 
-        参数:
-            -
+        - Args: 
+            - id_tag_info(dict): 
+                - recommended to use `get_id_tag_info()` to set element
+            - transaction_id(int): 
 
-        返回值:
+        - Returns:
             - call_result.StartTransaction
         """
         return call_result.StartTransaction(
-            transaction_id = transaction_id,
-            id_tag_info = id_tag_info
+            id_tag_info = id_tag_info,
+            transaction_id = transaction_id
         )
 
     @staticmethod
     def load_dict(dict_data: dict) -> call_result.StartTransaction:
         """
-        加载字典数据, 将字典转换为数据类
+        Load dictionary data and convert the dictionary into the ocpp dataclass.
 
-        参数:
-            - dict_data(dict): 字典数据
+        - Args:
+            - dict_data(dict): data of dictionary. It should comply with the OCPP message format (JSON).
 
-        返回值:
+        - Returns:
             - call_result.StartTransaction
         """
         return call_result.StartTransaction(
-            transaction_id = dict_data['transactionId'],
-            id_tag_info = dict_data['idTagInfo']
+            id_tag_info = dict_data['idTagInfo'],
+            transaction_id = dict_data['transactionId']
         )
 

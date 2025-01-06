@@ -1,4 +1,3 @@
-
 from ocpp.v16.enums import *
 from ocpp.v16 import call_result
 from ._Base import *
@@ -7,14 +6,17 @@ from ._Base import *
 class authorize_response(Base_OCPP_Struct_V1_6):
 
     @staticmethod
-    def generate(id_tag_info) -> call_result.Authorize:
+    def generate(
+        id_tag_info: dict
+    ) -> call_result.Authorize:
         """
-        生成 AuthorizeResponse
+        Generate AuthorizeResponse
 
-        参数:
-            -
+        - Args: 
+            - id_tag_info(dict): 
+                - recommended to use `get_id_tag_info()` to set element
 
-        返回值:
+        - Returns:
             - call_result.Authorize
         """
         return call_result.Authorize(
@@ -24,12 +26,12 @@ class authorize_response(Base_OCPP_Struct_V1_6):
     @staticmethod
     def load_dict(dict_data: dict) -> call_result.Authorize:
         """
-        加载字典数据, 将字典转换为数据类
+        Load dictionary data and convert the dictionary into the ocpp dataclass.
 
-        参数:
-            - dict_data(dict): 字典数据
+        - Args:
+            - dict_data(dict): data of dictionary. It should comply with the OCPP message format (JSON).
 
-        返回值:
+        - Returns:
             - call_result.Authorize
         """
         return call_result.Authorize(
