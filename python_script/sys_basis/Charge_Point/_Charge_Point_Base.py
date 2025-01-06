@@ -9,7 +9,7 @@ import time
 
 class ChargePointBase(object):
     """
-    充电桩基类
+    充电桩服务器基类
     该类主要提供其与主线程的通讯机制
 
     信号: 
@@ -137,7 +137,7 @@ class ChargePointBase(object):
         """
         self._send_signal_info(self.__time_table_for_send_message)
 
-    def set_response_timeout(self, response_timeout_s: int | float) -> None:
+    def set_response_timeout(self, response_timeout_s: int | float) -> bool:
         """ 
         更改响应超时时间
 
@@ -195,7 +195,6 @@ class ChargePointBase(object):
         该函数将通过 signal_charge_point_info 和 signal_charge_point_ocpp_request 发送信号, 并在控制台打印信息.
 
         ocpp_message 信号将携带一个字典, 包含
-
             - `action`: 消息类型
             - `data`: OCPP消息的字典形式
             - `send_time`: 发送时间
