@@ -17,6 +17,12 @@ class Optimizer:
     - max_grid_power(int): 允许的最大电网功率
     - interval(int): 时间间隔(默认为15分钟)
     - mod(int): 模式(默认为0, 0表示动态调整, 1表示最小充电时间, 2表示最少电费花销)
+
+    属性:
+
+    方法:
+    - get_charging_needs(): 获取充电需求
+    - get_charging_schedule(): 获取充电计划
     """
 
     def __init__(self, charging_needs: dict, eprices: list, his_usage: list, max_grid_power: int = 3000,
@@ -117,7 +123,7 @@ class Optimizer:
 
     def _calculate_charging_list(self):
         """
-        生成充电计划, 综合考虑以下因素: 
+        生成充电计划, 综合考虑以下因素:
         1. 最短充电时间
         2. 最少电费花销
         3. 最大家庭充电负载限制
@@ -176,6 +182,9 @@ class Optimizer:
             print("优化失败")
 
     def _generate_charging_schedule(self):
+        """
+        把列表转换成ocpp需要的格式
+        """
         if self._charging_list is None:
             self._charging_schedule = None
         else:
