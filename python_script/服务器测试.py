@@ -31,7 +31,7 @@ async def start_server():
             while True:
                 await asyncio.sleep(10)
                 await charge_point.send_request_message(authorize_request.generate(
-                    id_token=authorize_request.get_id_tocken('111', type='Central'),
+                    id_token=authorize_request.get_id_token('111', type='Central'),
                     custom_data=authorize_request.get_custom_data(str(time.time()))))
 
         task = asyncio.create_task(charge_point.start())
