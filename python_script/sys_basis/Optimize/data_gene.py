@@ -5,6 +5,18 @@ import matplotlib.pyplot as plt
 from tools.Inner_Decorators import time_counter
 
 class DataGene:
+    """
+    数据生成类, 用于生成电价, 时间, 家庭用电数据等数据
+
+    静态方法：
+    - `gene_eprices`: 生成电价列表(区分日间, 夜间电价)
+    - `time2str`: 生成指定字符串格式的柏林时间
+    - `str2time`: 将字符串格式时间(柏林时间)转换为 datetime 对象
+    - `gene_his_usage`: 生成一天家庭的用电数据, 每隔15分钟一个数据点, 单位为Wh
+    - `plot_usage`: 绘制用电数据图
+    - `plot_charging_schedule`: 根据优化前和优化后的用电记录绘制家庭用电曲线图
+    - `split_time`: 将开始时间和结束时间按照15分钟间隔分割, 返回每段时间的持续时间、电价和可用功率.
+    """
 
     @staticmethod
     def gene_eprices(price1: float, price2: float = None, time1: int = None, time2: int = None) -> list:
@@ -60,16 +72,21 @@ class DataGene:
         return datetime.strptime(time_str, '%Y-%m-%dT%H:%M:%SZ')
 
     @staticmethod
-    def gene_his_usage() -> list[int]:
+    def gene_his_usage(fixed_user_id: int = None) -> list[int]:
         """
-        生成一天家庭的用电数据, 每隔15分钟一个数据点, 单位为Wh. 
+        生成一天家庭的用电数据, 每隔15分钟一个数据点, 单位为Wh.
+        如果传入固定用户ID，则生成固定的用电数据。
 
-        返回: 
+        参数:
+        - fixed_user_id (int): 固定的用户ID，用于生成固定数据。为None时，数据是随机的。
+
+        返回:
         - list[int]: 一天的用电数据
         """
 
-        def generate_usage(hour: int) -> int:
-            """根据小时生成用电量(单位: Wh). """
+        def generate_usage(hour: int, seed: int) -> int:
+            """根据小时和种子生成用电量(单位: Wh). """
+            np.random.seed(seed)
             if 6 <= hour < 18:  # 白天
                 usage = np.random.normal(5000, 500)
                 if 7 <= hour < 9:  # 早餐时间
@@ -86,8 +103,11 @@ class DataGene:
                     usage += np.random.normal(1200, 300)
             return max(0, int(usage))  # 确保用电量非负
 
+        # 如果有固定的用户ID，使用该ID生成固定的种子
+        seed = fixed_user_id if fixed_user_id is not None else np.random.randint(0, 100000)
+
         # 每天有96个15分钟数据点
-        return [generate_usage(i // 4) for i in range(96)]
+        return [generate_usage(i // 4, seed) for i in range(96)]
 
     @staticmethod
     def plot_usage(usage_record: list):

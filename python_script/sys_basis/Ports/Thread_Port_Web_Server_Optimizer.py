@@ -40,7 +40,7 @@ class PortWebServerOptimizer(Thread):
     def signal_thread_webs_server_finished(self) -> XSignal:
         return self.__signal_thread_webs_server_finished
 
-    def send_message(self, message: str):
+    def send_message(self, message: dict):
         self.__web_server.update_data(message)
 
     def __send_signal_info(self, *args) -> None:
@@ -54,7 +54,7 @@ class PortWebServerOptimizer(Thread):
         """
         self.__send_signal(signal=self.__signal_thread_web_server_info, error_hint='send_signal_info', log=None, doShowTitle=True, doPrintInfo=True, args=args)
 
-    def __send_signal(self, signal: XSignal, error_hint: str, log=None, doShowTitle: bool = False, doPrintInfo: bool = False, args=[]) -> None:
+    def __send_signal(self, signal: XSignal, error_hint: str, log=None, doShowTitle: bool = False, doPrintInfo: bool = False, args=None) -> None:
         """
         发送/打印 信号
 
@@ -68,6 +68,8 @@ class PortWebServerOptimizer(Thread):
         - doPrintInfo(bool): 是否打印信息
         - args: 元组或列表或可解包对象, 每个参数都应该是能够被转换为字符串的对象. 建议传递字符串、数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式.
         """
+        if args is None:
+            args = []
         try:
             temp = ''.join([str(*args)]) + '\n'
             if self.__info_title and doShowTitle:
@@ -85,7 +87,7 @@ class PortWebServerOptimizer(Thread):
             if doPrintInfo:
                 print(error_text)
             if log:
-                log(temp)
+                log(error_text)
 
     def stop(self) -> None:
         """

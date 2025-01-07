@@ -51,7 +51,7 @@ body {
 }
 
 #language_selection {
-    width: calc((var(--time_font_size)+20) * 3);
+    width: calc((var(--time_font_size)+ 20) * 3);
     height: var(--time_font_size);
     display: inline-block;
 }

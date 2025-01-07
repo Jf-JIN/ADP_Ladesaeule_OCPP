@@ -25,13 +25,7 @@ class ServerWeb(Thread):
         except:
             self.__send_signal_info(f'<Error - __init__> info_title must be convertible to a string. It has been set to None. The provided type is {type(info_title)}')
             self.__info_title = None
-        self.__app.add_url_rule('/admin', 'admin', self.__admin_route, methods=['GET', 'POST'])
-        self.__app.add_url_rule('/', 'login', self.__login, methods=['GET', 'POST'])
-        self.__app.add_url_rule('/user', 'user', self.__user_route, methods=['GET', 'POST'])
-        self.__start_timer()
-        # self.__setup_socketio_listeners()
-        self.__listening_input_data()
-        self.__logout()
+        self.__app.add_url_rule('/', 'home', self.__home_route, methods=['GET', 'POST'])
 
     @property
     def signal_web_server_info(self):
@@ -50,49 +44,14 @@ class ServerWeb(Thread):
             return
         self.__socketio.emit('update_data', message)
 
-    def __start_timer(self):
-        self.__timer = Timer(1.0, self.__send_time)
-        self.__timer.start()
+    def __home_route(self):
+        return render_template('HomePage.html')
 
-    def __send_time(self):
-        self.__socketio.emit('current_time', datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
-        self.__start_timer()
-
-    def __login(self):
-        if request.method == 'POST':
-            username = request.form.get('username')
-            password = request.form.get('password')
-            login_type = request.form.get('login_type')
-            if login_type == 'user':
-                return redirect(url_for('user'))
-            if username == 'admin' and password == 'password':
-                session['logged_in'] = True
-                return redirect(url_for('admin'))
-            else:
-                text = """Invalid username or password, you should input 'admin' and 'password' """
-                flash(text)
-            return redirect(url_for('login'))
-        return render_template('login.html')
-
-    def __admin_route(self):
-        if not session.get('logged_in'):
-            return redirect(url_for('login'))
-        return render_template('AdminPage.html')
-
-    def __user_route(self):
-        return render_template('UserPage.html')
-
-    def __listening_input_data(self):
-        @self.__socketio.on('input_data', namespace='/')
-        def handle_input_data(message):
+    def __listening_test(self):
+        @self.__socketio.on('test', namespace='/')
+        def handle_test(message):
             self.__send_signal_info(f'->>> Web Received> {message}')
             self.signal_web_server_recv.emit(message)
-
-    def __logout(self):
-        @self.__socketio.on('logout', namespace='/')
-        def handle_logout():
-            session.pop('logged_in', None)
-            self.__socketio.emit('redirect_to_login', namespace='/')
 
     def __send_signal_info(self, *args) -> None:
         """
@@ -105,7 +64,7 @@ class ServerWeb(Thread):
         """
         self.__send_signal(signal=self.signal_web_server_info, error_hint='send_signal_info', log=None, doShowTitle=True, doPrintInfo=True, args=args)
 
-    def __send_signal(self, signal: XSignal, error_hint: str, log=None, doShowTitle: bool = False, doPrintInfo: bool = False, args=[]) -> None:
+    def __send_signal(self, signal: XSignal, error_hint: str, log=None, doShowTitle: bool = False, doPrintInfo: bool = False, args=None) -> None:
         """
         发送/打印 信号
 
@@ -119,6 +78,8 @@ class ServerWeb(Thread):
         - doPrintInfo(bool): 是否打印信息
         - args: 元组或列表或可解包对象, 每个参数都应该是能够被转换为字符串的对象. 建议传递字符串、数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式.
         """
+        if args is None:
+            args = []
         try:
             temp = ''.join([str(*args)]) + '\n'
             if self.__info_title and doShowTitle:
@@ -136,10 +97,10 @@ class ServerWeb(Thread):
             if doPrintInfo:
                 print(error_text)
             if log:
-                log(temp)
+                log(error_text)
 
     def run(self):
-        self.__socketio.run(self.__app, host=self.__host, port=self.__port, debug=False)
+        self.__socketio.run(self.__app, host=self.__host, port=self.__port, debug=False, allow_unsafe_werkzeug=True)
 
 
 if __name__ == "__main__":
