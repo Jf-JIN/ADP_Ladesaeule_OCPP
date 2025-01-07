@@ -53,10 +53,10 @@ class PortOCPPWebsocketClient(object):
         self.__websocket.signal_websocket_client_info.connect(self.signal_thread_ocpp_client_info.emit)
         self.__websocket.signal_websocket_client_recv.connect(self.signal_thread_ocpp_client_recv.emit)
         self.__list_request_message = []  # 存储待发送请求消息, 当列表非空则持续发送, 当列表为空则相应事件(__event_request_message)等待
-        self.__list_response_message = []  # 存储待发送响应消息, 当列表非空则持续发送, 当列表为空则相应事件(__event_response_message)等待
+        # self.__list_response_message = []  # 存储待发送响应消息, 当列表非空则持续发送, 当列表为空则相应事件(__event_response_message)等待
         self.__list_normal_message = []  # 存储待发送普通消息, 当列表非空则持续发送, 当列表为空则相应事件(__event_normal_message)等待
         self.__event_request_message = asyncio.Event()  # 请求消息事件
-        self.__event_response_message = asyncio.Event()  # 响应消息事件
+        # self.__event_response_message = asyncio.Event()  # 响应消息事件
         self.__event_normal_message = asyncio.Event()  # 普通消息事件
         self.__isRunning = True  # 是否正在运行, 用于控制协程/循环运行的开关
         try:
@@ -172,8 +172,13 @@ class PortOCPPWebsocketClient(object):
         - send_time: 接收的信号中的时间戳, 用于判断消息是否过期, 键名 `send_time` .
             - 例如: request_message['send_time']
         """
-        self.__list_response_message.append((message_action, message, send_time))
-        self.__event_response_message.set()
+        # self.__list_response_message.append((message_action, message, send_time))
+        # self.__event_response_message.set()
+        try:
+            # 此处结果将通过信号 signal_thread_ocpp_server_recv_response_result 传递, 无需手动处理
+            self.__charge_point.send_response_message(message_action, message, send_time)
+        except:
+            self.__send_signal_info(f'<Error - send_response_message>\n{traceback.format_exc}')
 
     def send_normal_message(self, message: str) -> None:
         """
@@ -193,7 +198,7 @@ class PortOCPPWebsocketClient(object):
         涵盖发送前的检查
 
         参数:
-        - args: 可变数量的参数, 每个参数都应该是能够被转换为字符串的对象. 建议传递字符串、数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式.
+        - args: 可变数量的参数, 每个参数都应该是能够被转换为字符串的对象. 建议传递字符串数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式.
         """
         self.__send_signal(signal=self.signal_thread_ocpp_client_info, error_hint='send_signal_info', log=None, doShowTitle=True, doPrintInfo=True, args=args)
 
@@ -209,7 +214,7 @@ class PortOCPPWebsocketClient(object):
         - log: 日志器动作
         - doShowTitle(bool): 是否显示标题
         - doPrintInfo(bool): 是否打印信息
-        - args: 元组或列表或可解包对象, 每个参数都应该是能够被转换为字符串的对象. 建议传递字符串、数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式.
+        - args: 元组或列表或可解包对象, 每个参数都应该是能够被转换为字符串的对象. 建议传递字符串数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式.
         """
         try:
             temp = ''.join([str(*args)]) + '\n'
@@ -263,25 +268,25 @@ class PortOCPPWebsocketClient(object):
             if self.__list_request_message:
                 self.__event_request_message.clear()
 
-    async def __send_response_message(self) -> None:
-        """
-        发送响应消息, 循环执行
+    # async def __send_response_message(self) -> None:
+    #     """
+    #     发送响应消息, 循环执行
 
-        当 send_response_message 被调用时, 会将消息放入队列中, 然后通过此方法发送
+    #     当 send_response_message 被调用时, 会将消息放入队列中, 然后通过此方法发送
 
-        当信息列表 __list_response_message 为空时, 将等待事件 __event_response_message 触发
-        """
-        while self.__isRunning:
-            await self.__event_response_message.wait()
-            if not self.__isRunning:  # 提前终止
-                break
-            try:
-                # 此处结果将通过信号 signal_thread_ocpp_client_recv_response_result 传递, 无需手动处理
-                result = await self.__charge_point.send_response_message(*self.__list_response_message.pop(0))
-            except:
-                self.__send_signal_info(f'<Error - send_response_message>\n{traceback.format_exc}')
-            if self.__list_response_message:
-                self.__event_response_message.clear()
+    #     当信息列表 __list_response_message 为空时, 将等待事件 __event_response_message 触发
+    #     """
+    #     while self.__isRunning:
+    #         await self.__event_response_message.wait()
+    #         if not self.__isRunning:  # 提前终止
+    #             break
+    #         try:
+    #             # 此处结果将通过信号 signal_thread_ocpp_client_recv_response_result 传递, 无需手动处理
+    #             result = await self.__charge_point.send_response_message(*self.__list_response_message.pop(0))
+    #         except:
+    #             self.__send_signal_info(f'<Error - send_response_message>\n{traceback.format_exc}')
+    #         if self.__list_response_message:
+    #             self.__event_response_message.clear()
 
     async def __send_normal_message(self) -> None:
         """
