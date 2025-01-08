@@ -1,7 +1,10 @@
 
 import asyncio
+import traceback
+from sys_basis.Generator_Ocpp_Std.V2_0_1 import *
 from sys_basis.XSignal import XSignal
 from ocpp.v201.enums import *
+from const.Charge_Point_Parameters import *
 import inspect
 import time
 
@@ -11,35 +14,41 @@ class ChargePointBase(object):
     充电桩服务器基类
     该类主要提供其与主线程的通讯机制
 
-    信号: 
-    - signal_charge_point_ocpp_request: OCPP请求消息信号(向系统传递外部请求), 内容为字典, 结构如下
-        - `action`: 消息类型
-        - `data`: OCPP消息的字典形式
-        - `send_time`: 请求收到时间 / 向系统发送时间, 这里的 send 含义是从 OCPP端口 向系统发送的动作
-    - signal_charge_point_ocpp_response: OCPP响应消息信号(向系统传递外部响应), 内容为字典, 结构如下
-        - `action`: 消息类型
-        - `data`: OCPP消息的字典形式
-        - `send_time`: 请求发送时间,  这里send 含义是从 OCPP端口 向外部发送的动作
-    - signal_charge_point_ocpp_response_result: OCPP响应消息结果信号. 向系统反馈消息是否在响应时间内发送出去了, 内容为字典, 结构如下
-        - `action`: 消息类型
-        - `data`: OCPP消息的字典形式
-        - `send_time`: 接收的信号中的时间戳
-        - `result`: 发送结果, True/False
-    - signal_charge_point_info: 普通信号, 用于信息显示, 调试等
+    - 信号: 
+        - signal_charge_point_ocpp_request(dict): OCPP请求消息信号(向系统传递外部请求), 内容为字典, 结构如下
+            - `action`(str): 消息类型
+            - `data`(dict): OCPP消息的字典形式
+            - `send_time`(float): 请求收到时间 / 向系统发送时间, 这里的 send 含义是从 OCPP端口 向系统发送的动作
+        - signal_charge_point_ocpp_response(dict): OCPP响应消息信号(向系统传递外部响应), 内容为字典, 结构如下
+            - `action`(str): 消息类型
+            - `data`(dict): OCPP消息的字典形式
+            - `send_time`(float): 请求发送时间,  这里send 含义是从 OCPP端口 向外部发送的动作
+            - `response_status`(int): 响应状态, 表示响应是否成功收到. 
+                - 枚举类 `CP_Params.RESPONSE`
+                - 枚举项: `SUCCESS`, `TIMEOUT`, `ERROR`
+        - signal_charge_point_ocpp_response_result(dict): OCPP响应消息结果信号. 向系统反馈消息是否在响应时间内发送出去了, 包含具体发送信息的内容, 与函数返回值不同的一点在于其记录了详细的消息信息, 可以用于后续对发送失败的消息进行处理, 内容为字典, 结构如下
+            - `action`(str): 消息类型
+            - `data`(dict): OCPP消息的字典形式
+            - `send_time`(float): 接收的信号中的时间戳
+            - `status`(int): 发送结果
+                - 枚举类 `CP_Params.RESPONSE_RESULT`
+                - 枚举项: `SUCCESS`, `TIMEOUT`
+        - signal_charge_point_info(str): 普通信号, 用于信息显示, 调试等
 
-    属性: 
-    - response_timeout_in_baseclass(int|float)
+    - 属性: 
+        - response_timeout_in_baseclass(int|float)
 
-    方法: 
-    - send_response_message: 发送响应消息
-    - show_current_message_to_send : 显示当前待发送的消息队列
-    - show_time_table_for_send_message : 显示当前待发送消息的时间表
-    - set_response_timeout: 设置响应超时时间
-    - _wait_for_result `<保护>`: 等待响应消息
-    - _send_signal_info_and_ocpp_request `<保护>`: 发送/打印信息信号和OCPP请求消息信号
-    - _send_signal_info `<保护>`: 发送/打印信息信号
-    - _set_network_buffer_time_in_baseclass `<保护>`: 设置网络缓冲时间, 命名in_baseclass主要区分于子类的方法
-    - _init_parameters_in_baseclass `<保护>`: 初始化参数, 因继承问题不得已而为之
+    - 方法: 
+        - send_response_message: 发送响应消息
+        - show_current_message_to_send : 显示当前待发送的消息队列
+        - show_time_table_for_send_message : 显示当前待发送消息的时间表
+        - set_response_timeout: 设置响应超时时间
+        - (异步)_wait_for_result `<保护>`: 等待响应消息
+        - _send_signal_info_and_ocpp_request `<保护>`: 发送/打印信息信号和OCPP请求消息信号
+        - _send_signal_info `<保护>`: 发送/打印信息信号
+        - _set_network_buffer_time_in_baseclass `<保护>`: 设置网络缓冲时间, 命名in_baseclass主要区分于子类的方法
+        - _set_doSendDefaultResponse `保护`: 设置是否发送默认响应
+        - _init_parameters_in_baseclass `<保护>`: 初始化参数, 因继承问题不得已而为之
     """
     @property
     def signal_charge_point_ocpp_request(self):  # OCPP请求消息信号
@@ -61,13 +70,15 @@ class ChargePointBase(object):
     def response_timeout_in_baseclass(self):
         return self._response_timeout
 
-    def send_response_message(self, message_action: str | Action, message, send_time: float) -> bool:
+    def send_response_message(self, message_action: str | Action, message, send_time: float) -> int:
         """
-        发送响应消息, 结果将通过信号 signal_charge_point_ocpp_response_result 以字典形式发送, 结构如下: 
-        - `action`: 消息类型
-        - `data`: OCPP消息的字典形式
-        - `send_time`: 接收的信号中的时间戳
-        - `result`: 发送结果, True/False
+        发送响应消息, 结果将通过信号 signal_charge_point_ocpp_response_result 以字典形式发送, 结构如下:         
+            - `action`(str): 消息类型
+            - `data`(dict): OCPP消息的字典形式
+            - `send_time`(float): 接收的信号中的时间戳
+            - `status`(int): 发送结果
+                - 枚举类: `CP_Params.RESPONSE_RESULT`
+                - 枚举项: `SUCCESS`, `TIMEOUT`
 
         发送时间指 从当前实例通过信号发送给主线程的时间戳. 
         接收时间指 主线程调用该函数传递消息的时间
@@ -76,17 +87,16 @@ class ChargePointBase(object):
         1. 当消息的发送时间小于记录的发送时间, 则表示当前消息已错过发送时间, 将被自动忽略. 
         2. 当消息的接收时间大于记录的接收时间, 则表示当前消息已错过发送时间, 将被自动忽略. 
 
-        参数:
-        - message_action: 消息类型, 请使用enums.Action枚举类
-            - 例如: `enums.Action.authorize`
-        - message: 响应消息, 该消息为OCPP数据类类型的消息, 请使用生成器进行消息生成
-            - 例如: `authorize_response.generate(authorize_response.get_id_token_info('Accepted'))`
-        - send_time: 接收的信号中的时间戳, 用于判断消息是否过期, 键名 `send_time` . 
-            - 例如: request_message['send_time']
+        - 参数:
+            - message_action(str): 消息类型, 请使用enums.Action枚举类
+                - 例如: `enums.Action.authorize`
+            - message(dataclass): 响应消息, 该消息为OCPP数据类类型的消息, 请使用生成器进行消息生成
+                - 例如: `authorize_response.generate(authorize_response.get_id_token_info('Accepted'))`
+            - send_time(float): 接收的信号中的时间戳, 用于判断消息是否过期, 键名 `send_time` . 
+                - 例如: request_message['send_time']
 
-        返回:
-        - True: 发送成功
-        - False: 发送失败, 消息已过时
+        - 返回值:
+            CP_Params.RESPONSE_RESULT`的枚举值. 枚举项: `SUCCESS`, `TIMEOUT`
         """
         current_time = time.time()
 
@@ -97,17 +107,20 @@ class ChargePointBase(object):
                 'action': message_action,
                 'data': message,
                 'send_time': send_time,
-                'statis': False})
-            return False
+                'status': CP_Params.RESPONSE_RESULT.TIMEOUT})
+            return CP_Params.RESPONSE_RESULT.TIMEOUT
         # 情况2
         if message_action in self.__time_table_for_send_message and self.__time_table_for_send_message[message_action]['receive_time'] < current_time:
             self._send_signal_info(f'<Error - receive_time> the receive time of the message {message_action} is greater than the current time, the message will be ignored\n\t{message}')
-            self.signal_charge_point_ocpp_response_result.emit({
-                'action': message_action,
-                'data': message,
-                'send_time': send_time,
-                'statis': False})
-            return False
+            self.signal_charge_point_ocpp_response_result.emit(
+                {
+                    'action': message_action,
+                    'data': message,
+                    'send_time': send_time,
+                    'status': CP_Params.RESPONSE_RESULT.TIMEOUT
+                }
+            )
+            return CP_Params.RESPONSE_RESULT.TIMEOUT
         # 可以发送消息
         if message_action not in self.__time_table_for_send_message:
             self.__time_table_for_send_message[message_action] = {
@@ -119,8 +132,8 @@ class ChargePointBase(object):
             'action': message_action,
             'data': message,
             'send_time': send_time,
-            'statis': True})
-        return True
+            'status': CP_Params.RESPONSE_RESULT.SUCCESS})
+        return CP_Params.RESPONSE_RESULT.SUCCESS
 
     def show_current_message_to_send(self) -> None:
         """
@@ -140,12 +153,12 @@ class ChargePointBase(object):
         """ 
         更改响应超时时间
 
-        参数: 
-        - response_timeout(int|float): 响应超时时间, 单位为 `秒`
+        - 参数: 
+            - response_timeout(int|float): 响应超时时间, 单位为 `秒`
 
-        返回: 
-        - True: 更改成功
-        - False: 更改失败, 响应时间维持原来的值
+        - 返回值:
+            - True: 更改成功
+            - False: 更改失败, 响应时间维持原来的值
         """
         if not isinstance(response_timeout_s, (int, float)):
             self._send_signal_info('<Error - Type - response_timeout> response_timeout must be int or float')
@@ -156,18 +169,18 @@ class ChargePointBase(object):
         self._response_timeout = response_timeout_s
         return True
 
-    async def _wait_for_result(self, message_action: str | Action, default_message) -> dict:
+    async def _wait_for_result(self, message_action: str | Action, default_message):
         """
         等待响应消息
         该函数的机制是, 当监听到响应请求时, 会先发送信号给主线程, 当前实例会停留在该函数进行监听消息, 如果主线程调用了当前类中的 `send_response_message`, 则 `self.__current_message_to_send[message_action]` 会增加一个消息, 该函数会读取消息, 检查其是否为对应请求消息类型的消息, 若是则返回消息, 此时当前实例会继续执行, 否则将继续等待.
 
         当等待时长超过 self._response_timeout 时, 会返回 default_message, 并拒绝接受当次的系统响应消息.
 
-        参数:
-        - message_action: 消息类型, 请使用enums.Action枚举类
+        - 参数:
+            - message_action(str): 消息类型, 请使用enums.Action枚举类
 
-        返回:
-        - message: 响应消息, 该消息为OCPP数据类类型的消息
+        - 返回值:
+            - message(dataclass): 响应消息, 该消息为OCPP数据类类型的消息
         """
         response_timeout = self._response_timeout - self.__network_buffer_time  # 网络缓冲时间, 考虑到网络延迟, 提前结束等待
         wait_until = time.time() + response_timeout
@@ -177,26 +190,28 @@ class ChargePointBase(object):
                 self.__time_table_for_send_message[message_action]['recv_time'] = time.time()
                 error_text = f'********************\n < Error - Timeout_for_Response > System has no response for {message_action} request in {response_timeout} seconds (required response time: {self._response_timeout} seconds), the default message will be returned\n\t{default_message}\n********************'
                 self._send_signal_info(error_text)
+                if not self.__doSendDefaultResponse:
+                    await asyncio.sleep(self.__network_buffer_time + CP_Params.RESPONSE_DELAY_TIME)  # 延迟到超时后发送, 此举为了结束该函数, 但实际上消息已无效
                 return default_message
         message = self.__current_message_to_send[message_action].pop(0)
         if self.__current_message_to_send[message_action] == []:
             del self.__current_message_to_send[message_action]
         return message
 
-    def _send_signal_info_and_ocpp_request(self, message_action: str | None, info_action: str | None = None) -> None:
+    def _send_signal_info_and_ocpp_request(self, message_action: str | Action, info_action: str | None = None) -> None:
         """
         用于发送/打印 信息信号 和 OCPP消息信号
 
-        参数:
-        - message_action: 消息类型, 建议使用 Action 的枚举值, 如 Action.authorize
-        - info_action: 信息动作, 默认为None, 输出 <Request> received
+        - 参数:
+            - message_action: 消息类型, 建议使用 Action 的枚举值, 如 Action.authorize
+            - info_action: 信息动作, 默认为None, 输出 <Request> received
 
         该函数将通过 signal_charge_point_info 和 signal_charge_point_ocpp_request 发送信号, 并在控制台打印信息.
 
         ocpp_message 信号将携带一个字典, 包含
-            - `action`: 消息类型
-            - `data`: OCPP消息的字典形式
-            - `send_time`: 发送时间
+            - `action`(str): 消息类型
+            - `data`(dict): OCPP消息的字典形式
+            - `send_time`(float): 发送时间
         """
         frame = inspect.currentframe()
         caller_frame = frame.f_back
@@ -225,29 +240,33 @@ class ChargePointBase(object):
 
         涵盖发送前的检查
 
-        参数: 
-        - args: 可变数量的参数, 每个参数都应该是能够被转换为字符串的对象. 建议传递字符串、数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式. 
+        - 参数: 
+            - args: 可变数量的参数, 每个参数都应该是能够被转换为字符串的对象. 建议传递字符串、数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式. 
         """
         try:
             temp = ''.join([str(*args)]) + '\n'
             self.signal_charge_point_info.emit(temp)
             print(temp)
         except Exception as e:
-            error_text = f'********************\n<Error - send_signal_info> {e}\n********************'
+            error_text = f'********************\n<Error - send_signal_info> {traceback.format_exc()}\n********************'
             self.signal_charge_point_info.emit(error_text)
             print(error_text)
 
     def _set_network_buffer_time_in_baseclass(self, network_buffer_time) -> None:
         self.__network_buffer_time = network_buffer_time
 
+    def _set_doSendDefaultResponse(self, flag: bool) -> None:
+        self.__doSendDefaultResponse = flag
+
     def _init_parameters_in_baseclass(self) -> None:
-        self.__signal_charge_point_ocpp_request = XSignal()  # OCPP请求消息信号
-        self.__signal_charge_point_ocpp_response = XSignal()  # OCPP响应消息信号
-        self.__signal_charge_point_ocpp_response_result = XSignal()  # OCPP响应结果信号
-        self.__signal_charge_point_info = XSignal()  # 普通信号, 用于信息显示, 调试等
+        self.__signal_charge_point_ocpp_request = XSignal(dict)  # OCPP请求消息信号
+        self.__signal_charge_point_ocpp_response = XSignal(dict)  # OCPP响应消息信号
+        self.__signal_charge_point_ocpp_response_result = XSignal(dict)  # OCPP响应结果信号
+        self.__signal_charge_point_info = XSignal(str)  # 普通信号, 用于信息显示, 调试等
         self.__current_message_to_send = {}
         self.__time_table_for_send_message = {}
         self.__network_buffer_time = 0
+        self.__doSendDefaultResponse = False
 
     def __init__(self, response_timeout=30):
         self._response_timeout = response_timeout
@@ -257,13 +276,13 @@ class ChargePointBase(object):
         """
         获取调用函数的函数名和参数
 
-        参数:
-        - frame: 调用函数的帧信息
+        - 参数:
+            - frame: 调用函数的帧信息
 
         返回:
-        - dict: 调用函数的函数名和参数, 键值信息如下:
-            - `func_name`: 函数名
-            - `bound_arguments`: 参数信息
+            - dict: 调用函数的函数名和参数, 键值信息如下:
+                - `func_name`: 函数名
+                - `bound_arguments`: 参数信息
         """
         if not frame or isinstance(frame, inspect.FrameInfo):
             return None
@@ -285,14 +304,14 @@ class ChargePointBase(object):
                 return {'func_name': caller_name, 'bound_arguments': bound_arguments}
         return None
 
-    def __set_time_table_for_send_message(self, message_action, send_time) -> None:
+    def __set_time_table_for_send_message(self, message_action: str | Action, send_time: float) -> None:
         """ 
         设置信息时间表信息
         如果未曾有过该消息类型, 则创建新的字典, 否则更新该消息类型的发送时间
 
-        参数: 
-        - `message_action`: 消息类型
-        - `send_time`: 发送时间
+        - 参数: 
+            - `message_action`(str): 消息类型
+            - `send_time`(float): 发送时间
         """
         if message_action not in self.__time_table_for_send_message:
             self.__time_table_for_send_message[message_action] = {
@@ -306,25 +325,29 @@ class ChargePointBase(object):
         解包数据并发送信号
 
         数据将通过 `self._send_signal_charge_point_ocpp_response` 发送, 数据格式为: 
-            - `action`: 消息类型
-            - `data`: 解包后的数据
-            - `send_time`: 请求发送时间
+            - `action`(str): 消息类型
+            - `data`(dict): 解包后的数据
+            - `send_time`(float): 请求发送时间
+            - `response_status`(int): 响应状态, 
+                - 枚举类 `CP_Params.RESPONSE`
+                - 枚举项: `SUCCESS`, `TIMEOUT`, `ERROR`
 
-        参数:
-        - `data`: ocpp数据类, 类型如:  `call_result.Authorize`
-        - `send_time`: 发送时间
+        - 参数:
+            - `data`(dataclass): ocpp数据类, 类型如:  `call_result.Authorize`
+            - `send_time`(float): 发送时间
 
-        返回: 
-        - 无
+        - 返回值:
+            - 无
         """
         temp_dict = {
             'action': data.__class__.__name__,
             'data': {},
-            'send_time': send_time
+            'send_time': send_time,
+            'response_status': CP_Params.RESPONSE.SUCCESS,
         }
         info_text = f'->>> <Response> received - {temp_dict["action"]}\n'
         for item in data.__class__.__dict__['__match_args__']:
             temp_dict['data'][item] = getattr(data, item)
             info_text += f'\t - {item}: {temp_dict["data"][item]}\n'
         self.signal_charge_point_ocpp_response.emit(temp_dict)
-        self.signal_charge_point_info.emit(info_text)
+        self._send_signal_info(info_text)
