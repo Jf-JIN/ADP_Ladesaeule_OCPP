@@ -72,7 +72,7 @@ class DataGene:
         return datetime.strptime(time_str, '%Y-%m-%dT%H:%M:%SZ')
 
     @staticmethod
-    def gene_his_usage(fixed_user_id: int = None) -> list[int]:
+    def gene_his_usage_seed(fixed_user_id: int = None) -> list[int]:
         """
         生成一天家庭的用电数据, 每隔15分钟一个数据点, 单位为Wh.
         如果传入固定用户ID，则生成固定的用电数据。
@@ -108,6 +108,40 @@ class DataGene:
 
         # 每天有96个15分钟数据点
         return [generate_usage(i // 4, seed) for i in range(96)]
+
+    @staticmethod
+    def gene_his_usage(fixed_user_id: int = None) -> list[int]:
+        """
+        生成一天家庭的用电数据, 每隔15分钟一个数据点, 单位为Wh.
+        如果传入固定用户ID，则生成固定的用电数据。
+
+        参数:
+        - fixed_user_id (int): 固定的用户ID，用于生成固定数据。为None时，数据是随机的。
+
+        返回:
+        - list[int]: 一天的用电数据
+        """
+
+        def generate_usage(hour: int) -> int:
+            """根据小时生成用电量(单位: Wh). """
+            if 6 <= hour < 18:  # 白天
+                usage = np.random.normal(5000, 500)
+                if 7 <= hour < 9:  # 早餐时间
+                    usage += np.random.normal(2000, 300)
+                elif 12 <= hour < 14:  # 午餐时间
+                    usage += np.random.normal(1600, 200)
+            else:  # 夜间
+                usage = np.random.normal(1000, 300)
+                if 19 <= hour < 22:  # 晚上电视和照明
+                    usage += np.random.normal(2400, 500)
+                if 20 <= hour < 22:  # 晚上洗澡
+                    usage += np.random.normal(3000, 400)
+                elif 22 <= hour < 23:  # 晚上用电渐低
+                    usage += np.random.normal(1200, 300)
+            return max(0, int(usage))  # 确保用电量非负
+
+        # 每天有96个15分钟数据点
+        return [generate_usage(i // 4) for i in range(96)]
 
     @staticmethod
     def plot_usage(usage_record: list):
