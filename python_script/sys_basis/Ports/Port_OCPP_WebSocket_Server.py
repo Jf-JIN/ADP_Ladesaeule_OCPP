@@ -126,7 +126,7 @@ class PortOCPPWebsocketServer(object):
         finally:
             self.__isRunning = False
 
-    def send_request_message(self, message: str) -> None:
+    def send_request_message(self, message) -> None:
         """ 
         发送请求消息
 
@@ -205,7 +205,7 @@ class PortOCPPWebsocketServer(object):
         """
         self.__send_signal(signal=self.signal_thread_ocpp_server_info, error_hint='send_signal_info', log=None, doShowTitle=True, doPrintInfo=True, args=args)
 
-    def __send_signal(self, signal: XSignal, error_hint: str, log=None, doShowTitle: bool = False, doPrintInfo: bool = False, args=[]) -> None:
+    def __send_signal(self, signal: XSignal, error_hint: str, log=None, doShowTitle: bool = False, doPrintInfo: bool = False, args=None) -> None:
         """
         发送/打印 信号
 
@@ -219,6 +219,8 @@ class PortOCPPWebsocketServer(object):
         - doPrintInfo(bool): 是否打印信息
         - args: 元组或列表或可解包对象, 每个参数都应该是能够被转换为字符串的对象. 建议传递字符串、数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式. 
         """
+        if args is None:
+            args = []
         try:
             temp = ''.join([str(*args)]) + '\n'
             if self.__info_title and doShowTitle:
@@ -236,7 +238,7 @@ class PortOCPPWebsocketServer(object):
             if doPrintInfo:
                 print(error_text)
             if log:
-                log(temp)
+                log(error_text)
 
     async def __send_request_message(self) -> None:
         """ 
@@ -272,7 +274,7 @@ class PortOCPPWebsocketServer(object):
                 break
             try:
                 # 此处结果将通过信号 signal_thread_ocpp_server_recv_response_result 传递, 无需手动处理
-                result = await self.__charge_point.send_response_message(*self.__list_response_message.pop(0))
+                result = self.__charge_point.send_response_message(*self.__list_response_message.pop(0))
             except:
                 self.__send_signal_info(f'<Error - send_response_message>\n{traceback.format_exc}')
             if self.__list_response_message:

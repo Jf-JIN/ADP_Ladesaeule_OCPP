@@ -1,6 +1,5 @@
 
 import asyncio
-from sys_basis.Generator_Ocpp_Std.V2_0_1 import *
 from sys_basis.XSignal import XSignal
 from ocpp.v201.enums import *
 import inspect
@@ -137,7 +136,7 @@ class ChargePointBase(object):
         """
         self._send_signal_info(self.__time_table_for_send_message)
 
-    def set_response_timeout(self, response_timeout_s: int | float) -> None:
+    def set_response_timeout(self, response_timeout_s: int | float) -> bool:
         """ 
         更改响应超时时间
 

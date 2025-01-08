@@ -14,7 +14,7 @@ socket.on('update_data', (data) => {
         }
     }
 
-    if (data.opt_console) {
-        updateConsole(opt_console, data.opt_console);
+    if (data) {
+        updateConsole(opt_console, data);
     }
 });

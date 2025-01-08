@@ -277,7 +277,7 @@ class PortOCPPWebsocketClient(object):
                 break
             try:
                 # 此处结果将通过信号 signal_thread_ocpp_client_recv_response_result 传递, 无需手动处理
-                result = await self.__charge_point.send_response_message(*self.__list_response_message.pop(0))
+                result = self.__charge_point.send_response_message(*self.__list_response_message.pop(0))
             except:
                 self.__send_signal_info(f'<Error - send_response_message>\n{traceback.format_exc}')
             if self.__list_response_message:

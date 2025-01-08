@@ -26,6 +26,7 @@ class ServerWeb(Thread):
             self.__send_signal_info(f'<Error - __init__> info_title must be convertible to a string. It has been set to None. The provided type is {type(info_title)}')
             self.__info_title = None
         self.__app.add_url_rule('/', 'home', self.__home_route, methods=['GET', 'POST'])
+        self.__listening_test()
 
     @property
     def signal_web_server_info(self):
