@@ -4,10 +4,6 @@ import os
 from sys_basis.Optimize.data_gene import DataGene
 
 
-os.chdir(os.path.dirname(os.path.dirname(__file__)))
-APP_WORKSPACE_PATH = os.getcwd()
-
-
 class OptParams(AnalogDefine):
     CHARGING_NEEDS_REQUEST_INTERVAL = 3600  # seconds
     OCPP_WEBSOCKET_TIMEOUT = 30  # seconds

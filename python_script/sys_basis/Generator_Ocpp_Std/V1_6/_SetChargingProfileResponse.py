@@ -1,4 +1,3 @@
-
 from ocpp.v16.enums import *
 from ocpp.v16 import call_result
 from ._Base import *
@@ -7,14 +6,18 @@ from ._Base import *
 class set_charging_profile_response(Base_OCPP_Struct_V1_6):
 
     @staticmethod
-    def generate(status) -> call_result.SetChargingProfile:
+    def generate(
+        status: str | ChargingProfileStatus
+    ) -> call_result.SetChargingProfile:
         """
-        生成 SetChargingProfileResponse
+        Generate SetChargingProfileResponse
 
-        参数:
-            -
+        - Args: 
+            - status(str|ChargingProfileStatus): 
+                - Enum: `Accepted`, `Rejected`, `NotSupported`
+                - Or use EnumClass (Recommended): `ChargingProfileStatus`. e.g. `ChargingProfileStatus.accepted`
 
-        返回值:
+        - Returns:
             - call_result.SetChargingProfile
         """
         return call_result.SetChargingProfile(
@@ -24,12 +27,12 @@ class set_charging_profile_response(Base_OCPP_Struct_V1_6):
     @staticmethod
     def load_dict(dict_data: dict) -> call_result.SetChargingProfile:
         """
-        加载字典数据, 将字典转换为数据类
+        Load dictionary data and convert the dictionary into the ocpp dataclass.
 
-        参数:
-            - dict_data(dict): 字典数据
+        - Args:
+            - dict_data(dict): data of dictionary. It should comply with the OCPP message format (JSON).
 
-        返回值:
+        - Returns:
             - call_result.SetChargingProfile
         """
         return call_result.SetChargingProfile(

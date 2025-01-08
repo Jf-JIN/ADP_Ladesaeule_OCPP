@@ -1,4 +1,3 @@
-
 from ocpp.v16.enums import *
 from ocpp.v16 import call_result
 from ._Base import *
@@ -7,14 +6,26 @@ from ._Base import *
 class get_composite_schedule_response(Base_OCPP_Struct_V1_6):
 
     @staticmethod
-    def generate(status, connector_id=None, schedule_start=None, charging_schedule=None) -> call_result.GetCompositeSchedule:
+    def generate(
+        status: str | GetCompositeScheduleStatus,
+        connector_id: int | None = None,
+        schedule_start: str | None = None,
+        charging_schedule: dict | None = None
+    ) -> call_result.GetCompositeSchedule:
         """
-        生成 GetCompositeScheduleResponse
+        Generate GetCompositeScheduleResponse
 
-        参数:
-            -
+        - Args: 
+            - status(str|GetCompositeScheduleStatus): 
+                - Enum: `Accepted`, `Rejected`
+                - Or use EnumClass (Recommended): `GetCompositeScheduleStatus`. e.g. `GetCompositeScheduleStatus.accepted`
+            - connector_id(int|None): 
+            - schedule_start(str|None): 
+                - format: date-time
+            - charging_schedule(dict|None): 
+                - recommended to use `get_charging_schedule()` to set element
 
-        返回值:
+        - Returns:
             - call_result.GetCompositeSchedule
         """
         return call_result.GetCompositeSchedule(
@@ -27,12 +38,12 @@ class get_composite_schedule_response(Base_OCPP_Struct_V1_6):
     @staticmethod
     def load_dict(dict_data: dict) -> call_result.GetCompositeSchedule:
         """
-        加载字典数据, 将字典转换为数据类
+        Load dictionary data and convert the dictionary into the ocpp dataclass.
 
-        参数:
-            - dict_data(dict): 字典数据
+        - Args:
+            - dict_data(dict): data of dictionary. It should comply with the OCPP message format (JSON).
 
-        返回值:
+        - Returns:
             - call_result.GetCompositeSchedule
         """
         return call_result.GetCompositeSchedule(

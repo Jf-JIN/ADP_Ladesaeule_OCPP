@@ -40,7 +40,7 @@ class PortWebServerChargePoint(Thread):
     def signal_thread_webs_server_finished(self) -> XSignal:
         return self.__signal_thread_webs_server_finished
 
-    def send_message(self, message: str):
+    def send_message(self, message: dict):
         self.__web_server.update_data(message)
 
     def __send_signal_info(self, *args) -> None:
@@ -85,7 +85,7 @@ class PortWebServerChargePoint(Thread):
             if doPrintInfo:
                 print(error_text)
             if log:
-                log(temp)
+                log(error_text)
 
     def stop(self) -> None:
         """

@@ -1,4 +1,3 @@
-
 from ocpp.v16.enums import *
 from ocpp.v16 import call_result
 from ._Base import *
@@ -7,36 +6,45 @@ from ._Base import *
 class boot_notification_response(Base_OCPP_Struct_V1_6):
 
     @staticmethod
-    def generate(current_time, interval, status) -> call_result.BootNotification:
+    def generate(
+        status: str | RegistrationStatus,
+        current_time: str,
+        interval: int
+    ) -> call_result.BootNotification:
         """
-        生成 BootNotificationResponse
+        Generate BootNotificationResponse
 
-        参数:
-            -
+        - Args: 
+            - status(str|RegistrationStatus): 
+                - Enum: `Accepted`, `Pending`, `Rejected`
+                - Or use EnumClass (Recommended): `RegistrationStatus`. e.g. `RegistrationStatus.accepted`
+            - current_time(str): 
+                - format: date-time
+            - interval(int): 
 
-        返回值:
+        - Returns:
             - call_result.BootNotification
         """
         return call_result.BootNotification(
+            status = status,
             current_time = current_time,
-            interval = interval,
-            status = status
+            interval = interval
         )
 
     @staticmethod
     def load_dict(dict_data: dict) -> call_result.BootNotification:
         """
-        加载字典数据, 将字典转换为数据类
+        Load dictionary data and convert the dictionary into the ocpp dataclass.
 
-        参数:
-            - dict_data(dict): 字典数据
+        - Args:
+            - dict_data(dict): data of dictionary. It should comply with the OCPP message format (JSON).
 
-        返回值:
+        - Returns:
             - call_result.BootNotification
         """
         return call_result.BootNotification(
+            status = dict_data['status'],
             current_time = dict_data['currentTime'],
-            interval = dict_data['interval'],
-            status = dict_data['status']
+            interval = dict_data['interval']
         )
 

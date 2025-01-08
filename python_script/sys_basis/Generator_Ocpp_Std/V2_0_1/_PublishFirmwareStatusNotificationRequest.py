@@ -1,4 +1,3 @@
-
 from ocpp.v201.enums import *
 from ocpp.v201 import call
 from ._Base import *
@@ -7,14 +6,29 @@ from ._Base import *
 class publish_firmware_status_notification_request(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
-    def generate(status, location=None, request_id=None, custom_data=None) -> call.PublishFirmwareStatusNotification:
+    def generate(
+        status: str | PublishFirmwareStatusType,
+        location: list | None = None,
+        request_id: int | None = None,
+        custom_data: dict | None = None
+    ) -> call.PublishFirmwareStatusNotification:
         """
-        生成 PublishFirmwareStatusNotificationRequest
+        Generate PublishFirmwareStatusNotificationRequest
 
-        参数:
-            -
+        - Args: 
+            - status(str): 
+                - This contains the progress status of the publishfirmware installation. 
+                - Enum: `Idle`, `DownloadScheduled`, `Downloading`, `Downloaded`, `Published`, `DownloadFailed`, `DownloadPaused`, `InvalidChecksum`, `ChecksumVerified`, `PublishFailed`
+                - Or use EnumClass (Recommended): `PublishFirmwareStatusType`. e.g. `PublishFirmwareStatusType.idle`
+            - location(list|None): 
+                - recommended to use `get_location()` to set element or to build a custom list.
+            - request_id(int|None): 
+                - The request id that was provided in the PublishFirmwareRequest which triggered this action. 
+            - custom_data(dict|None): 
+                - This class does not get 'AdditionalProperties = false' in the schema generation, so it can be extended with arbitrary JSON properties to allow adding custom data.
+                - recommended to use `get_custom_data()` to set element
 
-        返回值:
+        - Returns:
             - call.PublishFirmwareStatusNotification
         """
         return call.PublishFirmwareStatusNotification(
@@ -27,12 +41,12 @@ class publish_firmware_status_notification_request(Base_OCPP_Struct_V2_0_1):
     @staticmethod
     def load_dict(dict_data: dict) -> call.PublishFirmwareStatusNotification:
         """
-        加载字典数据, 将字典转换为数据类
+        Load dictionary data and convert the dictionary into the ocpp dataclass.
 
-        参数:
-            - dict_data(dict): 字典数据
+        - Args:
+            - dict_data(dict): data of dictionary. It should comply with the OCPP message format (JSON).
 
-        返回值:
+        - Returns:
             - call.PublishFirmwareStatusNotification
         """
         return call.PublishFirmwareStatusNotification(

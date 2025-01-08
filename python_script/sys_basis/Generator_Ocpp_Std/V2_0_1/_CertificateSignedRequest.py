@@ -1,4 +1,3 @@
-
 from ocpp.v201.enums import *
 from ocpp.v201 import call
 from ._Base import *
@@ -7,14 +6,27 @@ from ._Base import *
 class certificate_signed_request(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
-    def generate(certificate_chain, certificate_type=None, custom_data=None) -> call.CertificateSigned:
+    def generate(
+        certificate_chain: str,
+        certificate_type: str | CertificateSigningUseType | None = None,
+        custom_data: dict | None = None
+    ) -> call.CertificateSigned:
         """
-        生成 CertificateSignedRequest
+        Generate CertificateSignedRequest
 
-        参数:
-            -
+        - Args: 
+            - certificate_chain(str): 
+                - The signed PEM encoded X.509 certificate. This can also contain the necessary sub CA certificates. In that case, the order of the bundle should follow the certificate chain, starting from the leaf certificate. The Configuration Variable <<configkey-max-certificate-chain-size,MaxCertificateChainSize>> can be used to limit the maximum size of this field. 
+                - length limit: [1, 10000]
+            - certificate_type(str||None): 
+                - Indicates the type of the signed certificate that is returned. When omitted the certificate is used for both the 15118 connection (if implemented) and the Charging Station to CSMS connection. This field is required when a typeOfCertificate was included in the <<signcertificaterequest,SignCertificateRequest>> that requested this certificate to be signed AND both the 15118 connection and the Charging Station connection are implemented. 
+                - Enum: `ChargingStationCertificate`, `V2GCertificate`
+                - Or use EnumClass (Recommended): `CertificateSigningUseType`. e.g. `CertificateSigningUseType.charging_station_certificate`
+            - custom_data(dict|None): 
+                - This class does not get 'AdditionalProperties = false' in the schema generation, so it can be extended with arbitrary JSON properties to allow adding custom data.
+                - recommended to use `get_custom_data()` to set element
 
-        返回值:
+        - Returns:
             - call.CertificateSigned
         """
         return call.CertificateSigned(
@@ -26,12 +38,12 @@ class certificate_signed_request(Base_OCPP_Struct_V2_0_1):
     @staticmethod
     def load_dict(dict_data: dict) -> call.CertificateSigned:
         """
-        加载字典数据, 将字典转换为数据类
+        Load dictionary data and convert the dictionary into the ocpp dataclass.
 
-        参数:
-            - dict_data(dict): 字典数据
+        - Args:
+            - dict_data(dict): data of dictionary. It should comply with the OCPP message format (JSON).
 
-        返回值:
+        - Returns:
             - call.CertificateSigned
         """
         return call.CertificateSigned(

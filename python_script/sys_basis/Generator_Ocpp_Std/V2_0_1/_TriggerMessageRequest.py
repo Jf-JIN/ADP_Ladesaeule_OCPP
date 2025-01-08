@@ -1,4 +1,3 @@
-
 from ocpp.v201.enums import *
 from ocpp.v201 import call
 from ._Base import *
@@ -7,14 +6,27 @@ from ._Base import *
 class trigger_message_request(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
-    def generate(requested_message, evse=None, custom_data=None) -> call.TriggerMessage:
+    def generate(
+        requested_message: str | MessageTriggerType,
+        evse: dict | None = None,
+        custom_data: dict | None = None
+    ) -> call.TriggerMessage:
         """
-        生成 TriggerMessageRequest
+        Generate TriggerMessageRequest
 
-        参数:
-            -
+        - Args: 
+            - requested_message(str): 
+                - Type of message to be triggered. 
+                - Enum: `BootNotification`, `LogStatusNotification`, `FirmwareStatusNotification`, `Heartbeat`, `MeterValues`, `SignChargingStationCertificate`, `SignV2GCertificate`, `StatusNotification`, `TransactionEvent`, `SignCombinedCertificate`, `PublishFirmwareStatusNotification`
+                - Or use EnumClass (Recommended): `MessageTriggerType`. e.g. `MessageTriggerType.boot_notification`
+            - evse(dict|None): 
+                - EVSE Electric Vehicle Supply Equipment 
+                - recommended to use `get_evse()` to set element
+            - custom_data(dict|None): 
+                - This class does not get 'AdditionalProperties = false' in the schema generation, so it can be extended with arbitrary JSON properties to allow adding custom data.
+                - recommended to use `get_custom_data()` to set element
 
-        返回值:
+        - Returns:
             - call.TriggerMessage
         """
         return call.TriggerMessage(
@@ -26,12 +38,12 @@ class trigger_message_request(Base_OCPP_Struct_V2_0_1):
     @staticmethod
     def load_dict(dict_data: dict) -> call.TriggerMessage:
         """
-        加载字典数据, 将字典转换为数据类
+        Load dictionary data and convert the dictionary into the ocpp dataclass.
 
-        参数:
-            - dict_data(dict): 字典数据
+        - Args:
+            - dict_data(dict): data of dictionary. It should comply with the OCPP message format (JSON).
 
-        返回值:
+        - Returns:
             - call.TriggerMessage
         """
         return call.TriggerMessage(
@@ -39,4 +51,35 @@ class trigger_message_request(Base_OCPP_Struct_V2_0_1):
             evse = dict_data.get('evse', None),
             custom_data = dict_data.get('customData', None)
         )
+
+
+    @staticmethod
+    def get_evse(
+        id: int,
+        connector_id: int | None = None,
+        custom_data: dict | None = None
+    ) -> dict:
+        """
+        Get evse
+
+        - Args: 
+            - id(int): 
+                - Identified_ Object. MRID. Numeric_ Identifier EVSE Identifier. This contains a number (> 0) designating an EVSE of the Charging Station. 
+            - connector_id(int|None): 
+                - An id to designate a specific connector (on an EVSE) by connector index number. 
+            - custom_data(dict|None): 
+                - This class does not get 'AdditionalProperties = false' in the schema generation, so it can be extended with arbitrary JSON properties to allow adding custom data.
+                - recommended to use `get_custom_data()` to set element
+
+        - Returns:
+            - temp_dict(dict)
+        """
+        temp_dict:dict = {
+            'id': id
+        }
+        if connector_id is not None:
+            temp_dict['connectorId'] = connector_id
+        if custom_data is not None:
+            temp_dict['customData'] = custom_data
+        return temp_dict
 

@@ -1,4 +1,3 @@
-
 from ocpp.v16.enums import *
 from ocpp.v16 import call_result
 from ._Base import *
@@ -7,14 +6,18 @@ from ._Base import *
 class reset_response(Base_OCPP_Struct_V1_6):
 
     @staticmethod
-    def generate(status) -> call_result.Reset:
+    def generate(
+        status: str | ResetStatus
+    ) -> call_result.Reset:
         """
-        生成 ResetResponse
+        Generate ResetResponse
 
-        参数:
-            -
+        - Args: 
+            - status(str|ResetStatus): 
+                - Enum: `Accepted`, `Rejected`
+                - Or use EnumClass (Recommended): `ResetStatus`. e.g. `ResetStatus.accepted`
 
-        返回值:
+        - Returns:
             - call_result.Reset
         """
         return call_result.Reset(
@@ -24,12 +27,12 @@ class reset_response(Base_OCPP_Struct_V1_6):
     @staticmethod
     def load_dict(dict_data: dict) -> call_result.Reset:
         """
-        加载字典数据, 将字典转换为数据类
+        Load dictionary data and convert the dictionary into the ocpp dataclass.
 
-        参数:
-            - dict_data(dict): 字典数据
+        - Args:
+            - dict_data(dict): data of dictionary. It should comply with the OCPP message format (JSON).
 
-        返回值:
+        - Returns:
             - call_result.Reset
         """
         return call_result.Reset(

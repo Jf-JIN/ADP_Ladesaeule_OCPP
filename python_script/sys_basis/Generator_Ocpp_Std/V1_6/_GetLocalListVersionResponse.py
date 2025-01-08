@@ -1,4 +1,3 @@
-
 from ocpp.v16.enums import *
 from ocpp.v16 import call_result
 from ._Base import *
@@ -7,14 +6,16 @@ from ._Base import *
 class get_local_list_version_response(Base_OCPP_Struct_V1_6):
 
     @staticmethod
-    def generate(list_version) -> call_result.GetLocalListVersion:
+    def generate(
+        list_version: int
+    ) -> call_result.GetLocalListVersion:
         """
-        生成 GetLocalListVersionResponse
+        Generate GetLocalListVersionResponse
 
-        参数:
-            -
+        - Args: 
+            - list_version(int): 
 
-        返回值:
+        - Returns:
             - call_result.GetLocalListVersion
         """
         return call_result.GetLocalListVersion(
@@ -24,12 +25,12 @@ class get_local_list_version_response(Base_OCPP_Struct_V1_6):
     @staticmethod
     def load_dict(dict_data: dict) -> call_result.GetLocalListVersion:
         """
-        加载字典数据, 将字典转换为数据类
+        Load dictionary data and convert the dictionary into the ocpp dataclass.
 
-        参数:
-            - dict_data(dict): 字典数据
+        - Args:
+            - dict_data(dict): data of dictionary. It should comply with the OCPP message format (JSON).
 
-        返回值:
+        - Returns:
             - call_result.GetLocalListVersion
         """
         return call_result.GetLocalListVersion(

@@ -23,6 +23,11 @@ class ChargePointV16(cpv16, ChargePointBase):
         - `action`: 消息类型
         - `data`: OCPP消息的字典形式
         - `send_time`: 请求发送时间,  这里send 含义是从 OCPP端口 向外部发送的动作
+    - signal_charge_point_ocpp_response_result: OCPP响应消息结果信号. 向系统反馈消息是否在响应时间内发送出去了, 内容为字典, 结构如下
+        - `action`: 消息类型
+        - `data`: OCPP消息的字典形式
+        - `send_time`: 接收的信号中的时间戳
+        - `result`: 发送结果, True/False
     - signal_charge_point_info: 普通信号, 用于信息显示, 调试等
 
     属性: 

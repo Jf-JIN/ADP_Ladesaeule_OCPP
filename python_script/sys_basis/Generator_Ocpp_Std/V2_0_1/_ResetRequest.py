@@ -1,4 +1,3 @@
-
 from ocpp.v201.enums import *
 from ocpp.v201 import call
 from ._Base import *
@@ -7,14 +6,26 @@ from ._Base import *
 class reset_request(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
-    def generate(type, evse_id=None, custom_data=None) -> call.Reset:
+    def generate(
+        type: str | ResetType,
+        evse_id: int | None = None,
+        custom_data: dict | None = None
+    ) -> call.Reset:
         """
-        生成 ResetRequest
+        Generate ResetRequest
 
-        参数:
-            -
+        - Args: 
+            - type(str): 
+                - This contains the type of reset that the Charging Station or EVSE should perform. 
+                - Enum: `Immediate`, `OnIdle`
+                - Or use EnumClass (Recommended): `ResetType`. e.g. `ResetType.immediate`
+            - evse_id(int|None): 
+                - This contains the ID of a specific EVSE that needs to be reset, instead of the entire Charging Station. 
+            - custom_data(dict|None): 
+                - This class does not get 'AdditionalProperties = false' in the schema generation, so it can be extended with arbitrary JSON properties to allow adding custom data.
+                - recommended to use `get_custom_data()` to set element
 
-        返回值:
+        - Returns:
             - call.Reset
         """
         return call.Reset(
@@ -26,12 +37,12 @@ class reset_request(Base_OCPP_Struct_V2_0_1):
     @staticmethod
     def load_dict(dict_data: dict) -> call.Reset:
         """
-        加载字典数据, 将字典转换为数据类
+        Load dictionary data and convert the dictionary into the ocpp dataclass.
 
-        参数:
-            - dict_data(dict): 字典数据
+        - Args:
+            - dict_data(dict): data of dictionary. It should comply with the OCPP message format (JSON).
 
-        返回值:
+        - Returns:
             - call.Reset
         """
         return call.Reset(
