@@ -43,10 +43,11 @@ class ChargePointBase(object):
         - show_current_message_to_send : 显示当前待发送的消息队列
         - show_time_table_for_send_message : 显示当前待发送消息的时间表
         - set_response_timeout: 设置响应超时时间
-        - _wait_for_result `<保护>`: 等待响应消息
+        - (异步)_wait_for_result `<保护>`: 等待响应消息
         - _send_signal_info_and_ocpp_request `<保护>`: 发送/打印信息信号和OCPP请求消息信号
         - _send_signal_info `<保护>`: 发送/打印信息信号
         - _set_network_buffer_time_in_baseclass `<保护>`: 设置网络缓冲时间, 命名in_baseclass主要区分于子类的方法
+        - _set_doSendDefaultResponse `保护`: 设置是否发送默认响应
         - _init_parameters_in_baseclass `<保护>`: 初始化参数, 因继承问题不得已而为之
     """
     @property
@@ -254,7 +255,7 @@ class ChargePointBase(object):
     def _set_network_buffer_time_in_baseclass(self, network_buffer_time) -> None:
         self.__network_buffer_time = network_buffer_time
 
-    def _set_doSendDefaultResponse(self, flag: bool):
+    def _set_doSendDefaultResponse(self, flag: bool) -> None:
         self.__doSendDefaultResponse = flag
 
     def _init_parameters_in_baseclass(self) -> None:

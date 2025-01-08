@@ -39,12 +39,11 @@ class ChargePointV16(cpv16, ChargePointBase):
         - response_timeout_in_baseclass(int|float)
 
     - 方法: 
-        - send_request_message: 发送请求消息
+        - (异步)send_request_message: 发送请求消息
         - send_response_message: 发送响应消息
         - show_current_message_to_send : 显示当前待发送的消息队列
         - show_time_table_for_send_message : 显示当前待发送消息的时间表
         - set_response_timeout: 设置响应超时时间
-
     """
 
     def __init__(self, id, connection, response_timeout: int | float = 30):

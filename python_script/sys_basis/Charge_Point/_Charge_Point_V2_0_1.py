@@ -39,7 +39,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         - response_timeout_in_baseclass(int|float)
 
     - 方法: 
-        - send_request_message: 发送请求消息
+        - (异步)send_request_message: 发送请求消息
         - send_response_message: 发送响应消息
         - show_current_message_to_send : 显示当前待发送的消息队列
         - show_time_table_for_send_message : 显示当前待发送消息的时间表
