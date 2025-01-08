@@ -20,8 +20,8 @@ class WebSocketClient(object):
         - ping_timeout_s (int|float): 心跳超时时间, 单位为秒, 须大于0, 默认值为 20
 
     - 信号:
-        - signal_websocket_client_recv: WebSocket 客户端接收信号
-        - signal_websocket_client_info: 普通信号, 用于信息显示, 调试等
+        - signal_websocket_client_recv(str): WebSocket 客户端接收信号
+        - signal_websocket_client_info(str): 普通信号, 用于信息显示, 调试等
 
     - 属性:
         - websocket(ClientConnection): WebSocket 连接对象
