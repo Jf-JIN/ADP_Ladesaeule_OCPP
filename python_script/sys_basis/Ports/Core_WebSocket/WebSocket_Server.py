@@ -1,5 +1,6 @@
 
 import asyncio
+import traceback
 import websockets
 from sys_basis.XSignal import XSignal
 from websockets.asyncio.server import Server, ServerConnection  # 用于类型注释
@@ -129,7 +130,7 @@ class WebSocketServer(object):
                 self.__send_signal_recv(message)
                 await self.__filter_for_ocpp(message=message)
         except websockets.ConnectionClosed as e:
-            self.__send_signal_info(f'--<Connection_Closed> {e}')
+            self.__send_signal_info(f'--<Connection_Closed> {traceback.format_exc()}')
 
     async def __filter_for_ocpp(self, message: str):
         """ 
@@ -192,7 +193,7 @@ class WebSocketServer(object):
             if log:
                 log(temp)
         except Exception as e:
-            error_text = f'********************\n<Error - {error_hint}> {e}\n********************'
+            error_text = f'********************\n<Error - {error_hint}> {traceback.format_exc()}\n********************'
             if self.__info_title and doShowTitle:
                 error_text = f'< {self.__info_title} >\n' + error_text
             signal.emit(error_text)
