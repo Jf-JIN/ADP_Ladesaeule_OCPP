@@ -48,5 +48,5 @@ def out(message):  # 槽函数
 
 asyncio.run(start_server())
 
-# a = ServerWeb()
-# a.start()
+a = ServerWeb()
+a.start()

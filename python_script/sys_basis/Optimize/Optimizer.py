@@ -1,9 +1,9 @@
-from ChargingNeedsRequest import *
+
 from ChargingProfileRequest import *
-from datetime import datetime, timedelta
-import numpy as np
+from datetime import datetime
 from scipy.optimize import minimize
 from sys_basis.Generator_Ocpp_Std.V2_0_1 import set_charging_profile_request
+from tools.Inner_Decorators import time_counter
 
 
 class Optimizer:
@@ -59,6 +59,7 @@ class Optimizer:
 
         # 初始化充电计划
         self._charging_schedule = []
+        self._isopt = False
         self._generate_charging_schedule()
 
     def get_charging_needs(self):
@@ -66,6 +67,9 @@ class Optimizer:
 
     def get_charging_schedule(self):
         return self._charging_schedule
+
+    def IsOpt(self):
+        return self._isopt
 
     def _get_weight(self):
         """
@@ -165,6 +169,7 @@ class Optimizer:
         # 优化
         result = minimize(cost_function, P0, bounds=bounds, constraints=constraints)
 
+        self._isopt = result.success
         # 输出结果
         if result.success:
             self._charging_list = result.x
@@ -220,13 +225,13 @@ if __name__ == "__main__":
             "evMinCurrent": 6,
             "evMaxVoltage": 400,
         },
-        "departureTime": DataGene.time2str(datetime(2025, 1, 3, 18, 18))
+        "departureTime": DataGene.time2str(datetime.now() + timedelta(hours=10))
     }
     eprices = DataGene.gene_eprices(0.33, 0.3, 6, 22)
     # print(eprices)
-    his_usage = DataGene.gene_his_usage()
+    his_usage = DataGene.gene_his_usage_seed(3456)
     # print(his_usage)
-    # DataGene.plot_usage(his_usage)
+    DataGene.plot_usage(his_usage)
     op_dp = Optimizer(charging_needs, eprices, his_usage, 16000)
     # print(op_dp.get_charging_needs())
     chargingschedule = op_dp.get_charging_schedule()
