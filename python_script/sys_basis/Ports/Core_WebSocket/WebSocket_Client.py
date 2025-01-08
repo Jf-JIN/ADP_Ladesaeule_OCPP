@@ -1,5 +1,6 @@
 
 import asyncio
+import traceback
 import websockets
 from sys_basis.XSignal import XSignal
 from websockets.asyncio.client import ClientConnection  # 用于类型注释
@@ -100,7 +101,7 @@ class WebSocketClient(object):
                 self.__send_signal_info(f'<<<- Send< {message}')
                 await self.__websocket.send(message)
             except (ConnectionAbortedError, websockets.exceptions.ConnectionClosedError) as e:
-                self.__send_signal_info(f'--<Connection_Failed>: Connection closed, reconnecting... ({e})')
+                self.__send_signal_info(f'--<Connection_Failed>: Connection closed, reconnecting... ({traceback.format_exc()})')
                 self.__websocket = None
                 await self.__connect()
                 await self.send(message)
@@ -118,7 +119,7 @@ class WebSocketClient(object):
             except asyncio.TimeoutError as e:
                 await self.__websocket.ping()
             except websockets.exceptions.ConnectionClosedError as e:
-                self.__send_signal_info(f'--<Connection_Failed>: Connection closed, reconnecting... ({e})')
+                self.__send_signal_info(f'--<Connection_Failed>: Connection closed, reconnecting... ({traceback.format_exc()})')
                 if self.__websocket is not None:
                     await self.__websocket.close()
                     self.__websocket = None
@@ -151,11 +152,12 @@ class WebSocketClient(object):
                 self.__websocket = await websockets.connect(self.__uri, ping_interval=self.__ping_interval_s, ping_timeout=self.__ping_timeout_s)
                 await self.__websocket.send('Successfully connected to the server')
                 return self
-            except (ConnectionRefusedError, websockets.exceptions.WebSocketException) as e:
+            # except (ConnectionRefusedError, websockets.exceptions.WebSocketException, TimeoutError) as e:
+            except:
                 if self.__max_retries < 0:
-                    self.__send_signal_info(f'--<Connection_Failed>: {e} Reconnecting...')
+                    self.__send_signal_info(f'--<Connection_Failed>: {traceback.format_exc()} Reconnecting...')
                 elif retries <= self.__max_retries:
-                    self.__send_signal_info(f'--<Connection_Failed>: {e} Reconnecting... ({retries}/{self.__max_retries})...')
+                    self.__send_signal_info(f'--<Connection_Failed>: {traceback.format_exc()} Reconnecting... ({retries}/{self.__max_retries})...')
                     retries += 1
                 else:
                     self.__send_signal_info(f'--<Connection_Failed>: Unable to connect to the server. Maximum retry attempts reached. ({self.__max_retries})')
@@ -207,7 +209,7 @@ class WebSocketClient(object):
             if log:
                 log(temp)
         except Exception as e:
-            error_text = f'********************\n<Error - {error_hint}> {e}\n********************'
+            error_text = f'********************\n<Error - {error_hint}> {traceback.format_exc()}\n********************'
             if self.__info_title and doShowTitle:
                 error_text = f'< {self.__info_title} >\n' + error_text
             signal.emit(error_text)
