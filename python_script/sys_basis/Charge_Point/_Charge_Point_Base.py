@@ -1,6 +1,5 @@
 
 import asyncio
-from sys_basis.Generator_Ocpp_Std.V2_0_1 import *
 from sys_basis.XSignal import XSignal
 from ocpp.v201.enums import *
 import inspect
