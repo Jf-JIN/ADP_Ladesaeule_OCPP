@@ -1,3 +1,8 @@
+
+:root {
+    --svg_height: 50px;
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -5,10 +10,12 @@ body {
     display: flex;
     height: 100vh;
 }
+
 .container {
     display: flex;
     width: 100%;
 }
+
 .console {
     width: 50%;
     padding: 20px;
@@ -16,19 +23,23 @@ body {
     overflow-y: auto;
     background-color: #f4f4f4;
 }
+
 .console h2 {
     text-align: center;
 }
+
 .console ul {
     list-style-type: none;
     padding: 0;
 }
+
 .console li {
     background-color: #fff;
     margin: 5px 0;
     padding: 10px;
     border: 1px solid #ddd;
 }
+
 /*.console_block {*/
 /*    display: flex;*/
 /*    flex-direction: column;*/
@@ -47,17 +58,20 @@ body {
     /*border-radius: 10px;*/
     /*color: #dddddd;*/
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 20px;
+    font-size: 18px;
     overflow-y: auto;
     white-space: pre-wrap;
 }
+
 .console_contain::-webkit-scrollbar {
     width: 0.75vw;
 }
+
 .console_contain::-webkit-scrollbar-thumb {
     background-color: #4eafea;
     border-radius: 0.375vw;
 }
+
 /*.console_contain::-webkit-scrollbar-thumb:hover {*/
 /*    background-color: #ea502f;*/
 /*    cursor: pointer;*/
@@ -67,17 +81,20 @@ body {
     border: none;
     border-radius: 0.25vw;
 }
+
 .console_button {
     display: flex;
     justify-content: center; /* 水平居中 */
-    align-items: center;     /* 垂直居中 */
+    align-items: center; /* 垂直居中 */
     height: 60px;
 }
+
 .console_button button {
-    margin-top: 10px;
+    display: inline-block;
     padding: 10px 20px;
     background-color: #ddd;
 }
+
 /*.display_base {*/
 /*    height: 30vh;*/
 /*}*/
@@ -87,25 +104,39 @@ body {
     display: flex;
     flex-direction: column;
 }
-.status h2 {
+
+.status_title {
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+}
+
+.status_title h2 {
+    margin: 0;
+    display: inline-block;
     text-align: center;
+    height: var(--svg_height);
+    line-height: var(--svg_height);
 }
-.status .status-item {
-    margin: 15px 0;
-    font-size: 18px;
+
+.status_title svg {
+    display: inline-block;
+    width: var(--svg_height);
+    height: var(--svg_height);
 }
-.status svg {
-    width: 30px;
-    height: 30px;
-}
+
 .charging-status i {
-    font-size: 30px;
+    display: inline-block;
+    font-size: 20px;
     margin-right: 10px;
 }
+
 .charging-status .status-text {
+    display: inline-block;
     font-size: 20px;
     font-weight: bold;
 }
+
 .chart-container {
     margin-top: 20px;
     height: 250px;
@@ -115,6 +146,7 @@ body {
     align-items: center;
     border: 1px solid #ddd;
 }
+
 .chart-container img {
     max-width: 90%;
     max-height: 100%;
