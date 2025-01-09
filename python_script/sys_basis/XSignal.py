@@ -2,7 +2,8 @@ import asyncio
 
 
 class XSignal(object):
-    def __init__(self):
+    def __init__(self, type_=None):
+        self.__type_ = type_ if type(type_) == type else None
         self.__slots = []
         self.__aslots = []
 
@@ -44,6 +45,9 @@ class XSignal(object):
         """
         发射信号, 调用所有连接的槽
         """
+        if self.__type_ is not None:
+            if len(args) != 1 or not isinstance(args[0], self.__type_):
+                raise TypeError(f"Signal type mismatch, it schould be {self.__type_.__name__}, but got {type(args[0])}")
         for slot in self.__slots:
             slot(*args, **kwargs)
 
