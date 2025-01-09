@@ -9,13 +9,13 @@ class DataGene:
     数据生成类, 用于生成电价, 时间, 家庭用电数据等数据
 
     静态方法：
-    - `gene_eprices`: 生成电价列表(区分日间, 夜间电价)
-    - `time2str`: 生成指定字符串格式的柏林时间
-    - `str2time`: 将字符串格式时间(柏林时间)转换为 datetime 对象
-    - `gene_his_usage`: 生成一天家庭的用电数据, 每隔15分钟一个数据点, 单位为Wh
-    - `plot_usage`: 绘制用电数据图
-    - `plot_charging_schedule`: 根据优化前和优化后的用电记录绘制家庭用电曲线图
-    - `split_time`: 将开始时间和结束时间按照15分钟间隔分割, 返回每段时间的持续时间、电价和可用功率.
+        - `gene_eprices`: 生成电价列表(区分日间, 夜间电价)
+        - `time2str`: 生成指定字符串格式的柏林时间
+        - `str2time`: 将字符串格式时间(柏林时间)转换为 datetime 对象
+        - `gene_his_usage`: 生成一天家庭的用电数据, 每隔15分钟一个数据点, 单位为Wh
+        - `plot_usage`: 绘制用电数据图
+        - `plot_charging_schedule`: 根据优化前和优化后的用电记录绘制家庭用电曲线图
+        - `split_time`: 将开始时间和结束时间按照15分钟间隔分割, 返回每段时间的持续时间、电价和可用功率.
     """
 
     @staticmethod
@@ -24,13 +24,13 @@ class DataGene:
         生成电价列表(区分日间, 夜间电价)
 
         参数: 
-        - price1(float): 日间电价
-        - price2(float): 夜间电价(可选, 如果没有提供则默认所有时间段都使用日间电价)
-        - time1(int): 夜间电价结束时间(小时, 可选)
-        - time2(int): 夜间电价开始时间(小时, 可选)
+            - price1(float): 日间电价
+            - price2(float): 夜间电价(可选, 如果没有提供则默认所有时间段都使用日间电价)
+            - time1(int): 夜间电价结束时间(小时, 可选)
+            - time2(int): 夜间电价开始时间(小时, 可选)
 
         返回: 
-        - price_schedule(list): 电价列表(每隔15分钟)
+            - price_schedule(list): 电价列表(每隔15分钟)
         """
 
         # 默认夜间电价参数
@@ -51,10 +51,10 @@ class DataGene:
         生成指定字符串格式的柏林时间. 
 
         参数: 
-        - time(datetime): 需要转换的时间对象
+            - time(datetime): 需要转换的时间对象
 
         返回: 
-        - str: 格式化后的柏林时间字符串(ISO 8601 格式, 德国时区)
+            - str: 格式化后的柏林时间字符串(ISO 8601 格式, 德国时区)
         """
         return time.astimezone(pytz.timezone('Europe/Berlin')).strftime('%Y-%m-%dT%H:%M:%SZ')
 
@@ -64,10 +64,10 @@ class DataGene:
         将字符串格式时间(柏林时间)转换为 datetime 对象
 
         参数: 
-        - time_str(str): 格式化的时间字符串('%Y-%m-%dT%H:%M:%SZ')
+            - time_str(str): 格式化的时间字符串('%Y-%m-%dT%H:%M:%SZ')
 
         返回: 
-        - datetime: 转换后的 datetime 对象(无时区信息)
+            - datetime: 转换后的 datetime 对象(无时区信息)
         """
         return datetime.strptime(time_str, '%Y-%m-%dT%H:%M:%SZ')
 
@@ -78,10 +78,10 @@ class DataGene:
         如果传入固定用户ID，则生成固定的用电数据。
 
         参数:
-        - fixed_user_id (int): 固定的用户ID，用于生成固定数据。为None时，数据是随机的。
+            - fixed_user_id (int): 固定的用户ID，用于生成固定数据。为None时，数据是随机的。
 
         返回:
-        - list[int]: 一天的用电数据
+            - list[int]: 一天的用电数据
         """
 
         def generate_usage(hour: int, seed: int) -> int:
@@ -110,16 +110,12 @@ class DataGene:
         return [generate_usage(i // 4, seed) for i in range(96)]
 
     @staticmethod
-    def gene_his_usage(fixed_user_id: int = None) -> list[int]:
+    def gene_his_usage() -> list[int]:
         """
         生成一天家庭的用电数据, 每隔15分钟一个数据点, 单位为Wh.
-        如果传入固定用户ID，则生成固定的用电数据。
-
-        参数:
-        - fixed_user_id (int): 固定的用户ID，用于生成固定数据。为None时，数据是随机的。
 
         返回:
-        - list[int]: 一天的用电数据
+            - list[int]: 一天的用电数据
         """
 
         def generate_usage(hour: int) -> int:
@@ -149,7 +145,7 @@ class DataGene:
         根据用电记录绘制家庭用电曲线图
 
         参数: 
-        - usage_record: 一个包含每15分钟用电数据的列表(单位: Wh)
+            - usage_record: 一个包含每15分钟用电数据的列表(单位: Wh)
         """
         # 确定时间段, 24小时内, 每小时4个数据点, 总共96个数据点
         time_slots = np.arange(len(usage_record))  # 生成0到95的时间段(每15分钟一个数据点)
@@ -179,8 +175,8 @@ class DataGene:
         根据优化前和优化后的用电记录绘制家庭用电曲线图
 
         参数: 
-        - his_usage_before: 优化前的用电记录列表, 每15分钟一个数据点(单位: Wh)
-        - his_usage_after: 优化后的用电记录列表, 每15分钟一个数据点(单位: Wh)
+            - his_usage_before: 优化前的用电记录列表, 每15分钟一个数据点(单位: Wh)
+            - his_usage_after: 优化后的用电记录列表, 每15分钟一个数据点(单位: Wh)
         """
         # 确定时间段, 24小时内, 每小时4个数据点, 总共96个数据点
         time_slots = np.arange(len(his_usage_before))  # 假设两组数据长度相等
@@ -214,16 +210,16 @@ class DataGene:
         将开始时间和结束时间按照15分钟间隔分割, 返回每段时间的持续时间、电价和可用功率. 
 
         参数: 
-        - start_time(datetime): 开始时间
-        - end_time(datetime): 结束时间
-        - eprices(list): 电价列表
-        - his_usage(list): 历史用电量列表
-        - max_grid_power(int): 最大电网功率
-        - max_power(int): 最大功率
-        - min_power(int): 最小功率
+            - start_time(datetime): 开始时间
+            - end_time(datetime): 结束时间
+            - eprices(list): 电价列表
+            - his_usage(list): 历史用电量列表
+            - max_grid_power(int): 最大电网功率
+            - max_power(int): 最大功率
+            - min_power(int): 最小功率
 
         返回: 
-        - list: 包含每段时间的持续时间、电价和可用功率的列表
+            - list: 包含每段时间的持续时间、电价和可用功率的列表
         """
         result_time = []
         result_eprices = []

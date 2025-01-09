@@ -1,4 +1,4 @@
-
+import traceback
 
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_socketio import SocketIO
@@ -26,7 +26,7 @@ class ServerWeb(Thread):
             self.__send_signal_info(f'<Error - __init__> info_title must be convertible to a string. It has been set to None. The provided type is {type(info_title)}')
             self.__info_title = None
         self.__app.add_url_rule('/', 'home', self.__home_route, methods=['GET', 'POST'])
-        self.__listening_test()
+        self.__listening_update()
 
     @property
     def signal_web_server_info(self):
@@ -48,8 +48,8 @@ class ServerWeb(Thread):
     def __home_route(self):
         return render_template('HomePage.html')
 
-    def __listening_test(self):
-        @self.__socketio.on('test', namespace='/')
+    def __listening_update(self):
+        @self.__socketio.on('update', namespace='/')
         def handle_test(message):
             self.__send_signal_info(f'->>> Web Received> {message}')
             self.signal_web_server_recv.emit(message)
@@ -91,7 +91,7 @@ class ServerWeb(Thread):
             if log:
                 log(temp)
         except Exception as e:
-            error_text = f'********************\n<Error - {error_hint}> {e}\n********************'
+            error_text = f'********************\n<Error - {error_hint}> {traceback.format_exc()}\n********************'
             if self.__info_title and doShowTitle:
                 error_text = f'< {self.__info_title} >\n' + error_text
             signal.emit(error_text)

@@ -4,9 +4,9 @@ socket.on('update_data', (data) => {
     console.log(data);
 
     function updateConsole(consoleElement, content) {
-        console.log(consoleElement.scrollHeight - consoleElement.scrollTop);
-        console.log(consoleElement.clientHeight);
-        console.log(Math.abs(consoleElement.scrollHeight - consoleElement.scrollTop - consoleElement.clientHeight) < 1)
+        // console.log(consoleElement.scrollHeight - consoleElement.scrollTop);
+        // console.log(consoleElement.clientHeight);
+        // console.log(Math.abs(consoleElement.scrollHeight - consoleElement.scrollTop - consoleElement.clientHeight) < 1)
         const wasAtBottom = Math.abs(consoleElement.scrollHeight - consoleElement.scrollTop - consoleElement.clientHeight) < 1;
         consoleElement.textContent += `\n${content}\n`;
         if (wasAtBottom) {
@@ -14,7 +14,11 @@ socket.on('update_data', (data) => {
         }
     }
 
-    if (data) {
-        updateConsole(opt_console, data);
+    if (data.web_console) {
+        updateConsole(opt_console, 'Web Info: ' + data.web_console);
+    }
+
+    if (data.opt_console) {
+        updateConsole(opt_console, 'Console Info: ' + data.opt_console);
     }
 });
