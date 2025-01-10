@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class notify_charging_limit_request(Base_OCPP_Struct_V2_0_1):
+class GenNotifyChargingLimitRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -32,10 +32,10 @@ class notify_charging_limit_request(Base_OCPP_Struct_V2_0_1):
             - call.NotifyChargingLimit
         """
         return call.NotifyChargingLimit(
-            charging_limit = charging_limit,
-            charging_schedule = charging_schedule,
-            evse_id = evse_id,
-            custom_data = custom_data
+            charging_limit=charging_limit,
+            charging_schedule=charging_schedule,
+            evse_id=evse_id,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -50,12 +50,11 @@ class notify_charging_limit_request(Base_OCPP_Struct_V2_0_1):
             - call.NotifyChargingLimit
         """
         return call.NotifyChargingLimit(
-            charging_limit = dict_data['chargingLimit'],
-            charging_schedule = dict_data.get('chargingSchedule', None),
-            evse_id = dict_data.get('evseId', None),
-            custom_data = dict_data.get('customData', None)
+            charging_limit=dict_data['chargingLimit'],
+            charging_schedule=dict_data.get('chargingSchedule', None),
+            evse_id=dict_data.get('evseId', None),
+            custom_data=dict_data.get('customData', None)
         )
-
 
     @staticmethod
     def get_charging_schedule_period(
@@ -84,7 +83,7 @@ class notify_charging_limit_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'startPeriod': start_period,
             'limit': limit
         }
@@ -95,7 +94,6 @@ class notify_charging_limit_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_relative_time_interval(
@@ -118,7 +116,7 @@ class notify_charging_limit_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'start': start
         }
         if duration is not None:
@@ -126,7 +124,6 @@ class notify_charging_limit_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_cost(
@@ -154,7 +151,7 @@ class notify_charging_limit_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'costKind': cost_kind,
             'amount': amount
         }
@@ -163,7 +160,6 @@ class notify_charging_limit_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_consumption_cost(
@@ -188,14 +184,13 @@ class notify_charging_limit_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'startValue': start_value,
             'cost': cost
         }
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_sales_tariff_entry(
@@ -224,7 +219,7 @@ class notify_charging_limit_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'relativeTimeInterval': relative_time_interval
         }
         if e_price_level is not None:
@@ -234,7 +229,6 @@ class notify_charging_limit_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_sales_tariff(
@@ -266,7 +260,7 @@ class notify_charging_limit_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'id': id,
             'salesTariffEntry': sales_tariff_entry
         }
@@ -277,7 +271,6 @@ class notify_charging_limit_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_charging_schedule(
@@ -321,7 +314,7 @@ class notify_charging_limit_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'id': id,
             'chargingRateUnit': charging_rate_unit,
             'chargingSchedulePeriod': charging_schedule_period
@@ -337,7 +330,6 @@ class notify_charging_limit_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_charging_limit(
@@ -362,7 +354,7 @@ class notify_charging_limit_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'chargingLimitSource': charging_limit_source
         }
         if is_grid_critical is not None:
@@ -370,4 +362,3 @@ class notify_charging_limit_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-

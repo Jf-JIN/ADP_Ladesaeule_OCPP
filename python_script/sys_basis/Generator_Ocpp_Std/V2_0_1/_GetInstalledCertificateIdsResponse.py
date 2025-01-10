@@ -3,7 +3,7 @@ from ocpp.v201 import call_result
 from ._Base import *
 
 
-class get_installed_certificate_ids_response(Base_OCPP_Struct_V2_0_1):
+class GenGetInstalledCertificateIdsResponse(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -33,10 +33,10 @@ class get_installed_certificate_ids_response(Base_OCPP_Struct_V2_0_1):
             - call_result.GetInstalledCertificateIds
         """
         return call_result.GetInstalledCertificateIds(
-            status = status,
-            status_info = status_info,
-            certificate_hash_data_chain = certificate_hash_data_chain,
-            custom_data = custom_data
+            status=status,
+            status_info=status_info,
+            certificate_hash_data_chain=certificate_hash_data_chain,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -51,12 +51,11 @@ class get_installed_certificate_ids_response(Base_OCPP_Struct_V2_0_1):
             - call_result.GetInstalledCertificateIds
         """
         return call_result.GetInstalledCertificateIds(
-            status = dict_data['status'],
-            status_info = dict_data.get('statusInfo', None),
-            certificate_hash_data_chain = dict_data.get('certificateHashDataChain', None),
-            custom_data = dict_data.get('customData', None)
+            status=dict_data['status'],
+            status_info=dict_data.get('statusInfo', None),
+            certificate_hash_data_chain=dict_data.get('certificateHashDataChain', None),
+            custom_data=dict_data.get('customData', None)
         )
-
 
     @staticmethod
     def get_status_info(
@@ -81,7 +80,7 @@ class get_installed_certificate_ids_response(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'reasonCode': reason_code
         }
         if additional_info is not None:
@@ -89,7 +88,6 @@ class get_installed_certificate_ids_response(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_certificate_hash_data(
@@ -123,7 +121,7 @@ class get_installed_certificate_ids_response(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'hashAlgorithm': hash_algorithm,
             'issuerNameHash': issuer_name_hash,
             'issuerKeyHash': issuer_key_hash,
@@ -132,7 +130,6 @@ class get_installed_certificate_ids_response(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_child_certificate_hash_data(
@@ -166,7 +163,7 @@ class get_installed_certificate_ids_response(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'hashAlgorithm': hash_algorithm,
             'issuerNameHash': issuer_name_hash,
             'issuerKeyHash': issuer_key_hash,
@@ -175,7 +172,6 @@ class get_installed_certificate_ids_response(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_certificate_hash_data_chain(
@@ -204,7 +200,7 @@ class get_installed_certificate_ids_response(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'certificateHashData': certificate_hash_data,
             'certificateType': certificate_type
         }
@@ -213,4 +209,3 @@ class get_installed_certificate_ids_response(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-

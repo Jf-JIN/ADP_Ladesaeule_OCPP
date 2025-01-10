@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class notify_report_request(Base_OCPP_Struct_V2_0_1):
+class GenNotifyReportRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -38,12 +38,12 @@ class notify_report_request(Base_OCPP_Struct_V2_0_1):
             - call.NotifyReport
         """
         return call.NotifyReport(
-            request_id = request_id,
-            generated_at = generated_at,
-            seq_no = seq_no,
-            report_data = report_data,
-            tbc = tbc,
-            custom_data = custom_data
+            request_id=request_id,
+            generated_at=generated_at,
+            seq_no=seq_no,
+            report_data=report_data,
+            tbc=tbc,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -58,14 +58,13 @@ class notify_report_request(Base_OCPP_Struct_V2_0_1):
             - call.NotifyReport
         """
         return call.NotifyReport(
-            request_id = dict_data['requestId'],
-            generated_at = dict_data['generatedAt'],
-            seq_no = dict_data['seqNo'],
-            report_data = dict_data.get('reportData', None),
-            tbc = dict_data.get('tbc', None),
-            custom_data = dict_data.get('customData', None)
+            request_id=dict_data['requestId'],
+            generated_at=dict_data['generatedAt'],
+            seq_no=dict_data['seqNo'],
+            report_data=dict_data.get('reportData', None),
+            tbc=dict_data.get('tbc', None),
+            custom_data=dict_data.get('customData', None)
         )
-
 
     @staticmethod
     def get_evse(
@@ -88,7 +87,7 @@ class notify_report_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'id': id
         }
         if connector_id is not None:
@@ -96,7 +95,6 @@ class notify_report_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_component(
@@ -125,7 +123,7 @@ class notify_report_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'name': name
         }
         if evse is not None:
@@ -135,7 +133,6 @@ class notify_report_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_variable(
@@ -160,7 +157,7 @@ class notify_report_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'name': name
         }
         if instance is not None:
@@ -168,7 +165,6 @@ class notify_report_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_variable_attribute(
@@ -205,7 +201,7 @@ class notify_report_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             
         }
         if type is not None:
@@ -221,7 +217,6 @@ class notify_report_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_variable_characteristics(
@@ -260,7 +255,7 @@ class notify_report_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'dataType': data_type,
             'supportsMonitoring': supports_monitoring
         }
@@ -275,7 +270,6 @@ class notify_report_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_report_data(
@@ -309,7 +303,7 @@ class notify_report_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'component': component,
             'variable': variable,
             'variableAttribute': variable_attribute
@@ -319,4 +313,3 @@ class notify_report_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-

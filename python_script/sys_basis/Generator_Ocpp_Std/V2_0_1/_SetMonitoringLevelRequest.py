@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class set_monitoring_level_request(Base_OCPP_Struct_V2_0_1):
+class GenSetMonitoringLevelRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -24,8 +24,8 @@ class set_monitoring_level_request(Base_OCPP_Struct_V2_0_1):
             - call.SetMonitoringLevel
         """
         return call.SetMonitoringLevel(
-            severity = severity,
-            custom_data = custom_data
+            severity=severity,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -40,7 +40,6 @@ class set_monitoring_level_request(Base_OCPP_Struct_V2_0_1):
             - call.SetMonitoringLevel
         """
         return call.SetMonitoringLevel(
-            severity = dict_data['severity'],
-            custom_data = dict_data.get('customData', None)
+            severity=dict_data['severity'],
+            custom_data=dict_data.get('customData', None)
         )
-

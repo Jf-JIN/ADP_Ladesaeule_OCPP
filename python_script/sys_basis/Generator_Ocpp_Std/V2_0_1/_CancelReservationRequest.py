@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class cancel_reservation_request(Base_OCPP_Struct_V2_0_1):
+class GenCancelReservationRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -24,8 +24,8 @@ class cancel_reservation_request(Base_OCPP_Struct_V2_0_1):
             - call.CancelReservation
         """
         return call.CancelReservation(
-            reservation_id = reservation_id,
-            custom_data = custom_data
+            reservation_id=reservation_id,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -40,7 +40,6 @@ class cancel_reservation_request(Base_OCPP_Struct_V2_0_1):
             - call.CancelReservation
         """
         return call.CancelReservation(
-            reservation_id = dict_data['reservationId'],
-            custom_data = dict_data.get('customData', None)
+            reservation_id=dict_data['reservationId'],
+            custom_data=dict_data.get('customData', None)
         )
-

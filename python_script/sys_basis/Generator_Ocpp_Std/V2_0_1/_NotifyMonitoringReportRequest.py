@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class notify_monitoring_report_request(Base_OCPP_Struct_V2_0_1):
+class GenNotifyMonitoringReportRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -38,12 +38,12 @@ class notify_monitoring_report_request(Base_OCPP_Struct_V2_0_1):
             - call.NotifyMonitoringReport
         """
         return call.NotifyMonitoringReport(
-            request_id = request_id,
-            seq_no = seq_no,
-            generated_at = generated_at,
-            monitor = monitor,
-            tbc = tbc,
-            custom_data = custom_data
+            request_id=request_id,
+            seq_no=seq_no,
+            generated_at=generated_at,
+            monitor=monitor,
+            tbc=tbc,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -58,14 +58,13 @@ class notify_monitoring_report_request(Base_OCPP_Struct_V2_0_1):
             - call.NotifyMonitoringReport
         """
         return call.NotifyMonitoringReport(
-            request_id = dict_data['requestId'],
-            seq_no = dict_data['seqNo'],
-            generated_at = dict_data['generatedAt'],
-            monitor = dict_data.get('monitor', None),
-            tbc = dict_data.get('tbc', None),
-            custom_data = dict_data.get('customData', None)
+            request_id=dict_data['requestId'],
+            seq_no=dict_data['seqNo'],
+            generated_at=dict_data['generatedAt'],
+            monitor=dict_data.get('monitor', None),
+            tbc=dict_data.get('tbc', None),
+            custom_data=dict_data.get('customData', None)
         )
-
 
     @staticmethod
     def get_evse(
@@ -88,7 +87,7 @@ class notify_monitoring_report_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'id': id
         }
         if connector_id is not None:
@@ -96,7 +95,6 @@ class notify_monitoring_report_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_component(
@@ -125,7 +123,7 @@ class notify_monitoring_report_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'name': name
         }
         if evse is not None:
@@ -135,7 +133,6 @@ class notify_monitoring_report_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_variable(
@@ -160,7 +157,7 @@ class notify_monitoring_report_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'name': name
         }
         if instance is not None:
@@ -168,7 +165,6 @@ class notify_monitoring_report_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_variable_monitoring(
@@ -202,7 +198,7 @@ class notify_monitoring_report_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'id': id,
             'transaction': transaction,
             'value': value,
@@ -212,7 +208,6 @@ class notify_monitoring_report_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_monitor(
@@ -241,7 +236,7 @@ class notify_monitoring_report_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'component': component,
             'variable': variable,
             'variableMonitoring': variable_monitoring
@@ -249,4 +244,3 @@ class notify_monitoring_report_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-

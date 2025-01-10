@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class heartbeat_request(Base_OCPP_Struct_V2_0_1):
+class GenHeartbeatRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -21,7 +21,7 @@ class heartbeat_request(Base_OCPP_Struct_V2_0_1):
             - call.Heartbeat
         """
         return call.Heartbeat(
-            custom_data = custom_data
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -36,6 +36,5 @@ class heartbeat_request(Base_OCPP_Struct_V2_0_1):
             - call.Heartbeat
         """
         return call.Heartbeat(
-            custom_data = dict_data.get('customData', None)
+            custom_data=dict_data.get('customData', None)
         )
-

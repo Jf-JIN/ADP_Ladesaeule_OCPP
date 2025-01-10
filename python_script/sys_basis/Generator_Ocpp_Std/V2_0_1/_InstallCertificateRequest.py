@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class install_certificate_request(Base_OCPP_Struct_V2_0_1):
+class GenInstallCertificateRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -30,9 +30,9 @@ class install_certificate_request(Base_OCPP_Struct_V2_0_1):
             - call.InstallCertificate
         """
         return call.InstallCertificate(
-            certificate_type = certificate_type,
-            certificate = certificate,
-            custom_data = custom_data
+            certificate_type=certificate_type,
+            certificate=certificate,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -47,8 +47,7 @@ class install_certificate_request(Base_OCPP_Struct_V2_0_1):
             - call.InstallCertificate
         """
         return call.InstallCertificate(
-            certificate_type = dict_data['certificateType'],
-            certificate = dict_data['certificate'],
-            custom_data = dict_data.get('customData', None)
+            certificate_type=dict_data['certificateType'],
+            certificate=dict_data['certificate'],
+            custom_data=dict_data.get('customData', None)
         )
-

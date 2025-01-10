@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class update_firmware_request(Base_OCPP_Struct_V2_0_1):
+class GenUpdateFirmwareRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -34,11 +34,11 @@ class update_firmware_request(Base_OCPP_Struct_V2_0_1):
             - call.UpdateFirmware
         """
         return call.UpdateFirmware(
-            request_id = request_id,
-            firmware = firmware,
-            retries = retries,
-            retry_interval = retry_interval,
-            custom_data = custom_data
+            request_id=request_id,
+            firmware=firmware,
+            retries=retries,
+            retry_interval=retry_interval,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -53,13 +53,12 @@ class update_firmware_request(Base_OCPP_Struct_V2_0_1):
             - call.UpdateFirmware
         """
         return call.UpdateFirmware(
-            request_id = dict_data['requestId'],
-            firmware = dict_data['firmware'],
-            retries = dict_data.get('retries', None),
-            retry_interval = dict_data.get('retryInterval', None),
-            custom_data = dict_data.get('customData', None)
+            request_id=dict_data['requestId'],
+            firmware=dict_data['firmware'],
+            retries=dict_data.get('retries', None),
+            retry_interval=dict_data.get('retryInterval', None),
+            custom_data=dict_data.get('customData', None)
         )
-
 
     @staticmethod
     def get_firmware(
@@ -96,7 +95,7 @@ class update_firmware_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'location': location,
             'retrieveDateTime': retrieve_date_time
         }
@@ -109,4 +108,3 @@ class update_firmware_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-

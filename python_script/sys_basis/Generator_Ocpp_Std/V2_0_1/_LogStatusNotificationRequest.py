@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class log_status_notification_request(Base_OCPP_Struct_V2_0_1):
+class GenLogStatusNotificationRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -29,9 +29,9 @@ class log_status_notification_request(Base_OCPP_Struct_V2_0_1):
             - call.LogStatusNotification
         """
         return call.LogStatusNotification(
-            status = status,
-            request_id = request_id,
-            custom_data = custom_data
+            status=status,
+            request_id=request_id,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -46,8 +46,7 @@ class log_status_notification_request(Base_OCPP_Struct_V2_0_1):
             - call.LogStatusNotification
         """
         return call.LogStatusNotification(
-            status = dict_data['status'],
-            request_id = dict_data.get('requestId', None),
-            custom_data = dict_data.get('customData', None)
+            status=dict_data['status'],
+            request_id=dict_data.get('requestId', None),
+            custom_data=dict_data.get('customData', None)
         )
-

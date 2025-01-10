@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class send_local_list_request(Base_OCPP_Struct_V2_0_1):
+class GenSendLocalListRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -33,10 +33,10 @@ class send_local_list_request(Base_OCPP_Struct_V2_0_1):
             - call.SendLocalList
         """
         return call.SendLocalList(
-            version_number = version_number,
-            update_type = update_type,
-            local_authorization_list = local_authorization_list,
-            custom_data = custom_data
+            version_number=version_number,
+            update_type=update_type,
+            local_authorization_list=local_authorization_list,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -51,12 +51,11 @@ class send_local_list_request(Base_OCPP_Struct_V2_0_1):
             - call.SendLocalList
         """
         return call.SendLocalList(
-            version_number = dict_data['versionNumber'],
-            update_type = dict_data['updateType'],
-            local_authorization_list = dict_data.get('localAuthorizationList', None),
-            custom_data = dict_data.get('customData', None)
+            version_number=dict_data['versionNumber'],
+            update_type=dict_data['updateType'],
+            local_authorization_list=dict_data.get('localAuthorizationList', None),
+            custom_data=dict_data.get('customData', None)
         )
-
 
     @staticmethod
     def get_additional_info(
@@ -81,14 +80,13 @@ class send_local_list_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'additionalIdToken': additional_id_token,
             'type': type
         }
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_id_token(
@@ -118,7 +116,7 @@ class send_local_list_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'idToken': id_token,
             'type': type
         }
@@ -127,7 +125,6 @@ class send_local_list_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_additional_info(
@@ -152,14 +149,13 @@ class send_local_list_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'additionalIdToken': additional_id_token,
             'type': type
         }
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_group_id_token(
@@ -189,7 +185,7 @@ class send_local_list_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'idToken': id_token,
             'type': type
         }
@@ -198,7 +194,6 @@ class send_local_list_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_personal_message(
@@ -228,7 +223,7 @@ class send_local_list_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'format': format,
             'content': content
         }
@@ -237,7 +232,6 @@ class send_local_list_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_id_token_info(
@@ -285,7 +279,7 @@ class send_local_list_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'status': status
         }
         if cache_expiry_date_time is not None:
@@ -305,7 +299,6 @@ class send_local_list_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_local_authorization_list(
@@ -330,7 +323,7 @@ class send_local_list_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'idToken': id_token
         }
         if id_token_info is not None:
@@ -338,4 +331,3 @@ class send_local_list_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-

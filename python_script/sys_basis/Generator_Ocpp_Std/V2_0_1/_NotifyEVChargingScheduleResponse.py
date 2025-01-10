@@ -3,7 +3,7 @@ from ocpp.v201 import call_result
 from ._Base import *
 
 
-class notify_ev_charging_schedule_response(Base_OCPP_Struct_V2_0_1):
+class GenNotifyEVChargingScheduleResponse(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(

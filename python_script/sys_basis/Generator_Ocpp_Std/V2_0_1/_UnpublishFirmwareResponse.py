@@ -3,7 +3,7 @@ from ocpp.v201 import call_result
 from ._Base import *
 
 
-class unpublish_firmware_response(Base_OCPP_Struct_V2_0_1):
+class GenUnpublishFirmwareResponse(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -26,8 +26,8 @@ class unpublish_firmware_response(Base_OCPP_Struct_V2_0_1):
             - call_result.UnpublishFirmware
         """
         return call_result.UnpublishFirmware(
-            status = status,
-            custom_data = custom_data
+            status=status,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -42,7 +42,6 @@ class unpublish_firmware_response(Base_OCPP_Struct_V2_0_1):
             - call_result.UnpublishFirmware
         """
         return call_result.UnpublishFirmware(
-            status = dict_data['status'],
-            custom_data = dict_data.get('customData', None)
+            status=dict_data['status'],
+            custom_data=dict_data.get('customData', None)
         )
-

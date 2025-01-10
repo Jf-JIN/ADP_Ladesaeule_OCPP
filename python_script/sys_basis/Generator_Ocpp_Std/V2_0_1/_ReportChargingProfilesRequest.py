@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class report_charging_profiles_request(Base_OCPP_Struct_V2_0_1):
+class GenReportChargingProfilesRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -39,12 +39,12 @@ class report_charging_profiles_request(Base_OCPP_Struct_V2_0_1):
             - call.ReportChargingProfiles
         """
         return call.ReportChargingProfiles(
-            request_id = request_id,
-            charging_limit_source = charging_limit_source,
-            charging_profile = charging_profile,
-            evse_id = evse_id,
-            tbc = tbc,
-            custom_data = custom_data
+            request_id=request_id,
+            charging_limit_source=charging_limit_source,
+            charging_profile=charging_profile,
+            evse_id=evse_id,
+            tbc=tbc,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -59,14 +59,13 @@ class report_charging_profiles_request(Base_OCPP_Struct_V2_0_1):
             - call.ReportChargingProfiles
         """
         return call.ReportChargingProfiles(
-            request_id = dict_data['requestId'],
-            charging_limit_source = dict_data['chargingLimitSource'],
-            charging_profile = dict_data['chargingProfile'],
-            evse_id = dict_data['evseId'],
-            tbc = dict_data.get('tbc', None),
-            custom_data = dict_data.get('customData', None)
+            request_id=dict_data['requestId'],
+            charging_limit_source=dict_data['chargingLimitSource'],
+            charging_profile=dict_data['chargingProfile'],
+            evse_id=dict_data['evseId'],
+            tbc=dict_data.get('tbc', None),
+            custom_data=dict_data.get('customData', None)
         )
-
 
     @staticmethod
     def get_charging_schedule_period(
@@ -95,7 +94,7 @@ class report_charging_profiles_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'startPeriod': start_period,
             'limit': limit
         }
@@ -106,7 +105,6 @@ class report_charging_profiles_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_relative_time_interval(
@@ -129,7 +127,7 @@ class report_charging_profiles_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'start': start
         }
         if duration is not None:
@@ -137,7 +135,6 @@ class report_charging_profiles_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_cost(
@@ -165,7 +162,7 @@ class report_charging_profiles_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'costKind': cost_kind,
             'amount': amount
         }
@@ -174,7 +171,6 @@ class report_charging_profiles_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_consumption_cost(
@@ -199,14 +195,13 @@ class report_charging_profiles_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'startValue': start_value,
             'cost': cost
         }
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_sales_tariff_entry(
@@ -235,7 +230,7 @@ class report_charging_profiles_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'relativeTimeInterval': relative_time_interval
         }
         if e_price_level is not None:
@@ -245,7 +240,6 @@ class report_charging_profiles_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_sales_tariff(
@@ -277,7 +271,7 @@ class report_charging_profiles_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'id': id,
             'salesTariffEntry': sales_tariff_entry
         }
@@ -288,7 +282,6 @@ class report_charging_profiles_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_charging_schedule(
@@ -332,7 +325,7 @@ class report_charging_profiles_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'id': id,
             'chargingRateUnit': charging_rate_unit,
             'chargingSchedulePeriod': charging_schedule_period
@@ -348,7 +341,6 @@ class report_charging_profiles_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_charging_profile(
@@ -403,7 +395,7 @@ class report_charging_profiles_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'id': id,
             'stackLevel': stack_level,
             'chargingProfilePurpose': charging_profile_purpose,
@@ -421,4 +413,3 @@ class report_charging_profiles_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-

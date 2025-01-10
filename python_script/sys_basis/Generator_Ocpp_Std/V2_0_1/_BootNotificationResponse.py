@@ -3,7 +3,7 @@ from ocpp.v201 import call_result
 from ._Base import *
 
 
-class boot_notification_response(Base_OCPP_Struct_V2_0_1):
+class GenBootNotificationResponse(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -37,11 +37,11 @@ class boot_notification_response(Base_OCPP_Struct_V2_0_1):
             - call_result.BootNotification
         """
         return call_result.BootNotification(
-            current_time = current_time,
-            interval = interval,
-            status = status,
-            status_info = status_info,
-            custom_data = custom_data
+            current_time=current_time,
+            interval=interval,
+            status=status,
+            status_info=status_info,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -56,13 +56,12 @@ class boot_notification_response(Base_OCPP_Struct_V2_0_1):
             - call_result.BootNotification
         """
         return call_result.BootNotification(
-            current_time = dict_data['currentTime'],
-            interval = dict_data['interval'],
-            status = dict_data['status'],
-            status_info = dict_data.get('statusInfo', None),
-            custom_data = dict_data.get('customData', None)
+            current_time=dict_data['currentTime'],
+            interval=dict_data['interval'],
+            status=dict_data['status'],
+            status_info=dict_data.get('statusInfo', None),
+            custom_data=dict_data.get('customData', None)
         )
-
 
     @staticmethod
     def get_status_info(
@@ -87,7 +86,7 @@ class boot_notification_response(Base_OCPP_Struct_V2_0_1):
         - 返回值:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'reasonCode': reason_code
         }
         if additional_info is not None:
@@ -95,4 +94,3 @@ class boot_notification_response(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-

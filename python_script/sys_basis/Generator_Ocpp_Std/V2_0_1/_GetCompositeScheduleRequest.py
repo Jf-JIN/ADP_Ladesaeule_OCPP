@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class get_composite_schedule_request(Base_OCPP_Struct_V2_0_1):
+class GenGetCompositeScheduleRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -32,10 +32,10 @@ class get_composite_schedule_request(Base_OCPP_Struct_V2_0_1):
             - call.GetCompositeSchedule
         """
         return call.GetCompositeSchedule(
-            duration = duration,
-            evse_id = evse_id,
-            charging_rate_unit = charging_rate_unit,
-            custom_data = custom_data
+            duration=duration,
+            evse_id=evse_id,
+            charging_rate_unit=charging_rate_unit,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -50,9 +50,8 @@ class get_composite_schedule_request(Base_OCPP_Struct_V2_0_1):
             - call.GetCompositeSchedule
         """
         return call.GetCompositeSchedule(
-            duration = dict_data['duration'],
-            evse_id = dict_data['evseId'],
-            charging_rate_unit = dict_data.get('chargingRateUnit', None),
-            custom_data = dict_data.get('customData', None)
+            duration=dict_data['duration'],
+            evse_id=dict_data['evseId'],
+            charging_rate_unit=dict_data.get('chargingRateUnit', None),
+            custom_data=dict_data.get('customData', None)
         )
-

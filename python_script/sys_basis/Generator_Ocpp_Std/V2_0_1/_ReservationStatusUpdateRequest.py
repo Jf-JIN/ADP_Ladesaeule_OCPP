@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class reservation_status_update_request(Base_OCPP_Struct_V2_0_1):
+class GenReservationStatusUpdateRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -29,9 +29,9 @@ class reservation_status_update_request(Base_OCPP_Struct_V2_0_1):
             - call.ReservationStatusUpdate
         """
         return call.ReservationStatusUpdate(
-            reservation_id = reservation_id,
-            reservation_update_status = reservation_update_status,
-            custom_data = custom_data
+            reservation_id=reservation_id,
+            reservation_update_status=reservation_update_status,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -46,8 +46,7 @@ class reservation_status_update_request(Base_OCPP_Struct_V2_0_1):
             - call.ReservationStatusUpdate
         """
         return call.ReservationStatusUpdate(
-            reservation_id = dict_data['reservationId'],
-            reservation_update_status = dict_data['reservationUpdateStatus'],
-            custom_data = dict_data.get('customData', None)
+            reservation_id=dict_data['reservationId'],
+            reservation_update_status=dict_data['reservationUpdateStatus'],
+            custom_data=dict_data.get('customData', None)
         )
-

@@ -3,7 +3,7 @@ from ocpp.v201 import call_result
 from ._Base import *
 
 
-class data_transfer_response(Base_OCPP_Struct_V2_0_1):
+class GenDataTransferResponse(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(

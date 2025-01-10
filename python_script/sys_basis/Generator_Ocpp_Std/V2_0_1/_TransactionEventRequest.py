@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class transaction_event_request(Base_OCPP_Struct_V2_0_1):
+class GenTransactionEventRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
