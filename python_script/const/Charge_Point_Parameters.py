@@ -11,6 +11,7 @@ class _Response(AnalogDefine):
 class _Response_Result(AnalogDefine):
     SUCCESS = 0
     TIMEOUT = 1
+    ERROR = 2
 
 
 class CP_Params(AnalogDefine):
