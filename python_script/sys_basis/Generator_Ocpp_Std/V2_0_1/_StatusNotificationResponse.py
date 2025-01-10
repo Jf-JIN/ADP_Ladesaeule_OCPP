@@ -3,7 +3,7 @@ from ocpp.v201 import call_result
 from ._Base import *
 
 
-class StatusNotificationResponse(Base_OCPP_Struct_V2_0_1):
+class GenStatusNotificationResponse(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
