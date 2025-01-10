@@ -2,9 +2,11 @@
 import asyncio
 import traceback
 from sys_basis.Generator_Ocpp_Std.V2_0_1 import *
+from ocpp.charge_point import snake_to_camel_case
 from sys_basis.XSignal import XSignal
 from ocpp.v201.enums import *
 from const.Charge_Point_Parameters import *
+from const.Const_Parameter import *
 import inspect
 import time
 
@@ -110,7 +112,7 @@ class ChargePointBase(object):
                 'status': CP_Params.RESPONSE_RESULT.TIMEOUT})
             return CP_Params.RESPONSE_RESULT.TIMEOUT
         # 情况2
-        if message_action in self.__time_table_for_send_message and self.__time_table_for_send_message[message_action]['receive_time'] < current_time:
+        if message_action in self.__time_table_for_send_message and self.__time_table_for_send_message[message_action]['receive_time'] > 0 and self.__time_table_for_send_message[message_action]['receive_time'] < current_time:
             self._send_signal_info(f'<Error - receive_time> the receive time of the message {message_action} is greater than the current time, the message will be ignored\n\t{message}')
             self.signal_charge_point_ocpp_response_result.emit(
                 {
@@ -127,6 +129,8 @@ class ChargePointBase(object):
                 'send_time': send_time,
                 'receive_time': current_time
             }
+        if message_action not in self.__current_message_to_send:
+            self.__current_message_to_send[message_action] = []
         self.__current_message_to_send[message_action].append(message)
         self.signal_charge_point_ocpp_response_result.emit({
             'action': message_action,
@@ -187,7 +191,7 @@ class ChargePointBase(object):
         while not message_action in self.__current_message_to_send or len(self.__current_message_to_send[message_action]) < 1:
             await asyncio.sleep(0.1)
             if time.time() > wait_until:
-                self.__time_table_for_send_message[message_action]['recv_time'] = time.time()
+                self.__time_table_for_send_message[message_action]['receive_time'] = time.time()
                 error_text = f'********************\n < Error - Timeout_for_Response > System has no response for {message_action} request in {response_timeout} seconds (required response time: {self._response_timeout} seconds), the default message will be returned\n\t{default_message}\n********************'
                 self._send_signal_info(error_text)
                 if not self.__doSendDefaultResponse:
@@ -197,6 +201,17 @@ class ChargePointBase(object):
         if self.__current_message_to_send[message_action] == []:
             del self.__current_message_to_send[message_action]
         return message
+
+    def __snake_to_camel_string(self, snake_str):
+        if not isinstance(snake_str, str):
+            raise ValueError("Input must be a string")
+        snake_str = snake_str.replace("soc_limit_reached", "SOCLimitReached")
+        snake_str = snake_str.replace("ocpp_csms", "ocppCSMS")
+        snake_str = snake_str.replace("_v2x", "V2X").replace("_v2g", "V2G").replace("_url", "URL")
+        snake_str = snake_str.replace("soc", "SoC").replace("_socket", "Socket")
+        components = snake_str.split("_")
+        camel_case = components[0] + "".join(x.capitalize() for x in components[1:])
+        return camel_case
 
     def _send_signal_info_and_ocpp_request(self, message_action: str | Action, info_action: str | None = None) -> None:
         """
@@ -229,7 +244,7 @@ class ChargePointBase(object):
         }
         for name, value in bound_arguments.arguments.items():
             struct_params_info += f"\t - {name}: {value}\n"
-            temp_dict['data'][name] = value
+            temp_dict['data'][self.__snake_to_camel_string(name)] = snake_to_camel_case(value)
         self.__set_time_table_for_send_message(message_action, temp_dict['send_time'])
         self._send_signal_info(struct_params_info)
         self.signal_charge_point_ocpp_request.emit(temp_dict)
@@ -246,11 +261,11 @@ class ChargePointBase(object):
         try:
             temp = ''.join([str(*args)]) + '\n'
             self.signal_charge_point_info.emit(temp)
-            print(temp)
+            Log.CP.info(temp)
         except Exception as e:
             error_text = f'********************\n<Error - send_signal_info> {traceback.format_exc()}\n********************'
             self.signal_charge_point_info.emit(error_text)
-            print(error_text)
+            Log.CP.info(error_text)
 
     def _set_network_buffer_time_in_baseclass(self, network_buffer_time) -> None:
         self.__network_buffer_time = network_buffer_time
@@ -316,7 +331,7 @@ class ChargePointBase(object):
         if message_action not in self.__time_table_for_send_message:
             self.__time_table_for_send_message[message_action] = {
                 'send_time': send_time,
-                'recv_time': 0}
+                'receive_time': 0}
         else:
             self.__time_table_for_send_message[message_action]['send_time'] = send_time
 
@@ -339,6 +354,8 @@ class ChargePointBase(object):
         - 返回值:
             - 无
         """
+        if not data:
+            return
         temp_dict = {
             'action': data.__class__.__name__,
             'data': {},

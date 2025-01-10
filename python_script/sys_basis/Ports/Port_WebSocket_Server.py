@@ -5,6 +5,9 @@ import traceback
 import json
 from sys_basis.XSignal import XSignal
 from sys_basis.Ports.Core_WebSocket.WebSocket_Server import WebSocketServer
+from const.Const_Parameter import *
+
+_info = Log.GUI.info
 
 
 class PortWebSocketServer(object):
@@ -70,7 +73,7 @@ class PortWebSocketServer(object):
         参数:
         - args: 可变数量的参数, 每个参数都应该是能够被转换为字符串的对象. 建议传递字符串、数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式.
         """
-        self.__send_signal(signal=self.__signal_thread_websocket_client_info, error_hint='send_signal_info', log=None, doShowTitle=True, doPrintInfo=True, args=args)
+        self.__send_signal(signal=self.__signal_thread_websocket_client_info, error_hint='send_signal_info', log=Log.GUI.info, doShowTitle=True, doPrintInfo=False, args=args)
 
     def __send_signal(self, signal: XSignal, error_hint: str, log=None, doShowTitle: bool = False, doPrintInfo: bool = False, args=[]) -> None:
         """
@@ -103,7 +106,7 @@ class PortWebSocketServer(object):
             if doPrintInfo:
                 print(error_text)
             if log:
-                log(temp)
+                log(error_text)
 
     def __handle_recv_message(self, message: str) -> None:
         """

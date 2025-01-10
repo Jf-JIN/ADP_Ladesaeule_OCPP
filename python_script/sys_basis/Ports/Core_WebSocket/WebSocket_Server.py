@@ -3,6 +3,7 @@ import asyncio
 import traceback
 import websockets
 from sys_basis.XSignal import XSignal
+from const.Const_Parameter import *
 from websockets.asyncio.server import Server, ServerConnection  # 用于类型注释
 
 
@@ -154,7 +155,7 @@ class WebSocketServer(object):
         - 参数: 
             - args: 可变数量的参数, 每个参数都应该是能够被转换为字符串的对象. 建议传递字符串数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式. 
         """
-        self.__send_signal(signal=self.signal_websocket_server_recv, error_hint='send_signal_recv', log=None, doShowTitle=False, doPrintInfo=False, args=args)
+        self.__send_signal(signal=self.signal_websocket_server_recv, error_hint='send_signal_recv', log=Log.WS.info, doShowTitle=False, doPrintInfo=False, args=args)
 
     def __send_signal_info(self, *args) -> None:
         """
@@ -165,7 +166,7 @@ class WebSocketServer(object):
         - 参数:
             - args: 可变数量的参数, 每个参数都应该是能够被转换为字符串的对象. 建议传递字符串数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式. 
         """
-        self.__send_signal(signal=self.signal_websocket_server_info, error_hint='send_signal_info', log=None, doShowTitle=True, doPrintInfo=True, args=args)
+        self.__send_signal(signal=self.signal_websocket_server_info, error_hint='send_signal_info', log=Log.WS.info, doShowTitle=True, doPrintInfo=False, args=args)
 
     def __send_signal(self, signal: XSignal, error_hint: str, log=None, doShowTitle: bool = False, doPrintInfo: bool = False, args=None) -> None:
         """
@@ -201,21 +202,3 @@ class WebSocketServer(object):
                 print(error_text)
             if log:
                 log(error_text)
-
-
-if __name__ == '__main__':
-    async def start_server():
-        server = WebSocketServer('localhost', 12345)  # 创建服务器
-        server.signal_websocket_server_recv.connect(out)  # 信号 槽 连接
-        async with server:  # 上下文管理器启动服务器
-            # 这段注释的代码可以解注后运行, 用于测试
-            # async def periodic_send():  # 一个测试, 每隔一秒发送一条消息
-            #     while True:
-            #         await server.send("Server Message")  # 调用方法, 向所有客户端发送消息
-            #         await asyncio.sleep(1)  # 等待一秒
-            # asyncio.create_task(periodic_send())
-            await asyncio.Future()  # 保持运行
-
-    def out(message):  # 槽函数
-        print(f'out\t{message}\n')
-    asyncio.run(start_server())  # 服务器 启动! 芜湖!

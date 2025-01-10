@@ -4,6 +4,7 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 from flask_socketio import SocketIO
 from threading import Thread, Timer
 from sys_basis.XSignal import XSignal
+from const.Const_Parameter import *
 from datetime import datetime
 from tools.Inner_Decorators import *
 
@@ -101,9 +102,9 @@ class ServerWeb(Thread):
         涵盖发送前的检查
 
         参数:
-        - args: 可变数量的参数, 每个参数都应该是能够被转换为字符串的对象. 建议传递字符串、数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式.
+        - args: 可变数量的参数, 每个参数都应该是能够被转换为字符串的对象. 建议传递字符串数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式.
         """
-        self.__send_signal(signal=self.signal_web_server_info, error_hint='send_signal_info', log=None, doShowTitle=True, doPrintInfo=True, args=args)
+        self.__send_signal(signal=self.signal_web_server_info, error_hint='send_signal_info', log=Log.WEB.info, doShowTitle=True, doPrintInfo=False, args=args)
 
     def __send_signal(self, signal: XSignal, error_hint: str, log=None, doShowTitle: bool = False, doPrintInfo: bool = False, args=[]) -> None:
         """
@@ -117,7 +118,7 @@ class ServerWeb(Thread):
         - log: 日志器动作
         - doShowTitle(bool): 是否显示标题
         - doPrintInfo(bool): 是否打印信息
-        - args: 元组或列表或可解包对象, 每个参数都应该是能够被转换为字符串的对象. 建议传递字符串、数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式.
+        - args: 元组或列表或可解包对象, 每个参数都应该是能够被转换为字符串的对象. 建议传递字符串数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式.
         """
         try:
             temp = ''.join([str(*args)]) + '\n'
@@ -136,7 +137,7 @@ class ServerWeb(Thread):
             if doPrintInfo:
                 print(error_text)
             if log:
-                log(temp)
+                log(error_text)
 
     def run(self):
         self.__socketio.run(self.__app, host=self.__host, port=self.__port, debug=False)

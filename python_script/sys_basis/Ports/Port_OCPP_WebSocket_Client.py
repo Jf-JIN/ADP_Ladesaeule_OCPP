@@ -3,6 +3,9 @@ import asyncio
 import traceback
 from sys_basis.XSignal import XSignal
 from sys_basis.Ports.Core_WebSocket.WebSocket_Client import WebSocketClient
+from const.Const_Parameter import *
+
+_info = Log.OCPP.info
 
 
 class PortOCPPWebsocketClient(object):
@@ -142,6 +145,18 @@ class PortOCPPWebsocketClient(object):
     def isRunning(self) -> bool:
         return self.__isRunning
 
+    @property
+    def websocket(self):
+        return self.__websocket
+
+    @property
+    def ocpp_cp(self):
+        return self.__charge_point
+
+    @property
+    def list_request_message(self):
+        return self.__list_request_message
+
     async def run(self) -> None:
         """
         异步协程主体
@@ -156,6 +171,22 @@ class PortOCPPWebsocketClient(object):
                     self.__task_send_request_messages,
                     self.__task_send_normal_messages,
                 )
+                # t = 0.5
+                # try:
+                #     await asyncio.wait_for(self.__task_listening, timeout=t)
+                # except asyncio.TimeoutError:
+                #     await self.__send_signal_info("<Error - OCPP_Client_Port>\nListening task timed out")
+
+                # try:
+                #     await asyncio.wait_for(self.__task_send_request_messages, timeout=t)
+                # except asyncio.TimeoutError:
+                #     await self.__send_signal_info("<Error - OCPP_Client_Port>\nRequest message task timed out")
+
+                # try:
+                #     await asyncio.wait_for(self.__task_send_normal_messages, timeout=t)
+                # except asyncio.TimeoutError:
+                #     await self.__send_signal_info("<Error - OCPP_Client_Port>\nNormal message task timed out")
+
                 await asyncio.Future()
         except Exception as e:
             self.__send_signal_info(f"<Error - OCPP_Client_Port>\n{traceback.format_exc()}")
@@ -180,6 +211,7 @@ class PortOCPPWebsocketClient(object):
         """
         self.__list_request_message.append(message)
         self.__event_request_message.set()
+        _info('dfhdsjkalfhdjkashfjkiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii')
 
     def send_response_message(self,  message_action: str, message, send_time: float) -> None:
         """
@@ -211,7 +243,7 @@ class PortOCPPWebsocketClient(object):
             flag: bool = self.__charge_point.send_response_message(message_action, message, send_time)
             return flag
         except:
-            self.__send_signal_info(f'<Error - send_response_message>\n{traceback.format_exc}')
+            self.__send_signal_info(f'<Error - send_response_message>\n{(traceback.format_exc())}')
             return False
 
     def send_normal_message(self, message: str) -> None:
@@ -225,7 +257,7 @@ class PortOCPPWebsocketClient(object):
             self.__list_normal_message.append(message)
             self.__event_normal_message.set()
         else:
-            print('normal message must not start with "["')
+            self.__send_signal_info('<ValueError> normal message must not start with "["')
 
     def __send_signal_info(self, *args) -> None:
         """
@@ -236,9 +268,9 @@ class PortOCPPWebsocketClient(object):
         - 参数:
             - args: 可变数量的参数, 每个参数都应该是能够被转换为字符串的对象. 建议传递字符串、数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式.
         """
-        self.__send_signal(signal=self.signal_thread_ocpp_client_info, error_hint='send_signal_info', log=None, doShowTitle=True, doPrintInfo=True, args=[*args])
+        self.__send_signal(signal=self.signal_thread_ocpp_client_info, error_hint='send_signal_info', log=None, doShowTitle=True, doPrintInfo=False, args=[*args])
 
-    def __send_signal(self, signal: XSignal, error_hint: str, log=None, doShowTitle: bool = False, doPrintInfo: bool = False, args=[]) -> None:
+    def __send_signal(self, signal: XSignal, error_hint: str, log=Log.OCPP.info, doShowTitle: bool = False, doPrintInfo: bool = False, args=[]) -> None:
         """
         发送/打印 信号
 
@@ -269,7 +301,7 @@ class PortOCPPWebsocketClient(object):
             if doPrintInfo:
                 print(error_text)
             if log:
-                log(temp)
+                log(error_text)
 
     async def __listen_for_messages(self):
         """
@@ -278,11 +310,16 @@ class PortOCPPWebsocketClient(object):
         收到的消息实际上是通过信号Websocket的 `signal_websocket_client_recv` 和 `signal_websocket_client_info` 传进来
         """
         while self.__isRunning:
-            message = await self.__websocket.recv()
-            if (isinstance(message, str) and message.startswith('[')):  # 信息过滤
-                await self.__charge_point.route_message(message)
-            else:
-                self.__signal_thread_ocpp_client_normal_message.emit(message)
+            _info('4444444444444444444444444444444444444444444444444444444444444')
+            try:
+                message = await asyncio.wait_for(self.__websocket.recv(),   timeout=1)
+                _info(f'888888888888888888888888888888888888888888888888888888888888888888888888 {repr(message)}')
+                if (isinstance(message, str) and message.startswith('[')):  # 信息过滤
+                    await self.__charge_point.route_message(message)
+                else:
+                    self.__signal_thread_ocpp_client_normal_message.emit(message)
+            except:
+                pass
 
     async def __send_request_message(self) -> None:
         """
@@ -294,14 +331,19 @@ class PortOCPPWebsocketClient(object):
         """
         while self.__isRunning:
             await self.__event_request_message.wait()
+            _info('55555555555555555555555555555555555555555555')
             if not self.__isRunning:  # 提前终止
                 break
             try:
                 # 此处结果将由 __charge_point.signal_charge_point_ocpp_response 传递, 无需手动处理
-                await self.__charge_point.send_request_message(self.__list_request_message.pop(0))
+                if len(self.__list_request_message) > 0:
+                    _info('00000000000000000000000000000000000000000000000000000')
+                    await self.__charge_point.send_request_message(self.__list_request_message.pop(0))
+                    _info('1111111111111111111111111111111111111111111111111111111111')
             except:
-                self.__send_signal_info(f'<Error - send_request_message>\n{traceback.format_exc}')
-            if self.__list_request_message:
+                self.__send_signal_info(f'<Error - send_request_message>\n{traceback.format_exc()}')
+            _info(f'fdhsjakflllllllllllllllllllllllllllllllllllllllhjskalf\t{self.__list_request_message}')
+            if not self.__list_request_message:
                 self.__event_request_message.clear()
 
     async def __send_normal_message(self) -> None:
@@ -313,12 +355,13 @@ class PortOCPPWebsocketClient(object):
         当信息列表 __list_normal_message 为空时, 将等待事件 __event_request_message 触发
         """
         while self.__isRunning:
+            _info('6666666666666666666666666666666666666666666666666666666666')
             await self.__event_normal_message.wait()
             if not self.__isRunning:  # 提前终止
                 break
             try:
                 await self.__websocket.send(self.__list_normal_message.pop(0))
             except:
-                self.__send_signal_info(f'<Error - send_normal_message>\n{traceback.format_exc}')
+                self.__send_signal_info(f'<Error - send_normal_message>\n{traceback.format_exc()}')
             if self.__list_normal_message:
                 self.__event_normal_message.clear()

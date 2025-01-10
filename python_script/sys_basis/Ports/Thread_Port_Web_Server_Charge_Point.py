@@ -3,6 +3,9 @@
 from threading import Thread
 from sys_basis.XSignal import XSignal
 from sys_basis.Ports.Server_Web_Charge_Point import ServerWeb
+from const.Const_Parameter import *
+
+_info = Log.WEB.info
 
 
 class PortWebServerChargePoint(Thread):
@@ -52,7 +55,7 @@ class PortWebServerChargePoint(Thread):
         参数:
         - args: 可变数量的参数, 每个参数都应该是能够被转换为字符串的对象. 建议传递字符串、数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式.
         """
-        self.__send_signal(signal=self.__signal_thread_web_server_info, error_hint='send_signal_info', log=None, doShowTitle=True, doPrintInfo=True, args=args)
+        self.__send_signal(signal=self.__signal_thread_web_server_info, error_hint='send_signal_info', log=Log.WEB.info, doShowTitle=True, doPrintInfo=False, args=args)
 
     def __send_signal(self, signal: XSignal, error_hint: str, log=None, doShowTitle: bool = False, doPrintInfo: bool = False, args=[]) -> None:
         """
