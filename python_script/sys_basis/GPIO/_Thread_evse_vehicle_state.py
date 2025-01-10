@@ -5,7 +5,7 @@ from sys_basis.XSignal  import XSignal
 
 
 
-class ThreadOutputCurrent(Thread):
+class ThreadVehicleState(Thread):
 
     def __init__(self, polling_interval,client):
         super().__init__()
@@ -16,7 +16,7 @@ class ThreadOutputCurrent(Thread):
         self.read = EVSEReadWrite(client)
     @property
     def signal_transfer_data(self):
-        """转发收到的电流值"""
+        """转发收到的数据 """
         return self.__signal_transfer_data
 
     @property
@@ -29,7 +29,7 @@ class ThreadOutputCurrent(Thread):
         轮询循环，每隔一定时间读取寄存器并发送信息
         """
         while self.__isRunning:
-            self.signal_transfer_data.emit(self.read.get_actual_current())
+            self.signal_transfer_data.emit(self.read.get_vehicle_state())
             time.sleep(self.__polling_interval)  # 等待指定的轮询间隔
         self.signal_finished.emit()  # 发送完成信号
 

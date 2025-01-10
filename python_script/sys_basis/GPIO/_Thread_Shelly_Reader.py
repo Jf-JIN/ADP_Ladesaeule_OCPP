@@ -1,7 +1,7 @@
-from logging import exception
+import traceback
 
 import requests
-import traceback
+
 
 class GetShellyData:
 

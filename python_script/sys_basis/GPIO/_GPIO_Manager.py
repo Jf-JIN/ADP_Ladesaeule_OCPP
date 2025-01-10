@@ -1,7 +1,8 @@
 
 import time
-from XSignal import XSignal
+
 from _EVSE_communication import EVSECommunication
+
 
 class GPIO_Manager:
 

@@ -1,18 +1,18 @@
-from threading import Thread
 import time
-from XSignal import XSignal
-from _EVSE_communication import EVSECommunication
+from threading import Thread
 
-class TryConnection(Thread):
+from sys_basis.XSignal import XSignal
+
+
+class ThreadTryConnection(Thread):
     def __init__(self, polling_interval,parent):
         super().__init__()
         self.__parent_obj = parent
         self.__polling_interval = polling_interval
         self.__isRunning = True
         self.__signal_finished = XSignal()
-        #self.__evse_communication = EVSECommunication()
         self.__client = self.__parent_obj._client
-        self.__send_signal_info = self.__parent_obj.__send_signal_info
+        self.__send_signal_info = self.__parent_obj._send_signal_info
         self.__signal_internal = XSignal()
 
     @property
