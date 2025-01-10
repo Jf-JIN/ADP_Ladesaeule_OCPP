@@ -3,7 +3,7 @@ from ocpp.v16 import call_result
 from ._Base import *
 
 
-class clear_charging_profile_response(Base_OCPP_Struct_V1_6):
+class GenClearChargingProfileResponse(Base_OCPP_Struct_V1_6):
 
     @staticmethod
     def generate(

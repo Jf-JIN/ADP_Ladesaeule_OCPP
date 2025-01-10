@@ -3,7 +3,7 @@ from ocpp.v16 import call
 from ._Base import *
 
 
-class extended_trigger_message_request(Base_OCPP_Struct_V1_6):
+class GenExtendedTriggerMessageRequest(Base_OCPP_Struct_V1_6):
 
     @staticmethod
     def generate(

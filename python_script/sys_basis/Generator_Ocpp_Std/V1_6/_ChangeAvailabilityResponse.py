@@ -3,7 +3,7 @@ from ocpp.v16 import call_result
 from ._Base import *
 
 
-class change_availability_response(Base_OCPP_Struct_V1_6):
+class GenChangeAvailabilityResponse(Base_OCPP_Struct_V1_6):
 
     @staticmethod
     def generate(

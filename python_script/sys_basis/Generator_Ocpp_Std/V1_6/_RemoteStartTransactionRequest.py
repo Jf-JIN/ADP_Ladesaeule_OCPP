@@ -3,7 +3,7 @@ from ocpp.v16 import call
 from ._Base import *
 
 
-class remote_start_transaction_request(Base_OCPP_Struct_V1_6):
+class GenRemoteStartTransactionRequest(Base_OCPP_Struct_V1_6):
 
     @staticmethod
     def generate(

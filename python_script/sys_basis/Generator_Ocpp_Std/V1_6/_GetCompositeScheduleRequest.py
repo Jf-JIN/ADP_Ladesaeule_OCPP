@@ -3,7 +3,7 @@ from ocpp.v16 import call
 from ._Base import *
 
 
-class get_composite_schedule_request(Base_OCPP_Struct_V1_6):
+class GenGetCompositeScheduleRequest(Base_OCPP_Struct_V1_6):
 
     @staticmethod
     def generate(

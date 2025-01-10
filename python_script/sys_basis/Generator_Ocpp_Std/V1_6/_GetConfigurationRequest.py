@@ -3,7 +3,7 @@ from ocpp.v16 import call
 from ._Base import *
 
 
-class get_configuration_request(Base_OCPP_Struct_V1_6):
+class GenGetConfigurationRequest(Base_OCPP_Struct_V1_6):
 
     @staticmethod
     def generate(
