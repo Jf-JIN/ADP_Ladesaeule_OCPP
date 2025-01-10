@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class get_display_messages_request(Base_OCPP_Struct_V2_0_1):
+class GenGetDisplayMessagesRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -37,11 +37,11 @@ class get_display_messages_request(Base_OCPP_Struct_V2_0_1):
             - call.GetDisplayMessages
         """
         return call.GetDisplayMessages(
-            request_id = request_id,
-            id = id,
-            priority = priority,
-            state = state,
-            custom_data = custom_data
+            request_id=request_id,
+            id=id,
+            priority=priority,
+            state=state,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -56,10 +56,9 @@ class get_display_messages_request(Base_OCPP_Struct_V2_0_1):
             - call.GetDisplayMessages
         """
         return call.GetDisplayMessages(
-            request_id = dict_data['requestId'],
-            id = dict_data.get('id', None),
-            priority = dict_data.get('priority', None),
-            state = dict_data.get('state', None),
-            custom_data = dict_data.get('customData', None)
+            request_id=dict_data['requestId'],
+            id=dict_data.get('id', None),
+            priority=dict_data.get('priority', None),
+            state=dict_data.get('state', None),
+            custom_data=dict_data.get('customData', None)
         )
-

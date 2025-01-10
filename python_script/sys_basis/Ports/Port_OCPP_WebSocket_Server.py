@@ -3,6 +3,10 @@ import asyncio
 import traceback
 from sys_basis.XSignal import XSignal
 from sys_basis.Ports.Core_WebSocket.WebSocket_Server import WebSocketServer
+from const.Charge_Point_Parameters import *
+from const.Const_Parameter import *
+
+_info = Log.OCPP.info
 
 
 class PortOCPPWebsocketServer(object):
@@ -166,14 +170,14 @@ class PortOCPPWebsocketServer(object):
         self.__list_request_message.append(message)
         self.__event_request_message.set()
 
-    def send_response_message(self,  message_action: str, message, send_time: float) -> None:
+    def send_response_message(self,  message_action: str, message, send_time: float) -> int:
         """ 
-        发送响应消息, 结果将通过信号 __signal_thread_ocpp_server_recv_response 以字典形式发送, 结构如下: 
+        发送响应消息, 结果将通过信号 __signal_thread_ocpp_server_recv_response_result 以字典形式发送, 结构如下: 
             - `action`(str): 消息类型
             - `data`(dict): OCPP消息的字典形式
             - `send_time`(float): 请求发送时间,  这里send 含义是从 OCPP端口 向外部发送的动作
-            - `response_status`(int): 响应状态, 表示响应是否成功收到. 
-                - 枚举类 `CP_Params.RESPONSE`
+            - `status`(int): 响应状态, 表示响应是否成功收到. 
+                - 枚举类 `CP_Params.RESPONSE_RESULT`
                 - 枚举项: `SUCCESS`, `TIMEOUT`, `ERROR`
 
         发送时间指 从当前实例通过信号发送给主线程的时间戳. 
@@ -195,11 +199,11 @@ class PortOCPPWebsocketServer(object):
         # self.__event_response_message.set()
         try:
             # 此处结果将通过信号 signal_thread_ocpp_server_recv_response_result 传递, 无需手动处理
-            flag: bool = self.__charge_point.send_response_message(message_action, message, send_time)
+            flag: int = self.__charge_point.send_response_message(message_action, message, send_time)
             return flag
         except:
-            self.__send_signal_info(f'<Error - send_response_message>\n{traceback.format_exc}')
-            return False
+            self.__send_signal_info(f'<Error - send_response_message>\n{traceback.format_exc()}')
+            return CP_Params.RESPONSE_RESULT.ERROR
 
     def send_normal_message(self, message: str) -> None:
         """
@@ -233,9 +237,9 @@ class PortOCPPWebsocketServer(object):
         参数:
             - args: 可变数量的参数, 每个参数都应该是能够被转换为字符串的对象. 建议传递字符串、数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式. 
         """
-        self.__send_signal(signal=self.signal_thread_ocpp_server_info, error_hint='send_signal_info', log=None, doShowTitle=True, doPrintInfo=True, args=args)
+        self.__send_signal(signal=self.signal_thread_ocpp_server_info, error_hint='send_signal_info', log=None, doShowTitle=True, doPrintInfo=False, args=args)
 
-    def __send_signal(self, signal: XSignal, error_hint: str, log=None, doShowTitle: bool = False, doPrintInfo: bool = False, args=None) -> None:
+    def __send_signal(self, signal: XSignal, error_hint: str, log=Log.OCPP.info, doShowTitle: bool = False, doPrintInfo: bool = False, args=None) -> None:
         """
         发送/打印 信号
 
@@ -284,9 +288,10 @@ class PortOCPPWebsocketServer(object):
                 break
             try:
                 # 此处结果将由 __charge_point.signal_charge_point_ocpp_response 传递, 无需手动处理
-                await self.__charge_point.send_request_message(self.__list_request_message.pop(0))
+                if len(self.__list_request_message) > 0:
+                    await self.__charge_point.send_request_message(self.__list_request_message.pop(0))
             except:
-                self.__send_signal_info(f'<Error - send_request_message>\n{traceback.format_exc}')
+                self.__send_signal_info(f'<Error - send_request_message>\n{traceback.format_exc()}')
             if self.__list_request_message:
                 self.__event_request_message.clear()
 
@@ -306,7 +311,7 @@ class PortOCPPWebsocketServer(object):
     #             # 此处结果将通过信号 signal_thread_ocpp_server_recv_response_result 传递, 无需手动处理
     #             result = await self.__charge_point.send_response_message(*self.__list_response_message.pop(0))
     #         except:
-    #             self.__send_signal_info(f'<Error - send_response_message>\n{traceback.format_exc}')
+    #             self.__send_signal_info(f'<Error - send_response_message>\n{traceback.format_exc()}')
     #         if self.__list_response_message:
     #             self.__event_response_message.clear()
 
@@ -323,8 +328,9 @@ class PortOCPPWebsocketServer(object):
             if not self.__isRunning:  # 提前终止
                 break
             try:
-                await self.__websocket.send(self.__list_normal_message.pop(0))
+                if len(self.__list_normal_message) > 0:
+                    await self.__websocket.send(self.__list_normal_message.pop(0))
             except:
-                self.__send_signal_info(f'<Error - send_normal_message>\n{traceback.format_exc}')
+                self.__send_signal_info(f'<Error - send_normal_message>\n{traceback.format_exc()}')
             if self.__list_normal_message:
                 self.__event_normal_message.clear()

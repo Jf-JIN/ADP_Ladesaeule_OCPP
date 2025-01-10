@@ -3,7 +3,7 @@ from ocpp.v16 import call
 from ._Base import *
 
 
-class get_configuration_request(Base_OCPP_Struct_V1_6):
+class GenGetConfigurationRequest(Base_OCPP_Struct_V1_6):
 
     @staticmethod
     def generate(
@@ -20,7 +20,7 @@ class get_configuration_request(Base_OCPP_Struct_V1_6):
             - call.GetConfiguration
         """
         return call.GetConfiguration(
-            key = key
+            key=key
         )
 
     @staticmethod
@@ -35,6 +35,5 @@ class get_configuration_request(Base_OCPP_Struct_V1_6):
             - call.GetConfiguration
         """
         return call.GetConfiguration(
-            key = dict_data.get('key', None)
+            key=dict_data.get('key', None)
         )
-

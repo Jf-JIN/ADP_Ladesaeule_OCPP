@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class change_availability_request(Base_OCPP_Struct_V2_0_1):
+class GenChangeAvailabilityRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -30,9 +30,9 @@ class change_availability_request(Base_OCPP_Struct_V2_0_1):
             - call.ChangeAvailability
         """
         return call.ChangeAvailability(
-            operational_status = operational_status,
-            evse = evse,
-            custom_data = custom_data
+            operational_status=operational_status,
+            evse=evse,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -47,11 +47,10 @@ class change_availability_request(Base_OCPP_Struct_V2_0_1):
             - call.ChangeAvailability
         """
         return call.ChangeAvailability(
-            operational_status = dict_data['operationalStatus'],
-            evse = dict_data.get('evse', None),
-            custom_data = dict_data.get('customData', None)
+            operational_status=dict_data['operationalStatus'],
+            evse=dict_data.get('evse', None),
+            custom_data=dict_data.get('customData', None)
         )
-
 
     @staticmethod
     def get_evse(
@@ -74,7 +73,7 @@ class change_availability_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'id': id
         }
         if connector_id is not None:
@@ -82,4 +81,3 @@ class change_availability_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-

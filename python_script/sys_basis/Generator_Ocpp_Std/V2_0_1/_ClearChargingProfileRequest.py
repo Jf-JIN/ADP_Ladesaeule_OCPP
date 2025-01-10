@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class clear_charging_profile_request(Base_OCPP_Struct_V2_0_1):
+class GenClearChargingProfileRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -28,9 +28,9 @@ class clear_charging_profile_request(Base_OCPP_Struct_V2_0_1):
             - call.ClearChargingProfile
         """
         return call.ClearChargingProfile(
-            charging_profile_id = charging_profile_id,
-            charging_profile_criteria = charging_profile_criteria,
-            custom_data = custom_data
+            charging_profile_id=charging_profile_id,
+            charging_profile_criteria=charging_profile_criteria,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -45,11 +45,10 @@ class clear_charging_profile_request(Base_OCPP_Struct_V2_0_1):
             - call.ClearChargingProfile
         """
         return call.ClearChargingProfile(
-            charging_profile_id = dict_data.get('chargingProfileId', None),
-            charging_profile_criteria = dict_data.get('chargingProfileCriteria', None),
-            custom_data = dict_data.get('customData', None)
+            charging_profile_id=dict_data.get('chargingProfileId', None),
+            charging_profile_criteria=dict_data.get('chargingProfileCriteria', None),
+            custom_data=dict_data.get('customData', None)
         )
-
 
     @staticmethod
     def get_charging_profile_criteria(
@@ -77,7 +76,7 @@ class clear_charging_profile_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             
         }
         if evse_id is not None:
@@ -89,4 +88,3 @@ class clear_charging_profile_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-

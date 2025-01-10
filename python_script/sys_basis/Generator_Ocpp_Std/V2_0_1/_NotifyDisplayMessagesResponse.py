@@ -3,7 +3,7 @@ from ocpp.v201 import call_result
 from ._Base import *
 
 
-class notify_display_messages_response(Base_OCPP_Struct_V2_0_1):
+class GenNotifyDisplayMessagesResponse(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -21,7 +21,7 @@ class notify_display_messages_response(Base_OCPP_Struct_V2_0_1):
             - call_result.NotifyDisplayMessages
         """
         return call_result.NotifyDisplayMessages(
-            custom_data = custom_data
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -36,6 +36,5 @@ class notify_display_messages_response(Base_OCPP_Struct_V2_0_1):
             - call_result.NotifyDisplayMessages
         """
         return call_result.NotifyDisplayMessages(
-            custom_data = dict_data.get('customData', None)
+            custom_data=dict_data.get('customData', None)
         )
-

@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class set_display_message_request(Base_OCPP_Struct_V2_0_1):
+class GenSetDisplayMessageRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -25,8 +25,8 @@ class set_display_message_request(Base_OCPP_Struct_V2_0_1):
             - call.SetDisplayMessage
         """
         return call.SetDisplayMessage(
-            message = message,
-            custom_data = custom_data
+            message=message,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -41,10 +41,9 @@ class set_display_message_request(Base_OCPP_Struct_V2_0_1):
             - call.SetDisplayMessage
         """
         return call.SetDisplayMessage(
-            message = dict_data['message'],
-            custom_data = dict_data.get('customData', None)
+            message=dict_data['message'],
+            custom_data=dict_data.get('customData', None)
         )
-
 
     @staticmethod
     def get_evse(
@@ -67,7 +66,7 @@ class set_display_message_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'id': id
         }
         if connector_id is not None:
@@ -75,7 +74,6 @@ class set_display_message_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_display(
@@ -104,7 +102,7 @@ class set_display_message_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'name': name
         }
         if evse is not None:
@@ -114,7 +112,6 @@ class set_display_message_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_message(
@@ -144,7 +141,7 @@ class set_display_message_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'format': format,
             'content': content
         }
@@ -153,7 +150,6 @@ class set_display_message_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_message(
@@ -203,7 +199,7 @@ class set_display_message_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'id': id,
             'priority': priority,
             'message': message
@@ -221,4 +217,3 @@ class set_display_message_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-

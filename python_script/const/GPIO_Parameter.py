@@ -1,6 +1,5 @@
 
 from const.Analog_Define import AnalogDefine
-import os
 
 
 class GPIOParams(AnalogDefine):

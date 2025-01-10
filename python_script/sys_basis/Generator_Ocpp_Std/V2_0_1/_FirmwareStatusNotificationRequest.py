@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class firmware_status_notification_request(Base_OCPP_Struct_V2_0_1):
+class GenFirmwareStatusNotificationRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -29,9 +29,9 @@ class firmware_status_notification_request(Base_OCPP_Struct_V2_0_1):
             - call.FirmwareStatusNotification
         """
         return call.FirmwareStatusNotification(
-            status = status,
-            request_id = request_id,
-            custom_data = custom_data
+            status=status,
+            request_id=request_id,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -46,8 +46,7 @@ class firmware_status_notification_request(Base_OCPP_Struct_V2_0_1):
             - call.FirmwareStatusNotification
         """
         return call.FirmwareStatusNotification(
-            status = dict_data['status'],
-            request_id = dict_data.get('requestId', None),
-            custom_data = dict_data.get('customData', None)
+            status=dict_data['status'],
+            request_id=dict_data.get('requestId', None),
+            custom_data=dict_data.get('customData', None)
         )
-

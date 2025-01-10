@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class request_start_transaction_request(Base_OCPP_Struct_V2_0_1):
+class GenRequestStartTransactionRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -39,12 +39,12 @@ class request_start_transaction_request(Base_OCPP_Struct_V2_0_1):
             - call.RequestStartTransaction
         """
         return call.RequestStartTransaction(
-            id_token = id_token,
-            remote_start_id = remote_start_id,
-            evse_id = evse_id,
-            group_id_token = group_id_token,
-            charging_profile = charging_profile,
-            custom_data = custom_data
+            id_token=id_token,
+            remote_start_id=remote_start_id,
+            evse_id=evse_id,
+            group_id_token=group_id_token,
+            charging_profile=charging_profile,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -59,14 +59,13 @@ class request_start_transaction_request(Base_OCPP_Struct_V2_0_1):
             - call.RequestStartTransaction
         """
         return call.RequestStartTransaction(
-            id_token = dict_data['idToken'],
-            remote_start_id = dict_data['remoteStartId'],
-            evse_id = dict_data.get('evseId', None),
-            group_id_token = dict_data.get('groupIdToken', None),
-            charging_profile = dict_data.get('chargingProfile', None),
-            custom_data = dict_data.get('customData', None)
+            id_token=dict_data['idToken'],
+            remote_start_id=dict_data['remoteStartId'],
+            evse_id=dict_data.get('evseId', None),
+            group_id_token=dict_data.get('groupIdToken', None),
+            charging_profile=dict_data.get('chargingProfile', None),
+            custom_data=dict_data.get('customData', None)
         )
-
 
     @staticmethod
     def get_additional_info(
@@ -91,14 +90,13 @@ class request_start_transaction_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'additionalIdToken': additional_id_token,
             'type': type
         }
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_group_id_token(
@@ -128,7 +126,7 @@ class request_start_transaction_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'idToken': id_token,
             'type': type
         }
@@ -137,7 +135,6 @@ class request_start_transaction_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_additional_info(
@@ -162,14 +159,13 @@ class request_start_transaction_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'additionalIdToken': additional_id_token,
             'type': type
         }
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_id_token(
@@ -199,7 +195,7 @@ class request_start_transaction_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'idToken': id_token,
             'type': type
         }
@@ -208,7 +204,6 @@ class request_start_transaction_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_charging_schedule_period(
@@ -237,7 +232,7 @@ class request_start_transaction_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'startPeriod': start_period,
             'limit': limit
         }
@@ -248,7 +243,6 @@ class request_start_transaction_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_relative_time_interval(
@@ -271,7 +265,7 @@ class request_start_transaction_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'start': start
         }
         if duration is not None:
@@ -279,7 +273,6 @@ class request_start_transaction_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_cost(
@@ -307,7 +300,7 @@ class request_start_transaction_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'costKind': cost_kind,
             'amount': amount
         }
@@ -316,7 +309,6 @@ class request_start_transaction_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_consumption_cost(
@@ -341,14 +333,13 @@ class request_start_transaction_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'startValue': start_value,
             'cost': cost
         }
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_sales_tariff_entry(
@@ -377,7 +368,7 @@ class request_start_transaction_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'relativeTimeInterval': relative_time_interval
         }
         if e_price_level is not None:
@@ -387,7 +378,6 @@ class request_start_transaction_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_sales_tariff(
@@ -419,7 +409,7 @@ class request_start_transaction_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'id': id,
             'salesTariffEntry': sales_tariff_entry
         }
@@ -430,7 +420,6 @@ class request_start_transaction_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_charging_schedule(
@@ -474,7 +463,7 @@ class request_start_transaction_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'id': id,
             'chargingRateUnit': charging_rate_unit,
             'chargingSchedulePeriod': charging_schedule_period
@@ -490,7 +479,6 @@ class request_start_transaction_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_charging_profile(
@@ -545,7 +533,7 @@ class request_start_transaction_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'id': id,
             'stackLevel': stack_level,
             'chargingProfilePurpose': charging_profile_purpose,
@@ -563,4 +551,3 @@ class request_start_transaction_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-

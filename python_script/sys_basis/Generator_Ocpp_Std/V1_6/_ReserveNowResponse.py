@@ -3,7 +3,7 @@ from ocpp.v16 import call_result
 from ._Base import *
 
 
-class reserve_now_response(Base_OCPP_Struct_V1_6):
+class GenReserveNowResponse(Base_OCPP_Struct_V1_6):
 
     @staticmethod
     def generate(
@@ -21,7 +21,7 @@ class reserve_now_response(Base_OCPP_Struct_V1_6):
             - call_result.ReserveNow
         """
         return call_result.ReserveNow(
-            status = status
+            status=status
         )
 
     @staticmethod
@@ -36,6 +36,5 @@ class reserve_now_response(Base_OCPP_Struct_V1_6):
             - call_result.ReserveNow
         """
         return call_result.ReserveNow(
-            status = dict_data['status']
+            status=dict_data['status']
         )
-

@@ -3,7 +3,7 @@ from ocpp.v16 import call
 from ._Base import *
 
 
-class get_installed_certificate_ids_request(Base_OCPP_Struct_V1_6):
+class GenGetInstalledCertificateIdsRequest(Base_OCPP_Struct_V1_6):
 
     @staticmethod
     def generate(
@@ -21,7 +21,7 @@ class get_installed_certificate_ids_request(Base_OCPP_Struct_V1_6):
             - call.GetInstalledCertificateIds
         """
         return call.GetInstalledCertificateIds(
-            certificate_type = certificate_type
+            certificate_type=certificate_type
         )
 
     @staticmethod
@@ -36,6 +36,5 @@ class get_installed_certificate_ids_request(Base_OCPP_Struct_V1_6):
             - call.GetInstalledCertificateIds
         """
         return call.GetInstalledCertificateIds(
-            certificate_type = dict_data['certificateType']
+            certificate_type=dict_data['certificateType']
         )
-

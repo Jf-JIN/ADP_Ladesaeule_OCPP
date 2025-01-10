@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class clear_variable_monitoring_request(Base_OCPP_Struct_V2_0_1):
+class GenClearVariableMonitoringRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -24,8 +24,8 @@ class clear_variable_monitoring_request(Base_OCPP_Struct_V2_0_1):
             - call.ClearVariableMonitoring
         """
         return call.ClearVariableMonitoring(
-            id = id,
-            custom_data = custom_data
+            id=id,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -40,7 +40,6 @@ class clear_variable_monitoring_request(Base_OCPP_Struct_V2_0_1):
             - call.ClearVariableMonitoring
         """
         return call.ClearVariableMonitoring(
-            id = dict_data['id'],
-            custom_data = dict_data.get('customData', None)
+            id=dict_data['id'],
+            custom_data=dict_data.get('customData', None)
         )
-

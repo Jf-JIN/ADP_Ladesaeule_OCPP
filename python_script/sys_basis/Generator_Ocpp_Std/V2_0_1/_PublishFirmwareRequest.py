@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class publish_firmware_request(Base_OCPP_Struct_V2_0_1):
+class GenPublishFirmwareRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -38,12 +38,12 @@ class publish_firmware_request(Base_OCPP_Struct_V2_0_1):
             - call.PublishFirmware
         """
         return call.PublishFirmware(
-            location = location,
-            checksum = checksum,
-            request_id = request_id,
-            retries = retries,
-            retry_interval = retry_interval,
-            custom_data = custom_data
+            location=location,
+            checksum=checksum,
+            request_id=request_id,
+            retries=retries,
+            retry_interval=retry_interval,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -58,11 +58,10 @@ class publish_firmware_request(Base_OCPP_Struct_V2_0_1):
             - call.PublishFirmware
         """
         return call.PublishFirmware(
-            location = dict_data['location'],
-            checksum = dict_data['checksum'],
-            request_id = dict_data['requestId'],
-            retries = dict_data.get('retries', None),
-            retry_interval = dict_data.get('retryInterval', None),
-            custom_data = dict_data.get('customData', None)
+            location=dict_data['location'],
+            checksum=dict_data['checksum'],
+            request_id=dict_data['requestId'],
+            retries=dict_data.get('retries', None),
+            retry_interval=dict_data.get('retryInterval', None),
+            custom_data=dict_data.get('customData', None)
         )
-

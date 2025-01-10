@@ -93,19 +93,19 @@ class Server:
         if not opt.IsOpt():
             self.__coroutine_OCPP_server.send_response_message(
                 Action.NotifyEVChargingNeeds,
-                notify_ev_charging_needs_response.generate(status='Accepted'),
+                GenNotifyEVChargingNeedsResponse.generate(status='Accepted'),
                 message['send_time']
             )
-            temp_request = set_charging_profile_request.generate(
-                    message['data']['evseId'],
-                    set_charging_profile_request.get_charging_profile(
-                        1,
-                        1,
-                        ChargingProfilePurposeType.tx_profile,
-                        ChargingProfileKindType.absolute,
-                        [opt.get_charging_schedule()]
-                    )
+            temp_request = GenSetChargingProfileRequest.generate(
+                message['data']['evseId'],
+                GenSetChargingProfileRequest.get_charging_profile(
+                    1,
+                    1,
+                    ChargingProfilePurposeType.tx_profile,
+                    ChargingProfileKindType.absolute,
+                    [opt.get_charging_schedule()]
                 )
+            )
             self._send_request_list.append({
                 'action': 'NotifyEVChargingNeeds',
                 'data': temp_request
@@ -115,7 +115,7 @@ class Server:
         else:
             self.__coroutine_OCPP_server.send_response_message(
                 Action.NotifyEVChargingNeeds,
-                notify_ev_charging_needs_response.generate(status='Rejected'),
+                GenNotifyEVChargingNeedsResponse.generate(status='Rejected'),
                 message['send_time']
             )
 
@@ -126,7 +126,7 @@ class Server:
         # if len(self._send_request_list) > 0 and message['action'] == self._send_request_list[-1]['action']:
         #     if message['status'] == CP_Params.RESPONSE_RESULT.SUCCESS:
         #         self._send_request_list.pop(-1)
-        #         print("芜湖！！！！！！！！")
+        #         print("芜湖! ! ! ! ! ! ! ! ")
         #     if message['status'] == CP_Params.RESPONSE_RESULT.TIMEOUT:
         #         self.__coroutine_OCPP_server.send_request_message(self._send_request_list[-1]['data'])
         pass

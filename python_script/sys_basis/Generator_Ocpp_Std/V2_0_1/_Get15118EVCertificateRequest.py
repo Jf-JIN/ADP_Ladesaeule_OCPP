@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class get15118_ev_certificate_request(Base_OCPP_Struct_V2_0_1):
+class GenGet15118EVCertificateRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -52,7 +52,7 @@ class get15118_ev_certificate_request(Base_OCPP_Struct_V2_0_1):
             - call.Get15118EVCertificate
         """
         return call.Get15118EVCertificate(
-            iso15118schema_version=dict_data['iso15118SchemaVersion'],
+            iso15118_schema_version=dict_data['iso15118SchemaVersion'],
             action=dict_data['action'],
             exi_request=dict_data['exiRequest'],
             custom_data=dict_data.get('customData', None)

@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class notify_customer_information_request(Base_OCPP_Struct_V2_0_1):
+class GenNotifyCustomerInformationRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -38,12 +38,12 @@ class notify_customer_information_request(Base_OCPP_Struct_V2_0_1):
             - call.NotifyCustomerInformation
         """
         return call.NotifyCustomerInformation(
-            data = data,
-            seq_no = seq_no,
-            generated_at = generated_at,
-            request_id = request_id,
-            tbc = tbc,
-            custom_data = custom_data
+            data=data,
+            seq_no=seq_no,
+            generated_at=generated_at,
+            request_id=request_id,
+            tbc=tbc,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -58,11 +58,10 @@ class notify_customer_information_request(Base_OCPP_Struct_V2_0_1):
             - call.NotifyCustomerInformation
         """
         return call.NotifyCustomerInformation(
-            data = dict_data['data'],
-            seq_no = dict_data['seqNo'],
-            generated_at = dict_data['generatedAt'],
-            request_id = dict_data['requestId'],
-            tbc = dict_data.get('tbc', None),
-            custom_data = dict_data.get('customData', None)
+            data=dict_data['data'],
+            seq_no=dict_data['seqNo'],
+            generated_at=dict_data['generatedAt'],
+            request_id=dict_data['requestId'],
+            tbc=dict_data.get('tbc', None),
+            custom_data=dict_data.get('customData', None)
         )
-

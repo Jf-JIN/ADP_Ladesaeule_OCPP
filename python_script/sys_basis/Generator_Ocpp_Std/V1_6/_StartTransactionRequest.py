@@ -3,7 +3,7 @@ from ocpp.v16 import call
 from ._Base import *
 
 
-class start_transaction_request(Base_OCPP_Struct_V1_6):
+class GenStartTransactionRequest(Base_OCPP_Struct_V1_6):
 
     @staticmethod
     def generate(
@@ -29,11 +29,11 @@ class start_transaction_request(Base_OCPP_Struct_V1_6):
             - call.StartTransaction
         """
         return call.StartTransaction(
-            connector_id = connector_id,
-            id_tag = id_tag,
-            meter_start = meter_start,
-            timestamp = timestamp,
-            reservation_id = reservation_id
+            connector_id=connector_id,
+            id_tag=id_tag,
+            meter_start=meter_start,
+            timestamp=timestamp,
+            reservation_id=reservation_id
         )
 
     @staticmethod
@@ -48,10 +48,9 @@ class start_transaction_request(Base_OCPP_Struct_V1_6):
             - call.StartTransaction
         """
         return call.StartTransaction(
-            connector_id = dict_data['connectorId'],
-            id_tag = dict_data['idTag'],
-            meter_start = dict_data['meterStart'],
-            timestamp = dict_data['timestamp'],
-            reservation_id = dict_data.get('reservationId', None)
+            connector_id=dict_data['connectorId'],
+            id_tag=dict_data['idTag'],
+            meter_start=dict_data['meterStart'],
+            timestamp=dict_data['timestamp'],
+            reservation_id=dict_data.get('reservationId', None)
         )
-

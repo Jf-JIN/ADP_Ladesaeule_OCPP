@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class set_monitoring_base_request(Base_OCPP_Struct_V2_0_1):
+class GenSetMonitoringBaseRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -26,8 +26,8 @@ class set_monitoring_base_request(Base_OCPP_Struct_V2_0_1):
             - call.SetMonitoringBase
         """
         return call.SetMonitoringBase(
-            monitoring_base = monitoring_base,
-            custom_data = custom_data
+            monitoring_base=monitoring_base,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -42,7 +42,6 @@ class set_monitoring_base_request(Base_OCPP_Struct_V2_0_1):
             - call.SetMonitoringBase
         """
         return call.SetMonitoringBase(
-            monitoring_base = dict_data['monitoringBase'],
-            custom_data = dict_data.get('customData', None)
+            monitoring_base=dict_data['monitoringBase'],
+            custom_data=dict_data.get('customData', None)
         )
-

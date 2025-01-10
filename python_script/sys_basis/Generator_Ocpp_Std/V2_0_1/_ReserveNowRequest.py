@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class reserve_now_request(Base_OCPP_Struct_V2_0_1):
+class GenReserveNowRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -44,13 +44,13 @@ class reserve_now_request(Base_OCPP_Struct_V2_0_1):
             - call.ReserveNow
         """
         return call.ReserveNow(
-            id = id,
-            expiry_date_time = expiry_date_time,
-            id_token = id_token,
-            connector_type = connector_type,
-            evse_id = evse_id,
-            group_id_token = group_id_token,
-            custom_data = custom_data
+            id=id,
+            expiry_date_time=expiry_date_time,
+            id_token=id_token,
+            connector_type=connector_type,
+            evse_id=evse_id,
+            group_id_token=group_id_token,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -65,15 +65,14 @@ class reserve_now_request(Base_OCPP_Struct_V2_0_1):
             - call.ReserveNow
         """
         return call.ReserveNow(
-            id = dict_data['id'],
-            expiry_date_time = dict_data['expiryDateTime'],
-            id_token = dict_data['idToken'],
-            connector_type = dict_data.get('connectorType', None),
-            evse_id = dict_data.get('evseId', None),
-            group_id_token = dict_data.get('groupIdToken', None),
-            custom_data = dict_data.get('customData', None)
+            id=dict_data['id'],
+            expiry_date_time=dict_data['expiryDateTime'],
+            id_token=dict_data['idToken'],
+            connector_type=dict_data.get('connectorType', None),
+            evse_id=dict_data.get('evseId', None),
+            group_id_token=dict_data.get('groupIdToken', None),
+            custom_data=dict_data.get('customData', None)
         )
-
 
     @staticmethod
     def get_additional_info(
@@ -98,14 +97,13 @@ class reserve_now_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'additionalIdToken': additional_id_token,
             'type': type
         }
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_id_token(
@@ -135,7 +133,7 @@ class reserve_now_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'idToken': id_token,
             'type': type
         }
@@ -144,7 +142,6 @@ class reserve_now_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_additional_info(
@@ -169,14 +166,13 @@ class reserve_now_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'additionalIdToken': additional_id_token,
             'type': type
         }
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_group_id_token(
@@ -206,7 +202,7 @@ class reserve_now_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'idToken': id_token,
             'type': type
         }
@@ -215,4 +211,3 @@ class reserve_now_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-

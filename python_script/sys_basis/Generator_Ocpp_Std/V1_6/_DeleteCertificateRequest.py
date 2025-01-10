@@ -3,7 +3,7 @@ from ocpp.v16 import call
 from ._Base import *
 
 
-class delete_certificate_request(Base_OCPP_Struct_V1_6):
+class GenDeleteCertificateRequest(Base_OCPP_Struct_V1_6):
 
     @staticmethod
     def generate(
@@ -20,7 +20,7 @@ class delete_certificate_request(Base_OCPP_Struct_V1_6):
             - call.DeleteCertificate
         """
         return call.DeleteCertificate(
-            certificate_hash_data = certificate_hash_data
+            certificate_hash_data=certificate_hash_data
         )
 
     @staticmethod
@@ -35,9 +35,8 @@ class delete_certificate_request(Base_OCPP_Struct_V1_6):
             - call.DeleteCertificate
         """
         return call.DeleteCertificate(
-            certificate_hash_data = dict_data['certificateHashData']
+            certificate_hash_data=dict_data['certificateHashData']
         )
-
 
     @staticmethod
     def get_certificate_hash_data(
@@ -63,11 +62,10 @@ class delete_certificate_request(Base_OCPP_Struct_V1_6):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'hashAlgorithm': hash_algorithm,
             'issuerNameHash': issuer_name_hash,
             'issuerKeyHash': issuer_key_hash,
             'serialNumber': serial_number
         }
         return temp_dict
-

@@ -3,7 +3,7 @@ from ocpp.v201 import call_result
 from ._Base import *
 
 
-class set_display_message_response(Base_OCPP_Struct_V2_0_1):
+class GenSetDisplayMessageResponse(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -30,9 +30,9 @@ class set_display_message_response(Base_OCPP_Struct_V2_0_1):
             - call_result.SetDisplayMessage
         """
         return call_result.SetDisplayMessage(
-            status = status,
-            status_info = status_info,
-            custom_data = custom_data
+            status=status,
+            status_info=status_info,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -47,11 +47,10 @@ class set_display_message_response(Base_OCPP_Struct_V2_0_1):
             - call_result.SetDisplayMessage
         """
         return call_result.SetDisplayMessage(
-            status = dict_data['status'],
-            status_info = dict_data.get('statusInfo', None),
-            custom_data = dict_data.get('customData', None)
+            status=dict_data['status'],
+            status_info=dict_data.get('statusInfo', None),
+            custom_data=dict_data.get('customData', None)
         )
-
 
     @staticmethod
     def get_status_info(
@@ -76,7 +75,7 @@ class set_display_message_response(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'reasonCode': reason_code
         }
         if additional_info is not None:
@@ -84,4 +83,3 @@ class set_display_message_response(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-

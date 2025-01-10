@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class set_variables_request(Base_OCPP_Struct_V2_0_1):
+class GenSetVariablesRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -24,8 +24,8 @@ class set_variables_request(Base_OCPP_Struct_V2_0_1):
             - call.SetVariables
         """
         return call.SetVariables(
-            set_variable_data = set_variable_data,
-            custom_data = custom_data
+            set_variable_data=set_variable_data,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -40,10 +40,9 @@ class set_variables_request(Base_OCPP_Struct_V2_0_1):
             - call.SetVariables
         """
         return call.SetVariables(
-            set_variable_data = dict_data['setVariableData'],
-            custom_data = dict_data.get('customData', None)
+            set_variable_data=dict_data['setVariableData'],
+            custom_data=dict_data.get('customData', None)
         )
-
 
     @staticmethod
     def get_evse(
@@ -66,7 +65,7 @@ class set_variables_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'id': id
         }
         if connector_id is not None:
@@ -74,7 +73,6 @@ class set_variables_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_component(
@@ -103,7 +101,7 @@ class set_variables_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'name': name
         }
         if evse is not None:
@@ -113,7 +111,6 @@ class set_variables_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_variable(
@@ -138,7 +135,7 @@ class set_variables_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'name': name
         }
         if instance is not None:
@@ -146,7 +143,6 @@ class set_variables_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_set_variable_data(
@@ -180,7 +176,7 @@ class set_variables_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'attributeValue': attribute_value,
             'component': component,
             'variable': variable
@@ -190,4 +186,3 @@ class set_variables_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-

@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class delete_certificate_request(Base_OCPP_Struct_V2_0_1):
+class GenDeleteCertificateRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -24,8 +24,8 @@ class delete_certificate_request(Base_OCPP_Struct_V2_0_1):
             - call.DeleteCertificate
         """
         return call.DeleteCertificate(
-            certificate_hash_data = certificate_hash_data,
-            custom_data = custom_data
+            certificate_hash_data=certificate_hash_data,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -40,10 +40,9 @@ class delete_certificate_request(Base_OCPP_Struct_V2_0_1):
             - call.DeleteCertificate
         """
         return call.DeleteCertificate(
-            certificate_hash_data = dict_data['certificateHashData'],
-            custom_data = dict_data.get('customData', None)
+            certificate_hash_data=dict_data['certificateHashData'],
+            custom_data=dict_data.get('customData', None)
         )
-
 
     @staticmethod
     def get_certificate_hash_data(
@@ -77,7 +76,7 @@ class delete_certificate_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'hashAlgorithm': hash_algorithm,
             'issuerNameHash': issuer_name_hash,
             'issuerKeyHash': issuer_key_hash,
@@ -86,4 +85,3 @@ class delete_certificate_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-

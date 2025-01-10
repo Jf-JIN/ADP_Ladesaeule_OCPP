@@ -3,7 +3,7 @@ from ocpp.v16 import call
 from ._Base import *
 
 
-class update_firmware_request(Base_OCPP_Struct_V1_6):
+class GenUpdateFirmwareRequest(Base_OCPP_Struct_V1_6):
 
     @staticmethod
     def generate(
@@ -27,10 +27,10 @@ class update_firmware_request(Base_OCPP_Struct_V1_6):
             - call.UpdateFirmware
         """
         return call.UpdateFirmware(
-            location = location,
-            retrieve_date = retrieve_date,
-            retries = retries,
-            retry_interval = retry_interval
+            location=location,
+            retrieve_date=retrieve_date,
+            retries=retries,
+            retry_interval=retry_interval
         )
 
     @staticmethod
@@ -45,9 +45,8 @@ class update_firmware_request(Base_OCPP_Struct_V1_6):
             - call.UpdateFirmware
         """
         return call.UpdateFirmware(
-            location = dict_data['location'],
-            retrieve_date = dict_data['retrieveDate'],
-            retries = dict_data.get('retries', None),
-            retry_interval = dict_data.get('retryInterval', None)
+            location=dict_data['location'],
+            retrieve_date=dict_data['retrieveDate'],
+            retries=dict_data.get('retries', None),
+            retry_interval=dict_data.get('retryInterval', None)
         )
-

@@ -3,7 +3,7 @@ from ocpp.v16 import call_result
 from ._Base import *
 
 
-class remote_start_transaction_response(Base_OCPP_Struct_V1_6):
+class GenRemoteStartTransactionResponse(Base_OCPP_Struct_V1_6):
 
     @staticmethod
     def generate(
@@ -21,7 +21,7 @@ class remote_start_transaction_response(Base_OCPP_Struct_V1_6):
             - call_result.RemoteStartTransaction
         """
         return call_result.RemoteStartTransaction(
-            status = status
+            status=status
         )
 
     @staticmethod
@@ -36,6 +36,5 @@ class remote_start_transaction_response(Base_OCPP_Struct_V1_6):
             - call_result.RemoteStartTransaction
         """
         return call_result.RemoteStartTransaction(
-            status = dict_data['status']
+            status=dict_data['status']
         )
-

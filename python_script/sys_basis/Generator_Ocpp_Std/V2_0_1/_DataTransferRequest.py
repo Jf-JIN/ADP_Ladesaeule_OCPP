@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class data_transfer_request(Base_OCPP_Struct_V2_0_1):
+class GenDataTransferRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -32,10 +32,10 @@ class data_transfer_request(Base_OCPP_Struct_V2_0_1):
             - call.DataTransfer
         """
         return call.DataTransfer(
-            vendor_id = vendor_id,
-            message_id = message_id,
-            data = data,
-            custom_data = custom_data
+            vendor_id=vendor_id,
+            message_id=message_id,
+            data=data,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -50,9 +50,8 @@ class data_transfer_request(Base_OCPP_Struct_V2_0_1):
             - call.DataTransfer
         """
         return call.DataTransfer(
-            vendor_id = dict_data['vendorId'],
-            message_id = dict_data.get('messageId', None),
-            data = dict_data.get('data', None),
-            custom_data = dict_data.get('customData', None)
+            vendor_id=dict_data['vendorId'],
+            message_id=dict_data.get('messageId', None),
+            data=dict_data.get('data', None),
+            custom_data=dict_data.get('customData', None)
         )
-

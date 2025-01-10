@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class customer_information_request(Base_OCPP_Struct_V2_0_1):
+class GenCustomerInformationRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -41,13 +41,13 @@ class customer_information_request(Base_OCPP_Struct_V2_0_1):
             - call.CustomerInformation
         """
         return call.CustomerInformation(
-            request_id = request_id,
-            report = report,
-            clear = clear,
-            customer_certificate = customer_certificate,
-            id_token = id_token,
-            customer_identifier = customer_identifier,
-            custom_data = custom_data
+            request_id=request_id,
+            report=report,
+            clear=clear,
+            customer_certificate=customer_certificate,
+            id_token=id_token,
+            customer_identifier=customer_identifier,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -62,15 +62,14 @@ class customer_information_request(Base_OCPP_Struct_V2_0_1):
             - call.CustomerInformation
         """
         return call.CustomerInformation(
-            request_id = dict_data['requestId'],
-            report = dict_data['report'],
-            clear = dict_data['clear'],
-            customer_certificate = dict_data.get('customerCertificate', None),
-            id_token = dict_data.get('idToken', None),
-            customer_identifier = dict_data.get('customerIdentifier', None),
-            custom_data = dict_data.get('customData', None)
+            request_id=dict_data['requestId'],
+            report=dict_data['report'],
+            clear=dict_data['clear'],
+            customer_certificate=dict_data.get('customerCertificate', None),
+            id_token=dict_data.get('idToken', None),
+            customer_identifier=dict_data.get('customerIdentifier', None),
+            custom_data=dict_data.get('customData', None)
         )
-
 
     @staticmethod
     def get_customer_certificate(
@@ -104,7 +103,7 @@ class customer_information_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'hashAlgorithm': hash_algorithm,
             'issuerNameHash': issuer_name_hash,
             'issuerKeyHash': issuer_key_hash,
@@ -113,7 +112,6 @@ class customer_information_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_additional_info(
@@ -138,14 +136,13 @@ class customer_information_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'additionalIdToken': additional_id_token,
             'type': type
         }
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_id_token(
@@ -175,7 +172,7 @@ class customer_information_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'idToken': id_token,
             'type': type
         }
@@ -184,4 +181,3 @@ class customer_information_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-

@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class notify_event_request(Base_OCPP_Struct_V2_0_1):
+class GenNotifyEventRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -35,11 +35,11 @@ class notify_event_request(Base_OCPP_Struct_V2_0_1):
             - call.NotifyEvent
         """
         return call.NotifyEvent(
-            generated_at = generated_at,
-            seq_no = seq_no,
-            event_data = event_data,
-            tbc = tbc,
-            custom_data = custom_data
+            generated_at=generated_at,
+            seq_no=seq_no,
+            event_data=event_data,
+            tbc=tbc,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -54,13 +54,12 @@ class notify_event_request(Base_OCPP_Struct_V2_0_1):
             - call.NotifyEvent
         """
         return call.NotifyEvent(
-            generated_at = dict_data['generatedAt'],
-            seq_no = dict_data['seqNo'],
-            event_data = dict_data['eventData'],
-            tbc = dict_data.get('tbc', None),
-            custom_data = dict_data.get('customData', None)
+            generated_at=dict_data['generatedAt'],
+            seq_no=dict_data['seqNo'],
+            event_data=dict_data['eventData'],
+            tbc=dict_data.get('tbc', None),
+            custom_data=dict_data.get('customData', None)
         )
-
 
     @staticmethod
     def get_evse(
@@ -83,7 +82,7 @@ class notify_event_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'id': id
         }
         if connector_id is not None:
@@ -91,7 +90,6 @@ class notify_event_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_component(
@@ -120,7 +118,7 @@ class notify_event_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'name': name
         }
         if evse is not None:
@@ -130,7 +128,6 @@ class notify_event_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_variable(
@@ -155,7 +152,7 @@ class notify_event_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'name': name
         }
         if instance is not None:
@@ -163,7 +160,6 @@ class notify_event_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_event_data(
@@ -230,7 +226,7 @@ class notify_event_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'eventId': event_id,
             'timestamp': timestamp,
             'trigger': trigger,
@@ -254,4 +250,3 @@ class notify_event_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-

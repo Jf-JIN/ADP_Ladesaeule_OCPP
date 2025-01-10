@@ -3,7 +3,7 @@ from ocpp.v16 import call_result
 from ._Base import *
 
 
-class get_composite_schedule_response(Base_OCPP_Struct_V1_6):
+class GenGetCompositeScheduleResponse(Base_OCPP_Struct_V1_6):
 
     @staticmethod
     def generate(
@@ -29,10 +29,10 @@ class get_composite_schedule_response(Base_OCPP_Struct_V1_6):
             - call_result.GetCompositeSchedule
         """
         return call_result.GetCompositeSchedule(
-            status = status,
-            connector_id = connector_id,
-            schedule_start = schedule_start,
-            charging_schedule = charging_schedule
+            status=status,
+            connector_id=connector_id,
+            schedule_start=schedule_start,
+            charging_schedule=charging_schedule
         )
 
     @staticmethod
@@ -47,9 +47,8 @@ class get_composite_schedule_response(Base_OCPP_Struct_V1_6):
             - call_result.GetCompositeSchedule
         """
         return call_result.GetCompositeSchedule(
-            status = dict_data['status'],
-            connector_id = dict_data.get('connectorId', None),
-            schedule_start = dict_data.get('scheduleStart', None),
-            charging_schedule = dict_data.get('chargingSchedule', None)
+            status=dict_data['status'],
+            connector_id=dict_data.get('connectorId', None),
+            schedule_start=dict_data.get('scheduleStart', None),
+            charging_schedule=dict_data.get('chargingSchedule', None)
         )
-

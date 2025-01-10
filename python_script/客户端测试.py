@@ -9,9 +9,9 @@ from sys_basis.Ports.Port_OCPP_WebSocket_Client import PortOCPPWebsocketClient
 
 class MyChargePoint(ChargePoint):
     async def send_boot_notification(self):
-        boot_notification = authorize_request.generate(
-            id_token=authorize_request.get_id_tocken('111', type='Central'),
-            custom_data=authorize_request.get_custom_data(str(time.time()))
+        boot_notification = GenAuthorizeRequest.generate(
+            id_token=GenAuthorizeRequest.get_id_token('111', type='Central'),
+            custom_data=GenAuthorizeRequest.get_custom_data(str(time.time()))
         )
         # a = {"idToken": "111", "type": "Central"}
         # boot_notification = authorize_request.generate(a)
@@ -52,9 +52,9 @@ async def main():
                 await asyncio.sleep(1)
                 print('休眠 5 s')
                 await client.send('dfdsafsd    fdsjkafldsajkflsajfklsd;jafklds;jfkdlsa;')
-                # await charge_point.send_request_message(authorize_request.generate(
-                #     id_token=authorize_request.get_id_tocken('111', type='Central'),
-                #     custom_data=authorize_request.get_custom_data(str(time.time()))))
+                # await charge_point.send_request_message(GenAuthorizeRequest.generate(
+                #     id_token=GenAuthorizeRequest.get_id_token('111', type='Central'),
+                #     custom_data=GenAuthorizeRequest.get_custom_data(str(time.time()))))
 
         listening_task = asyncio.create_task(listen_for_messages())
         send_task = asyncio.create_task(send_boot_notification())

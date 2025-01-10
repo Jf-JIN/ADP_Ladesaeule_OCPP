@@ -44,6 +44,7 @@ class ChargePointV16(cpv16, ChargePointBase):
         - show_current_message_to_send : 显示当前待发送的消息队列
         - show_time_table_for_send_message : 显示当前待发送消息的时间表
         - set_response_timeout: 设置响应超时时间
+
     """
 
     def __init__(self, id, connection, response_timeout: int | float = 30):
@@ -70,10 +71,10 @@ class ChargePointV16(cpv16, ChargePointBase):
         3. 其他错误
 
         参数: 
-        - message: 请求消息对象, OCPP数据类, 如: `call.Authorize`
+            - message(dataclass): 请求消息对象, OCPP数据类, 如: `call.Authorize`
 
         返回: 
-        - 无
+            - 无
         """
         request_time = time.time()
         try:
@@ -81,8 +82,8 @@ class ChargePointV16(cpv16, ChargePointBase):
             # signal_charge_point_ocpp_response 将在此函数发送
             self._unpack_data_and_send_signal_ocpp_response(response, request_time)
         except asyncio.TimeoutError:
-            self._send_signal_info(f'< Error - Request - Response_Timeout > No response was received within {self.response_timeout_in_baseclass} seconds.')
-            self.__signal_charge_point_ocpp_response.emit(
+            self._send_signal_info(f'< Error - Request - Response_Timeout> No response was received within {self.response_timeout_in_baseclass} seconds.')
+            self.signal_charge_point_ocpp_response.emit(
                 {
                     'action': message.__class__.__name__,
                     'data': {},
@@ -92,7 +93,7 @@ class ChargePointV16(cpv16, ChargePointBase):
             )
         except Exception:
             self._send_signal_info(f'<Error - Request> {traceback.format_exc()}')
-            self.__signal_charge_point_ocpp_response.emit(
+            self.signal_charge_point_ocpp_response.emit(
                 {
                     'action': message.__class__.__name__,
                     'data': {},

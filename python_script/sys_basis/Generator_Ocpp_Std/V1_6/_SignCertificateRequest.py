@@ -3,7 +3,7 @@ from ocpp.v16 import call
 from ._Base import *
 
 
-class sign_certificate_request(Base_OCPP_Struct_V1_6):
+class GenSignCertificateRequest(Base_OCPP_Struct_V1_6):
 
     @staticmethod
     def generate(
@@ -20,7 +20,7 @@ class sign_certificate_request(Base_OCPP_Struct_V1_6):
             - call.SignCertificate
         """
         return call.SignCertificate(
-            csr = csr
+            csr=csr
         )
 
     @staticmethod
@@ -35,6 +35,5 @@ class sign_certificate_request(Base_OCPP_Struct_V1_6):
             - call.SignCertificate
         """
         return call.SignCertificate(
-            csr = dict_data['csr']
+            csr=dict_data['csr']
         )
-

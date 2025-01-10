@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class request_stop_transaction_request(Base_OCPP_Struct_V2_0_1):
+class GenRequestStopTransactionRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -25,8 +25,8 @@ class request_stop_transaction_request(Base_OCPP_Struct_V2_0_1):
             - call.RequestStopTransaction
         """
         return call.RequestStopTransaction(
-            transaction_id = transaction_id,
-            custom_data = custom_data
+            transaction_id=transaction_id,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -41,7 +41,6 @@ class request_stop_transaction_request(Base_OCPP_Struct_V2_0_1):
             - call.RequestStopTransaction
         """
         return call.RequestStopTransaction(
-            transaction_id = dict_data['transactionId'],
-            custom_data = dict_data.get('customData', None)
+            transaction_id=dict_data['transactionId'],
+            custom_data=dict_data.get('customData', None)
         )
-

@@ -3,7 +3,7 @@ from ocpp.v16 import call
 from ._Base import *
 
 
-class get_log_request(Base_OCPP_Struct_V1_6):
+class GenGetLogRequest(Base_OCPP_Struct_V1_6):
 
     @staticmethod
     def generate(
@@ -30,11 +30,11 @@ class get_log_request(Base_OCPP_Struct_V1_6):
             - call.GetLog
         """
         return call.GetLog(
-            log = log,
-            log_type = log_type,
-            request_id = request_id,
-            retries = retries,
-            retry_interval = retry_interval
+            log=log,
+            log_type=log_type,
+            request_id=request_id,
+            retries=retries,
+            retry_interval=retry_interval
         )
 
     @staticmethod
@@ -49,13 +49,12 @@ class get_log_request(Base_OCPP_Struct_V1_6):
             - call.GetLog
         """
         return call.GetLog(
-            log = dict_data['log'],
-            log_type = dict_data['logType'],
-            request_id = dict_data['requestId'],
-            retries = dict_data.get('retries', None),
-            retry_interval = dict_data.get('retryInterval', None)
+            log=dict_data['log'],
+            log_type=dict_data['logType'],
+            request_id=dict_data['requestId'],
+            retries=dict_data.get('retries', None),
+            retry_interval=dict_data.get('retryInterval', None)
         )
-
 
     @staticmethod
     def get_log(
@@ -77,7 +76,7 @@ class get_log_request(Base_OCPP_Struct_V1_6):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'remoteLocation': remote_location
         }
         if oldest_timestamp is not None:
@@ -85,4 +84,3 @@ class get_log_request(Base_OCPP_Struct_V1_6):
         if latest_timestamp is not None:
             temp_dict['latestTimestamp'] = latest_timestamp
         return temp_dict
-

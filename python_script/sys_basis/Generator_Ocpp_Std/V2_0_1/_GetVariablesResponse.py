@@ -3,7 +3,7 @@ from ocpp.v201 import call_result
 from ._Base import *
 
 
-class get_variables_response(Base_OCPP_Struct_V2_0_1):
+class GenGetVariablesResponse(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -25,8 +25,8 @@ class get_variables_response(Base_OCPP_Struct_V2_0_1):
             - call_result.GetVariables
         """
         return call_result.GetVariables(
-            get_variable_result = get_variable_result,
-            custom_data = custom_data
+            get_variable_result=get_variable_result,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -41,10 +41,9 @@ class get_variables_response(Base_OCPP_Struct_V2_0_1):
             - call_result.GetVariables
         """
         return call_result.GetVariables(
-            get_variable_result = dict_data['getVariableResult'],
-            custom_data = dict_data.get('customData', None)
+            get_variable_result=dict_data['getVariableResult'],
+            custom_data=dict_data.get('customData', None)
         )
-
 
     @staticmethod
     def get_attribute_status_info(
@@ -69,7 +68,7 @@ class get_variables_response(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'reasonCode': reason_code
         }
         if additional_info is not None:
@@ -77,7 +76,6 @@ class get_variables_response(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_evse(
@@ -100,7 +98,7 @@ class get_variables_response(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'id': id
         }
         if connector_id is not None:
@@ -108,7 +106,6 @@ class get_variables_response(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_component(
@@ -137,7 +134,7 @@ class get_variables_response(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'name': name
         }
         if evse is not None:
@@ -147,7 +144,6 @@ class get_variables_response(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_variable(
@@ -172,7 +168,7 @@ class get_variables_response(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'name': name
         }
         if instance is not None:
@@ -180,7 +176,6 @@ class get_variables_response(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_get_variable_result(
@@ -223,7 +218,7 @@ class get_variables_response(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'attributeStatus': attribute_status,
             'component': component,
             'variable': variable
@@ -237,4 +232,3 @@ class get_variables_response(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-

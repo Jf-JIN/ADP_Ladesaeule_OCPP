@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class clear_cache_request(Base_OCPP_Struct_V2_0_1):
+class GenClearCacheRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -21,7 +21,7 @@ class clear_cache_request(Base_OCPP_Struct_V2_0_1):
             - call.ClearCache
         """
         return call.ClearCache(
-            custom_data = custom_data
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -36,6 +36,5 @@ class clear_cache_request(Base_OCPP_Struct_V2_0_1):
             - call.ClearCache
         """
         return call.ClearCache(
-            custom_data = dict_data.get('customData', None)
+            custom_data=dict_data.get('customData', None)
         )
-

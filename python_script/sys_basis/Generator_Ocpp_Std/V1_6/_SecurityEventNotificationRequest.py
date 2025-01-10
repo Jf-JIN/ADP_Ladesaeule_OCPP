@@ -3,7 +3,7 @@ from ocpp.v16 import call
 from ._Base import *
 
 
-class security_event_notification_request(Base_OCPP_Struct_V1_6):
+class GenSecurityEventNotificationRequest(Base_OCPP_Struct_V1_6):
 
     @staticmethod
     def generate(
@@ -26,9 +26,9 @@ class security_event_notification_request(Base_OCPP_Struct_V1_6):
             - call.SecurityEventNotification
         """
         return call.SecurityEventNotification(
-            type = type,
-            timestamp = timestamp,
-            tech_info = tech_info
+            type=type,
+            timestamp=timestamp,
+            tech_info=tech_info
         )
 
     @staticmethod
@@ -43,8 +43,7 @@ class security_event_notification_request(Base_OCPP_Struct_V1_6):
             - call.SecurityEventNotification
         """
         return call.SecurityEventNotification(
-            type = dict_data['type'],
-            timestamp = dict_data['timestamp'],
-            tech_info = dict_data.get('techInfo', None)
+            type=dict_data['type'],
+            timestamp=dict_data['timestamp'],
+            tech_info=dict_data.get('techInfo', None)
         )
-

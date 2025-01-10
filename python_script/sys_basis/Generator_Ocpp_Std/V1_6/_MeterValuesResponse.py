@@ -3,7 +3,7 @@ from ocpp.v16 import call_result
 from ._Base import *
 
 
-class meter_values_response(Base_OCPP_Struct_V1_6):
+class GenMeterValuesResponse(Base_OCPP_Struct_V1_6):
 
     @staticmethod
     def generate(
@@ -36,4 +36,3 @@ class meter_values_response(Base_OCPP_Struct_V1_6):
         return call_result.MeterValues(
             
         )
-

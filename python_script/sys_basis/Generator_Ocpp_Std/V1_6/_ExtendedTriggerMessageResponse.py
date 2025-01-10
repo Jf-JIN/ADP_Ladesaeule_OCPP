@@ -3,7 +3,7 @@ from ocpp.v16 import call_result
 from ._Base import *
 
 
-class extended_trigger_message_response(Base_OCPP_Struct_V1_6):
+class GenExtendedTriggerMessageResponse(Base_OCPP_Struct_V1_6):
 
     @staticmethod
     def generate(
@@ -21,7 +21,7 @@ class extended_trigger_message_response(Base_OCPP_Struct_V1_6):
             - call_result.ExtendedTriggerMessage
         """
         return call_result.ExtendedTriggerMessage(
-            status = status
+            status=status
         )
 
     @staticmethod
@@ -36,6 +36,5 @@ class extended_trigger_message_response(Base_OCPP_Struct_V1_6):
             - call_result.ExtendedTriggerMessage
         """
         return call_result.ExtendedTriggerMessage(
-            status = dict_data['status']
+            status=dict_data['status']
         )
-

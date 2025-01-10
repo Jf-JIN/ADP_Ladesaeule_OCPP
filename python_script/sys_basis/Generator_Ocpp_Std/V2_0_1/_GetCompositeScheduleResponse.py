@@ -3,7 +3,7 @@ from ocpp.v201 import call_result
 from ._Base import *
 
 
-class get_composite_schedule_response(Base_OCPP_Struct_V2_0_1):
+class GenGetCompositeScheduleResponse(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -34,10 +34,10 @@ class get_composite_schedule_response(Base_OCPP_Struct_V2_0_1):
             - call_result.GetCompositeSchedule
         """
         return call_result.GetCompositeSchedule(
-            status = status,
-            status_info = status_info,
-            schedule = schedule,
-            custom_data = custom_data
+            status=status,
+            status_info=status_info,
+            schedule=schedule,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -52,12 +52,11 @@ class get_composite_schedule_response(Base_OCPP_Struct_V2_0_1):
             - call_result.GetCompositeSchedule
         """
         return call_result.GetCompositeSchedule(
-            status = dict_data['status'],
-            status_info = dict_data.get('statusInfo', None),
-            schedule = dict_data.get('schedule', None),
-            custom_data = dict_data.get('customData', None)
+            status=dict_data['status'],
+            status_info=dict_data.get('statusInfo', None),
+            schedule=dict_data.get('schedule', None),
+            custom_data=dict_data.get('customData', None)
         )
-
 
     @staticmethod
     def get_status_info(
@@ -82,7 +81,7 @@ class get_composite_schedule_response(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'reasonCode': reason_code
         }
         if additional_info is not None:
@@ -90,7 +89,6 @@ class get_composite_schedule_response(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_charging_schedule_period(
@@ -119,7 +117,7 @@ class get_composite_schedule_response(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'startPeriod': start_period,
             'limit': limit
         }
@@ -130,7 +128,6 @@ class get_composite_schedule_response(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_schedule(
@@ -166,7 +163,7 @@ class get_composite_schedule_response(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'chargingSchedulePeriod': charging_schedule_period,
             'evseId': evse_id,
             'duration': duration,
@@ -176,4 +173,3 @@ class get_composite_schedule_response(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-

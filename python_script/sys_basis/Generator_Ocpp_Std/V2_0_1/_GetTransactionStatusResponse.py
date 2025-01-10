@@ -3,7 +3,7 @@ from ocpp.v201 import call_result
 from ._Base import *
 
 
-class get_transaction_status_response(Base_OCPP_Struct_V2_0_1):
+class GenGetTransactionStatusResponse(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -27,9 +27,9 @@ class get_transaction_status_response(Base_OCPP_Struct_V2_0_1):
             - call_result.GetTransactionStatus
         """
         return call_result.GetTransactionStatus(
-            messages_in_queue = messages_in_queue,
-            ongoing_indicator = ongoing_indicator,
-            custom_data = custom_data
+            messages_in_queue=messages_in_queue,
+            ongoing_indicator=ongoing_indicator,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -44,8 +44,7 @@ class get_transaction_status_response(Base_OCPP_Struct_V2_0_1):
             - call_result.GetTransactionStatus
         """
         return call_result.GetTransactionStatus(
-            messages_in_queue = dict_data['messagesInQueue'],
-            ongoing_indicator = dict_data.get('ongoingIndicator', None),
-            custom_data = dict_data.get('customData', None)
+            messages_in_queue=dict_data['messagesInQueue'],
+            ongoing_indicator=dict_data.get('ongoingIndicator', None),
+            custom_data=dict_data.get('customData', None)
         )
-

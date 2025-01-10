@@ -3,7 +3,7 @@ from ocpp.v16 import call_result
 from ._Base import *
 
 
-class heartbeat_response(Base_OCPP_Struct_V1_6):
+class GenHeartbeatResponse(Base_OCPP_Struct_V1_6):
 
     @staticmethod
     def generate(
@@ -20,7 +20,7 @@ class heartbeat_response(Base_OCPP_Struct_V1_6):
             - call_result.Heartbeat
         """
         return call_result.Heartbeat(
-            current_time = current_time
+            current_time=current_time
         )
 
     @staticmethod
@@ -35,6 +35,5 @@ class heartbeat_response(Base_OCPP_Struct_V1_6):
             - call_result.Heartbeat
         """
         return call_result.Heartbeat(
-            current_time = dict_data['currentTime']
+            current_time=dict_data['currentTime']
         )
-
