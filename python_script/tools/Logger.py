@@ -211,7 +211,7 @@ class Logger(object):
         ** kwargs,
     ) -> None:
         self.__log_name = log_name
-        self.__log_path = log_path
+        self.__log_path = os.path.join(log_path, 'Log')
         self.__log_sub_folder_name = log_sub_folder_name if isinstance(log_sub_folder_name, str) else ''
         self.__log_level = log_level if log_level in _LogLevel else _LogLevel.INFO
         self.__default_level = default_level if default_level in _LogLevel else _LogLevel.INFO
