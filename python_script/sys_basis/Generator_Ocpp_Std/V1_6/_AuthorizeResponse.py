@@ -20,7 +20,7 @@ class GenAuthorizeResponse(Base_OCPP_Struct_V1_6):
             - call_result.Authorize
         """
         return call_result.Authorize(
-            id_tag_info = id_tag_info
+            id_tag_info=id_tag_info
         )
 
     @staticmethod
@@ -35,6 +35,5 @@ class GenAuthorizeResponse(Base_OCPP_Struct_V1_6):
             - call_result.Authorize
         """
         return call_result.Authorize(
-            id_tag_info = dict_data['idTagInfo']
+            id_tag_info=dict_data['idTagInfo']
         )
-

@@ -19,7 +19,7 @@ class GenUnlockConnectorRequest(Base_OCPP_Struct_V1_6):
             - call.UnlockConnector
         """
         return call.UnlockConnector(
-            connector_id = connector_id
+            connector_id=connector_id
         )
 
     @staticmethod
@@ -34,6 +34,5 @@ class GenUnlockConnectorRequest(Base_OCPP_Struct_V1_6):
             - call.UnlockConnector
         """
         return call.UnlockConnector(
-            connector_id = dict_data['connectorId']
+            connector_id=dict_data['connectorId']
         )
-

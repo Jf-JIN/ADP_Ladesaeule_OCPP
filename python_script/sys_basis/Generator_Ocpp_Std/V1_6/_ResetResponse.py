@@ -21,7 +21,7 @@ class GenResetResponse(Base_OCPP_Struct_V1_6):
             - call_result.Reset
         """
         return call_result.Reset(
-            status = status
+            status=status
         )
 
     @staticmethod
@@ -36,6 +36,5 @@ class GenResetResponse(Base_OCPP_Struct_V1_6):
             - call_result.Reset
         """
         return call_result.Reset(
-            status = dict_data['status']
+            status=dict_data['status']
         )
-

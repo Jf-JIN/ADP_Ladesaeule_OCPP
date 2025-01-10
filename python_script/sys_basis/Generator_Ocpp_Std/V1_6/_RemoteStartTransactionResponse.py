@@ -21,7 +21,7 @@ class GenRemoteStartTransactionResponse(Base_OCPP_Struct_V1_6):
             - call_result.RemoteStartTransaction
         """
         return call_result.RemoteStartTransaction(
-            status = status
+            status=status
         )
 
     @staticmethod
@@ -36,6 +36,5 @@ class GenRemoteStartTransactionResponse(Base_OCPP_Struct_V1_6):
             - call_result.RemoteStartTransaction
         """
         return call_result.RemoteStartTransaction(
-            status = dict_data['status']
+            status=dict_data['status']
         )
-

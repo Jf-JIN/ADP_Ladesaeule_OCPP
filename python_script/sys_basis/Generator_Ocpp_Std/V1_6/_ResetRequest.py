@@ -21,7 +21,7 @@ class GenResetRequest(Base_OCPP_Struct_V1_6):
             - call.Reset
         """
         return call.Reset(
-            type = type
+            type=type
         )
 
     @staticmethod
@@ -36,6 +36,5 @@ class GenResetRequest(Base_OCPP_Struct_V1_6):
             - call.Reset
         """
         return call.Reset(
-            type = dict_data['type']
+            type=dict_data['type']
         )
-

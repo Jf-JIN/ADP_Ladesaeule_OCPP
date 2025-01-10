@@ -21,7 +21,7 @@ class GenRemoteStopTransactionResponse(Base_OCPP_Struct_V1_6):
             - call_result.RemoteStopTransaction
         """
         return call_result.RemoteStopTransaction(
-            status = status
+            status=status
         )
 
     @staticmethod
@@ -36,6 +36,5 @@ class GenRemoteStopTransactionResponse(Base_OCPP_Struct_V1_6):
             - call_result.RemoteStopTransaction
         """
         return call_result.RemoteStopTransaction(
-            status = dict_data['status']
+            status=dict_data['status']
         )
-

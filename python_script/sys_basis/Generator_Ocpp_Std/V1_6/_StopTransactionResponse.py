@@ -20,7 +20,7 @@ class GenStopTransactionResponse(Base_OCPP_Struct_V1_6):
             - call_result.StopTransaction
         """
         return call_result.StopTransaction(
-            id_tag_info = id_tag_info
+            id_tag_info=id_tag_info
         )
 
     @staticmethod
@@ -35,6 +35,5 @@ class GenStopTransactionResponse(Base_OCPP_Struct_V1_6):
             - call_result.StopTransaction
         """
         return call_result.StopTransaction(
-            id_tag_info = dict_data.get('idTagInfo', None)
+            id_tag_info=dict_data.get('idTagInfo', None)
         )
-

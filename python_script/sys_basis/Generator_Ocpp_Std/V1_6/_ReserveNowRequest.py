@@ -30,11 +30,11 @@ class GenReserveNowRequest(Base_OCPP_Struct_V1_6):
             - call.ReserveNow
         """
         return call.ReserveNow(
-            connector_id = connector_id,
-            expiry_date = expiry_date,
-            id_tag = id_tag,
-            reservation_id = reservation_id,
-            parent_id_tag = parent_id_tag
+            connector_id=connector_id,
+            expiry_date=expiry_date,
+            id_tag=id_tag,
+            reservation_id=reservation_id,
+            parent_id_tag=parent_id_tag
         )
 
     @staticmethod
@@ -49,10 +49,9 @@ class GenReserveNowRequest(Base_OCPP_Struct_V1_6):
             - call.ReserveNow
         """
         return call.ReserveNow(
-            connector_id = dict_data['connectorId'],
-            expiry_date = dict_data['expiryDate'],
-            id_tag = dict_data['idTag'],
-            reservation_id = dict_data['reservationId'],
-            parent_id_tag = dict_data.get('parentIdTag', None)
+            connector_id=dict_data['connectorId'],
+            expiry_date=dict_data['expiryDate'],
+            id_tag=dict_data['idTag'],
+            reservation_id=dict_data['reservationId'],
+            parent_id_tag=dict_data.get('parentIdTag', None)
         )
-

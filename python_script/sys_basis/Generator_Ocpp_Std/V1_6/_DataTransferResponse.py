@@ -23,8 +23,8 @@ class GenDataTransferResponse(Base_OCPP_Struct_V1_6):
             - call_result.DataTransfer
         """
         return call_result.DataTransfer(
-            status = status,
-            data = data
+            status=status,
+            data=data
         )
 
     @staticmethod
@@ -39,7 +39,6 @@ class GenDataTransferResponse(Base_OCPP_Struct_V1_6):
             - call_result.DataTransfer
         """
         return call_result.DataTransfer(
-            status = dict_data['status'],
-            data = dict_data.get('data', None)
+            status=dict_data['status'],
+            data=dict_data.get('data', None)
         )
-

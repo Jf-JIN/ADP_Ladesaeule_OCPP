@@ -21,7 +21,7 @@ class GenFirmwareStatusNotificationRequest(Base_OCPP_Struct_V1_6):
             - call.FirmwareStatusNotification
         """
         return call.FirmwareStatusNotification(
-            status = status
+            status=status
         )
 
     @staticmethod
@@ -36,6 +36,5 @@ class GenFirmwareStatusNotificationRequest(Base_OCPP_Struct_V1_6):
             - call.FirmwareStatusNotification
         """
         return call.FirmwareStatusNotification(
-            status = dict_data['status']
+            status=dict_data['status']
         )
-

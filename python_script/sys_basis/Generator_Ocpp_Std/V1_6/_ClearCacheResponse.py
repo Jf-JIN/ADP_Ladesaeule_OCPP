@@ -21,7 +21,7 @@ class GenClearCacheResponse(Base_OCPP_Struct_V1_6):
             - call_result.ClearCache
         """
         return call_result.ClearCache(
-            status = status
+            status=status
         )
 
     @staticmethod
@@ -36,6 +36,5 @@ class GenClearCacheResponse(Base_OCPP_Struct_V1_6):
             - call_result.ClearCache
         """
         return call_result.ClearCache(
-            status = dict_data['status']
+            status=dict_data['status']
         )
-

@@ -23,8 +23,8 @@ class GenGetConfigurationResponse(Base_OCPP_Struct_V1_6):
             - call_result.GetConfiguration
         """
         return call_result.GetConfiguration(
-            configuration_key = configuration_key,
-            unknown_key = unknown_key
+            configuration_key=configuration_key,
+            unknown_key=unknown_key
         )
 
     @staticmethod
@@ -39,10 +39,9 @@ class GenGetConfigurationResponse(Base_OCPP_Struct_V1_6):
             - call_result.GetConfiguration
         """
         return call_result.GetConfiguration(
-            configuration_key = dict_data.get('configurationKey', None),
-            unknown_key = dict_data.get('unknownKey', None)
+            configuration_key=dict_data.get('configurationKey', None),
+            unknown_key=dict_data.get('unknownKey', None)
         )
-
 
     @staticmethod
     def get_configuration_key(
@@ -63,11 +62,10 @@ class GenGetConfigurationResponse(Base_OCPP_Struct_V1_6):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'key': key,
             'readonly': readonly
         }
         if value is not None:
             temp_dict['value'] = value
         return temp_dict
-

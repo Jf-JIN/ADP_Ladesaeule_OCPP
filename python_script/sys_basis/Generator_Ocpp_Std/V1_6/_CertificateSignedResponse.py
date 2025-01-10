@@ -21,7 +21,7 @@ class GenCertificateSignedResponse(Base_OCPP_Struct_V1_6):
             - call_result.CertificateSigned
         """
         return call_result.CertificateSigned(
-            status = status
+            status=status
         )
 
     @staticmethod
@@ -36,6 +36,5 @@ class GenCertificateSignedResponse(Base_OCPP_Struct_V1_6):
             - call_result.CertificateSigned
         """
         return call_result.CertificateSigned(
-            status = dict_data['status']
+            status=dict_data['status']
         )
-

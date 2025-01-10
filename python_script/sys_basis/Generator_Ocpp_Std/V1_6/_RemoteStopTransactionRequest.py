@@ -19,7 +19,7 @@ class GenRemoteStopTransactionRequest(Base_OCPP_Struct_V1_6):
             - call.RemoteStopTransaction
         """
         return call.RemoteStopTransaction(
-            transaction_id = transaction_id
+            transaction_id=transaction_id
         )
 
     @staticmethod
@@ -34,6 +34,5 @@ class GenRemoteStopTransactionRequest(Base_OCPP_Struct_V1_6):
             - call.RemoteStopTransaction
         """
         return call.RemoteStopTransaction(
-            transaction_id = dict_data['transactionId']
+            transaction_id=dict_data['transactionId']
         )
-

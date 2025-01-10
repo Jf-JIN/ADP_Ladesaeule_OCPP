@@ -21,7 +21,7 @@ class GenSetChargingProfileResponse(Base_OCPP_Struct_V1_6):
             - call_result.SetChargingProfile
         """
         return call_result.SetChargingProfile(
-            status = status
+            status=status
         )
 
     @staticmethod
@@ -36,6 +36,5 @@ class GenSetChargingProfileResponse(Base_OCPP_Struct_V1_6):
             - call_result.SetChargingProfile
         """
         return call_result.SetChargingProfile(
-            status = dict_data['status']
+            status=dict_data['status']
         )
-

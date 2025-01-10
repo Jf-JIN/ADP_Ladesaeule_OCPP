@@ -44,15 +44,15 @@ class GenBootNotificationRequest(Base_OCPP_Struct_V1_6):
             - call.BootNotification
         """
         return call.BootNotification(
-            charge_point_vendor = charge_point_vendor,
-            charge_point_model = charge_point_model,
-            charge_point_serial_number = charge_point_serial_number,
-            charge_box_serial_number = charge_box_serial_number,
-            firmware_version = firmware_version,
-            iccid = iccid,
-            imsi = imsi,
-            meter_type = meter_type,
-            meter_serial_number = meter_serial_number
+            charge_point_vendor=charge_point_vendor,
+            charge_point_model=charge_point_model,
+            charge_point_serial_number=charge_point_serial_number,
+            charge_box_serial_number=charge_box_serial_number,
+            firmware_version=firmware_version,
+            iccid=iccid,
+            imsi=imsi,
+            meter_type=meter_type,
+            meter_serial_number=meter_serial_number
         )
 
     @staticmethod
@@ -67,14 +67,13 @@ class GenBootNotificationRequest(Base_OCPP_Struct_V1_6):
             - call.BootNotification
         """
         return call.BootNotification(
-            charge_point_vendor = dict_data['chargePointVendor'],
-            charge_point_model = dict_data['chargePointModel'],
-            charge_point_serial_number = dict_data.get('chargePointSerialNumber', None),
-            charge_box_serial_number = dict_data.get('chargeBoxSerialNumber', None),
-            firmware_version = dict_data.get('firmwareVersion', None),
-            iccid = dict_data.get('iccid', None),
-            imsi = dict_data.get('imsi', None),
-            meter_type = dict_data.get('meterType', None),
-            meter_serial_number = dict_data.get('meterSerialNumber', None)
+            charge_point_vendor=dict_data['chargePointVendor'],
+            charge_point_model=dict_data['chargePointModel'],
+            charge_point_serial_number=dict_data.get('chargePointSerialNumber', None),
+            charge_box_serial_number=dict_data.get('chargeBoxSerialNumber', None),
+            firmware_version=dict_data.get('firmwareVersion', None),
+            iccid=dict_data.get('iccid', None),
+            imsi=dict_data.get('imsi', None),
+            meter_type=dict_data.get('meterType', None),
+            meter_serial_number=dict_data.get('meterSerialNumber', None)
         )
-

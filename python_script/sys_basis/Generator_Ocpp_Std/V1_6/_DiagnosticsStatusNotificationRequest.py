@@ -21,7 +21,7 @@ class GenDiagnosticsStatusNotificationRequest(Base_OCPP_Struct_V1_6):
             - call.DiagnosticsStatusNotification
         """
         return call.DiagnosticsStatusNotification(
-            status = status
+            status=status
         )
 
     @staticmethod
@@ -36,6 +36,5 @@ class GenDiagnosticsStatusNotificationRequest(Base_OCPP_Struct_V1_6):
             - call.DiagnosticsStatusNotification
         """
         return call.DiagnosticsStatusNotification(
-            status = dict_data['status']
+            status=dict_data['status']
         )
-

@@ -36,4 +36,3 @@ class GenHeartbeatRequest(Base_OCPP_Struct_V1_6):
         return call.Heartbeat(
             
         )
-

@@ -20,7 +20,7 @@ class GenGetDiagnosticsResponse(Base_OCPP_Struct_V1_6):
             - call_result.GetDiagnostics
         """
         return call_result.GetDiagnostics(
-            file_name = file_name
+            file_name=file_name
         )
 
     @staticmethod
@@ -35,6 +35,5 @@ class GenGetDiagnosticsResponse(Base_OCPP_Struct_V1_6):
             - call_result.GetDiagnostics
         """
         return call_result.GetDiagnostics(
-            file_name = dict_data.get('fileName', None)
+            file_name=dict_data.get('fileName', None)
         )
-

@@ -22,8 +22,8 @@ class GenStartTransactionResponse(Base_OCPP_Struct_V1_6):
             - call_result.StartTransaction
         """
         return call_result.StartTransaction(
-            id_tag_info = id_tag_info,
-            transaction_id = transaction_id
+            id_tag_info=id_tag_info,
+            transaction_id=transaction_id
         )
 
     @staticmethod
@@ -38,7 +38,6 @@ class GenStartTransactionResponse(Base_OCPP_Struct_V1_6):
             - call_result.StartTransaction
         """
         return call_result.StartTransaction(
-            id_tag_info = dict_data['idTagInfo'],
-            transaction_id = dict_data['transactionId']
+            id_tag_info=dict_data['idTagInfo'],
+            transaction_id=dict_data['transactionId']
         )
-

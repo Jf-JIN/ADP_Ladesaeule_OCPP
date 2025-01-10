@@ -21,7 +21,7 @@ class GenUnlockConnectorResponse(Base_OCPP_Struct_V1_6):
             - call_result.UnlockConnector
         """
         return call_result.UnlockConnector(
-            status = status
+            status=status
         )
 
     @staticmethod
@@ -36,6 +36,5 @@ class GenUnlockConnectorResponse(Base_OCPP_Struct_V1_6):
             - call_result.UnlockConnector
         """
         return call_result.UnlockConnector(
-            status = dict_data['status']
+            status=dict_data['status']
         )
-

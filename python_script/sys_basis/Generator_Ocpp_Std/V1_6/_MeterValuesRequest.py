@@ -24,9 +24,9 @@ class GenMeterValuesRequest(Base_OCPP_Struct_V1_6):
             - call.MeterValues
         """
         return call.MeterValues(
-            connector_id = connector_id,
-            meter_value = meter_value,
-            transaction_id = transaction_id
+            connector_id=connector_id,
+            meter_value=meter_value,
+            transaction_id=transaction_id
         )
 
     @staticmethod
@@ -41,11 +41,10 @@ class GenMeterValuesRequest(Base_OCPP_Struct_V1_6):
             - call.MeterValues
         """
         return call.MeterValues(
-            connector_id = dict_data['connectorId'],
-            meter_value = dict_data['meterValue'],
-            transaction_id = dict_data.get('transactionId', None)
+            connector_id=dict_data['connectorId'],
+            meter_value=dict_data['meterValue'],
+            transaction_id=dict_data.get('transactionId', None)
         )
-
 
     @staticmethod
     def get_sampled_value(
@@ -84,7 +83,7 @@ class GenMeterValuesRequest(Base_OCPP_Struct_V1_6):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'value': value
         }
         if context is not None:
@@ -100,7 +99,6 @@ class GenMeterValuesRequest(Base_OCPP_Struct_V1_6):
         if unit is not None:
             temp_dict['unit'] = unit
         return temp_dict
-
 
     @staticmethod
     def get_meter_value(
@@ -119,9 +117,8 @@ class GenMeterValuesRequest(Base_OCPP_Struct_V1_6):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'timestamp': timestamp,
             'sampledValue': sampled_value
         }
         return temp_dict
-

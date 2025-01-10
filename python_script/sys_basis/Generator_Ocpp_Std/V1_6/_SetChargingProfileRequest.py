@@ -22,8 +22,8 @@ class GenSetChargingProfileRequest(Base_OCPP_Struct_V1_6):
             - call.SetChargingProfile
         """
         return call.SetChargingProfile(
-            connector_id = connector_id,
-            cs_charging_profiles = cs_charging_profiles
+            connector_id=connector_id,
+            cs_charging_profiles=cs_charging_profiles
         )
 
     @staticmethod
@@ -38,7 +38,6 @@ class GenSetChargingProfileRequest(Base_OCPP_Struct_V1_6):
             - call.SetChargingProfile
         """
         return call.SetChargingProfile(
-            connector_id = dict_data['connectorId'],
-            cs_charging_profiles = dict_data['csChargingProfiles']
+            connector_id=dict_data['connectorId'],
+            cs_charging_profiles=dict_data['csChargingProfiles']
         )
-

@@ -20,7 +20,7 @@ class GenCertificateSignedRequest(Base_OCPP_Struct_V1_6):
             - call.CertificateSigned
         """
         return call.CertificateSigned(
-            certificate_chain = certificate_chain
+            certificate_chain=certificate_chain
         )
 
     @staticmethod
@@ -35,6 +35,5 @@ class GenCertificateSignedRequest(Base_OCPP_Struct_V1_6):
             - call.CertificateSigned
         """
         return call.CertificateSigned(
-            certificate_chain = dict_data['certificateChain']
+            certificate_chain=dict_data['certificateChain']
         )
-

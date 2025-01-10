@@ -21,7 +21,7 @@ class GenInstallCertificateResponse(Base_OCPP_Struct_V1_6):
             - call_result.InstallCertificate
         """
         return call_result.InstallCertificate(
-            status = status
+            status=status
         )
 
     @staticmethod
@@ -36,6 +36,5 @@ class GenInstallCertificateResponse(Base_OCPP_Struct_V1_6):
             - call_result.InstallCertificate
         """
         return call_result.InstallCertificate(
-            status = dict_data['status']
+            status=dict_data['status']
         )
-

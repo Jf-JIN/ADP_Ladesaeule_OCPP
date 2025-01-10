@@ -26,9 +26,9 @@ class GenBootNotificationResponse(Base_OCPP_Struct_V1_6):
             - call_result.BootNotification
         """
         return call_result.BootNotification(
-            status = status,
-            current_time = current_time,
-            interval = interval
+            status=status,
+            current_time=current_time,
+            interval=interval
         )
 
     @staticmethod
@@ -43,8 +43,7 @@ class GenBootNotificationResponse(Base_OCPP_Struct_V1_6):
             - call_result.BootNotification
         """
         return call_result.BootNotification(
-            status = dict_data['status'],
-            current_time = dict_data['currentTime'],
-            interval = dict_data['interval']
+            status=dict_data['status'],
+            current_time=dict_data['currentTime'],
+            interval=dict_data['interval']
         )
-

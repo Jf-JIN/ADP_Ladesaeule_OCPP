@@ -21,7 +21,7 @@ class GenCancelReservationResponse(Base_OCPP_Struct_V1_6):
             - call_result.CancelReservation
         """
         return call_result.CancelReservation(
-            status = status
+            status=status
         )
 
     @staticmethod
@@ -36,6 +36,5 @@ class GenCancelReservationResponse(Base_OCPP_Struct_V1_6):
             - call_result.CancelReservation
         """
         return call_result.CancelReservation(
-            status = dict_data['status']
+            status=dict_data['status']
         )
-

@@ -21,7 +21,7 @@ class GenSignedUpdateFirmwareResponse(Base_OCPP_Struct_V1_6):
             - call_result.SignedUpdateFirmware
         """
         return call_result.SignedUpdateFirmware(
-            status = status
+            status=status
         )
 
     @staticmethod
@@ -36,6 +36,5 @@ class GenSignedUpdateFirmwareResponse(Base_OCPP_Struct_V1_6):
             - call_result.SignedUpdateFirmware
         """
         return call_result.SignedUpdateFirmware(
-            status = dict_data['status']
+            status=dict_data['status']
         )
-

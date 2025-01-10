@@ -21,7 +21,7 @@ class GenExtendedTriggerMessageResponse(Base_OCPP_Struct_V1_6):
             - call_result.ExtendedTriggerMessage
         """
         return call_result.ExtendedTriggerMessage(
-            status = status
+            status=status
         )
 
     @staticmethod
@@ -36,6 +36,5 @@ class GenExtendedTriggerMessageResponse(Base_OCPP_Struct_V1_6):
             - call_result.ExtendedTriggerMessage
         """
         return call_result.ExtendedTriggerMessage(
-            status = dict_data['status']
+            status=dict_data['status']
         )
-

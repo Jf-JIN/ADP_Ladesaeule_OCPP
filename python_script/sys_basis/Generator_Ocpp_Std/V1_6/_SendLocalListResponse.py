@@ -21,7 +21,7 @@ class GenSendLocalListResponse(Base_OCPP_Struct_V1_6):
             - call_result.SendLocalList
         """
         return call_result.SendLocalList(
-            status = status
+            status=status
         )
 
     @staticmethod
@@ -36,6 +36,5 @@ class GenSendLocalListResponse(Base_OCPP_Struct_V1_6):
             - call_result.SendLocalList
         """
         return call_result.SendLocalList(
-            status = dict_data['status']
+            status=dict_data['status']
         )
-

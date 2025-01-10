@@ -26,9 +26,9 @@ class GenSendLocalListRequest(Base_OCPP_Struct_V1_6):
             - call.SendLocalList
         """
         return call.SendLocalList(
-            list_version = list_version,
-            update_type = update_type,
-            local_authorization_list = local_authorization_list
+            list_version=list_version,
+            update_type=update_type,
+            local_authorization_list=local_authorization_list
         )
 
     @staticmethod
@@ -43,11 +43,10 @@ class GenSendLocalListRequest(Base_OCPP_Struct_V1_6):
             - call.SendLocalList
         """
         return call.SendLocalList(
-            list_version = dict_data['listVersion'],
-            update_type = dict_data['updateType'],
-            local_authorization_list = dict_data.get('localAuthorizationList', None)
+            list_version=dict_data['listVersion'],
+            update_type=dict_data['updateType'],
+            local_authorization_list=dict_data.get('localAuthorizationList', None)
         )
-
 
     @staticmethod
     def get_id_tag_info(
@@ -70,7 +69,7 @@ class GenSendLocalListRequest(Base_OCPP_Struct_V1_6):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'status': status
         }
         if expiry_date is not None:
@@ -78,7 +77,6 @@ class GenSendLocalListRequest(Base_OCPP_Struct_V1_6):
         if parent_id_tag is not None:
             temp_dict['parentIdTag'] = parent_id_tag
         return temp_dict
-
 
     @staticmethod
     def get_local_authorization_list(
@@ -97,10 +95,9 @@ class GenSendLocalListRequest(Base_OCPP_Struct_V1_6):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'idTag': id_tag
         }
         if id_tag_info is not None:
             temp_dict['idTagInfo'] = id_tag_info
         return temp_dict
-

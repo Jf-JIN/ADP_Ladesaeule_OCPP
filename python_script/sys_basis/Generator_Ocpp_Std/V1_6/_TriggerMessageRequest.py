@@ -23,8 +23,8 @@ class GenTriggerMessageRequest(Base_OCPP_Struct_V1_6):
             - call.TriggerMessage
         """
         return call.TriggerMessage(
-            requested_message = requested_message,
-            connector_id = connector_id
+            requested_message=requested_message,
+            connector_id=connector_id
         )
 
     @staticmethod
@@ -39,7 +39,6 @@ class GenTriggerMessageRequest(Base_OCPP_Struct_V1_6):
             - call.TriggerMessage
         """
         return call.TriggerMessage(
-            requested_message = dict_data['requestedMessage'],
-            connector_id = dict_data.get('connectorId', None)
+            requested_message=dict_data['requestedMessage'],
+            connector_id=dict_data.get('connectorId', None)
         )
-

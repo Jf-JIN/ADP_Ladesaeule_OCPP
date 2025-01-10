@@ -20,7 +20,7 @@ class GenSignCertificateRequest(Base_OCPP_Struct_V1_6):
             - call.SignCertificate
         """
         return call.SignCertificate(
-            csr = csr
+            csr=csr
         )
 
     @staticmethod
@@ -35,6 +35,5 @@ class GenSignCertificateRequest(Base_OCPP_Struct_V1_6):
             - call.SignCertificate
         """
         return call.SignCertificate(
-            csr = dict_data['csr']
+            csr=dict_data['csr']
         )
-

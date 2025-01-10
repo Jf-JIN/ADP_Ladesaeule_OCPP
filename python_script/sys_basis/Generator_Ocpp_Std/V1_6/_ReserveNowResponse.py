@@ -21,7 +21,7 @@ class GenReserveNowResponse(Base_OCPP_Struct_V1_6):
             - call_result.ReserveNow
         """
         return call_result.ReserveNow(
-            status = status
+            status=status
         )
 
     @staticmethod
@@ -36,6 +36,5 @@ class GenReserveNowResponse(Base_OCPP_Struct_V1_6):
             - call_result.ReserveNow
         """
         return call_result.ReserveNow(
-            status = dict_data['status']
+            status=dict_data['status']
         )
-

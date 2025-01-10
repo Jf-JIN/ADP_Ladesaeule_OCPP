@@ -26,10 +26,10 @@ class GenSignedUpdateFirmwareRequest(Base_OCPP_Struct_V1_6):
             - call.SignedUpdateFirmware
         """
         return call.SignedUpdateFirmware(
-            request_id = request_id,
-            firmware = firmware,
-            retries = retries,
-            retry_interval = retry_interval
+            request_id=request_id,
+            firmware=firmware,
+            retries=retries,
+            retry_interval=retry_interval
         )
 
     @staticmethod
@@ -44,12 +44,11 @@ class GenSignedUpdateFirmwareRequest(Base_OCPP_Struct_V1_6):
             - call.SignedUpdateFirmware
         """
         return call.SignedUpdateFirmware(
-            request_id = dict_data['requestId'],
-            firmware = dict_data['firmware'],
-            retries = dict_data.get('retries', None),
-            retry_interval = dict_data.get('retryInterval', None)
+            request_id=dict_data['requestId'],
+            firmware=dict_data['firmware'],
+            retries=dict_data.get('retries', None),
+            retry_interval=dict_data.get('retryInterval', None)
         )
-
 
     @staticmethod
     def get_firmware(
@@ -77,7 +76,7 @@ class GenSignedUpdateFirmwareRequest(Base_OCPP_Struct_V1_6):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'location': location,
             'retrieveDateTime': retrieve_date_time,
             'signingCertificate': signing_certificate,
@@ -86,4 +85,3 @@ class GenSignedUpdateFirmwareRequest(Base_OCPP_Struct_V1_6):
         if install_date_time is not None:
             temp_dict['installDateTime'] = install_date_time
         return temp_dict
-

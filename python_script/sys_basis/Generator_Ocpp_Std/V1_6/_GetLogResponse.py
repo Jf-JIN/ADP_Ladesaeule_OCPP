@@ -24,8 +24,8 @@ class GenGetLogResponse(Base_OCPP_Struct_V1_6):
             - call_result.GetLog
         """
         return call_result.GetLog(
-            status = status,
-            filename = filename
+            status=status,
+            filename=filename
         )
 
     @staticmethod
@@ -40,7 +40,6 @@ class GenGetLogResponse(Base_OCPP_Struct_V1_6):
             - call_result.GetLog
         """
         return call_result.GetLog(
-            status = dict_data['status'],
-            filename = dict_data.get('filename', None)
+            status=dict_data['status'],
+            filename=dict_data.get('filename', None)
         )
-

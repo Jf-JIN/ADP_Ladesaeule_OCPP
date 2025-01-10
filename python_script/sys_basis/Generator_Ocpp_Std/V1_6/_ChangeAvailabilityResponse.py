@@ -21,7 +21,7 @@ class GenChangeAvailabilityResponse(Base_OCPP_Struct_V1_6):
             - call_result.ChangeAvailability
         """
         return call_result.ChangeAvailability(
-            status = status
+            status=status
         )
 
     @staticmethod
@@ -36,6 +36,5 @@ class GenChangeAvailabilityResponse(Base_OCPP_Struct_V1_6):
             - call_result.ChangeAvailability
         """
         return call_result.ChangeAvailability(
-            status = dict_data['status']
+            status=dict_data['status']
         )
-

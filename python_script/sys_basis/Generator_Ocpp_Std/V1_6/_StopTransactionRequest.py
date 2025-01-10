@@ -34,12 +34,12 @@ class GenStopTransactionRequest(Base_OCPP_Struct_V1_6):
             - call.StopTransaction
         """
         return call.StopTransaction(
-            meter_stop = meter_stop,
-            timestamp = timestamp,
-            transaction_id = transaction_id,
-            id_tag = id_tag,
-            reason = reason,
-            transaction_data = transaction_data
+            meter_stop=meter_stop,
+            timestamp=timestamp,
+            transaction_id=transaction_id,
+            id_tag=id_tag,
+            reason=reason,
+            transaction_data=transaction_data
         )
 
     @staticmethod
@@ -54,14 +54,13 @@ class GenStopTransactionRequest(Base_OCPP_Struct_V1_6):
             - call.StopTransaction
         """
         return call.StopTransaction(
-            meter_stop = dict_data['meterStop'],
-            timestamp = dict_data['timestamp'],
-            transaction_id = dict_data['transactionId'],
-            id_tag = dict_data.get('idTag', None),
-            reason = dict_data.get('reason', None),
-            transaction_data = dict_data.get('transactionData', None)
+            meter_stop=dict_data['meterStop'],
+            timestamp=dict_data['timestamp'],
+            transaction_id=dict_data['transactionId'],
+            id_tag=dict_data.get('idTag', None),
+            reason=dict_data.get('reason', None),
+            transaction_data=dict_data.get('transactionData', None)
         )
-
 
     @staticmethod
     def get_sampled_value(
@@ -100,7 +99,7 @@ class GenStopTransactionRequest(Base_OCPP_Struct_V1_6):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'value': value
         }
         if context is not None:
@@ -116,7 +115,6 @@ class GenStopTransactionRequest(Base_OCPP_Struct_V1_6):
         if unit is not None:
             temp_dict['unit'] = unit
         return temp_dict
-
 
     @staticmethod
     def get_transaction_data(
@@ -135,9 +133,8 @@ class GenStopTransactionRequest(Base_OCPP_Struct_V1_6):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'timestamp': timestamp,
             'sampledValue': sampled_value
         }
         return temp_dict
-

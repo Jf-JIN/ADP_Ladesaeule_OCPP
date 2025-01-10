@@ -23,8 +23,8 @@ class GenSignedFirmwareStatusNotificationRequest(Base_OCPP_Struct_V1_6):
             - call.SignedFirmwareStatusNotification
         """
         return call.SignedFirmwareStatusNotification(
-            status = status,
-            request_id = request_id
+            status=status,
+            request_id=request_id
         )
 
     @staticmethod
@@ -39,7 +39,6 @@ class GenSignedFirmwareStatusNotificationRequest(Base_OCPP_Struct_V1_6):
             - call.SignedFirmwareStatusNotification
         """
         return call.SignedFirmwareStatusNotification(
-            status = dict_data['status'],
-            request_id = dict_data.get('requestId', None)
+            status=dict_data['status'],
+            request_id=dict_data.get('requestId', None)
         )
-

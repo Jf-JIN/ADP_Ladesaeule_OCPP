@@ -25,9 +25,9 @@ class GenRemoteStartTransactionRequest(Base_OCPP_Struct_V1_6):
             - call.RemoteStartTransaction
         """
         return call.RemoteStartTransaction(
-            id_tag = id_tag,
-            connector_id = connector_id,
-            charging_profile = charging_profile
+            id_tag=id_tag,
+            connector_id=connector_id,
+            charging_profile=charging_profile
         )
 
     @staticmethod
@@ -42,8 +42,7 @@ class GenRemoteStartTransactionRequest(Base_OCPP_Struct_V1_6):
             - call.RemoteStartTransaction
         """
         return call.RemoteStartTransaction(
-            id_tag = dict_data['idTag'],
-            connector_id = dict_data.get('connectorId', None),
-            charging_profile = dict_data.get('chargingProfile', None)
+            id_tag=dict_data['idTag'],
+            connector_id=dict_data.get('connectorId', None),
+            charging_profile=dict_data.get('chargingProfile', None)
         )
-

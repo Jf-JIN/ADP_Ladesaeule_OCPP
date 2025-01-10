@@ -20,7 +20,7 @@ class GenGetConfigurationRequest(Base_OCPP_Struct_V1_6):
             - call.GetConfiguration
         """
         return call.GetConfiguration(
-            key = key
+            key=key
         )
 
     @staticmethod
@@ -35,6 +35,5 @@ class GenGetConfigurationRequest(Base_OCPP_Struct_V1_6):
             - call.GetConfiguration
         """
         return call.GetConfiguration(
-            key = dict_data.get('key', None)
+            key=dict_data.get('key', None)
         )
-

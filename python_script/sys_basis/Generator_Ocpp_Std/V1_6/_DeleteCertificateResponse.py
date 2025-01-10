@@ -21,7 +21,7 @@ class GenDeleteCertificateResponse(Base_OCPP_Struct_V1_6):
             - call_result.DeleteCertificate
         """
         return call_result.DeleteCertificate(
-            status = status
+            status=status
         )
 
     @staticmethod
@@ -36,6 +36,5 @@ class GenDeleteCertificateResponse(Base_OCPP_Struct_V1_6):
             - call_result.DeleteCertificate
         """
         return call_result.DeleteCertificate(
-            status = dict_data['status']
+            status=dict_data['status']
         )
-

@@ -30,11 +30,11 @@ class GenGetDiagnosticsRequest(Base_OCPP_Struct_V1_6):
             - call.GetDiagnostics
         """
         return call.GetDiagnostics(
-            location = location,
-            retries = retries,
-            retry_interval = retry_interval,
-            start_time = start_time,
-            stop_time = stop_time
+            location=location,
+            retries=retries,
+            retry_interval=retry_interval,
+            start_time=start_time,
+            stop_time=stop_time
         )
 
     @staticmethod
@@ -49,10 +49,9 @@ class GenGetDiagnosticsRequest(Base_OCPP_Struct_V1_6):
             - call.GetDiagnostics
         """
         return call.GetDiagnostics(
-            location = dict_data['location'],
-            retries = dict_data.get('retries', None),
-            retry_interval = dict_data.get('retryInterval', None),
-            start_time = dict_data.get('startTime', None),
-            stop_time = dict_data.get('stopTime', None)
+            location=dict_data['location'],
+            retries=dict_data.get('retries', None),
+            retry_interval=dict_data.get('retryInterval', None),
+            start_time=dict_data.get('startTime', None),
+            stop_time=dict_data.get('stopTime', None)
         )
-
