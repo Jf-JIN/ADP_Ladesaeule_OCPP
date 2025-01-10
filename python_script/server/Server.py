@@ -126,7 +126,7 @@ class Server:
         # if len(self._send_request_list) > 0 and message['action'] == self._send_request_list[-1]['action']:
         #     if message['status'] == CP_Params.RESPONSE_RESULT.SUCCESS:
         #         self._send_request_list.pop(-1)
-        #         print("芜湖！！！！！！！！")
+        #         print("芜湖! ! ! ! ! ! ! ! ")
         #     if message['status'] == CP_Params.RESPONSE_RESULT.TIMEOUT:
         #         self.__coroutine_OCPP_server.send_request_message(self._send_request_list[-1]['data'])
         pass

@@ -134,20 +134,20 @@ class Logger(object):
     参数:
     - log_name(str): 日志名称
     - log_path(str): 日志路径
-    - log_sub_folder_name(str): 日志子文件夹名称，默认无子文件夹
+    - log_sub_folder_name(str): 日志子文件夹名称, 默认无子文件夹
     - log_level(str): 日志级别, 默认为 `INFO`
         - `DEBUG` | `INFO` | `WARNING` | `ERROR` | `CRITICAL`
-    - default_level(str): 默认日志级别，是直接调用类时执行的日志级别，默认为`INFO`
-    - console_output(bool): 是否输出到控制台，默认输出
-    - file_output(bool): 是否输出到文件，默认输出
-    - size_limit(int): 文件大小限制，单位为 kB, 默认不限制
-    - count_limit(int): 文件数量限制，默认不限制
-    - days_limit(int): 天数限制，默认不限制
-    - split_by_day(bool): 是否按天分割日志，默认不分割
-    - message_format(str): 消息格式，可自定义，详细方法见示例。默认格式为：`%(scriptPath)s", line %(lineNum)s\\n[%(asctime)s] [module: %(moduleName)s] [class: %(className)s] [function: %(functionName)s] [line: %(lineNum)s]- %(levelName)s\\n%(message)s\\n`
-    - exclude_funcs(list[str]): 排除的函数列表, 用于追溯调用位置时，排除父级调用函数，排除的函数链应是完整的，只写顶层的函数名将可能不会产生效果, 默认为空列表
-    - highlight_type(str|None): 高亮模式. 默认为 `ASNI`，取消高亮则使用 None。当前支持 `ASNI`
-    - **kwargs, 消息格式中的自定义参数，使用方法见示例
+    - default_level(str): 默认日志级别, 是直接调用类时执行的日志级别, 默认为`INFO`
+    - console_output(bool): 是否输出到控制台, 默认输出
+    - file_output(bool): 是否输出到文件, 默认输出
+    - size_limit(int): 文件大小限制, 单位为 kB, 默认不限制
+    - count_limit(int): 文件数量限制, 默认不限制
+    - days_limit(int): 天数限制, 默认不限制
+    - split_by_day(bool): 是否按天分割日志, 默认不分割
+    - message_format(str): 消息格式, 可自定义, 详细方法见示例. 默认格式为: `%(scriptPath)s", line %(lineNum)s\\n[%(asctime)s] [module: %(moduleName)s] [class: %(className)s] [function: %(functionName)s] [line: %(lineNum)s]- %(levelName)s\\n%(message)s\\n`
+    - exclude_funcs(list[str]): 排除的函数列表, 用于追溯调用位置时, 排除父级调用函数, 排除的函数链应是完整的, 只写顶层的函数名将可能不会产生效果, 默认为空列表
+    - highlight_type(str|None): 高亮模式. 默认为 `ASNI`, 取消高亮则使用 None. 当前支持 `ASNI`
+    - **kwargs, 消息格式中的自定义参数, 使用方法见示例
 
     方法:
     - debug(*message) # 输出调试信息, 支持多参数
@@ -189,7 +189,7 @@ class Logger(object):
 
     logger.debug('debug message')
 
-    得到输出：`2025-01-01 06:30:00-INFO -debug message -True`
+    得到输出: `2025-01-01 06:30:00-INFO -debug message -True`
     """
 
     def __init__(
