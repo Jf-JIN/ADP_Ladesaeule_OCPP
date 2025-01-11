@@ -8,7 +8,7 @@ APP_WORKSPACE_PATH = os.getcwd()
 
 
 class Log(AnalogDefine):
-    __EXCLUDE_FUNCS = ['_send_signal_info', '__send_signal_recv', '__send_signal_info']
+    __EXCLUDE_FUNCS = ['_send_signal_info', '__send_signal_recv', '__send_signal_info', '__send_signal']
     RAS = Logger(log_name='client_rasberryPi', log_path=APP_WORKSPACE_PATH, log_sub_folder_name='client_rasberryPi', count_limit=10, exclude_funcs=__EXCLUDE_FUNCS)
     WS = Logger(log_name='websocket', log_path=APP_WORKSPACE_PATH, log_sub_folder_name='websocket', count_limit=10, exclude_funcs=__EXCLUDE_FUNCS)
     CP = Logger(log_name='charge_point', log_path=APP_WORKSPACE_PATH, log_sub_folder_name='charge_point',
