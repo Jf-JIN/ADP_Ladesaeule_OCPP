@@ -103,9 +103,12 @@ class ChargePointV16(cpv16, ChargePointBase):
             )
 
     @on(Action.authorize)
-    async def _on_authorize_request(self, id_token: dict, custom_data: dict | None = None, certificate: str | None = None, hash_data: list | None = None):
-        self._send_signal_info_and_ocpp_request(Action.authorize)
-
+    async def _on_authorize_request(
+        self,
+        id_token: dict,
+        custom_data: dict | None = None,
+        certificate: str | None = None,
+        hash_data: list | None = None
+    ) -> call_result.Authorize:
         default_message = '请修改此处默认信息, 参照_Charge_Point_Server_V2_0_1.py'
-
         return await self._wait_for_result(Action.authorize, default_message=default_message)
