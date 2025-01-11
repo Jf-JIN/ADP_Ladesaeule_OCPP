@@ -253,7 +253,7 @@ class Logger(object):
         self.__days_limit = days_limit if isinstance(days_limit, int) else -1
         self.__doSplitByDay = split_by_day if isinstance(split_by_day, bool) else False
         self.__message_format = message_format if isinstance(
-            message_format, str) else '%(scriptPath)s", line %(lineNum)s\n[%(asctime)s] [module: %(moduleName)s] [class: %(className)s] [function: %(functionName)s] [line: %(lineNum)s]- %(levelName)s\n%(message)s\n'
+            message_format, str) else '%(consoleLine)s\n[%(asctime)s] [module: %(moduleName)s] [class: %(className)s] [function: %(functionName)s] [line: %(lineNum)s]- %(levelName)s\n%(message)s\n'
         self.__exclude_funcs_list = exclude_funcs if isinstance(exclude_funcs, list) else []
         self.__highlight_type = highlight_type if isinstance(highlight_type, (str, type(None))) and highlight_type in _HighlightType else _HighlightType.ASNI
         self.__kwargs = kwargs
