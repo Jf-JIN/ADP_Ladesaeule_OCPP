@@ -34,7 +34,16 @@ class WebSocketClient(object):
         - recv(异步): 接收消息
     """
 
-    def __init__(self, uri, recv_timeout_s: int | float = 30, retry_interval_s: int | float = 1, max_retries: int = -1, info_title: str | None = 'WebSocket_Client', ping_interval_s: int | float = 20, ping_timeout_s=20) -> None:
+    def __init__(
+        self,
+        uri,
+        recv_timeout_s: int | float = 30,
+        retry_interval_s: int | float = 1,
+        max_retries: int = -1,
+        info_title: str | None = 'WebSocket_Client',
+        ping_interval_s: int | float = 20,
+        ping_timeout_s=20
+    ) -> None:
         self.__signal_websocket_client_recv = XSignal()  # WebSocket 客户端接收信号
         self.__signal_websocket_client_info = XSignal()  # 普通信号, 用于信息显示, 调试等
         self.__uri = uri
@@ -78,18 +87,22 @@ class WebSocketClient(object):
 
     @property
     def websocket(self) -> ClientConnection:
+        """ 客户端连接对象 """
         return self.__websocket
 
     @property
     def signal_websocket_client_recv(self) -> XSignal:
+        """ WebSocket 客户端接收信号 """
         return self.__signal_websocket_client_recv
 
     @property
     def signal_websocket_client_info(self) -> XSignal:
+        """ 普通信号, 用于信息显示, 调试等 """
         return self.__signal_websocket_client_info
 
     @property
     def isConnected(self) -> bool:
+        """ 是否已连接 """
         return self.__isConnected
 
     async def connect(self) -> None:
@@ -100,7 +113,7 @@ class WebSocketClient(object):
         发送消息到服务器
 
         - 参数:
-            - message (str): 要发送的消息, 建议传递字符串、数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式
+            - message(str): 要发送的消息, 建议传递字符串、数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式
         """
         if self.__websocket is not None:
             try:
@@ -124,7 +137,7 @@ class WebSocketClient(object):
                 return response
             except asyncio.TimeoutError as e:
                 await self.__websocket.ping()
-                await self.__connect()
+                # await self.__connect()
             except websockets.exceptions.ConnectionClosedError as e:
                 self.__isConnected = False
                 self.__send_signal_info(f'--<Connection_Failed>: Connection closed, reconnecting... ({traceback.format_exc()})')
