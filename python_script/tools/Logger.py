@@ -1,3 +1,4 @@
+import pprint
 import sys
 import os
 import inspect
@@ -23,7 +24,7 @@ class EnumBaseMeta(type):
 
     def __setattr__(cls, key, value) -> None:
         if key in cls._members_ and not cls._members_['isAllowedSetValue']:
-            raise AttributeError(f'禁止外部修改枚举项\t< {key} > = {cls._members_[key]}')
+            raise AttributeError(f'Disable external modification of enumeration items\t< {key} > = {cls._members_[key]}')
         super().__setattr__(key, value)
 
     def __contains__(self, item) -> bool:
@@ -32,6 +33,26 @@ class EnumBaseMeta(type):
 
 class EnumBase(metaclass=EnumBaseMeta):
     pass
+
+
+class _LogSignal(object):
+    def __init__(self) -> None:
+        self.__slots = []
+
+    def connect(self, slot) -> None:
+        if callable(slot):
+            if slot not in self.__slots:
+                self.__slots.append(slot)
+        else:
+            raise ValueError("Slot must be callable")
+
+    def disconnect(self, slot) -> None:
+        if slot in self.__slots:
+            self.__slots.remove(slot)
+
+    def emit(self, *args, **kwargs) -> None:
+        for slot in self.__slots:
+            slot(*args, **kwargs)
 
 
 class _TxtColor(EnumBase):
@@ -124,7 +145,7 @@ def asni_ct(
     style_list.append(txt_color) if txt_color in _TxtColor else ''  # 字体颜色
     style_list.append(bg_color) if bg_color in _BgColor else ''  # 背景颜色
     style_str = ';'.join(item for item in style_list if item)
-    return f'\x1B[{style_str}m{text}\033[0m'
+    return f'\x1B[{style_str}m{text}\x1B[0m'
 
 
 class Logger(object):
@@ -133,7 +154,7 @@ class Logger(object):
 
     参数:
     - log_name(str): 日志名称
-    - log_path(str): 日志路径
+    - log_path(str): 日志路径, 默认为无路径
     - log_sub_folder_name(str): 日志子文件夹名称, 默认无子文件夹
     - log_level(str): 日志级别, 默认为 `INFO`
         - `DEBUG` | `INFO` | `WARNING` | `ERROR` | `CRITICAL`
@@ -144,7 +165,7 @@ class Logger(object):
     - count_limit(int): 文件数量限制, 默认不限制
     - days_limit(int): 天数限制, 默认不限制
     - split_by_day(bool): 是否按天分割日志, 默认不分割
-    - message_format(str): 消息格式, 可自定义, 详细方法见示例. 默认格式为: `%(scriptPath)s", line %(lineNum)s\\n[%(asctime)s] [module: %(moduleName)s] [class: %(className)s] [function: %(functionName)s] [line: %(lineNum)s]- %(levelName)s\\n%(message)s\\n`
+    - message_format(str): 消息格式, 可自定义, 详细方法见示例. 默认格式为: `%(consoleLine)s\\n[%(asctime)s] [module: %(moduleName)s] [class: %(className)s] [function: %(functionName)s] [line: %(lineNum)s]- %(levelName)s\\n%(message)s\\n`
     - exclude_funcs(list[str]): 排除的函数列表, 用于追溯调用位置时, 排除父级调用函数, 排除的函数链应是完整的, 只写顶层的函数名将可能不会产生效果, 默认为空列表
     - highlight_type(str|None): 高亮模式. 默认为 `ASNI`, 取消高亮则使用 None. 当前支持 `ASNI`
     - **kwargs, 消息格式中的自定义参数, 使用方法见示例
@@ -180,6 +201,7 @@ class Logger(object):
         - `message` 消息内容
         - `scriptName` 脚本名称
         - `scriptPath` 脚本路径
+        - `consoleLine` 控制台链接行
 
     - 如需添加自定义的参数, 可以在初始化中添加, 并可以在后续对相应的属性进行赋值
 
@@ -191,11 +213,12 @@ class Logger(object):
 
     得到输出: `2025-01-01 06:30:00-INFO -debug message -True`
     """
+    log_public = _LogSignal()
 
     def __init__(
         self,
         log_name: str,
-        log_path: str,
+        log_folder_path: str = '',
         log_sub_folder_name: str = '',
         log_level: str = _LogLevel.INFO,
         default_level: str = _LogLevel.INFO,
@@ -205,13 +228,21 @@ class Logger(object):
         count_limit: int = -1,
         days_limit: int = -1,
         split_by_day: bool = False,
-        message_format: str = '%(scriptPath)s", line %(lineNum)s\n[%(asctime)s] [module: %(moduleName)s] [class: %(className)s] [function: %(functionName)s] [line: %(lineNum)s]- %(levelName)s\n%(message)s\n',
+        message_format: str = '%(consoleLine)s\n[%(asctime)s] [module: %(moduleName)s] [class: %(className)s] [function: %(functionName)s] [line: %(lineNum)s]- %(levelName)s\n%(message)s\n',
         exclude_funcs: list = [],
         highlight_type: str | None = 'ASNI',
         ** kwargs,
     ) -> None:
         self.__log_name = log_name
-        self.__log_path = os.path.join(log_path, 'Log')
+        self.__log_path = os.path.join(log_folder_path, 'Log') if log_folder_path else ''
+        if isinstance(self.__log_path, str) and self.__log_path != '' and os.path.exists(self.__log_path):
+            self.__isExistsPath = True
+        else:
+            self.__isExistsPath = False
+            if isinstance(log_folder_path, str) and log_folder_path != '' and not os.path.exists(log_folder_path):
+                raise ValueError(f'Log folder path "{log_folder_path}" does not exist, create it.')
+            elif not isinstance(log_folder_path, str):
+                raise ValueError(f'<WARNING>Log folder path "{log_folder_path}" is not a string.')
         self.__log_sub_folder_name = log_sub_folder_name if isinstance(log_sub_folder_name, str) else ''
         self.__log_level = log_level if log_level in _LogLevel else _LogLevel.INFO
         self.__default_level = default_level if default_level in _LogLevel else _LogLevel.INFO
@@ -240,6 +271,7 @@ class Logger(object):
             'lineNum': '',
             'message': '',
             'scriptName': '',
+            'consoleLine': '',
         }
         self.__var_dict.update(self.__kwargs)
         self.__exclude_funcs = {}  # 存储 __find_caller 中忽略的函数
@@ -267,6 +299,8 @@ class Logger(object):
     def __set_log_file_path(self):
         """ 设置日志文件路径 """
         # 支持的字符 {}[];'',.!~@#$%^&()_+-=
+        if self.__isExistsPath is False:
+            return
         if not hasattr(self, '_Logger__log_file_path'):  # 初始化, 创建属性
             self.__start_time = datetime.now()
             self.__start_time_format = self.__start_time.strftime("%Y%m%d_%H'%M'%S")
@@ -292,6 +326,8 @@ class Logger(object):
             raise TypeError("'module' object is not callable. Please use Logger.debug/info/warning/error/critical to log.")
 
     def __setattr__(self, name: str, value) -> None:
+        if hasattr(self, '_Logger__kwargs') and name == 'log_public' and name in self.__dict__['_Logger__exclude_funcs']:
+            raise AttributeError("'log_public' is a read-only property.")
         if hasattr(self, '_Logger__kwargs') and name != '_Logger__kwargs' and name in self.__kwargs:
             self.__kwargs[name] = value
             self.__var_dict[name] = value
@@ -303,6 +339,8 @@ class Logger(object):
         """
         清理日志文件.
         """
+        if self.__isExistsPath is False:
+            return
         if (not isinstance(self.__count_limit, int) and self.__count_limit < 0) or (not isinstance(self.__days_limit, int) and self.__days_limit <= 0):
             return
         current_folder_path = os.path.join(self.__log_path, self.__log_sub_folder_name)
@@ -365,7 +403,13 @@ class Logger(object):
 
     def __format(self, log_level: str, *args):
         """ 格式化日志信息 """
-        msg = ' '.join(str(arg) for arg in args)
+        msg_list = []
+        for arg in args:
+            if isinstance(arg, (dict, list, tuple)):
+                msg_list.append(pprint.pformat(arg))
+            else:
+                msg_list.append(str(arg))
+        msg = ' '.join(message for message in msg_list)
         caller_info = self.__find_caller()
         self.__var_dict['asctime'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         self.__var_dict['moduleName'] = caller_info['module_name']
@@ -376,6 +420,9 @@ class Logger(object):
         self.__var_dict['levelName'] = log_level
         self.__var_dict['lineNum'] = caller_info['line_num']
         self.__var_dict['message'] = msg
+        script_path = caller_info['script_path']
+        line_num = caller_info['line_num']
+        self.__var_dict['consoleLine'] = f'File "{script_path}", line {line_num}'
         pattern = r'%\((.*?)\)(\.\d+)?([sdfxXobeEgGc%])'
         used_var_names = re.findall(pattern, self.__message_format)
         # 普通消息
@@ -389,6 +436,29 @@ class Logger(object):
                 bg_color=self.__level_color_dict[log_level][1],
                 bold=self.__level_color_dict[log_level][2],
                 blink=self.__level_color_dict[log_level][3])
+        self.__var_dict['asctime'] = self.__color(
+            self.__var_dict['asctime'],
+            txt_color=_TxtColor.GREEN,
+            bold=True)
+        self.__var_dict['moduleName'] = self.__color(
+            self.__var_dict['moduleName'],
+            txt_color=_TxtColor.CYAN)
+        self.__var_dict['functionName'] = self.__color(
+            self.__var_dict['functionName'],
+            txt_color=_TxtColor.CYAN)
+        self.__var_dict['className'] = self.__color(
+            self.__var_dict['className'],
+            txt_color=_TxtColor.CYAN)
+        self.__var_dict['lineNum'] = self.__color(
+            self.__var_dict['lineNum'],
+            txt_color=_TxtColor.CYAN)
+        self.__var_dict['scriptPath'] = self.__color(
+            self.__var_dict['scriptPath'],
+            txt_color=_TxtColor.CYAN)
+        self.__var_dict['consoleLine'] = self.__color(
+            self.__var_dict['consoleLine'],
+            txt_color=_TxtColor.RED,
+            italic=True)
         used_vars = {name[0]: self.__var_dict[name[0]] for name in used_var_names if name[0] in self.__var_dict}
         text_with_color = self.__message_format % used_vars + '\n'
         return text_with_color, text
@@ -401,7 +471,7 @@ class Logger(object):
 
     def __write(self, message: str):
         """ 写入日志信息 """
-        if not self.__doFileOutput:
+        if not self.__doFileOutput or self.__isExistsPath is False:
             return
         if self.__size_limit and self.__size_limit > 0:
             # 大小限制
@@ -425,7 +495,6 @@ class Logger(object):
 # <start time> This Program is started at\t {start_time}.
 {'#'*66}\n\n{message}"""
             self.__current_size = len(message.encode('utf-8'))
-
         with open(self.__log_file_path, 'a', encoding='utf-8') as f:
             f.write(message)
 
@@ -433,6 +502,7 @@ class Logger(object):
         txs, tx = self.__format(level, *args)
         self.__write(tx)
         self.__printf(txs)
+        Logger.log_public.emit(txs)
 
     def debug(self, *args, **kwargs):
         """ 打印调试信息 """
