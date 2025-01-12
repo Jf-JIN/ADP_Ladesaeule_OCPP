@@ -2,6 +2,7 @@ import time
 from typing import Optional, List
 from _Decorator_check_flag import check_flag
 from const.GPIO_Parameter import *
+from const.Const_Parameter import *
 from pymodbus.client import ModbusSerialClient
 from sys_basis.XSignal import XSignal
 from sys_basis.GPIO._evse_r_w import EVSEReadWrite
@@ -399,7 +400,7 @@ class EVSEManager(object):
         """
         self.__send_signal(signal=self.__signal_EVSE_info, error_hint='send_signal_info', log=None, doShowTitle=True, doPrintInfo=True, args=args)
 
-    def __send_signal(self, signal: XSignal, error_hint: str, log=None, doShowTitle: bool = False, doPrintInfo: bool = False, args=[]) -> None:
+    def __send_signal(self, signal: XSignal, error_hint: str, log= Log.GPIO, doShowTitle: bool = False, doPrintInfo: bool = False, args=[]) -> None:
         """
         发送/打印 信号
 
