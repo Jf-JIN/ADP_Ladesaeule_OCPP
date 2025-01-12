@@ -3,7 +3,7 @@ from ocpp.v16 import call_result
 from ._Base import *
 
 
-class send_local_list_response(Base_OCPP_Struct_V1_6):
+class GenSendLocalListResponse(Base_OCPP_Struct_V1_6):
 
     @staticmethod
     def generate(
@@ -21,7 +21,7 @@ class send_local_list_response(Base_OCPP_Struct_V1_6):
             - call_result.SendLocalList
         """
         return call_result.SendLocalList(
-            status = status
+            status=status
         )
 
     @staticmethod
@@ -36,6 +36,5 @@ class send_local_list_response(Base_OCPP_Struct_V1_6):
             - call_result.SendLocalList
         """
         return call_result.SendLocalList(
-            status = dict_data['status']
+            status=dict_data['status']
         )
-

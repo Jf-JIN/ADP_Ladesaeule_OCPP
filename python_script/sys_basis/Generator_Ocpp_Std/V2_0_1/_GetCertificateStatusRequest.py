@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class get_certificate_status_request(Base_OCPP_Struct_V2_0_1):
+class GenGetCertificateStatusRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -24,8 +24,8 @@ class get_certificate_status_request(Base_OCPP_Struct_V2_0_1):
             - call.GetCertificateStatus
         """
         return call.GetCertificateStatus(
-            ocsp_request_data = ocsp_request_data,
-            custom_data = custom_data
+            ocsp_request_data=ocsp_request_data,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -40,10 +40,9 @@ class get_certificate_status_request(Base_OCPP_Struct_V2_0_1):
             - call.GetCertificateStatus
         """
         return call.GetCertificateStatus(
-            ocsp_request_data = dict_data['ocspRequestData'],
-            custom_data = dict_data.get('customData', None)
+            ocsp_request_data=dict_data['ocspRequestData'],
+            custom_data=dict_data.get('customData', None)
         )
-
 
     @staticmethod
     def get_ocsp_request_data(
@@ -81,7 +80,7 @@ class get_certificate_status_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'hashAlgorithm': hash_algorithm,
             'issuerNameHash': issuer_name_hash,
             'issuerKeyHash': issuer_key_hash,
@@ -91,4 +90,3 @@ class get_certificate_status_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-

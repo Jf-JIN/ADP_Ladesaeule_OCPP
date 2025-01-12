@@ -3,7 +3,7 @@ from ocpp.v201 import call_result
 from ._Base import *
 
 
-class report_charging_profiles_response(Base_OCPP_Struct_V2_0_1):
+class GenReportChargingProfilesResponse(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -21,7 +21,7 @@ class report_charging_profiles_response(Base_OCPP_Struct_V2_0_1):
             - call_result.ReportChargingProfiles
         """
         return call_result.ReportChargingProfiles(
-            custom_data = custom_data
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -36,6 +36,5 @@ class report_charging_profiles_response(Base_OCPP_Struct_V2_0_1):
             - call_result.ReportChargingProfiles
         """
         return call_result.ReportChargingProfiles(
-            custom_data = dict_data.get('customData', None)
+            custom_data=dict_data.get('customData', None)
         )
-

@@ -3,7 +3,7 @@ from ocpp.v16 import call
 from ._Base import *
 
 
-class authorize_request(Base_OCPP_Struct_V1_6):
+class GenAuthorizeRequest(Base_OCPP_Struct_V1_6):
 
     @staticmethod
     def generate(
@@ -20,7 +20,7 @@ class authorize_request(Base_OCPP_Struct_V1_6):
             - call.Authorize
         """
         return call.Authorize(
-            id_tag = id_tag
+            id_tag=id_tag
         )
 
     @staticmethod
@@ -35,6 +35,5 @@ class authorize_request(Base_OCPP_Struct_V1_6):
             - call.Authorize
         """
         return call.Authorize(
-            id_tag = dict_data['idTag']
+            id_tag=dict_data['idTag']
         )
-

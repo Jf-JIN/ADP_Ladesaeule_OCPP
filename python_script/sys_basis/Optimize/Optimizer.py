@@ -1,9 +1,9 @@
-from ChargingNeedsRequest import *
-from ChargingProfileRequest import *
+
 from datetime import datetime, timedelta
-import numpy as np
 from scipy.optimize import minimize
-from sys_basis.Generator_Ocpp_Std.V2_0_1 import set_charging_profile_request
+from sys_basis.Generator_Ocpp_Std.V2_0_1 import *
+from sys_basis.Optimize.data_gene import DataGene
+import numpy as np
 
 
 class Optimizer:
@@ -11,12 +11,17 @@ class Optimizer:
     充电优化器
     
     参数: 
-    - charging_needs(dict): 充电需求
-    - eprices(list): 电价(间隔为15分钟)
-    - his_usage(list): 历史的一天用电量(间隔为15分钟)
-    - max_grid_power(int): 允许的最大电网功率
-    - interval(int): 时间间隔(默认为15分钟)
-    - mod(int): 模式(默认为0, 0表示动态调整, 1表示最小充电时间, 2表示最少电费花销)
+        - charging_needs(dict): 充电需求
+        - eprices(list): 电价(间隔为15分钟)
+        - his_usage(list): 历史的一天用电量(间隔为15分钟)
+        - max_grid_power(int): 允许的最大电网功率
+        - interval(int): 时间间隔(默认为15分钟)
+        - mod(int): 模式(默认为0, 0表示动态调整, 1表示最小充电时间, 2表示最少电费花销)
+
+    方法:
+        - get_charging_needs(): 获取充电需求
+        - get_charging_schedule(): 获取充电计划
+        - Isopt(): 是否优化成功
     """
 
     def __init__(self, charging_needs: dict, eprices: list, his_usage: list, max_grid_power: int = 3000,
@@ -44,7 +49,7 @@ class Optimizer:
             self._max_power,
             self._min_power)
         self._num_split = len(self._time_split)
-        print(self._num_split, "\n", self._time_split, "\n", self._eprices_split, "\n", self._max_power_split, "\n")
+        # print(self._num_split, "\n", self._time_split, "\n", self._eprices_split, "\n", self._max_power_split, "\n")
         self._charging_list = None
         self._over_time = 0
         self._cumulative_energy = []
@@ -53,6 +58,7 @@ class Optimizer:
 
         # 初始化充电计划
         self._charging_schedule = []
+        self._isopt = False
         self._generate_charging_schedule()
 
     def get_charging_needs(self):
@@ -60,6 +66,9 @@ class Optimizer:
 
     def get_charging_schedule(self):
         return self._charging_schedule
+
+    def IsOpt(self):
+        return self._isopt
 
     def _get_weight(self):
         """
@@ -77,16 +86,16 @@ class Optimizer:
         将开始时间和结束时间按照15分钟间隔分割, 返回每段时间的持续时间、电价和可用功率. 
 
         参数: 
-        - start_time(datetime): 开始时间
-        - end_time(datetime): 结束时间
-        - eprices(list): 电价列表
-        - his_usage(list): 历史用电量列表
-        - max_grid_power(int): 最大电网功率
-        - max_power(int): 最大功率
-        - min_power(int): 最小功率
+            - start_time(datetime): 开始时间
+            - end_time(datetime): 结束时间
+            - eprices(list): 电价列表
+            - his_usage(list): 历史用电量列表
+            - max_grid_power(int): 最大电网功率
+            - max_power(int): 最大功率
+            - min_power(int): 最小功率
 
         返回: 
-        - list: 包含每段时间的持续时间、电价和可用功率的列表
+            - list: 包含每段时间的持续时间、电价和可用功率的列表
         """
         result_time = []
         result_eprices = []
@@ -117,18 +126,12 @@ class Optimizer:
 
     def _calculate_charging_list(self):
         """
-        生成充电计划, 综合考虑以下因素: 
+        生成充电计划, 综合考虑以下因素:
         1. 最短充电时间
         2. 最少电费花销
         3. 最大家庭充电负载限制
         """
-        # T = self._num_split  # 总时间段
         E_target = self._energy_amount / 1000  # 目标充电量(kWh)
-        # C = self._eprices_split  # 随机生成电价列表
-        # w_over = self._weight[0]  # 充电时长权重
-        # w_cost = self._weight[1]  # 充电成本权重
-        # w_over = 1  # 充电时长权重
-        # w_cost = 1  # 充电成本权重
 
         # 时间段长度 (小时)
         time_step = self._interval / 60
@@ -159,6 +162,7 @@ class Optimizer:
         # 优化
         result = minimize(cost_function, P0, bounds=bounds, constraints=constraints)
 
+        self._isopt = result.success
         # 输出结果
         if result.success:
             self._charging_list = result.x
@@ -176,15 +180,28 @@ class Optimizer:
             print("优化失败")
 
     def _generate_charging_schedule(self):
+        """
+        把列表转换成ocpp需要的格式
+        """
         if self._charging_list is None:
             self._charging_schedule = None
         else:
+            self._charging_list = [round(item, 1) for item in self._charging_list]
             scpr = set_charging_profile_request()
             charging_schedule_period_list = []
             for i in range(self._num_split):
                 start_period = sum(self._time_split[:i])
-                charging_schedule_period_list.append(scpr.get_charging_schedule_period(start_period=start_period, limit=self._charging_list[i]))
-            self._charging_schedule = scpr.get_charging_schedule(id=0, charging_rate_unit="w", charging_schedule_period=charging_schedule_period_list)
+                charging_schedule_period_list.append(
+                    scpr.get_charging_schedule_period(
+                        start_period=start_period,
+                        limit=self._charging_list[i]
+                    )
+                )
+            self._charging_schedule = scpr.get_charging_schedule(
+                id=1,
+                charging_rate_unit="W",
+                charging_schedule_period=charging_schedule_period_list
+            )
 
 
 if __name__ == "__main__":
@@ -200,7 +217,7 @@ if __name__ == "__main__":
     #             "evMinCurrent": 6,
     #             "evMaxVoltage": 400,
     #         },
-    #         "departureTime": DataGene.time(10)
+    #         "departureTime": DataGene.time2str(datetime.now() + timedelta(hours=10))
     #     }
     # }
     charging_needs = {
@@ -211,13 +228,13 @@ if __name__ == "__main__":
             "evMinCurrent": 6,
             "evMaxVoltage": 400,
         },
-        "departureTime": DataGene.time2str(datetime(2025, 1, 3, 18, 18))
+        "departureTime": DataGene.time2str(datetime.now() + timedelta(hours=10))
     }
     eprices = DataGene.gene_eprices(0.33, 0.3, 6, 22)
     # print(eprices)
-    his_usage = DataGene.gene_his_usage()
+    his_usage = DataGene.gene_his_usage_seed(3456)
     # print(his_usage)
-    # DataGene.plot_usage(his_usage)
+    DataGene.plot_usage(his_usage)
     op_dp = Optimizer(charging_needs, eprices, his_usage, 16000)
     # print(op_dp.get_charging_needs())
     chargingschedule = op_dp.get_charging_schedule()

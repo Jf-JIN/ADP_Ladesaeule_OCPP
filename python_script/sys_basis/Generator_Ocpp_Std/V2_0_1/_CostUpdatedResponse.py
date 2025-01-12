@@ -3,7 +3,7 @@ from ocpp.v201 import call_result
 from ._Base import *
 
 
-class cost_updated_response(Base_OCPP_Struct_V2_0_1):
+class GenCostUpdatedResponse(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -21,7 +21,7 @@ class cost_updated_response(Base_OCPP_Struct_V2_0_1):
             - call_result.CostUpdated
         """
         return call_result.CostUpdated(
-            custom_data = custom_data
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -36,6 +36,5 @@ class cost_updated_response(Base_OCPP_Struct_V2_0_1):
             - call_result.CostUpdated
         """
         return call_result.CostUpdated(
-            custom_data = dict_data.get('customData', None)
+            custom_data=dict_data.get('customData', None)
         )
-

@@ -3,11 +3,11 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class get15118_ev_certificate_request(Base_OCPP_Struct_V2_0_1):
+class GenGet15118EVCertificateRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
-        iso15118schema_version: str,
+        iso15118_schema_version: str,
         action: str | CertificateActionType,
         exi_request: str,
         custom_data: dict | None = None
@@ -16,7 +16,7 @@ class get15118_ev_certificate_request(Base_OCPP_Struct_V2_0_1):
         Generate Get15118EVCertificateRequest
 
         - Args: 
-            - iso15118schema_version(str): 
+            - iso15118_schema_version(str): 
                 - Schema version currently used for the 15118 session between EV and Charging Station. Needed for parsing of the EXI stream by the CSMS. 
                 - length limit: [1, 50]
             - action(str): 
@@ -34,10 +34,10 @@ class get15118_ev_certificate_request(Base_OCPP_Struct_V2_0_1):
             - call.Get15118EVCertificate
         """
         return call.Get15118EVCertificate(
-            iso15118schema_version = iso15118schema_version,
-            action = action,
-            exi_request = exi_request,
-            custom_data = custom_data
+            iso15118_schema_version=iso15118_schema_version,
+            action=action,
+            exi_request=exi_request,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -52,9 +52,8 @@ class get15118_ev_certificate_request(Base_OCPP_Struct_V2_0_1):
             - call.Get15118EVCertificate
         """
         return call.Get15118EVCertificate(
-            iso15118schema_version = dict_data['iso15118SchemaVersion'],
-            action = dict_data['action'],
-            exi_request = dict_data['exiRequest'],
-            custom_data = dict_data.get('customData', None)
+            iso15118_schema_version=dict_data['iso15118SchemaVersion'],
+            action=dict_data['action'],
+            exi_request=dict_data['exiRequest'],
+            custom_data=dict_data.get('customData', None)
         )
-

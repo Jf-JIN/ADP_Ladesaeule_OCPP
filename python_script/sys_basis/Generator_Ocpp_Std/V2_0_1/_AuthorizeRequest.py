@@ -3,13 +3,13 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class authorize_request(Base_OCPP_Struct_V2_0_1):
+class GenAuthorizeRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
         id_token: dict,
         certificate: str | None = None,
-        hash_data: list | None = None,
+        iso15118_certificate_hash_data: list | None = None,
         custom_data: dict | None = None
     ) -> call.Authorize:
         """
@@ -22,7 +22,7 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
             - certificate(str|None): 
                 - 由 EV 提供并以 PEM 格式编码的 X.509 证书. 
                 - 长度范围: [1, 5500]
-            - hash_data(list|None): 
+            - iso15118_certificate_hash_data(list|None): 
                 - 长度范围: [1, 4]
                 - 推荐使用 `get_hash_data_list()` 传入
             - custom_data(dict|None): 
@@ -35,7 +35,7 @@ class authorize_request(Base_OCPP_Struct_V2_0_1):
         return call.Authorize(
             id_token=id_token,
             certificate=certificate,
-            iso15118certificate_hash_data=hash_data,
+            iso15118_certificate_hash_data=iso15118_certificate_hash_data,
             custom_data=custom_data
         )
 

@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class set_network_profile_request(Base_OCPP_Struct_V2_0_1):
+class GenSetNetworkProfileRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -28,9 +28,9 @@ class set_network_profile_request(Base_OCPP_Struct_V2_0_1):
             - call.SetNetworkProfile
         """
         return call.SetNetworkProfile(
-            configuration_slot = configuration_slot,
-            connection_data = connection_data,
-            custom_data = custom_data
+            configuration_slot=configuration_slot,
+            connection_data=connection_data,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -45,11 +45,10 @@ class set_network_profile_request(Base_OCPP_Struct_V2_0_1):
             - call.SetNetworkProfile
         """
         return call.SetNetworkProfile(
-            configuration_slot = dict_data['configurationSlot'],
-            connection_data = dict_data['connectionData'],
-            custom_data = dict_data.get('customData', None)
+            configuration_slot=dict_data['configurationSlot'],
+            connection_data=dict_data['connectionData'],
+            custom_data=dict_data.get('customData', None)
         )
-
 
     @staticmethod
     def get_apn(
@@ -93,7 +92,7 @@ class set_network_profile_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'apn': apn,
             'apnAuthentication': apn_authentication
         }
@@ -110,7 +109,6 @@ class set_network_profile_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_vpn(
@@ -152,7 +150,7 @@ class set_network_profile_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'server': server,
             'user': user,
             'password': password,
@@ -164,7 +162,6 @@ class set_network_profile_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_connection_data(
@@ -214,7 +211,7 @@ class set_network_profile_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'ocppVersion': ocpp_version,
             'ocppTransport': ocpp_transport,
             'ocppCsmsUrl': ocpp_csms_url,
@@ -229,4 +226,3 @@ class set_network_profile_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-

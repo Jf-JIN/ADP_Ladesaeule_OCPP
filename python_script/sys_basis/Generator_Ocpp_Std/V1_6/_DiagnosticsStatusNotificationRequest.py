@@ -3,7 +3,7 @@ from ocpp.v16 import call
 from ._Base import *
 
 
-class diagnostics_status_notification_request(Base_OCPP_Struct_V1_6):
+class GenDiagnosticsStatusNotificationRequest(Base_OCPP_Struct_V1_6):
 
     @staticmethod
     def generate(
@@ -21,7 +21,7 @@ class diagnostics_status_notification_request(Base_OCPP_Struct_V1_6):
             - call.DiagnosticsStatusNotification
         """
         return call.DiagnosticsStatusNotification(
-            status = status
+            status=status
         )
 
     @staticmethod
@@ -36,6 +36,5 @@ class diagnostics_status_notification_request(Base_OCPP_Struct_V1_6):
             - call.DiagnosticsStatusNotification
         """
         return call.DiagnosticsStatusNotification(
-            status = dict_data['status']
+            status=dict_data['status']
         )
-

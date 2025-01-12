@@ -3,7 +3,7 @@ from ocpp.v16 import call_result
 from ._Base import *
 
 
-class sign_certificate_response(Base_OCPP_Struct_V1_6):
+class GenSignCertificateResponse(Base_OCPP_Struct_V1_6):
 
     @staticmethod
     def generate(
@@ -21,7 +21,7 @@ class sign_certificate_response(Base_OCPP_Struct_V1_6):
             - call_result.SignCertificate
         """
         return call_result.SignCertificate(
-            status = status
+            status=status
         )
 
     @staticmethod
@@ -36,6 +36,5 @@ class sign_certificate_response(Base_OCPP_Struct_V1_6):
             - call_result.SignCertificate
         """
         return call_result.SignCertificate(
-            status = dict_data['status']
+            status=dict_data['status']
         )
-

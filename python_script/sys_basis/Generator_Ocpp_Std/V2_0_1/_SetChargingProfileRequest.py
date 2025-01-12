@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class set_charging_profile_request(Base_OCPP_Struct_V2_0_1):
+class GenSetChargingProfileRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(

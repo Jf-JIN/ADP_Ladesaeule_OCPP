@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class unpublish_firmware_request(Base_OCPP_Struct_V2_0_1):
+class GenUnpublishFirmwareRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -25,8 +25,8 @@ class unpublish_firmware_request(Base_OCPP_Struct_V2_0_1):
             - call.UnpublishFirmware
         """
         return call.UnpublishFirmware(
-            checksum = checksum,
-            custom_data = custom_data
+            checksum=checksum,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -41,7 +41,6 @@ class unpublish_firmware_request(Base_OCPP_Struct_V2_0_1):
             - call.UnpublishFirmware
         """
         return call.UnpublishFirmware(
-            checksum = dict_data['checksum'],
-            custom_data = dict_data.get('customData', None)
+            checksum=dict_data['checksum'],
+            custom_data=dict_data.get('customData', None)
         )
-

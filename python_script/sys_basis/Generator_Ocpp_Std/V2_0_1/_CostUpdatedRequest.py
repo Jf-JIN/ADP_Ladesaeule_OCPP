@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class cost_updated_request(Base_OCPP_Struct_V2_0_1):
+class GenCostUpdatedRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -28,9 +28,9 @@ class cost_updated_request(Base_OCPP_Struct_V2_0_1):
             - call.CostUpdated
         """
         return call.CostUpdated(
-            total_cost = total_cost,
-            transaction_id = transaction_id,
-            custom_data = custom_data
+            total_cost=total_cost,
+            transaction_id=transaction_id,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -45,8 +45,7 @@ class cost_updated_request(Base_OCPP_Struct_V2_0_1):
             - call.CostUpdated
         """
         return call.CostUpdated(
-            total_cost = dict_data['totalCost'],
-            transaction_id = dict_data['transactionId'],
-            custom_data = dict_data.get('customData', None)
+            total_cost=dict_data['totalCost'],
+            transaction_id=dict_data['transactionId'],
+            custom_data=dict_data.get('customData', None)
         )
-

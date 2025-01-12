@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class reset_request(Base_OCPP_Struct_V2_0_1):
+class GenResetRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -29,9 +29,9 @@ class reset_request(Base_OCPP_Struct_V2_0_1):
             - call.Reset
         """
         return call.Reset(
-            type = type,
-            evse_id = evse_id,
-            custom_data = custom_data
+            type=type,
+            evse_id=evse_id,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -46,8 +46,7 @@ class reset_request(Base_OCPP_Struct_V2_0_1):
             - call.Reset
         """
         return call.Reset(
-            type = dict_data['type'],
-            evse_id = dict_data.get('evseId', None),
-            custom_data = dict_data.get('customData', None)
+            type=dict_data['type'],
+            evse_id=dict_data.get('evseId', None),
+            custom_data=dict_data.get('customData', None)
         )
-

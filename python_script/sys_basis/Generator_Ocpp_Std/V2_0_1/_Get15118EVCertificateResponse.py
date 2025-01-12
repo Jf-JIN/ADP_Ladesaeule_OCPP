@@ -3,7 +3,7 @@ from ocpp.v201 import call_result
 from ._Base import *
 
 
-class get15118_ev_certificate_response(Base_OCPP_Struct_V2_0_1):
+class GenGet15118EVCertificateResponse(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -34,10 +34,10 @@ class get15118_ev_certificate_response(Base_OCPP_Struct_V2_0_1):
             - call_result.Get15118EVCertificate
         """
         return call_result.Get15118EVCertificate(
-            status = status,
-            exi_response = exi_response,
-            status_info = status_info,
-            custom_data = custom_data
+            status=status,
+            exi_response=exi_response,
+            status_info=status_info,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -52,12 +52,11 @@ class get15118_ev_certificate_response(Base_OCPP_Struct_V2_0_1):
             - call_result.Get15118EVCertificate
         """
         return call_result.Get15118EVCertificate(
-            status = dict_data['status'],
-            exi_response = dict_data['exiResponse'],
-            status_info = dict_data.get('statusInfo', None),
-            custom_data = dict_data.get('customData', None)
+            status=dict_data['status'],
+            exi_response=dict_data['exiResponse'],
+            status_info=dict_data.get('statusInfo', None),
+            custom_data=dict_data.get('customData', None)
         )
-
 
     @staticmethod
     def get_status_info(
@@ -82,7 +81,7 @@ class get15118_ev_certificate_response(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'reasonCode': reason_code
         }
         if additional_info is not None:
@@ -90,4 +89,3 @@ class get15118_ev_certificate_response(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-

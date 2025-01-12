@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class get_transaction_status_request(Base_OCPP_Struct_V2_0_1):
+class GenGetTransactionStatusRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -25,8 +25,8 @@ class get_transaction_status_request(Base_OCPP_Struct_V2_0_1):
             - call.GetTransactionStatus
         """
         return call.GetTransactionStatus(
-            transaction_id = transaction_id,
-            custom_data = custom_data
+            transaction_id=transaction_id,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -41,7 +41,6 @@ class get_transaction_status_request(Base_OCPP_Struct_V2_0_1):
             - call.GetTransactionStatus
         """
         return call.GetTransactionStatus(
-            transaction_id = dict_data.get('transactionId', None),
-            custom_data = dict_data.get('customData', None)
+            transaction_id=dict_data.get('transactionId', None),
+            custom_data=dict_data.get('customData', None)
         )
-

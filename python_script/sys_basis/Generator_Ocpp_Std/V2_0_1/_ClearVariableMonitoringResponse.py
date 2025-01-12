@@ -3,7 +3,7 @@ from ocpp.v201 import call_result
 from ._Base import *
 
 
-class clear_variable_monitoring_response(Base_OCPP_Struct_V2_0_1):
+class GenClearVariableMonitoringResponse(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -24,8 +24,8 @@ class clear_variable_monitoring_response(Base_OCPP_Struct_V2_0_1):
             - call_result.ClearVariableMonitoring
         """
         return call_result.ClearVariableMonitoring(
-            clear_monitoring_result = clear_monitoring_result,
-            custom_data = custom_data
+            clear_monitoring_result=clear_monitoring_result,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -40,10 +40,9 @@ class clear_variable_monitoring_response(Base_OCPP_Struct_V2_0_1):
             - call_result.ClearVariableMonitoring
         """
         return call_result.ClearVariableMonitoring(
-            clear_monitoring_result = dict_data['clearMonitoringResult'],
-            custom_data = dict_data.get('customData', None)
+            clear_monitoring_result=dict_data['clearMonitoringResult'],
+            custom_data=dict_data.get('customData', None)
         )
-
 
     @staticmethod
     def get_status_info(
@@ -68,7 +67,7 @@ class clear_variable_monitoring_response(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'reasonCode': reason_code
         }
         if additional_info is not None:
@@ -76,7 +75,6 @@ class clear_variable_monitoring_response(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_clear_monitoring_result(
@@ -105,7 +103,7 @@ class clear_variable_monitoring_response(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'status': status,
             'id': id
         }
@@ -114,4 +112,3 @@ class clear_variable_monitoring_response(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-

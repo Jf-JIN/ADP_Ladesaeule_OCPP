@@ -3,7 +3,7 @@ from ocpp.v201 import call_result
 from ._Base import *
 
 
-class get_local_list_version_response(Base_OCPP_Struct_V2_0_1):
+class GenGetLocalListVersionResponse(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -24,8 +24,8 @@ class get_local_list_version_response(Base_OCPP_Struct_V2_0_1):
             - call_result.GetLocalListVersion
         """
         return call_result.GetLocalListVersion(
-            version_number = version_number,
-            custom_data = custom_data
+            version_number=version_number,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -40,7 +40,6 @@ class get_local_list_version_response(Base_OCPP_Struct_V2_0_1):
             - call_result.GetLocalListVersion
         """
         return call_result.GetLocalListVersion(
-            version_number = dict_data['versionNumber'],
-            custom_data = dict_data.get('customData', None)
+            version_number=dict_data['versionNumber'],
+            custom_data=dict_data.get('customData', None)
         )
-

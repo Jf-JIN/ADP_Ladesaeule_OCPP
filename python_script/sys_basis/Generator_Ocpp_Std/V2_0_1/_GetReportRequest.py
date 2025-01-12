@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class get_report_request(Base_OCPP_Struct_V2_0_1):
+class GenGetReportRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -32,10 +32,10 @@ class get_report_request(Base_OCPP_Struct_V2_0_1):
             - call.GetReport
         """
         return call.GetReport(
-            request_id = request_id,
-            component_variable = component_variable,
-            component_criteria = component_criteria,
-            custom_data = custom_data
+            request_id=request_id,
+            component_variable=component_variable,
+            component_criteria=component_criteria,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -50,12 +50,11 @@ class get_report_request(Base_OCPP_Struct_V2_0_1):
             - call.GetReport
         """
         return call.GetReport(
-            request_id = dict_data['requestId'],
-            component_variable = dict_data.get('componentVariable', None),
-            component_criteria = dict_data.get('componentCriteria', None),
-            custom_data = dict_data.get('customData', None)
+            request_id=dict_data['requestId'],
+            component_variable=dict_data.get('componentVariable', None),
+            component_criteria=dict_data.get('componentCriteria', None),
+            custom_data=dict_data.get('customData', None)
         )
-
 
     @staticmethod
     def get_evse(
@@ -78,7 +77,7 @@ class get_report_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'id': id
         }
         if connector_id is not None:
@@ -86,7 +85,6 @@ class get_report_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_component(
@@ -115,7 +113,7 @@ class get_report_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'name': name
         }
         if evse is not None:
@@ -125,7 +123,6 @@ class get_report_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_variable(
@@ -150,7 +147,7 @@ class get_report_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'name': name
         }
         if instance is not None:
@@ -158,7 +155,6 @@ class get_report_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-
 
     @staticmethod
     def get_component_variable(
@@ -183,7 +179,7 @@ class get_report_request(Base_OCPP_Struct_V2_0_1):
         - Returns:
             - temp_dict(dict)
         """
-        temp_dict:dict = {
+        temp_dict: dict = {
             'component': component
         }
         if variable is not None:
@@ -191,4 +187,3 @@ class get_report_request(Base_OCPP_Struct_V2_0_1):
         if custom_data is not None:
             temp_dict['customData'] = custom_data
         return temp_dict
-

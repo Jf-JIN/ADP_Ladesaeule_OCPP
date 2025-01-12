@@ -3,7 +3,7 @@ from ocpp.v16 import call
 from ._Base import *
 
 
-class change_availability_request(Base_OCPP_Struct_V1_6):
+class GenChangeAvailabilityRequest(Base_OCPP_Struct_V1_6):
 
     @staticmethod
     def generate(
@@ -23,8 +23,8 @@ class change_availability_request(Base_OCPP_Struct_V1_6):
             - call.ChangeAvailability
         """
         return call.ChangeAvailability(
-            connector_id = connector_id,
-            type = type
+            connector_id=connector_id,
+            type=type
         )
 
     @staticmethod
@@ -39,7 +39,6 @@ class change_availability_request(Base_OCPP_Struct_V1_6):
             - call.ChangeAvailability
         """
         return call.ChangeAvailability(
-            connector_id = dict_data['connectorId'],
-            type = dict_data['type']
+            connector_id=dict_data['connectorId'],
+            type=dict_data['type']
         )
-

@@ -3,7 +3,7 @@ from ocpp.v16 import call
 from ._Base import *
 
 
-class unlock_connector_request(Base_OCPP_Struct_V1_6):
+class GenUnlockConnectorRequest(Base_OCPP_Struct_V1_6):
 
     @staticmethod
     def generate(
@@ -19,7 +19,7 @@ class unlock_connector_request(Base_OCPP_Struct_V1_6):
             - call.UnlockConnector
         """
         return call.UnlockConnector(
-            connector_id = connector_id
+            connector_id=connector_id
         )
 
     @staticmethod
@@ -34,6 +34,5 @@ class unlock_connector_request(Base_OCPP_Struct_V1_6):
             - call.UnlockConnector
         """
         return call.UnlockConnector(
-            connector_id = dict_data['connectorId']
+            connector_id=dict_data['connectorId']
         )
-

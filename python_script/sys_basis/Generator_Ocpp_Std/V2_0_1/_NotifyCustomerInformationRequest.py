@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class notify_customer_information_request(Base_OCPP_Struct_V2_0_1):
+class GenNotifyCustomerInformationRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -29,7 +29,7 @@ class notify_customer_information_request(Base_OCPP_Struct_V2_0_1):
             - request_id(int): 
                 - The Id of the request. 
             - tbc(bool|None): 
-                - “to be continued” indicator. Indicates whether another part of the monitoringData follows in an upcoming notifyMonitoringReportRequest message. Default value when omitted is false. 
+                - "to be continued" indicator. Indicates whether another part of the monitoringData follows in an upcoming notifyMonitoringReportRequest message. Default value when omitted is false. 
             - custom_data(dict|None): 
                 - This class does not get 'AdditionalProperties = false' in the schema generation, so it can be extended with arbitrary JSON properties to allow adding custom data.
                 - recommended to use `get_custom_data()` to set element
@@ -38,12 +38,12 @@ class notify_customer_information_request(Base_OCPP_Struct_V2_0_1):
             - call.NotifyCustomerInformation
         """
         return call.NotifyCustomerInformation(
-            data = data,
-            seq_no = seq_no,
-            generated_at = generated_at,
-            request_id = request_id,
-            tbc = tbc,
-            custom_data = custom_data
+            data=data,
+            seq_no=seq_no,
+            generated_at=generated_at,
+            request_id=request_id,
+            tbc=tbc,
+            custom_data=custom_data
         )
 
     @staticmethod
@@ -58,11 +58,10 @@ class notify_customer_information_request(Base_OCPP_Struct_V2_0_1):
             - call.NotifyCustomerInformation
         """
         return call.NotifyCustomerInformation(
-            data = dict_data['data'],
-            seq_no = dict_data['seqNo'],
-            generated_at = dict_data['generatedAt'],
-            request_id = dict_data['requestId'],
-            tbc = dict_data.get('tbc', None),
-            custom_data = dict_data.get('customData', None)
+            data=dict_data['data'],
+            seq_no=dict_data['seqNo'],
+            generated_at=dict_data['generatedAt'],
+            request_id=dict_data['requestId'],
+            tbc=dict_data.get('tbc', None),
+            custom_data=dict_data.get('customData', None)
         )
-

@@ -3,7 +3,7 @@ from ocpp.v16 import call_result
 from ._Base import *
 
 
-class clear_charging_profile_response(Base_OCPP_Struct_V1_6):
+class GenClearChargingProfileResponse(Base_OCPP_Struct_V1_6):
 
     @staticmethod
     def generate(
@@ -21,7 +21,7 @@ class clear_charging_profile_response(Base_OCPP_Struct_V1_6):
             - call_result.ClearChargingProfile
         """
         return call_result.ClearChargingProfile(
-            status = status
+            status=status
         )
 
     @staticmethod
@@ -36,6 +36,5 @@ class clear_charging_profile_response(Base_OCPP_Struct_V1_6):
             - call_result.ClearChargingProfile
         """
         return call_result.ClearChargingProfile(
-            status = dict_data['status']
+            status=dict_data['status']
         )
-

@@ -3,7 +3,7 @@ from ocpp.v16 import call
 from ._Base import *
 
 
-class status_notification_request(Base_OCPP_Struct_V1_6):
+class GenStatusNotificationRequest(Base_OCPP_Struct_V1_6):
 
     @staticmethod
     def generate(
@@ -39,13 +39,13 @@ class status_notification_request(Base_OCPP_Struct_V1_6):
             - call.StatusNotification
         """
         return call.StatusNotification(
-            connector_id = connector_id,
-            error_code = error_code,
-            status = status,
-            info = info,
-            timestamp = timestamp,
-            vendor_id = vendor_id,
-            vendor_error_code = vendor_error_code
+            connector_id=connector_id,
+            error_code=error_code,
+            status=status,
+            info=info,
+            timestamp=timestamp,
+            vendor_id=vendor_id,
+            vendor_error_code=vendor_error_code
         )
 
     @staticmethod
@@ -60,12 +60,11 @@ class status_notification_request(Base_OCPP_Struct_V1_6):
             - call.StatusNotification
         """
         return call.StatusNotification(
-            connector_id = dict_data['connectorId'],
-            error_code = dict_data['errorCode'],
-            status = dict_data['status'],
-            info = dict_data.get('info', None),
-            timestamp = dict_data.get('timestamp', None),
-            vendor_id = dict_data.get('vendorId', None),
-            vendor_error_code = dict_data.get('vendorErrorCode', None)
+            connector_id=dict_data['connectorId'],
+            error_code=dict_data['errorCode'],
+            status=dict_data['status'],
+            info=dict_data.get('info', None),
+            timestamp=dict_data.get('timestamp', None),
+            vendor_id=dict_data.get('vendorId', None),
+            vendor_error_code=dict_data.get('vendorErrorCode', None)
         )
-

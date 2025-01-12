@@ -3,7 +3,7 @@ from ocpp.v201 import call
 from ._Base import *
 
 
-class meter_values_request(Base_OCPP_Struct_V2_0_1):
+class GenMeterValuesRequest(Base_OCPP_Struct_V2_0_1):
 
     @staticmethod
     def generate(
@@ -16,7 +16,7 @@ class meter_values_request(Base_OCPP_Struct_V2_0_1):
 
         - 参数: 
             - evse_id(int): 
-                - 请求正文, EVSE ID. Numeric_ Identifier 这包含一个数字 (>0), 指定充电站的 EVSE. “0”(零)用于指定主功率计. 
+                - 请求正文, EVSE ID. Numeric_ Identifier 这包含一个数字 (>0), 指定充电站的 EVSE. "0"(零)用于指定主功率计. 
             - meter_value(list): 
                 - Meter_ Value MeterValuesRequest 和 TransactionEvent 中一个或多个采样值的集合. MeterValue 中的所有采样值均在同一时间点采样. 
                 - 推荐使用 `get_meter_value()` 传入列表元素 或 自行创建列表.
@@ -102,7 +102,7 @@ class meter_values_request(Base_OCPP_Struct_V2_0_1):
 
         - 参数: 
             - unit(str|None): 
-                - 单位. 如果(默认)被测量是“能量”类型, 则默认 =“Wh”. 该字段应使用第 2 部分附录中标准化测量单位列表中的值. 如果该列表中有适用的单位, 否则可能会使用“自定义”单位. 
+                - 单位. 如果(默认)被测量是"能量"类型, 则默认 ="Wh". 该字段应使用第 2 部分附录中标准化测量单位列表中的值. 如果该列表中有适用的单位, 否则可能会使用"自定义"单位. 
                 - 长度范围: [1, 20]
             - multiplier(int|None): 
                 - 乘数, 该值表示以 10 为底的指数. 即乘数 3 表示 10 的 3 次方. 默认值为 0. 
