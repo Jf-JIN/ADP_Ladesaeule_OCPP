@@ -19,4 +19,4 @@ class Log(AnalogDefine):
     GPIO = Logger(log_name='gpio', log_folder_path=APP_WORKSPACE_PATH, log_sub_folder_name='gpio', count_limit=10, exclude_funcs=__EXCLUDE_FUNCS)
     OPT = Logger(log_name='optimize', log_folder_path=APP_WORKSPACE_PATH, log_sub_folder_name='optimize', count_limit=10, exclude_funcs=__EXCLUDE_FUNCS)
     GUI = Logger(log_name='gui_port', log_folder_path=APP_WORKSPACE_PATH, log_sub_folder_name='gui_port', count_limit=10, exclude_funcs=__EXCLUDE_FUNCS)
-    GROUP = LoggerGroup(log_folder_path=APP_WORKSPACE_PATH)
+    GROUP = LoggerGroup(log_folder_path=APP_WORKSPACE_PATH, count_limit=10, size_limit=100)
