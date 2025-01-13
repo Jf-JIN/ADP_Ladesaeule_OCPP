@@ -3,3 +3,7 @@ flask_socketio
 websockets
 wrapt
 ocpp
+requests
+serial
+pymodbus
+pyserial
