@@ -1,0 +1,5 @@
+#wiringpi
+requests
+serial
+pymodbus
+pyserial(pip install pyserial --upgrade)
