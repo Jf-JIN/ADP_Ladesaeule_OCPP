@@ -15,8 +15,6 @@ from _Thread_evse_try_connect import ThreadTryConnection
 
 class EVSEManager(object):
 
-
-
     def __init__(self, RCD: bool, port=GPIOParams.PORT, baudrate=GPIOParams.BAUDRATE, poll_interval=GPIOParams.POLL_INTERVAL, poll_interval_check= GPIOParams.POLL_INTERVAL_CHECK,
                  parity=GPIOParams.PARITY, stopbits=GPIOParams.STOPBITS, bytesize=GPIOParams.BYTESIZE, timeout=GPIOParams.TIMEOUT,):
         """
@@ -400,7 +398,7 @@ class EVSEManager(object):
         """
         self.__send_signal(signal=self.__signal_EVSE_info, error_hint='send_signal_info', log=None, doShowTitle=True, doPrintInfo=True, args=args)
 
-    def __send_signal(self, signal: XSignal, error_hint: str, log= Log.GPIO, doShowTitle: bool = False, doPrintInfo: bool = False, args=[]) -> None:
+    def __send_signal(self, signal: XSignal, error_hint: str, log= Log.GPIO.info, doShowTitle: bool = False, doPrintInfo: bool = False, args=[]) -> None:
         """
         发送/打印 信号
 

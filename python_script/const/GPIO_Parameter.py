@@ -8,10 +8,13 @@ class GPIOParams(AnalogDefine):
     BAUDRATE = 9600
     POLL_INTERVAL = 5 #EVSE状态检查
     POLL_INTERVAL_CHECK = 1 #车辆状态检查
+    POLL_INTERVAL_SHELLY = 1
     PARITY = 'N' # 无校验位
     STOPBITS = 1 # 停止位
     BYTESIZE = 8  # 数据位
     TIMEOUT = 1  # 超时时间
+    SHELLY_IP = "192.168.1.100"#Shelly IP地址
+    SHELLY_EMETER_INDEX = 0 #Shelly电表索引
 
 
 class ResultFlag(AnalogDefine):
