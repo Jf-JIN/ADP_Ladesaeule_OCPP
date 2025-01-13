@@ -2,7 +2,9 @@
 import asyncio
 import time
 import traceback
+from datetime import datetime
 from ocpp.routing import on
+from ocpp.v201.call_result import *
 from const.Charge_Point_Parameters import CP_Params
 from sys_basis.Generator_Ocpp_Std.V2_0_1 import *
 from ._Charge_Point_Base import ChargePointBase
@@ -23,16 +25,16 @@ class ChargePointV201(cpv201, ChargePointBase):
             - `action`(str): 消息类型, 实际是数据类的名称, 例如: `call.Authorize` 中的 `'Authorize'`, 在1.6版本中可能存在数据类名称与消息类型不一致的情况
             - `data`(dict): OCPP消息的字典形式
             - `send_time`(float): 请求发送时间,  这里send 含义是从 OCPP端口 向外部发送的动作
-            - `response_status`(int): 响应状态, 表示响应是否成功收到. 
+            - `result`(int): 响应结果, 表示响应是否成功收到. 
                 - 枚举类 `CP_Params.RESPONSE`
                 - 枚举项: `SUCCESS`, `TIMEOUT`, `ERROR`
         - signal_charge_point_ocpp_response_result(dict): OCPP响应消息结果信号. 向系统反馈消息是否在响应时间内发送出去了, 包含具体发送信息的内容, 与函数返回值不同的一点在于其记录了详细的消息信息, 可以用于后续对发送失败的消息进行处理, 内容为字典, 结构如下
             - `action`(str): 消息类型
             - `data`(dict): OCPP消息的字典形式
             - `send_time`(float): 接收的信号中的时间戳
-            - `status`(int): 发送结果
+            - `result`(int): 发送结果
                 - 枚举类 `CP_Params.RESPONSE_RESULT`
-                - 枚举项: `SUCCESS`, `TIMEOUT`
+                - 枚举项: `SUCCESS`, `TIMEOUT`, `ERROR`
         - signal_charge_point_info(str): 普通信号, 用于信息显示, 调试等
 
     - 属性: 
@@ -55,7 +57,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         super().__init__(id, connection, response_timeout)
         self._init_parameters_in_baseclass()
         self._set_network_buffer_time_in_baseclass(CP_Params.NETWORK_BUFFER_TIME)
-        # self._set_doSendDefaultResponse(True)
+        self._set_doSendDefaultResponse(CP_Params.DO_SEND_DEFAULT_RESPONSE)
 
     async def send_request_message(self, message) -> None:
         """ 
@@ -65,7 +67,7 @@ class ChargePointV201(cpv201, ChargePointBase):
             - `action`(str): 消息类型, 实际是数据类的名称, 例如: `call.Authorize` 中的 `'Authorize'`, 在1.6版本中可能存在数据类名称与消息类型不一致的情况
             - `data`(dict): 解包后的数据
             - `send_time`(float): 请求发送时间
-            - `response_status`(int): 响应状态, 
+            - `result`(int): 响应结果, 
                 - 枚举类 `CP_Params.RESPONSE`
                 - 枚举项: `SUCCESS`, `TIMEOUT`, `ERROR`
 
@@ -86,13 +88,13 @@ class ChargePointV201(cpv201, ChargePointBase):
             # signal_charge_point_ocpp_response 将在此函数发送
             self._unpack_data_and_send_signal_ocpp_response(response, request_time)
         except asyncio.TimeoutError:
-            self._send_signal_info(f'< Error - Request - Response_Timeout> No response was received within {self.response_timeout_in_baseclass} seconds.')
+            self._send_signal_info(f'< Error - Request - Response_Timeout - {message.__class__.__name__} > No response was received within {self.response_timeout_in_baseclass} seconds.')
             self.signal_charge_point_ocpp_response.emit(
                 {
                     'action': message.__class__.__name__,
                     'data': {},
                     'send_time': request_time,
-                    'response_status': CP_Params.RESPONSE.TIMEOUT,
+                    'result': CP_Params.RESPONSE.TIMEOUT,
                 }
             )
         except Exception:
@@ -102,7 +104,7 @@ class ChargePointV201(cpv201, ChargePointBase):
                     'action': message.__class__.__name__,
                     'data': {},
                     'send_time': request_time,
-                    'response_status': CP_Params.RESPONSE.ERROR,
+                    'result': CP_Params.RESPONSE.ERROR,
                 }
             )
 
@@ -114,7 +116,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         certificate: str | None = None,
         hash_data: list | None = None
     ) -> call_result.Authorize:
-        default_message = GenAuthorizeResponse.generate(
+        default_message: Authorize = GenAuthorizeResponse.generate(
             id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
         )
         return await self._wait_for_result(Action.authorize, default_message)
@@ -126,10 +128,10 @@ class ChargePointV201(cpv201, ChargePointBase):
         reason: str | BootReasonType,
         custom_data: dict | None = None
     ) -> call_result.BootNotification:
-        default_message = GenBootNotificationResponse.generate(
+        default_message: BootNotification = GenBootNotificationResponse.generate(
             current_time=str(time.time()),
-            interval=1,
-            status=RegistrationStatusType.accepted
+            interval=10,
+            status=RegistrationStatusType.rejected
         )
         return await self._wait_for_result(Action.boot_notification, default_message)
 
@@ -139,8 +141,8 @@ class ChargePointV201(cpv201, ChargePointBase):
         reservation_id: int,
         custom_data: dict | None = None
     ) -> call_result.CancelReservation:
-        default_message = GenCancelReservationResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: CancelReservation = GenCancelReservationResponse.generate(
+            status=CancelReservationStatusType.rejected
         )
         return await self._wait_for_result(Action.cancel_reservation, default_message)
 
@@ -151,8 +153,8 @@ class ChargePointV201(cpv201, ChargePointBase):
         certificate_type: str | CertificateSigningUseType | None = None,
         custom_data: dict | None = None
     ) -> call_result.CertificateSigned:
-        default_message = GenCertificateSignedResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: CertificateSigned = GenCertificateSignedResponse.generate(
+            status=CertificateSignedStatusType.rejected
         )
         return await self._wait_for_result(Action.certificate_signed, default_message)
 
@@ -163,8 +165,8 @@ class ChargePointV201(cpv201, ChargePointBase):
         evse: dict | None = None,
         custom_data: dict | None = None
     ) -> call_result.ChangeAvailability:
-        default_message = GenCertificateSignedResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: CertificateSigned = GenCertificateSignedResponse.generate(
+            status=ChangeAvailabilityStatusType.rejected
         )
         return await self._wait_for_result(Action.change_availability, default_message)
 
@@ -173,8 +175,8 @@ class ChargePointV201(cpv201, ChargePointBase):
         self,
         custom_data: dict | None = None
     ) -> call_result.ClearCache:
-        default_message = GenClearCacheResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: ClearCache = GenClearCacheResponse.generate(
+            status=ClearCacheStatusType.rejected
         )
         return await self._wait_for_result(Action.clear_cache, default_message)
 
@@ -185,8 +187,8 @@ class ChargePointV201(cpv201, ChargePointBase):
         charging_profile_criteria: dict | None = None,
         custom_data: dict | None = None
     ) -> call_result.ClearChargingProfile:
-        default_message = GenClearChargingProfileResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: ClearChargingProfile = GenClearChargingProfileResponse.generate(
+            status=ClearChargingProfileStatusType.unknown
         )
         return await self._wait_for_result(Action.clear_charging_profile, default_message)
 
@@ -196,8 +198,8 @@ class ChargePointV201(cpv201, ChargePointBase):
         id: int,
         custom_data: dict | None = None
     ) -> call_result.ClearDisplayMessage:
-        default_message = GenClearDisplayMessageResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: ClearDisplayMessage = GenClearDisplayMessageResponse.generate(
+            status=ClearMessageStatusType.unknown
         )
         return await self._wait_for_result(Action.clear_display_message, default_message)
 
@@ -208,8 +210,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         evse_id: int | None = None,
         custom_data: dict | None = None
     ) -> call_result.ClearedChargingLimit:
-        default_message = GenClearedChargingLimitResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: ClearedChargingLimit = GenClearedChargingLimitResponse.generate(
         )
         return await self._wait_for_result(Action.cleared_charging_limit, default_message)
 
@@ -219,8 +220,13 @@ class ChargePointV201(cpv201, ChargePointBase):
         id: list,
         custom_data: dict | None = None
     ) -> call_result.ClearVariableMonitoring:
-        default_message = GenClearVariableMonitoringResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: ClearVariableMonitoring = GenClearVariableMonitoringResponse.generate(
+            clear_monitoring_result=[
+                GenClearVariableMonitoringResponse.get_clear_monitoring_result(
+                    status=ClearMonitoringStatusType.rejected,
+                    id=id
+                )
+            ]
         )
         return await self._wait_for_result(Action.clear_variable_monitoring, default_message)
 
@@ -231,8 +237,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         transaction_id: str,
         custom_data: dict | None = None
     ) -> call_result.CostUpdated:
-        default_message = GenCostUpdatedResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: CostUpdated = GenCostUpdatedResponse.generate(
         )
         return await self._wait_for_result(Action.cost_updated, default_message)
 
@@ -247,8 +252,8 @@ class ChargePointV201(cpv201, ChargePointBase):
         customer_identifier: str | None = None,
         custom_data: dict | None = None
     ) -> call_result.CustomerInformation:
-        default_message = GenCustomerInformationResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: CustomerInformation = GenCustomerInformationResponse.generate(
+            status=CustomerInformationStatusType.rejected
         )
         return await self._wait_for_result(Action.customer_information, default_message)
 
@@ -260,8 +265,8 @@ class ChargePointV201(cpv201, ChargePointBase):
         data=None,
         custom_data: dict | None = None
     ) -> call_result.DataTransfer:
-        default_message = GenDataTransferResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: DataTransfer = GenDataTransferResponse.generate(
+            status=DataTransferStatusType.rejected
         )
         return await self._wait_for_result(Action.data_transfer, default_message)
 
@@ -271,8 +276,8 @@ class ChargePointV201(cpv201, ChargePointBase):
         certificate_hash_data: dict,
         custom_data: dict | None = None
     ) -> call_result.DeleteCertificate:
-        default_message = GenDeleteCertificateResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: DeleteCertificate = GenDeleteCertificateResponse.generate(
+            status=DeleteCertificateStatusType.failed
         )
         return await self._wait_for_result(Action.delete_certificate, default_message)
 
@@ -283,8 +288,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         request_id: int | None = None,
         custom_data: dict | None = None
     ) -> call_result.FirmwareStatusNotification:
-        default_message = GenFirmwareStatusNotificationResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: FirmwareStatusNotification = GenFirmwareStatusNotificationResponse.generate(
         )
         return await self._wait_for_result(Action.firmware_status_notification, default_message)
 
@@ -295,8 +299,8 @@ class ChargePointV201(cpv201, ChargePointBase):
         report_base: str | ReportBaseType,
         custom_data: dict | None = None
     ) -> call_result.GetBaseReport:
-        default_message = GenGetBaseReportResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: GetBaseReport = GenGetBaseReportResponse.generate(
+            status=GenericDeviceModelStatusType.rejected
         )
         return await self._wait_for_result(Action.get_base_report, default_message)
 
@@ -306,8 +310,8 @@ class ChargePointV201(cpv201, ChargePointBase):
         ocsp_request_data: dict,
         custom_data: dict | None = None
     ) -> call_result.GetCertificateStatus:
-        default_message = GenGetCertificateStatusResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: GetCertificateStatus = GenGetCertificateStatusResponse.generate(
+            status=GetCertificateStatusType.failed
         )
         return await self._wait_for_result(Action.get_certificate_status, default_message)
 
@@ -319,8 +323,8 @@ class ChargePointV201(cpv201, ChargePointBase):
         evse_id: int | None = None,
         custom_data: dict | None = None
     ) -> call_result.GetChargingProfiles:
-        default_message = GenGetChargingProfilesResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: GetChargingProfiles = GenGetChargingProfilesResponse.generate(
+            status=GetChargingProfileStatusType.no_profiles
         )
         return await self._wait_for_result(Action.get_charging_profiles, default_message)
 
@@ -332,8 +336,8 @@ class ChargePointV201(cpv201, ChargePointBase):
         charging_rate_unit: str | ChargingRateUnitType | None = None,
         custom_data: dict | None = None
     ) -> call_result.GetCompositeSchedule:
-        default_message = GenGetCompositeScheduleResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: GetCompositeSchedule = GenGetCompositeScheduleResponse.generate(
+            status=GenericStatusType.rejected
         )
         return await self._wait_for_result(Action.get_composite_schedule, default_message)
 
@@ -346,8 +350,8 @@ class ChargePointV201(cpv201, ChargePointBase):
         state: str | MessageStateType | None = None,
         custom_data: dict | None = None
     ) -> call_result.GetDisplayMessages:
-        default_message = GenGetDisplayMessagesResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: GetDisplayMessages = GenGetDisplayMessagesResponse.generate(
+            status=GetDisplayMessagesStatusType.unknown
         )
         return await self._wait_for_result(Action.get_display_messages, default_message)
 
@@ -357,8 +361,8 @@ class ChargePointV201(cpv201, ChargePointBase):
         certificate_type: list | None = None,
         custom_data: dict | None = None
     ) -> call_result.GetInstalledCertificateIds:
-        default_message = GenGetInstalledCertificateIdsResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: GetInstalledCertificateIds = GenGetInstalledCertificateIdsResponse.generate(
+            status=GetInstalledCertificateStatusType.notFound
         )
         return await self._wait_for_result(Action.get_installed_certificate_ids, default_message)
 
@@ -367,8 +371,8 @@ class ChargePointV201(cpv201, ChargePointBase):
         self,
         custom_data: dict | None = None
     ) -> call_result.GetLocalListVersion:
-        default_message = GenGetLocalListVersionResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: GetLocalListVersion = GenGetLocalListVersionResponse.generate(
+            version_number=201
         )
         return await self._wait_for_result(Action.get_local_list_version, default_message)
 
@@ -382,8 +386,8 @@ class ChargePointV201(cpv201, ChargePointBase):
         retry_interval: int | None = None,
         custom_data: dict | None = None
     ) -> call_result.GetLog:
-        default_message = GenGetLogResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: GetLog = GenGetLogResponse.generate(
+            status=LogStatusType.rejected
         )
         return await self._wait_for_result(Action.get_log, default_message)
 
@@ -395,8 +399,8 @@ class ChargePointV201(cpv201, ChargePointBase):
         monitoring_criteria: list | None = None,
         custom_data: dict | None = None
     ) -> call_result.GetMonitoringReport:
-        default_message = GenGetMonitoringReportResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: GetMonitoringReport = GenGetMonitoringReportResponse.generate(
+            status=GenericDeviceModelStatusType.rejected
         )
         return await self._wait_for_result(Action.get_monitoring_report, default_message)
 
@@ -408,8 +412,8 @@ class ChargePointV201(cpv201, ChargePointBase):
         component_criteria: list | None = None,
         custom_data: dict | None = None
     ) -> call_result.GetReport:
-        default_message = GenGetReportResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: GetReport = GenGetReportResponse.generate(
+            status=GenericDeviceModelStatusType.rejected
         )
         return await self._wait_for_result(Action.get_report, default_message)
 
@@ -419,8 +423,8 @@ class ChargePointV201(cpv201, ChargePointBase):
         transaction_id: str | None = None,
         custom_data: dict | None = None
     ) -> call_result.GetTransactionStatus:
-        default_message = GenGetTransactionStatusResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: GetTransactionStatus = GenGetTransactionStatusResponse.generate(
+            messages_in_queue=True
         )
         return await self._wait_for_result(Action.get_transaction_status, default_message)
 
@@ -430,8 +434,10 @@ class ChargePointV201(cpv201, ChargePointBase):
         get_variable_data: list,
         custom_data: dict | None = None
     ) -> call_result.GetVariables:
-        default_message = GenGetVariablesResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: GetVariables = GenGetVariablesResponse.generate(
+            get_variable_result=[
+                GenGetVariablesResponse.get_get_variable_result(attribute_status=GetVariableStatusType.rejected)
+            ]
         )
         return await self._wait_for_result(Action.get_variables, default_message)
 
@@ -440,8 +446,8 @@ class ChargePointV201(cpv201, ChargePointBase):
         self,
         custom_data: dict | None = None
     ) -> call_result.Heartbeat:
-        default_message = GenHeartbeatResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: Heartbeat = GenHeartbeatResponse.generate(
+            current_time=datetime.now()  # check format, there is a function in tools.data_gene.DataGene.
         )
         return await self._wait_for_result(Action.heartbeat, default_message)
 
@@ -452,8 +458,8 @@ class ChargePointV201(cpv201, ChargePointBase):
         certificate: str,
         custom_data: dict | None = None
     ) -> call_result.InstallCertificate:
-        default_message = GenInstallCertificateResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: InstallCertificate = GenInstallCertificateResponse.generate(
+            status=InstallCertificateStatusType.rejected
         )
         return await self._wait_for_result(Action.install_certificate, default_message)
 
@@ -464,8 +470,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         request_id: int | None = None,
         custom_data: dict | None = None
     ) -> call_result.LogStatusNotification:
-        default_message = GenLogStatusNotificationResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: LogStatusNotification = GenLogStatusNotificationResponse.generate(
         )
         return await self._wait_for_result(Action.log_status_notification, default_message)
 
@@ -476,8 +481,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         meter_value: list,
         custom_data: dict | None = None
     ) -> call_result.MeterValues:
-        default_message = GenMeterValuesResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: MeterValues = GenMeterValuesResponse.generate(
         )
         return await self._wait_for_result(Action.meter_values, default_message)
 
@@ -489,8 +493,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         evse_id: int | None = None,
         custom_data: dict | None = None
     ) -> call_result.NotifyChargingLimit:
-        default_message = GenNotifyChargingLimitResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: NotifyChargingLimit = GenNotifyChargingLimitResponse.generate(
         )
         return await self._wait_for_result(Action.notify_charging_limit, default_message)
 
@@ -504,8 +507,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         tbc: bool | None = None,
         custom_data: dict | None = None
     ) -> call_result.NotifyCustomerInformation:
-        default_message = GenNotifyCustomerInformationResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: NotifyCustomerInformation = GenNotifyCustomerInformationResponse.generate(
         )
         return await self._wait_for_result(Action.notify_customer_information, default_message)
 
@@ -517,8 +519,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         tbc: bool | None = None,
         custom_data: dict | None = None
     ) -> call_result.NotifyDisplayMessages:
-        default_message = GenNotifyDisplayMessagesResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: NotifyDisplayMessages = GenNotifyDisplayMessagesResponse.generate(
         )
         return await self._wait_for_result(Action.notify_display_messages, default_message)
 
@@ -530,7 +531,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         max_schedule_tuples: int | None = None,
         custom_data: dict | None = None
     ) -> call_result.NotifyEVChargingNeeds:
-        default_message = GenNotifyEVChargingNeedsResponse.generate(
+        default_message: NotifyEVChargingNeeds = GenNotifyEVChargingNeedsResponse.generate(
             status=NotifyEVChargingNeedsStatusType.rejected
         )
         return await self._wait_for_result(Action.NotifyEVChargingNeeds, default_message)
@@ -543,8 +544,8 @@ class ChargePointV201(cpv201, ChargePointBase):
         evse_id: int,
         custom_data: dict | None = None
     ) -> call_result.NotifyEVChargingSchedule:
-        default_message = GenNotifyEVChargingScheduleResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: NotifyEVChargingSchedule = GenNotifyEVChargingScheduleResponse.generate(
+            status=GenericStatusType.rejected
         )
         return await self._wait_for_result(Action.notify_ev_charging_schedule, default_message)
 
@@ -557,8 +558,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         tbc: bool | None = None,
         custom_data: dict | None = None
     ) -> call_result.NotifyEvent:
-        default_message = GenNotifyEventResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: NotifyEvent = GenNotifyEventResponse.generate(
         )
         return await self._wait_for_result(Action.notify_event, default_message)
 
@@ -572,8 +572,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         tbc: bool | None = None,
         custom_data: dict | None = None
     ) -> call_result.NotifyMonitoringReport:
-        default_message = GenNotifyMonitoringReportResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: NotifyMonitoringReport = GenNotifyMonitoringReportResponse.generate(
         )
         return await self._wait_for_result(Action.notify_monitoring_report, default_message)
 
@@ -587,8 +586,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         tbc: bool | None = None,
         custom_data: dict | None = None
     ) -> call_result.NotifyReport:
-        default_message = GenNotifyReportResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: NotifyReport = GenNotifyReportResponse.generate(
         )
         return await self._wait_for_result(Action.notify_report, default_message)
 
@@ -602,8 +600,8 @@ class ChargePointV201(cpv201, ChargePointBase):
         retry_interval: int | None = None,
         custom_data: dict | None = None
     ) -> call_result.PublishFirmware:
-        default_message = GenPublishFirmwareResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: PublishFirmware = GenPublishFirmwareResponse.generate(
+            status=GenericStatusType.rejected
         )
         return await self._wait_for_result(Action.publish_firmware, default_message)
 
@@ -615,8 +613,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         request_id: int | None = None,
         custom_data: dict | None = None
     ) -> call_result.PublishFirmwareStatusNotification:
-        default_message = GenPublishFirmwareStatusNotificationResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: PublishFirmwareStatusNotification = GenPublishFirmwareStatusNotificationResponse.generate(
         )
         return await self._wait_for_result(Action.publish_firmware_status_notification, default_message)
 
@@ -630,8 +627,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         tbc: bool | None = None,
         custom_data: dict | None = None
     ) -> call_result.ReportChargingProfiles:
-        default_message = GenReportChargingProfilesResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: ReportChargingProfiles = GenReportChargingProfilesResponse.generate(
         )
         return await self._wait_for_result(Action.report_charging_profiles, default_message)
 
@@ -645,8 +641,8 @@ class ChargePointV201(cpv201, ChargePointBase):
         charging_profile: dict | None = None,
         custom_data: dict | None = None
     ) -> call_result.RequestStartTransaction:
-        default_message = GenRequestStartTransactionResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: RequestStartTransaction = GenRequestStartTransactionResponse.generate(
+            status=RequestStartStopStatusType.rejected
         )
         return await self._wait_for_result(Action.request_start_transaction, default_message)
 
@@ -656,8 +652,8 @@ class ChargePointV201(cpv201, ChargePointBase):
         transaction_id: str,
         custom_data: dict | None = None
     ) -> call_result.RequestStopTransaction:
-        default_message = GenRequestStopTransactionResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: RequestStopTransaction = GenRequestStopTransactionResponse.generate(
+            status=RequestStartStopStatusType.rejected
         )
         return await self._wait_for_result(Action.request_stop_transaction, default_message)
 
@@ -668,8 +664,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         reservation_update_status: str | ReservationUpdateStatusType,
         custom_data: dict | None = None
     ) -> call_result.ReservationStatusUpdate:
-        default_message = GenReservationStatusUpdateResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: ReservationStatusUpdate = GenReservationStatusUpdateResponse.generate(
         )
         return await self._wait_for_result(Action.reservation_status_update, default_message)
 
@@ -684,8 +679,8 @@ class ChargePointV201(cpv201, ChargePointBase):
         group_id_token: dict | None = None,
         custom_data: dict | None = None
     ) -> call_result.ReserveNow:
-        default_message = GenReserveNowResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: ReserveNow = GenReserveNowResponse.generate(
+            status=ReserveNowStatusType.rejected
         )
         return await self._wait_for_result(Action.reserve_now, default_message)
 
@@ -696,8 +691,8 @@ class ChargePointV201(cpv201, ChargePointBase):
         evse_id: int | None = None,
         custom_data: dict | None = None
     ) -> call_result.Reset:
-        default_message = GenResetResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: Reset = GenResetResponse.generate(
+            status=ResetStatusType.rejected
         )
         return await self._wait_for_result(Action.reset, default_message)
 
@@ -709,8 +704,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         tech_info: str | None = None,
         custom_data: dict | None = None
     ) -> call_result.SecurityEventNotification:
-        default_message = GenSecurityEventNotificationResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: SecurityEventNotification = GenSecurityEventNotificationResponse.generate(
         )
         return await self._wait_for_result(Action.security_event_notification, default_message)
 
@@ -722,8 +716,8 @@ class ChargePointV201(cpv201, ChargePointBase):
         local_authorization_list: list | None = None,
         custom_data: dict | None = None
     ) -> call_result.SendLocalList:
-        default_message = GenSendLocalListResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: SendLocalList = GenSendLocalListResponse.generate(
+            status=SendLocalListStatusType.failed
         )
         return await self._wait_for_result(Action.send_local_list, default_message)
 
@@ -734,7 +728,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         charging_profile: dict,
         custom_data: dict | None = None
     ) -> call_result.SetChargingProfile:
-        default_message = GenSetChargingProfileResponse.generate(
+        default_message: SetChargingProfile = GenSetChargingProfileResponse.generate(
             status=ChargingProfileStatus.rejected
         )
         return await self._wait_for_result(Action.SetChargingProfile, default_message)
@@ -745,8 +739,8 @@ class ChargePointV201(cpv201, ChargePointBase):
         message: dict,
         custom_data: dict | None = None
     ) -> call_result.SetDisplayMessage:
-        default_message = GenSetDisplayMessageResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: SetDisplayMessage = GenSetDisplayMessageResponse.generate(
+            status=DisplayMessageStatusType.rejected
         )
         return await self._wait_for_result(Action.set_display_message, default_message)
 
@@ -756,11 +750,10 @@ class ChargePointV201(cpv201, ChargePointBase):
         monitoring_base: str | MonitorBaseType,
         custom_data: dict | None = None
     ) -> call_result.SetMonitoringBase:
-        default_message = GenSetMonitoringBaseResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: SetMonitoringBase = GenSetMonitoringBaseResponse.generate(
+            status=GenericDeviceModelStatusType.rejected
         )
-        return await self._wait_for_result(Action.set_monitoring_base, default_message)\
-
+        return await self._wait_for_result(Action.set_monitoring_base, default_message)
 
     @on(Action.set_monitoring_level)
     async def _on_set_monitoring_level_request(
@@ -768,8 +761,8 @@ class ChargePointV201(cpv201, ChargePointBase):
         severity: int,
         custom_data: dict | None = None
     ) -> call_result.SetMonitoringLevel:
-        default_message = GenSetMonitoringLevelResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: SetMonitoringLevel = GenSetMonitoringLevelResponse.generate(
+            status=GenericStatusType.rejected
         )
         return await self._wait_for_result(Action.set_monitoring_level, default_message)
 
@@ -780,8 +773,8 @@ class ChargePointV201(cpv201, ChargePointBase):
         connection_data: dict,
         custom_data: dict | None = None
     ) -> call_result.SetNetworkProfile:
-        default_message = GenSetNetworkProfileResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: SetNetworkProfile = GenSetNetworkProfileResponse.generate(
+            status=SetNetworkProfileStatusType.rejected
         )
         return await self._wait_for_result(Action.set_network_profile, default_message)
 
@@ -791,8 +784,8 @@ class ChargePointV201(cpv201, ChargePointBase):
         set_monitoring_data: list,
         custom_data: dict | None = None
     ) -> call_result.SetVariableMonitoring:
-        default_message = GenSetVariableMonitoringResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: SetVariableMonitoring = GenSetVariableMonitoringResponse.generate(
+            set_monitoring_result=[]
         )
         return await self._wait_for_result(Action.set_variable_monitoring, default_message)
 
@@ -802,11 +795,10 @@ class ChargePointV201(cpv201, ChargePointBase):
         set_variable_data: list,
         custom_data: dict | None = None
     ) -> call_result.SetVariables:
-        default_message = GenSetVariablesResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: SetVariables = GenSetVariablesResponse.generate(
+            set_variable_result=[]
         )
-        return await self._wait_for_result(Action.set_variables, default_message)\
-
+        return await self._wait_for_result(Action.set_variables, default_message)
 
     @on(Action.sign_certificate)
     async def _on_sign_certificate_request(
@@ -815,8 +807,8 @@ class ChargePointV201(cpv201, ChargePointBase):
         certificate_type: str | CertificateSigningUseType | None = None,
         custom_data: dict | None = None
     ) -> call_result.SignCertificate:
-        default_message = GenSignCertificateResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: SignCertificate = GenSignCertificateResponse.generate(
+            status=GenericStatusType.rejected
         )
         return await self._wait_for_result(Action.sign_certificate, default_message)
 
@@ -829,8 +821,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         connector_id: int,
         custom_data: dict | None = None
     ) -> call_result.StatusNotification:
-        default_message = GenStatusNotificationResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: StatusNotification = GenStatusNotificationResponse.generate(
         )
         return await self._wait_for_result(Action.status_notification, default_message)
 
@@ -851,8 +842,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         evse: dict | None = None,
         id_token: dict | None = None
     ) -> call_result.TransactionEvent:
-        default_message = GenTransactionEventResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: TransactionEvent = GenTransactionEventResponse.generate(
         )
         return await self._wait_for_result(Action.transaction_event, default_message)
 
@@ -863,8 +853,8 @@ class ChargePointV201(cpv201, ChargePointBase):
         evse: dict | None = None,
         custom_data: dict | None = None
     ) -> call_result.TriggerMessage:
-        default_message = GenTriggerMessageResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: TriggerMessage = GenTriggerMessageResponse.generate(
+            status=TriggerMessageStatusType.rejected
         )
         return await self._wait_for_result(Action.trigger_message, default_message)
 
@@ -875,11 +865,10 @@ class ChargePointV201(cpv201, ChargePointBase):
         connector_id: int,
         custom_data: dict | None = None
     ) -> call_result.UnlockConnector:
-        default_message = GenUnlockConnectorResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: UnlockConnector = GenUnlockConnectorResponse.generate(
+            status=UnlockStatusType.unlock_failed
         )
-        return await self._wait_for_result(Action.unlock_connector, default_message)\
-
+        return await self._wait_for_result(Action.unlock_connector, default_message)
 
     @on(Action.unpublish_firmware)
     async def _on_unpublish_firmware_request(
@@ -887,8 +876,8 @@ class ChargePointV201(cpv201, ChargePointBase):
         checksum: str,
         custom_data: dict | None = None
     ) -> call_result.UnpublishFirmware:
-        default_message = GenUnpublishFirmwareResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: UnpublishFirmware = GenUnpublishFirmwareResponse.generate(
+            status=UnpublishFirmwareStatusType.no_firmware
         )
         return await self._wait_for_result(Action.unpublish_firmware, default_message)
 
@@ -901,7 +890,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         retry_interval: int | None = None,
         custom_data: dict | None = None
     ) -> call_result.UpdateFirmware:
-        default_message = GenUpdateFirmwareResponse.generate(
-            id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
+        default_message: UpdateFirmware = GenUpdateFirmwareResponse.generate(
+            status=UpdateFirmwareStatusType.rejected
         )
         return await self._wait_for_result(Action.update_firmware, default_message)
