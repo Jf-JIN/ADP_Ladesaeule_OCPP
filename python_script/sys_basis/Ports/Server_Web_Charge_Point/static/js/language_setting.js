@@ -27,6 +27,12 @@ function apply_language_package (language_package) {
             if (key == 'username' || key == 'password') {
                 element.placeholder = value;
             }
+            else if (element.tagName == 'SELECT') {
+                element.value = value;
+            }
+            else if (element.tagName == 'INPUT') {
+                element.value = value;
+            }
             else {
                 element.textContent = value;
             }

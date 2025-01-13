@@ -43,7 +43,7 @@ body {
     margin-left: 30px;
 }
 
-#logout{
+#logout {
     margin-left: 60px;
     width: var(--time_font_size);
     height: var(--time_font_size);
@@ -64,7 +64,7 @@ body {
     /* display: inline-block; */
 }
 
-#language_selection svg{
+#language_selection svg {
     width: calc(2*var(--time_font_size));
     height: var(--time_font_size);
     cursor: pointer;
@@ -190,4 +190,400 @@ body {
     padding: 10px;
     border: 5px solid var(--console_border_color);
     border-radius: 10px;
+}
+
+
+#page_home {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* h1#welcome_title {
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+} */
+
+/* p#welcome_text {
+    font-size: 16px;
+    color: #666;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+input[type="button"] {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+} */
+
+/* input[type="button"]:hover {
+    background-color: #45a049;
+}
+
+#charging_settings {
+    margin-top: 20px;
+}
+
+#charging_settings div {
+    margin-bottom: 15px;
+}
+
+label {
+    font-size: 14px;
+    color: #333;
+    margin-right: 10px;
+} */
+
+/* input[type="text"],
+select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+} */
+
+/* #charging_settings_blank {
+    height: 20px;
+} */
+
+/* #save_settings {
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#save_settings:hover {
+    background-color: #007bb5;
+} */
+
+h1#welcome_title {
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+#welcome_text {
+    font-size: 1.1em;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+input[type="button"] {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px 0;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+input[type="button"]:hover {
+    background-color: #45a049;
+}
+
+#charging_settings {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #e9f7e9;
+    border-radius: 8px;
+}
+
+#charging_settings div {
+    margin-bottom: 15px;
+}
+
+label {
+    font-size: 1.1em;
+    margin-right: 10px;
+}
+
+input[type="text"],
+input[type="time"],
+select {
+    padding: 8px;
+    font-size: 1em;
+    width: 100%;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input[type="text"]:focus,
+input[type="time"]:focus,
+select:focus {
+    border-color: #4CAF50;
+}
+
+#charging_display {
+    margin-top: 30px;
+}
+
+#charging_display div {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+#charging_display span {
+    display: inline-block;
+    width: 200px;
+    text-align: left;
+}
+
+#charging_display span#home_charging_status,
+#charging_display span#home_current_current {
+    font-weight: bold;
+}
+
+#charging_display span[id$="_value"] {
+    font-weight: normal;
+    color: #555;
+}
+
+#charging_settings_blank {
+    height: 20px;
+}
+
+#save_settings {
+    background-color: #2196F3;
+}
+
+#save_settings:hover {
+    background-color: #0b7dda;
+}
+
+#charging_settings {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+}
+
+/* 每个设置项的容器 */
+#charging_settings div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+/* 标签样式 */
+label {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-right: 15px;
+    width: 200px;
+    text-align: right;
+    color: #333;
+}
+
+/* 输入框和选择框的样式 */
+input[type="text"],
+input[type="time"],
+select {
+    padding: 10px;
+    font-size: 1em;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    /* 确保输入框宽度适应容器 */
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="time"]:focus,
+select:focus {
+    border-color: #4CAF50;
+    background-color: #f1fdf0;
+    /* 聚焦时改变背景色 */
+}
+
+/* 输入框和选择框的外边距 */
+input[type="text"],
+input[type="time"],
+select {
+    margin-top: 5px;
+}
+
+/* 保存按钮样式 */
+#save_settings {
+    display: inline-block;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 1.1em;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#save_settings:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+    /* 悬停时放大效果 */
+}
+
+#save_settings:active {
+    transform: scale(0.98);
+    /* 按下时缩小效果 */
+}
+
+/* 空白区域样式 */
+#charging_settings_blank {
+    height: 20px;
+}
+
+/* 选择框项样式 */
+select {
+    background-color: #fafafa;
+    font-size: 1em;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+select:focus {
+    background-color: #f1fdf0;
+}
+
+/* 样式改进 */
+#charging_settings div:last-child {
+    display: flex;
+    justify-content: center;
+}
+
+/* 标签对齐 */
+#charging_settings div label {
+    width: 200px;
+    text-align: left;
+    margin-right: 20px;
+}
+
+
+/* 充电设置区块 */
+#charging_settings {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+}
+
+/* 每个设置项的容器 */
+#charging_settings div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+/* 标签样式 */
+label {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-right: 15px;
+    width: 200px;
+    text-align: right;
+    color: #333;
+}
+
+/* 输入框和选择框的样式 */
+input[type="text"],
+input[type="time"],
+select {
+    padding: 10px;
+    font-size: 1em;
+    width: 100%;
+    /* 确保宽度适配容器 */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    /* 使宽度包含边框和内边距 */
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+/* 确保选择框和输入框对齐 */
+select {
+    background-color: #fafafa;
+}
+
+input[type="text"]:focus,
+input[type="time"]:focus,
+select:focus {
+    border-color: #4CAF50;
+    background-color: #f1fdf0;
+    /* 聚焦时改变背景色 */
+}
+
+/* 输入框和选择框的外边距 */
+input[type="text"],
+input[type="time"],
+select {
+    margin-top: 5px;
+}
+
+/* 保存按钮样式 */
+#save_settings {
+    display: inline-block;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 1.1em;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#save_settings:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+    /* 悬停时放大效果 */
+}
+
+#save_settings:active {
+    transform: scale(0.98);
+    /* 按下时缩小效果 */
+}
+
+/* 空白区域样式 */
+#charging_settings_blank {
+    height: 20px;
+}
+
+/* 样式改进 */
+#charging_settings div:last-child {
+    display: flex;
+    justify-content: center;
+}
+
+/* 标签对齐 */
+#charging_settings div label {
+    width: 200px;
+    text-align: left;
+    margin-right: 20px;
 }
