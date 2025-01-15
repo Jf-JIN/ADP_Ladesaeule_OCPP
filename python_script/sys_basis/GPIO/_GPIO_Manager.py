@@ -14,12 +14,16 @@ class GPIOManager:
     -   __signal_GPIO_EVSE_failure: EVSE故障
     -   __signal_GPIO_vehicle_state: 车辆状态
     -   __signal_GPIO_Shelly_error: Shelly故障
-    -   __signal_GPIO_Shelly_power: Shelly功率
-    -   __signal_GPIO_Shelly_power_factor: Shelly功率因数
-    -   __signal_GPIO_Shelly_current: Shelly电流
-    -   __signal_GPIO_Shelly_voltage: Shelly电压
-    -   __signal_GPIO_Shelly_total: Shelly已充电Wh数
-    -   __signal_GPIO_Shelly_total_returned: Shelly返回充电桩的总能量
+    -   __signal_GPIO_Shelly_data: Shelly数据,格式如下,列表的0,1,2位代表第1,2,3个电流钳数据
+        {
+            'power': [0, 10, 20],
+            'pf': [0, 0.95, 0.9],
+            'current': [0, 5, 10],
+            'voltage': [0, 220, 215],
+            'is_valid': [True, True, True],
+            'total': [0, 100, 200],
+            'total_returned': [0, 5, 10]
+        }
     方法:
     - set_current: 设置EVSE输出电流
     """
@@ -32,24 +36,15 @@ class GPIOManager:
         self.__signal_GPIO_EVSE_failure = XSignal()
         self.__signal_GPIO_vehicle_state = XSignal()
         self.__signal_GPIO_Shelly_error = XSignal()
-        self.__signal_GPIO_Shelly_power = XSignal()
-        self.__signal_GPIO_Shelly_power_factor = XSignal()
-        self.__signal_GPIO_Shelly_current = XSignal()
-        self.__signal_GPIO_Shelly_voltage = XSignal()
-        self.__signal_GPIO_Shelly_total = XSignal()
-        self.__signal_GPIO_Shelly_total_returned = XSignal()
+        self.__signal_GPIO_Shelly_data = XSignal()
 
         self.evse.signal_EVSE_min_current.connect(self.signal_GPIO_min_current.emit)
         self.evse.signal_EVSE_actual_current.connect(self.signal_GPIO_actual_current.emit)
         self.evse.signal_EVSE_failure.connect(self.signal_GPIO_EVSE_failure.emit)
         self.evse.signal_vehicle_state.connect(self.signal_GPIO_vehicle_state.emit)
         self.shelly.signal_Shelly_error.connect(self.signal_GPIO_Shelly_error.emit)
-        self.shelly.signal_Shelly_power.connect(self.signal_GPIO_Shelly_power.emit)
-        self.shelly.signal_Shelly_pf.connect(self.signal_GPIO_Shelly_power_factor.emit)
-        self.shelly.signal_Shelly_current.connect(self.signal_GPIO_Shelly_current.emit)
-        self.shelly.signal_Shelly_voltage.connect(self.signal_GPIO_Shelly_voltage.emit)
-        self.shelly.signal_Shelly_total.connect(self.signal_GPIO_Shelly_total.emit)
-        self.shelly.signal_Shelly_total_returned.connect(self.signal_GPIO_Shelly_total_returned.emit)
+        self.shelly.signal_Shelly_data.connect(self.signal_GPIO_Shelly_data.emit)
+
 
     @property
     def signal_GPIO_min_current(self):
@@ -72,28 +67,8 @@ class GPIOManager:
         return self.__signal_GPIO_Shelly_error
 
     @property
-    def signal_GPIO_Shelly_power(self):
-        return self.__signal_GPIO_Shelly_power
-
-    @property
-    def signal_GPIO_Shelly_power_factor(self):
-        return self.__signal_GPIO_Shelly_power_factor
-
-    @property
-    def signal_GPIO_Shelly_current(self):
-        return self.__signal_GPIO_Shelly_current
-
-    @property
-    def signal_GPIO_Shelly_voltage(self):
-        return self.__signal_GPIO_Shelly_voltage
-
-    @property
-    def signal_GPIO_Shelly_total(self):
-        return self.__signal_GPIO_Shelly_total
-
-    @property
-    def signal_GPIO_Shelly_total_returned(self):
-        return self.__signal_GPIO_Shelly_total_returned
+    def signal_GPIO_Shelly_data(self):
+        return self.__signal_GPIO_Shelly_data
 
 
     def set_current(self,current):

@@ -18,8 +18,9 @@ class GetShellyData(Thread):
         self.__Signal_Shelly_error = XSignal()
     # 替换为实际的 Shelly 3EM 设备 IP 地址
         self.__shelly_ip = GPIOParams.SHELLY_IP
-        self.__emeter_index = GPIOParams.SHELLY_EMETER_INDEX
-        self.__emeter_url = f"http://{self.__shelly_ip}/emeter/{self.__emeter_index}"
+        self.__emeter_0_url = f"http://{self.__shelly_ip}/emeter/0"
+        self.__emeter_1_url = f"http://{self.__shelly_ip}/emeter/1"
+        self.__emeter_2_url = f"http://{self.__shelly_ip}/emeter/2"
 
     @property
     def signal_Shelly_data(self) -> XSignal:
@@ -32,11 +33,19 @@ class GetShellyData(Thread):
     def get_data(self):
         try:
             #请求失败后的处理
-            response = requests.get(self.__emeter_url, timeout=5)
-            response.raise_for_status()
-            data = response.json()
-            _info(f"通道 {self.__emeter_index} 的电能数据：", data)
-            return data
+            current_clamp_1 = requests.get(self.__emeter_0_url, timeout=5)
+            current_clamp_1.raise_for_status()
+            data_1 = current_clamp_1.json()
+            current_clamp_2 = requests.get(self.__emeter_1_url, timeout=5)
+            current_clamp_2.raise_for_status()
+            data_2 = current_clamp_2.json()
+            current_clamp_3 = requests.get(self.__emeter_2_url, timeout=5)
+            current_clamp_3.raise_for_status()
+            data_3 = current_clamp_3.json()
+
+            merged_data = {key: [data_1[key], data_2[key], data_3[key]] for key in data_1.keys()}
+            _info(f"汇总的电能数据：", merged_data)
+            return merged_data
         except requests.exceptions.RequestException as e:
             _info(f"请求失败: {traceback.format_exc()}")
             self.signal_Shelly_error.emit(True)

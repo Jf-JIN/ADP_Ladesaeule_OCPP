@@ -18,13 +18,7 @@ class ShellyManager:
         self.__new_charge = new_charge
         self.__shelly_polling_thread = GetShellyData()
         self.__signal_Shelly_error = XSignal()
-        self.__signal_Shelly_power = XSignal()
-        self.__signal_Shelly_pf = XSignal()
-        self.__signal_Shelly_current = XSignal()
-        self.__signal_Shelly_voltage = XSignal()
-        self.__signal_Shelly_is_valid = XSignal()
-        self.__signal_Shelly_total = XSignal()
-        self.__signal_Shelly_total_returned = XSignal()
+        self.__signal_Shelly_data = XSignal()
         self.__shelly_polling_thread.signal_Shelly_error.connect(self.__signal_Shelly_error.emit)
         self.__shelly_polling_thread.signal_Shelly_data.connect(self.send_data)
 
@@ -36,32 +30,9 @@ class ShellyManager:
         return self.__signal_Shelly_error
 
     @property
-    def signal_Shelly_power(self):
-        return self.__signal_Shelly_power
+    def signal_Shelly_data(self):
+        return self.__signal_Shelly_data
 
-    @property
-    def signal_Shelly_pf(self):
-        return self.__signal_Shelly_pf
-
-    @property
-    def signal_Shelly_current(self):
-        return self.__signal_Shelly_current
-
-    @property
-    def signal_Shelly_voltage(self):
-        return self.__signal_Shelly_voltage
-
-    @property
-    def signal_Shelly_is_valid(self):
-        return self.__signal_Shelly_is_valid
-
-    @property
-    def signal_Shelly_total(self):
-        return self.__signal_Shelly_total
-
-    @property
-    def signal_Shelly_total_returned(self):
-        return self.__signal_Shelly_total_returned
 
     def reset_total(self):
         if self.__new_charge == True:
@@ -86,23 +57,14 @@ class ShellyManager:
             self.__shelly_polling_thread.stop()
             return
 
-        power = data.get("power")
-        pf = data.get("pf")
-        current = data.get("current")
-        voltage = data.get("voltage")
         is_valid = data.get("is_valid")
-        total = data.get("total")
-        total_returned = data.get("total_returned")
 
-        if is_valid == False:
-            self.signal_Shelly_error.emit(True)
-            self.__shelly_polling_thread.stop()
-            return
+        for i in is_valid:
+            if i == False:
+                self.signal_Shelly_error.emit(True)
+                self.__shelly_polling_thread.stop()
+                return
 
-        self.__signal_Shelly_power.emit(power)
-        self.__signal_Shelly_pf.emit(pf)
-        self.__signal_Shelly_current.emit(current)
-        self.__signal_Shelly_voltage.emit(voltage)
-        self.__signal_Shelly_total.emit(total)
-        self.__signal_Shelly_total_returned.emit(total_returned)
+        self.__signal_Shelly_data.emit(data)
+
 

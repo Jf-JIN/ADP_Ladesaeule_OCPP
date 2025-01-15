@@ -14,7 +14,6 @@ class GPIOParams(AnalogDefine):
     BYTESIZE = 8  # 数据位
     TIMEOUT = 1  # 超时时间
     SHELLY_IP = "192.168.1.100"#Shelly IP地址
-    SHELLY_EMETER_INDEX = 0 #Shelly电表索引
 
 
 class ResultFlag(AnalogDefine):
