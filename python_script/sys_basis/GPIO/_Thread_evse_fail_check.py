@@ -1,19 +1,19 @@
 import time
 from threading import Thread
-from sys_basis.GPIO._evse_r_w_test import EVSEReadWrite
+from sys_basis.GPIO._evse_r_w import EVSEReadWrite
 from sys_basis.XSignal  import XSignal
 
 
 
 class ThreadFailCheck(Thread):
 
-    def __init__(self, polling_interval,client):
+    def __init__(self, polling_interval,client,evse_id):
         super().__init__()
         self.__polling_interval = polling_interval
         self.__isRunning = True
         self.__signal_finished = XSignal()
         self.__signal_transfer_data = XSignal()
-        self.read = EVSEReadWrite(client)
+        self.read = EVSEReadWrite(client,evse_id)
     @property
     def signal_transfer_data(self):
         """转发收到的数据 """

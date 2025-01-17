@@ -10,14 +10,14 @@ _info = Log.GPIO
 
 class GetShellyData(Thread):
 
-    def __init__(self):
+    def __init__(self,evse_id):
         super().__init__()
         self.__interval = GPIOParams.POLL_INTERVAL_SHELLY  # 每隔多少秒返回时间
         self.__running = True  # 控制线程是否继续运行
         self.__Signal_Shelly_data = XSignal()
         self.__Signal_Shelly_error = XSignal()
     # 替换为实际的 Shelly 3EM 设备 IP 地址
-        self.__shelly_ip = GPIOParams.SHELLY_IP
+        self.__shelly_ip = GPIOParams.SHELLY_IP[evse_id]
         self.__emeter_0_url = f"http://{self.__shelly_ip}/emeter/0"
         self.__emeter_1_url = f"http://{self.__shelly_ip}/emeter/1"
         self.__emeter_2_url = f"http://{self.__shelly_ip}/emeter/2"

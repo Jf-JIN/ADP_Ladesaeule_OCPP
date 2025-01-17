@@ -13,7 +13,9 @@ class GPIOParams(AnalogDefine):
     STOPBITS = 1 # 停止位
     BYTESIZE = 8  # 数据位
     TIMEOUT = 1  # 超时时间
-    SHELLY_IP = "192.168.1.100"#Shelly IP地址
+    SHELLY_IP = [0,'192.168.1.100','url2','url3','url4','url5']#预先设置的5个IP,根据启用的EVSE选择对应的URL
+    EVSE_QUANTITY = 5 # EVSE数量
+    MAX_VOLTAGE = 220
 
 
 class ResultFlag(AnalogDefine):
@@ -53,3 +55,4 @@ class VehicleState(AnalogDefine):
     CHARGING = 3
     CHARGING_WITH_VENTILATION = 4
     FAILURE = 5
+
