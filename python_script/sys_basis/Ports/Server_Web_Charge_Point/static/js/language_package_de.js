@@ -14,5 +14,22 @@ const lang_pkg_de = {
     "text_current_time": "Akutelle Zeit",
     "text_rasberry_pi_system": "Information über Rasberry Pi System",
     "text_optimisation_system": "Optimisation System Information",
-    "text_GPIO": "Hardware Information"
+    "text_GPIO": "Hardware Information",
+    
+    // 用户界面
+    "welcome_title": "OCPP Charge Station",
+    "welcome_text": "Herzlich Willkommen bei der Nutzung der OCPP-Ladesäule, einer Ladestationssoftware, die auf dem OCPP-Protokoll basiert.",
+    "Testen_btn": "Testen",
+    "charge_mode_label": "Lademodus:",
+    "select_dynamic": "Dynamische Anpassung",
+    "select_shortest_time": "Minimale Ladezeit",
+    "select_least_cost": "Minimale Ladekosten",
+    "charge_power_label": "Ladeenergie:",
+    "departure_time_label": "Geschätzte Abfahrtszeit",
+    "save_settings": "Abgeben und speichern",
+    "home_current_current": "Aktueller Strom",
+    "home_current_voltage": "Aktuelle Spannung",
+    "home_charged_energy": "Geladene Menge",
+    "home_left_time": "Verbleibende Zeit",
+    "home_charging_status": "Lade-Status",
 }

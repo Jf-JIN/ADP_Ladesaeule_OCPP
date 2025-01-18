@@ -1,1 +1,3885 @@
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1925" height="980"><defs/><g><g><rect fill="#C0C0C0" stroke="none" x="999" y="71" width="189.5751953125" height="192" transform="matrix(1 0 0 1 -86 -54)" fill-opacity="0.2"/></g><g><rect fill="#FFA182" stroke="none" x="992" y="64" width="189.5751953125" height="192" transform="matrix(1 0 0 1 -86 -54)"/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 906 10 L 1095.5751953125 10 L 1095.5751953125 202 L 906 202 L 906 10 Z Z" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 906 48 L 1095.5751953125 48" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 906 86 L 1095.5751953125 86" stroke-miterlimit="10" stroke-dasharray=""/></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="1087.28759765625" y="75.5" text-anchor="middle" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">«Coroutine ContextManager»</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="bold" text-decoration="undefined" x="1087.28759765625" y="90.5" text-anchor="middle" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">WebSocketClient</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="997" y="113.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+signal_websocket_client_recv</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="997" y="128.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+signal_websocket_client_info</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="997" y="151.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+send()</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="997" y="166.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+recv()</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="997" y="181.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+connect()</text></g></g><g><rect fill="#C0C0C0" stroke="none" x="1335" y="71" width="304" height="192" transform="matrix(1 0 0 1 -86 -54)" fill-opacity="0.2"/></g><g><rect fill="#FFA182" stroke="none" x="1328" y="64" width="304" height="192" transform="matrix(1 0 0 1 -86 -54)"/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1242 10 L 1546 10 L 1546 202 L 1242 202 L 1242 10 Z Z" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1242 35 L 1546 35" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1242 133 L 1546 133" stroke-miterlimit="10" stroke-dasharray=""/></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="bold" text-decoration="undefined" x="1480.5" y="77.5" text-anchor="middle" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">PortOCPPWebsocketClient</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="1333" y="100.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+signal_thread_ocpp_client_info</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="1333" y="115.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+signal_thread_ocpp_client_recv</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="1333" y="130.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+signal_thread_ocpp_client_normal_message</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="1333" y="145.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+signal_thread_ocpp_client_recv_request</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="1333" y="160.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+signal_thread_ocpp_client_recv_response</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="1333" y="175.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+signal_thread_ocpp_client_recv_response_result</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="1333" y="198.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+send_request_message()</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="1333" y="213.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+send_response_message()</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="1333" y="228.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+send_normal_message()</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="1333" y="243.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+run()</text></g></g><g><rect fill="#C0C0C0" stroke="none" x="103" y="71" width="305.93408203125" height="192" transform="matrix(1 0 0 1 -86 -54)" fill-opacity="0.2"/></g><g><rect fill="#A3E0FF" stroke="none" x="96" y="64" width="305.93408203125" height="192" transform="matrix(1 0 0 1 -86 -54)"/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 10 10 L 315.93408203125 10 L 315.93408203125 202 L 10 202 L 10 10 Z Z" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 10 48 L 315.93408203125 48" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 10 146 L 315.93408203125 146" stroke-miterlimit="10" stroke-dasharray=""/></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="249.467041015625" y="75.5" text-anchor="middle" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">«coroutine»</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="bold" text-decoration="undefined" x="249.467041015625" y="90.5" text-anchor="middle" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">PortOCPPWebsocketServer</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="101" y="113.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+signal_thread_ocpp_server_info</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="101" y="128.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+signal_thread_ocpp_server_recv</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="101" y="143.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+signal_thread_ocpp_server_normal_message</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="101" y="158.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+signal_thread_ocpp_server_recv_request</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="101" y="173.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+signal_thread_ocpp_server_recv_response</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="101" y="188.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+signal_thread_ocpp_server_recv_response_result</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="101" y="211.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+send_request_message()</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="101" y="226.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+send_response_message()</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="101" y="241.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+send_normal_message()</text></g></g><g><rect fill="#C0C0C0" stroke="none" x="535" y="279" width="272" height="159" transform="matrix(1 0 0 1 -86 -54)" fill-opacity="0.2"/></g><g><rect fill="#A3E0FF" stroke="none" x="528" y="272" width="272" height="159" transform="matrix(1 0 0 1 -86 -54)"/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 442 218 L 714 218 L 714 377 L 442 377 L 442 218 Z Z" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 442 256 L 714 256" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 442 324 L 714 324" stroke-miterlimit="10" stroke-dasharray=""/></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="664.5" y="283.5" text-anchor="middle" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">«coroutine»</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="bold" text-decoration="undefined" x="664.5" y="298.5" text-anchor="middle" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">ChargePoint</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="533" y="321.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+signal_charge_point_ocpp_request</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="533" y="336.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+signal_charge_point_ocpp_response</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="533" y="351.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+signal_charge_point_ocpp_response_result</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="533" y="366.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+signal_charge_point_info</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="533" y="389.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+send_response_message()</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="533" y="404.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+send_request_message()</text></g></g><g><rect fill="#C0C0C0" stroke="none" x="599" y="71" width="208" height="192" transform="matrix(1 0 0 1 -86 -54)" fill-opacity="0.2"/></g><g><rect fill="#A3E0FF" stroke="none" x="592" y="64" width="208" height="192" transform="matrix(1 0 0 1 -86 -54)"/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 506 10 L 714 10 L 714 202 L 506 202 L 506 10 Z Z" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 506 48 L 714 48" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 506 86 L 714 86" stroke-miterlimit="10" stroke-dasharray=""/></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="696.5" y="75.5" text-anchor="middle" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">«Coroutine ContextManager»</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="bold" text-decoration="undefined" x="696.5" y="90.5" text-anchor="middle" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">WebSocketServer</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="597" y="113.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+signal_websocket_server_recv</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="597" y="128.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+signal_websocket_server_info</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="597" y="151.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+send()</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="597" y="166.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+recv()</text></g></g><g><rect fill="#C0C0C0" stroke="none" x="1687" y="279" width="320" height="504" transform="matrix(1 0 0 1 -86 -54)" fill-opacity="0.2"/></g><g><rect fill="#FF602B" stroke="none" x="1680" y="272" width="320" height="504" transform="matrix(1 0 0 1 -86 -54)"/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1594 218 L 1914 218 L 1914 722 L 1594 722 L 1594 218 Z Z" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1594 243 L 1914 243" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1594 253 L 1914 253" stroke-miterlimit="10" stroke-dasharray=""/></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="bold" text-decoration="undefined" x="1840.5" y="285.5" text-anchor="middle" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">Client Central Processor</text></g></g><g><rect fill="#C0C0C0" stroke="none" x="999" y="279" width="269.10498046875" height="144" transform="matrix(1 0 0 1 -86 -54)" fill-opacity="0.2"/></g><g><rect fill="#FFA182" stroke="none" x="992" y="272" width="269.10498046875" height="144" transform="matrix(1 0 0 1 -86 -54)"/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 906 218 L 1175.10498046875 218 L 1175.10498046875 362 L 906 362 L 906 218 Z Z" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 906 256 L 1175.10498046875 256" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 906 324 L 1175.10498046875 324" stroke-miterlimit="10" stroke-dasharray=""/></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="1127.052490234375" y="283.5" text-anchor="middle" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">«coroutine»</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="bold" text-decoration="undefined" x="1127.052490234375" y="298.5" text-anchor="middle" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">ChargePoint</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="997" y="321.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+signal_charge_point_ocpp_request</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="997" y="336.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+signal_charge_point_ocpp_response</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="997" y="351.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+signal_charge_point_ocpp_response_result</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="997" y="366.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+signal_charge_point_info</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="997" y="389.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+send_response_message()</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="997" y="404.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+send_request_message()</text></g></g><g><rect fill="#C0C0C0" stroke="none" x="1687" y="903" width="320" height="128" transform="matrix(1 0 0 1 -86 -54)" fill-opacity="0.2"/></g><g><rect fill="#FFA182" stroke="none" x="1680" y="896" width="320" height="128" transform="matrix(1 0 0 1 -86 -54)"/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1594 842 L 1914 842 L 1914 970 L 1594 970 L 1594 842 Z Z" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1594 867 L 1914 867" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1594 877 L 1914 877" stroke-miterlimit="10" stroke-dasharray=""/></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="bold" text-decoration="undefined" x="1840.5" y="909.5" text-anchor="middle" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">GPIO Manager</text></g></g><g><rect fill="#C0C0C0" stroke="none" x="103" y="471" width="304" height="448" transform="matrix(1 0 0 1 -86 -54)" fill-opacity="0.2"/></g><g><rect fill="#00A9FF" stroke="none" x="96" y="464" width="304" height="448" transform="matrix(1 0 0 1 -86 -54)"/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 10 410 L 314 410 L 314 858 L 10 858 L 10 410 Z Z" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 10 435 L 314 435" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 10 445 L 314 445" stroke-miterlimit="10" stroke-dasharray=""/></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="bold" text-decoration="undefined" x="248.5" y="477.5" text-anchor="middle" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">Opt Central Processor</text></g></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 505 106 L 317 106" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="#000000" stroke="none" paint-order="stroke fill markers" d=" M 327.16267485762415 101.790482243984 L 317 106 L 327.16267485762415 110.209517756016 L 339 106"/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 327.16267485762415 101.790482243984 L 317 106 L 327.16267485762415 110.209517756016 L 339 106 L 327.16267485762415 101.790482243984" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 441 234 L 317 177" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="#000000" stroke="none" paint-order="stroke fill markers" d=" M 327.99198633381155 177.41980523734216 L 317 177 L 324.47566094524575 185.06935520545028 L 336.98923737260264 186.1886010503093"/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 327.99198633381155 177.41980523734216 L 317 177 L 324.47566094524575 185.06935520545028 L 336.98923737260264 186.1886010503093 L 327.99198633381155 177.41980523734216" stroke-miterlimit="10" stroke-dasharray=""/></g><g><rect fill="#C0C0C0" stroke="none" x="999" y="551" width="195.34521484375" height="128" transform="matrix(1 0 0 1 -86 -54)" fill-opacity="0.2"/></g><g><rect fill="#FFA182" stroke="none" x="992" y="544" width="195.34521484375" height="128" transform="matrix(1 0 0 1 -86 -54)"/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 906 490 L 1101.34521484375 490 L 1101.34521484375 618 L 906 618 L 906 490 Z Z" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 906 528 L 1101.34521484375 528" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 906 566 L 1101.34521484375 566" stroke-miterlimit="10" stroke-dasharray=""/></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="1090.172607421875" y="555.5" text-anchor="middle" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">«Coroutine ContextManager»</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="bold" text-decoration="undefined" x="1090.172607421875" y="570.5" text-anchor="middle" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">WebSocketServer</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="997" y="593.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+signal_websocket_server_recv</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="997" y="608.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+signal_websocket_server_info</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="997" y="631.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+send()</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="997" y="646.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+recv()</text></g></g><g><rect fill="#C0C0C0" stroke="none" x="1303" y="551" width="240" height="128" transform="matrix(1 0 0 1 -86 -54)" fill-opacity="0.2"/></g><g><rect fill="#FFA182" stroke="none" x="1296" y="544" width="240" height="128" transform="matrix(1 0 0 1 -86 -54)"/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1210 490 L 1450 490 L 1450 618 L 1210 618 L 1210 490 Z Z" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1210 515 L 1450 515" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1210 553 L 1450 553" stroke-miterlimit="10" stroke-dasharray=""/></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="bold" text-decoration="undefined" x="1416.5" y="557.5" text-anchor="middle" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">PortWebSocketServer</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="1301" y="580.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+signal_thread_websocket_client_info</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="1301" y="595.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+signal_thread_websocket_client_recv</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="1301" y="618.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+send_data()</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="1301" y="633.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+run()</text></g></g><g><rect fill="#C0C0C0" stroke="none" x="295" y="327" width="132.07177734375" height="80" transform="matrix(1 0 0 1 -86 -54)" fill-opacity="0.2"/></g><g><rect fill="#A3E0FF" stroke="none" x="288" y="320" width="132.07177734375" height="80" transform="matrix(1 0 0 1 -86 -54)"/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 202 266 L 334.07177734375 266 L 334.07177734375 346 L 202 346 L 202 266 Z Z" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 202 304 L 334.07177734375 304" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 202 314 L 334.07177734375 314" stroke-miterlimit="10" stroke-dasharray=""/></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="354.535888671875" y="331.5" text-anchor="middle" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">«object»</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="bold" text-decoration="undefined" x="354.535888671875" y="346.5" text-anchor="middle" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">ManagerCoroutines</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="293" y="379.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+run()</text></g></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 213 203 L 246 265" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="#000000" stroke="none" paint-order="stroke fill markers" d=" M 237.50913839670733 258.00676975684837 L 246 265 L 244.94101470952666 254.0510936548639 L 235.66332020820113 245.5795713002566"/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 237.50913839670733 258.00676975684837 L 246 265 L 244.94101470952666 254.0510936548639 L 235.66332020820113 245.5795713002566 L 237.50913839670733 258.00676975684837" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 255 347 L 235 409" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="#000000" stroke="none" paint-order="stroke fill markers" d=" M 234.1137351077253 398.0357611052695 L 235 409 L 242.12620375775822 400.6204284117317 L 241.75406115830066 388.0624104092679"/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 234.1137351077253 398.0357611052695 L 235 409 L 242.12620375775822 400.6204284117317 L 241.75406115830066 388.0624104092679 L 234.1137351077253 398.0357611052695" stroke-miterlimit="10" stroke-dasharray=""/></g><g><rect fill="#C0C0C0" stroke="none" x="535" y="471" width="272" height="448" transform="matrix(1 0 0 1 -86 -54)" fill-opacity="0.2"/></g><g><rect fill="#A3E0FF" stroke="none" x="528" y="464" width="272" height="448" transform="matrix(1 0 0 1 -86 -54)"/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 442 410 L 714 410 L 714 858 L 442 858 L 442 410 Z Z" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 442 448 L 714 448" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 442 458 L 714 458" stroke-miterlimit="10" stroke-dasharray=""/></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="664.5" y="475.5" text-anchor="middle" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">«Thread»</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="bold" text-decoration="undefined" x="664.5" y="490.5" text-anchor="middle" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">Optimizer</text></g></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 441 634 L 315 634" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="#000000" stroke="none" paint-order="stroke fill markers" d=" M 325.16267485762415 629.790482243984 L 315 634 L 325.16267485762415 638.209517756016 L 337 634"/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 325.16267485762415 629.790482243984 L 315 634 L 325.16267485762415 638.209517756016 L 337 634 L 325.16267485762415 629.790482243984" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 115 203 L 58 322 L 87 409" stroke-miterlimit="10" stroke-dasharray="3"/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 79.79278084503858 400.6900064950472 L 87 409 L 87.77977922099748 398.02767370306094" stroke-miterlimit="10" stroke-dasharray=""/></g><g><rect fill="#ffffff" stroke="none" x="108" y="362" width="54.92626953125" height="13" transform="matrix(1 0 0 1 -86 -54)"/></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="135.463134765625" y="368.5" text-anchor="middle" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">«signals»</text></g></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 162 203 L 162 409" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 157.790482243984 398.83732514237585 L 162 409 L 166.209517756016 398.83732514237585" stroke-miterlimit="10" stroke-dasharray=""/></g><g><rect fill="#ffffff" stroke="none" x="220" y="352" width="39.03173828125" height="13" transform="matrix(1 0 0 1 -86 -54)"/></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="239.515869140625" y="358.5" text-anchor="middle" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">«func»</text></g></g><g><rect fill="#C0C0C0" stroke="none" x="1399" y="327" width="144" height="80" transform="matrix(1 0 0 1 -86 -54)" fill-opacity="0.2"/></g><g><rect fill="#FFA182" stroke="none" x="1392" y="320" width="144" height="80" transform="matrix(1 0 0 1 -86 -54)"/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1306 266 L 1450 266 L 1450 346 L 1306 346 L 1306 266 Z Z" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1306 304 L 1450 304" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1306 314 L 1450 314" stroke-miterlimit="10" stroke-dasharray=""/></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="1464.5" y="331.5" text-anchor="middle" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">«object»</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="bold" text-decoration="undefined" x="1464.5" y="346.5" text-anchor="middle" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">ManagerCoroutines</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="1397" y="379.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+run()</text></g></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1097 106 L 1241 106" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="#000000" stroke="none" paint-order="stroke fill markers" d=" M 1230.837325142376 110.209517756016 L 1241 106 L 1230.837325142376 101.790482243984 L 1219 106"/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1230.837325142376 110.209517756016 L 1241 106 L 1230.837325142376 101.790482243984 L 1219 106 L 1230.837325142376 110.209517756016" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1176 219 L 1241 186" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="#000000" stroke="none" paint-order="stroke fill markers" d=" M 1233.843897069176 194.35405236058833 L 1241 186 L 1230.032664016186 186.84707816530488 L 1221.38333107632 195.95923191509908"/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1233.843897069176 194.35405236058833 L 1241 186 L 1230.032664016186 186.84707816530488 L 1221.38333107632 195.95923191509908 L 1233.843897069176 194.35405236058833" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1386 203 L 1381 265" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="#000000" stroke="none" paint-order="stroke fill markers" d=" M 1377.6210228186746 254.5318333406426 L 1381 265 L 1386.0128139530327 255.20859069018763 L 1382.768452178247 243.07119298973942"/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1377.6210228186746 254.5318333406426 L 1381 265 L 1386.0128139530327 255.20859069018763 L 1382.768452178247 243.07119298973942 L 1377.6210228186746 254.5318333406426" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1451 338 L 1593 400" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="#000000" stroke="none" paint-order="stroke fill markers" d=" M 1582.0019796475524 399.79131764054915 L 1593 400 L 1585.3707859406381 392.07566451767485 L 1572.8380267596394 391.19688492322285"/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1582.0019796475524 399.79131764054915 L 1593 400 L 1585.3707859406381 392.07566451767485 L 1572.8380267596394 391.19688492322285 L 1582.0019796475524 399.79131764054915" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1102 554 L 1209 554" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="#000000" stroke="none" paint-order="stroke fill markers" d=" M 1198.837325142376 558.209517756016 L 1209 554 L 1198.837325142376 549.790482243984 L 1187 554"/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1198.837325142376 558.209517756016 L 1209 554 L 1198.837325142376 549.790482243984 L 1187 554 L 1198.837325142376 558.209517756016" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1343 489 L 1370 347" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="#000000" stroke="none" paint-order="stroke fill markers" d=" M 1372.2370977146913 357.7701157753723 L 1370 347 L 1363.9662450653052 356.19748886316506 L 1365.8905278378843 368.6127795192751"/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1372.2370977146913 357.7701157753723 L 1370 347 L 1363.9662450653052 356.19748886316506 L 1365.8905278378843 368.6127795192751 L 1372.2370977146913 357.7701157753723" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1754 841 L 1754 723" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="#000000" stroke="none" paint-order="stroke fill markers" d=" M 1758.2095177560159 733.1626748576241 L 1754 723 L 1749.7904822439841 733.1626748576241 L 1754 745"/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1758.2095177560159 733.1626748576241 L 1754 723 L 1749.7904822439841 733.1626748576241 L 1754 745 L 1758.2095177560159 733.1626748576241" stroke-miterlimit="10" stroke-dasharray=""/></g><g><rect fill="#C0C0C0" stroke="none" x="999" y="823" width="240" height="144" transform="matrix(1 0 0 1 -86 -54)" fill-opacity="0.2"/></g><g><rect fill="#FFA182" stroke="none" x="992" y="816" width="240" height="144" transform="matrix(1 0 0 1 -86 -54)"/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 906 762 L 1146 762 L 1146 906 L 906 906 L 906 762 Z Z" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 906 800 L 1146 800" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 906 853 L 1146 853" stroke-miterlimit="10" stroke-dasharray=""/></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="1112.5" y="827.5" text-anchor="middle" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">«Thread»</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="bold" text-decoration="undefined" x="1112.5" y="842.5" text-anchor="middle" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">PortWebServerChargePoint</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="997" y="865.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+signal_thread_web_server_info</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="997" y="880.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+signal_thread_web_server_recv</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="997" y="895.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+signal_thread_webs_server_finished</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="997" y="918.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+send_message()</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="997" y="933.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+run()</text></g></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="997" y="948.5" text-anchor="start" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+stop()</text></g></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1147 812 L 1418 762 L 1593 610" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="#000000" stroke="none" paint-order="stroke fill markers" d=" M 1588.0878121833991 619.8422767109262 L 1593 610 L 1582.5670180798093 613.4860992890299 L 1576.390507964734 624.4265302249167"/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1588.0878121833991 619.8422767109262 L 1593 610 L 1582.5670180798093 613.4860992890299 L 1576.390507964734 624.4265302249167 L 1588.0878121833991 619.8422767109262" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 715 106 L 905 106" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 894.8373251423759 110.209517756016 L 905 106 L 894.8373251423758 101.790482243984" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 905 106 L 715 106" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 725.1626748576241 101.790482243984 L 715 106 L 725.1626748576241 110.209517756016" stroke-miterlimit="10" stroke-dasharray=""/></g><g><rect fill="#ffffff" stroke="none" x="836" y="168" width="118.16162109375" height="13" transform="matrix(1 0 0 1 -86 -54)"/></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="895.080810546875" y="174.5" text-anchor="middle" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">+Request/Response</text></g></g><g><rect fill="#ffffff" stroke="none" x="844" y="143" width="102.603515625" height="13" transform="matrix(1 0 0 1 -86 -54)"/></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="895.3017578125" y="149.5" text-anchor="middle" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">«OCPP Protocol»</text></g></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1547 106 L 1754 106 L 1754 217" stroke-miterlimit="10" stroke-dasharray="3"/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1749.7904822439841 206.83732514237585 L 1754 217 L 1758.2095177560159 206.83732514237585" stroke-miterlimit="10" stroke-dasharray=""/></g><g><rect fill="#ffffff" stroke="none" x="1808" y="152" width="54.92626953125" height="13" transform="matrix(1 0 0 1 -86 -54)"/></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="1835.463134765625" y="158.5" text-anchor="middle" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">«signals»</text></g></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1404 489 L 1522 386 L 1593 412" stroke-miterlimit="10" stroke-dasharray="3"/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1582.0095479300132 412.45821752184077 L 1593 412 L 1584.9045680960544 404.55258552995866" stroke-miterlimit="10" stroke-dasharray=""/></g><g><rect fill="#ffffff" stroke="none" x="1584" y="433" width="54.92626953125" height="13" transform="matrix(1 0 0 1 -86 -54)"/></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="1611.463134765625" y="439.5" text-anchor="middle" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">«signals»</text></g></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1547 152 L 1634 178 L 1650 217" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1642.2481784348654 209.19556136404975 L 1650 217 L 1650.0372058875798 206.00006292191046" stroke-miterlimit="10" stroke-dasharray=""/></g><g><rect fill="#ffffff" stroke="none" x="1696" y="223" width="39.03173828125" height="13" transform="matrix(1 0 0 1 -86 -54)"/></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="1715.515869140625" y="229.5" text-anchor="middle" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">«func»</text></g></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1451 530 L 1593 502" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1583.8436777652744 508.09604487630054 L 1593 502 L 1582.2149477866467 499.83605712754604" stroke-miterlimit="10" stroke-dasharray=""/></g><g><rect fill="#ffffff" stroke="none" x="1583" y="565" width="39.03173828125" height="13" transform="matrix(1 0 0 1 -86 -54)"/></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="1602.515869140625" y="571.5" text-anchor="middle" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">«func»</text></g></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1147 779 L 1362 682 L 1593 557" stroke-miterlimit="10" stroke-dasharray=""/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1586.0653901829594 565.5388047574239 L 1593 557 L 1582.0586436262854 558.1343371206902" stroke-miterlimit="10" stroke-dasharray=""/></g><g><rect fill="#ffffff" stroke="none" x="1424" y="727" width="39.03173828125" height="13" transform="matrix(1 0 0 1 -86 -54)"/></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="1443.515869140625" y="733.5" text-anchor="middle" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">«func»</text></g></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1147 796 L 1378 722 L 1593 578" stroke-miterlimit="10" stroke-dasharray="3"/></g><g><path fill="none" stroke="#000000" paint-order="fill stroke markers" d=" M 1586.8987699514967 587.1528679601117 L 1593 578 L 1582.213723857224 580.1578338610242" stroke-miterlimit="10" stroke-dasharray=""/></g><g><rect fill="#ffffff" stroke="none" x="1448" y="769" width="52.0380859375" height="13" transform="matrix(1 0 0 1 -86 -54)"/></g><g><g><path fill="none" stroke="none"/><text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="undefined" x="1474.01904296875" y="775.5" text-anchor="middle" dominant-baseline="central" transform="matrix(1 0 0 1 -86 -54)">«signas»</text></g></g></g></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   version="1.1"
+   width="1925"
+   height="980"
+   id="svg331"
+   sodipodi:docname="Project Flow Diagram.svg"
+   inkscape:export-filename="Project Flow Diagram.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview331"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:export-bgcolor="#ffffffff"
+     inkscape:zoom="0.49506494"
+     inkscape:cx="962.5"
+     inkscape:cy="489.83473"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="2552"
+     inkscape:window-y="210"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg331" />
+  <defs
+     id="defs1" />
+  <g
+     id="g331">
+    <g
+       id="g1">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="999"
+         y="71"
+         width="198.43017578125"
+         height="192"
+         transform="matrix(1 0 0 1 -86 -54)"
+         fill-opacity="0.2"
+         id="rect1" />
+    </g>
+    <g
+       id="g2">
+      <rect
+         fill="#FFA182"
+         stroke="none"
+         x="992"
+         y="64"
+         width="198.43017578125"
+         height="192"
+         transform="matrix(1 0 0 1 -86 -54)"
+         id="rect2" />
+    </g>
+    <g
+       id="g3">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 906 10 L 1104.43017578125 10 L 1104.43017578125 202 L 906 202 L 906 10 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path2" />
+    </g>
+    <g
+       id="g4">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 906 48 L 1104.43017578125 48"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path3" />
+    </g>
+    <g
+       id="g5">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 906 86 L 1104.43017578125 86"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path4" />
+    </g>
+    <g
+       id="g7">
+      <g
+         id="g6">
+        <path
+           fill="none"
+           stroke="none"
+           id="path5" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="1091.715087890625"
+           y="75.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text5">«Coroutine ContextManager»</text>
+      </g>
+    </g>
+    <g
+       id="g9">
+      <g
+         id="g8">
+        <path
+           fill="none"
+           stroke="none"
+           id="path7" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="1091.715087890625"
+           y="90.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text7">WebSocketClient</text>
+      </g>
+    </g>
+    <g
+       id="g11">
+      <g
+         id="g10">
+        <path
+           fill="none"
+           stroke="none"
+           id="path9" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="997"
+           y="113.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text9">+signal_websocket_client_recv</text>
+      </g>
+    </g>
+    <g
+       id="g13">
+      <g
+         id="g12">
+        <path
+           fill="none"
+           stroke="none"
+           id="path11" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="997"
+           y="128.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text11">+signal_websocket_client_info</text>
+      </g>
+    </g>
+    <g
+       id="g15">
+      <g
+         id="g14">
+        <path
+           fill="none"
+           stroke="none"
+           id="path13" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="997"
+           y="151.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text13">+send()</text>
+      </g>
+    </g>
+    <g
+       id="g17">
+      <g
+         id="g16">
+        <path
+           fill="none"
+           stroke="none"
+           id="path15" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="997"
+           y="166.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text15">+recv()</text>
+      </g>
+    </g>
+    <g
+       id="g19">
+      <g
+         id="g18">
+        <path
+           fill="none"
+           stroke="none"
+           id="path17" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="997"
+           y="181.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text17">+connect()</text>
+      </g>
+    </g>
+    <g
+       id="g20">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="1335"
+         y="71"
+         width="312.7451171875"
+         height="204"
+         transform="matrix(1 0 0 1 -86 -54)"
+         fill-opacity="0.2"
+         id="rect19" />
+    </g>
+    <g
+       id="g21">
+      <rect
+         fill="#FFA182"
+         stroke="none"
+         x="1328"
+         y="64"
+         width="312.7451171875"
+         height="204"
+         transform="matrix(1 0 0 1 -86 -54)"
+         id="rect20" />
+    </g>
+    <g
+       id="g22">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1242 10 L 1554.7451171875 10 L 1554.7451171875 214 L 1242 214 L 1242 10 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path21" />
+    </g>
+    <g
+       id="g23">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1242 48 L 1554.7451171875 48"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path22" />
+    </g>
+    <g
+       id="g24">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1242 146 L 1554.7451171875 146"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path23" />
+    </g>
+    <g
+       id="g26">
+      <g
+         id="g25">
+        <path
+           fill="none"
+           stroke="none"
+           id="path24" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="1484.87255859375"
+           y="75.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text24">«Coroutine»</text>
+      </g>
+    </g>
+    <g
+       id="g28">
+      <g
+         id="g27">
+        <path
+           fill="none"
+           stroke="none"
+           id="path26" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="1484.87255859375"
+           y="90.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text26">PortOCPPWebsocketClient</text>
+      </g>
+    </g>
+    <g
+       id="g30">
+      <g
+         id="g29">
+        <path
+           fill="none"
+           stroke="none"
+           id="path28" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="1333"
+           y="113.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text28">+signal_thread_ocpp_client_info</text>
+      </g>
+    </g>
+    <g
+       id="g32">
+      <g
+         id="g31">
+        <path
+           fill="none"
+           stroke="none"
+           id="path30" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="1333"
+           y="128.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text30">+signal_thread_ocpp_client_recv</text>
+      </g>
+    </g>
+    <g
+       id="g34">
+      <g
+         id="g33">
+        <path
+           fill="none"
+           stroke="none"
+           id="path32" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="1333"
+           y="143.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text32">+signal_thread_ocpp_client_normal_message</text>
+      </g>
+    </g>
+    <g
+       id="g36">
+      <g
+         id="g35">
+        <path
+           fill="none"
+           stroke="none"
+           id="path34" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="1333"
+           y="158.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text34">+signal_thread_ocpp_client_recv_request</text>
+      </g>
+    </g>
+    <g
+       id="g38">
+      <g
+         id="g37">
+        <path
+           fill="none"
+           stroke="none"
+           id="path36" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="1333"
+           y="173.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text36">+signal_thread_ocpp_client_recv_response</text>
+      </g>
+    </g>
+    <g
+       id="g40">
+      <g
+         id="g39">
+        <path
+           fill="none"
+           stroke="none"
+           id="path38" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="1333"
+           y="188.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text38">+signal_thread_ocpp_client_recv_response_result</text>
+      </g>
+    </g>
+    <g
+       id="g42">
+      <g
+         id="g41">
+        <path
+           fill="none"
+           stroke="none"
+           id="path40" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="1333"
+           y="211.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text40">+send_request_message()</text>
+      </g>
+    </g>
+    <g
+       id="g44">
+      <g
+         id="g43">
+        <path
+           fill="none"
+           stroke="none"
+           id="path42" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="1333"
+           y="226.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text42">+send_response_message()</text>
+      </g>
+    </g>
+    <g
+       id="g46">
+      <g
+         id="g45">
+        <path
+           fill="none"
+           stroke="none"
+           id="path44" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="1333"
+           y="241.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text44">+send_normal_message()</text>
+      </g>
+    </g>
+    <g
+       id="g48">
+      <g
+         id="g47">
+        <path
+           fill="none"
+           stroke="none"
+           id="path46" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="1333"
+           y="256.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text46">+run()</text>
+      </g>
+    </g>
+    <g
+       id="g49">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="103"
+         y="71"
+         width="317.08056640625"
+         height="192"
+         transform="matrix(1 0 0 1 -86 -54)"
+         fill-opacity="0.2"
+         id="rect48" />
+    </g>
+    <g
+       id="g50">
+      <rect
+         fill="#A3E0FF"
+         stroke="none"
+         x="96"
+         y="64"
+         width="317.08056640625"
+         height="192"
+         transform="matrix(1 0 0 1 -86 -54)"
+         id="rect49" />
+    </g>
+    <g
+       id="g51">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 10 10 L 327.08056640625 10 L 327.08056640625 202 L 10 202 L 10 10 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path50" />
+    </g>
+    <g
+       id="g52">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 10 48 L 327.08056640625 48"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path51" />
+    </g>
+    <g
+       id="g53">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 10 146 L 327.08056640625 146"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path52" />
+    </g>
+    <g
+       id="g55">
+      <g
+         id="g54">
+        <path
+           fill="none"
+           stroke="none"
+           id="path53" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="255.040283203125"
+           y="75.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text53">«coroutine»</text>
+      </g>
+    </g>
+    <g
+       id="g57">
+      <g
+         id="g56">
+        <path
+           fill="none"
+           stroke="none"
+           id="path55" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="255.040283203125"
+           y="90.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text55">PortOCPPWebsocketServer</text>
+      </g>
+    </g>
+    <g
+       id="g59">
+      <g
+         id="g58">
+        <path
+           fill="none"
+           stroke="none"
+           id="path57" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="101"
+           y="113.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text57">+signal_thread_ocpp_server_info</text>
+      </g>
+    </g>
+    <g
+       id="g61">
+      <g
+         id="g60">
+        <path
+           fill="none"
+           stroke="none"
+           id="path59" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="101"
+           y="128.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text59">+signal_thread_ocpp_server_recv</text>
+      </g>
+    </g>
+    <g
+       id="g63">
+      <g
+         id="g62">
+        <path
+           fill="none"
+           stroke="none"
+           id="path61" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="101"
+           y="143.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text61">+signal_thread_ocpp_server_normal_message</text>
+      </g>
+    </g>
+    <g
+       id="g65">
+      <g
+         id="g64">
+        <path
+           fill="none"
+           stroke="none"
+           id="path63" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="101"
+           y="158.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text63">+signal_thread_ocpp_server_recv_request</text>
+      </g>
+    </g>
+    <g
+       id="g67">
+      <g
+         id="g66">
+        <path
+           fill="none"
+           stroke="none"
+           id="path65" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="101"
+           y="173.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text65">+signal_thread_ocpp_server_recv_response</text>
+      </g>
+    </g>
+    <g
+       id="g69">
+      <g
+         id="g68">
+        <path
+           fill="none"
+           stroke="none"
+           id="path67" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="101"
+           y="188.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text67">+signal_thread_ocpp_server_recv_response_result</text>
+      </g>
+    </g>
+    <g
+       id="g71">
+      <g
+         id="g70">
+        <path
+           fill="none"
+           stroke="none"
+           id="path69" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="101"
+           y="211.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text69">+send_request_message()</text>
+      </g>
+    </g>
+    <g
+       id="g73">
+      <g
+         id="g72">
+        <path
+           fill="none"
+           stroke="none"
+           id="path71" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="101"
+           y="226.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text71">+send_response_message()</text>
+      </g>
+    </g>
+    <g
+       id="g75">
+      <g
+         id="g74">
+        <path
+           fill="none"
+           stroke="none"
+           id="path73" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="101"
+           y="241.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text73">+send_normal_message()</text>
+      </g>
+    </g>
+    <g
+       id="g76">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="535"
+         y="279"
+         width="282.30810546875"
+         height="159"
+         transform="matrix(1 0 0 1 -86 -54)"
+         fill-opacity="0.2"
+         id="rect75" />
+    </g>
+    <g
+       id="g77">
+      <rect
+         fill="#A3E0FF"
+         stroke="none"
+         x="528"
+         y="272"
+         width="282.30810546875"
+         height="159"
+         transform="matrix(1 0 0 1 -86 -54)"
+         id="rect76" />
+    </g>
+    <g
+       id="g78">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 442 218 L 724.30810546875 218 L 724.30810546875 377 L 442 377 L 442 218 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path77" />
+    </g>
+    <g
+       id="g79">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 442 256 L 724.30810546875 256"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path78" />
+    </g>
+    <g
+       id="g80">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 442 324 L 724.30810546875 324"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path79" />
+    </g>
+    <g
+       id="g82">
+      <g
+         id="g81">
+        <path
+           fill="none"
+           stroke="none"
+           id="path80" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="669.654052734375"
+           y="283.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text80">«coroutine»</text>
+      </g>
+    </g>
+    <g
+       id="g84">
+      <g
+         id="g83">
+        <path
+           fill="none"
+           stroke="none"
+           id="path82" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="669.654052734375"
+           y="298.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text82">ChargePoint</text>
+      </g>
+    </g>
+    <g
+       id="g86">
+      <g
+         id="g85">
+        <path
+           fill="none"
+           stroke="none"
+           id="path84" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="533"
+           y="321.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text84">+signal_charge_point_ocpp_request</text>
+      </g>
+    </g>
+    <g
+       id="g88">
+      <g
+         id="g87">
+        <path
+           fill="none"
+           stroke="none"
+           id="path86" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="533"
+           y="336.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text86">+signal_charge_point_ocpp_response</text>
+      </g>
+    </g>
+    <g
+       id="g90">
+      <g
+         id="g89">
+        <path
+           fill="none"
+           stroke="none"
+           id="path88" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="533"
+           y="351.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text88">+signal_charge_point_ocpp_response_result</text>
+      </g>
+    </g>
+    <g
+       id="g92">
+      <g
+         id="g91">
+        <path
+           fill="none"
+           stroke="none"
+           id="path90" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="533"
+           y="366.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text90">+signal_charge_point_info</text>
+      </g>
+    </g>
+    <g
+       id="g94">
+      <g
+         id="g93">
+        <path
+           fill="none"
+           stroke="none"
+           id="path92" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="533"
+           y="389.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text92">+send_response_message()</text>
+      </g>
+    </g>
+    <g
+       id="g96">
+      <g
+         id="g95">
+        <path
+           fill="none"
+           stroke="none"
+           id="path94" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="533"
+           y="404.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text94">+send_request_message()</text>
+      </g>
+    </g>
+    <g
+       id="g97">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="599"
+         y="71"
+         width="208"
+         height="192"
+         transform="matrix(1 0 0 1 -86 -54)"
+         fill-opacity="0.2"
+         id="rect96" />
+    </g>
+    <g
+       id="g98">
+      <rect
+         fill="#A3E0FF"
+         stroke="none"
+         x="592"
+         y="64"
+         width="208"
+         height="192"
+         transform="matrix(1 0 0 1 -86 -54)"
+         id="rect97" />
+    </g>
+    <g
+       id="g99">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 506 10 L 714 10 L 714 202 L 506 202 L 506 10 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path98" />
+    </g>
+    <g
+       id="g100">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 506 48 L 714 48"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path99" />
+    </g>
+    <g
+       id="g101">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 506 86 L 714 86"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path100" />
+    </g>
+    <g
+       id="g103">
+      <g
+         id="g102">
+        <path
+           fill="none"
+           stroke="none"
+           id="path101" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="696.5"
+           y="75.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text101">«Coroutine ContextManager»</text>
+      </g>
+    </g>
+    <g
+       id="g105">
+      <g
+         id="g104">
+        <path
+           fill="none"
+           stroke="none"
+           id="path103" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="696.5"
+           y="90.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text103">WebSocketServer</text>
+      </g>
+    </g>
+    <g
+       id="g107">
+      <g
+         id="g106">
+        <path
+           fill="none"
+           stroke="none"
+           id="path105" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="597"
+           y="113.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text105">+signal_websocket_server_recv</text>
+      </g>
+    </g>
+    <g
+       id="g109">
+      <g
+         id="g108">
+        <path
+           fill="none"
+           stroke="none"
+           id="path107" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="597"
+           y="128.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text107">+signal_websocket_server_info</text>
+      </g>
+    </g>
+    <g
+       id="g111">
+      <g
+         id="g110">
+        <path
+           fill="none"
+           stroke="none"
+           id="path109" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="597"
+           y="151.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text109">+send()</text>
+      </g>
+    </g>
+    <g
+       id="g113">
+      <g
+         id="g112">
+        <path
+           fill="none"
+           stroke="none"
+           id="path111" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="597"
+           y="166.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text111">+recv()</text>
+      </g>
+    </g>
+    <g
+       id="g114">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="1687"
+         y="279"
+         width="320"
+         height="504"
+         transform="matrix(1 0 0 1 -86 -54)"
+         fill-opacity="0.2"
+         id="rect113" />
+    </g>
+    <g
+       id="g115">
+      <rect
+         fill="#FF602B"
+         stroke="none"
+         x="1680"
+         y="272"
+         width="320"
+         height="504"
+         transform="matrix(1 0 0 1 -86 -54)"
+         id="rect114" />
+    </g>
+    <g
+       id="g116">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1594 218 L 1914 218 L 1914 722 L 1594 722 L 1594 218 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path115" />
+    </g>
+    <g
+       id="g117">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1594 243 L 1914 243"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path116" />
+    </g>
+    <g
+       id="g118">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1594 253 L 1914 253"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path117" />
+    </g>
+    <g
+       id="g120">
+      <g
+         id="g119">
+        <path
+           fill="none"
+           stroke="none"
+           id="path118" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="1840.5"
+           y="285.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text118">Client Central Processor</text>
+      </g>
+    </g>
+    <g
+       id="g121">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="999"
+         y="279"
+         width="282.30810546875"
+         height="160"
+         transform="matrix(1 0 0 1 -86 -54)"
+         fill-opacity="0.2"
+         id="rect120" />
+    </g>
+    <g
+       id="g122">
+      <rect
+         fill="#FFA182"
+         stroke="none"
+         x="992"
+         y="272"
+         width="282.30810546875"
+         height="160"
+         transform="matrix(1 0 0 1 -86 -54)"
+         id="rect121" />
+    </g>
+    <g
+       id="g123">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 906 218 L 1188.30810546875 218 L 1188.30810546875 378 L 906 378 L 906 218 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path122" />
+    </g>
+    <g
+       id="g124">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 906 256 L 1188.30810546875 256"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path123" />
+    </g>
+    <g
+       id="g125">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 906 324 L 1188.30810546875 324"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path124" />
+    </g>
+    <g
+       id="g127">
+      <g
+         id="g126">
+        <path
+           fill="none"
+           stroke="none"
+           id="path125" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="1133.654052734375"
+           y="283.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text125">«coroutine»</text>
+      </g>
+    </g>
+    <g
+       id="g129">
+      <g
+         id="g128">
+        <path
+           fill="none"
+           stroke="none"
+           id="path127" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="1133.654052734375"
+           y="298.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text127">ChargePoint</text>
+      </g>
+    </g>
+    <g
+       id="g131">
+      <g
+         id="g130">
+        <path
+           fill="none"
+           stroke="none"
+           id="path129" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="997"
+           y="321.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text129">+signal_charge_point_ocpp_request</text>
+      </g>
+    </g>
+    <g
+       id="g133">
+      <g
+         id="g132">
+        <path
+           fill="none"
+           stroke="none"
+           id="path131" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="997"
+           y="336.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text131">+signal_charge_point_ocpp_response</text>
+      </g>
+    </g>
+    <g
+       id="g135">
+      <g
+         id="g134">
+        <path
+           fill="none"
+           stroke="none"
+           id="path133" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="997"
+           y="351.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text133">+signal_charge_point_ocpp_response_result</text>
+      </g>
+    </g>
+    <g
+       id="g137">
+      <g
+         id="g136">
+        <path
+           fill="none"
+           stroke="none"
+           id="path135" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="997"
+           y="366.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text135">+signal_charge_point_info</text>
+      </g>
+    </g>
+    <g
+       id="g139">
+      <g
+         id="g138">
+        <path
+           fill="none"
+           stroke="none"
+           id="path137" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="997"
+           y="389.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text137">+send_response_message()</text>
+      </g>
+    </g>
+    <g
+       id="g141">
+      <g
+         id="g140">
+        <path
+           fill="none"
+           stroke="none"
+           id="path139" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="997"
+           y="404.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text139">+send_request_message()</text>
+      </g>
+    </g>
+    <g
+       id="g142">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="1687"
+         y="903"
+         width="320"
+         height="128"
+         transform="matrix(1 0 0 1 -86 -54)"
+         fill-opacity="0.2"
+         id="rect141" />
+    </g>
+    <g
+       id="g143">
+      <rect
+         fill="#FFA182"
+         stroke="none"
+         x="1680"
+         y="896"
+         width="320"
+         height="128"
+         transform="matrix(1 0 0 1 -86 -54)"
+         id="rect142" />
+    </g>
+    <g
+       id="g144">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1594 842 L 1914 842 L 1914 970 L 1594 970 L 1594 842 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path143" />
+    </g>
+    <g
+       id="g145">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1594 867 L 1914 867"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path144" />
+    </g>
+    <g
+       id="g146">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1594 877 L 1914 877"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path145" />
+    </g>
+    <g
+       id="g148">
+      <g
+         id="g147">
+        <path
+           fill="none"
+           stroke="none"
+           id="path146" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="1840.5"
+           y="909.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text146">GPIO Manager</text>
+      </g>
+    </g>
+    <g
+       id="g149">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="103"
+         y="471"
+         width="304"
+         height="448"
+         transform="matrix(1 0 0 1 -86 -54)"
+         fill-opacity="0.2"
+         id="rect148" />
+    </g>
+    <g
+       id="g150">
+      <rect
+         fill="#00A9FF"
+         stroke="none"
+         x="96"
+         y="464"
+         width="304"
+         height="448"
+         transform="matrix(1 0 0 1 -86 -54)"
+         id="rect149" />
+    </g>
+    <g
+       id="g151">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 10 410 L 314 410 L 314 858 L 10 858 L 10 410 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path150" />
+    </g>
+    <g
+       id="g152">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 10 435 L 314 435"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path151" />
+    </g>
+    <g
+       id="g153">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 10 445 L 314 445"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path152" />
+    </g>
+    <g
+       id="g155">
+      <g
+         id="g154">
+        <path
+           fill="none"
+           stroke="none"
+           id="path153" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="248.5"
+           y="477.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text153">Opt Central Processor</text>
+      </g>
+    </g>
+    <g
+       id="g156">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 505 106 L 328 106"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path155" />
+    </g>
+    <g
+       id="g157">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 338.16267485762415 101.790482243984 L 328 106 L 338.16267485762415 110.209517756016 L 350 106"
+         id="path156" />
+    </g>
+    <g
+       id="g158">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 338.16267485762415 101.790482243984 L 328 106 L 338.16267485762415 110.209517756016 L 350 106 L 338.16267485762415 101.790482243984"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path157" />
+    </g>
+    <g
+       id="g159">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 441 232 L 328 180"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path158" />
+    </g>
+    <g
+       id="g160">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 338.991812293979 180.42433771212578 L 328 180 L 335.4723329368449 188.07243708435954 L 347.9854467829098 189.1968427673567"
+         id="path159" />
+    </g>
+    <g
+       id="g161">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 338.991812293979 180.42433771212578 L 328 180 L 335.4723329368449 188.07243708435954 L 347.9854467829098 189.1968427673567 L 338.991812293979 180.42433771212578"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path160" />
+    </g>
+    <g
+       id="g162">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="999"
+         y="551"
+         width="202.765625"
+         height="128"
+         transform="matrix(1 0 0 1 -86 -54)"
+         fill-opacity="0.2"
+         id="rect161" />
+    </g>
+    <g
+       id="g163">
+      <rect
+         fill="#FFA182"
+         stroke="none"
+         x="992"
+         y="544"
+         width="202.765625"
+         height="128"
+         transform="matrix(1 0 0 1 -86 -54)"
+         id="rect162" />
+    </g>
+    <g
+       id="g164">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 906 490 L 1108.765625 490 L 1108.765625 618 L 906 618 L 906 490 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path163" />
+    </g>
+    <g
+       id="g165">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 906 528 L 1108.765625 528"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path164" />
+    </g>
+    <g
+       id="g166">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 906 566 L 1108.765625 566"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path165" />
+    </g>
+    <g
+       id="g168">
+      <g
+         id="g167">
+        <path
+           fill="none"
+           stroke="none"
+           id="path166" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="1093.8828125"
+           y="555.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text166">«Coroutine ContextManager»</text>
+      </g>
+    </g>
+    <g
+       id="g170">
+      <g
+         id="g169">
+        <path
+           fill="none"
+           stroke="none"
+           id="path168" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="1093.8828125"
+           y="570.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text168">WebSocketServer</text>
+      </g>
+    </g>
+    <g
+       id="g172">
+      <g
+         id="g171">
+        <path
+           fill="none"
+           stroke="none"
+           id="path170" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="997"
+           y="593.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text170">+signal_websocket_server_recv</text>
+      </g>
+    </g>
+    <g
+       id="g174">
+      <g
+         id="g173">
+        <path
+           fill="none"
+           stroke="none"
+           id="path172" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="997"
+           y="608.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text172">+signal_websocket_server_info</text>
+      </g>
+    </g>
+    <g
+       id="g176">
+      <g
+         id="g175">
+        <path
+           fill="none"
+           stroke="none"
+           id="path174" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="997"
+           y="631.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text174">+send()</text>
+      </g>
+    </g>
+    <g
+       id="g178">
+      <g
+         id="g177">
+        <path
+           fill="none"
+           stroke="none"
+           id="path176" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="997"
+           y="646.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text176">+recv()</text>
+      </g>
+    </g>
+    <g
+       id="g179">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="1303"
+         y="551"
+         width="244.76171875"
+         height="128"
+         transform="matrix(1 0 0 1 -86 -54)"
+         fill-opacity="0.2"
+         id="rect178" />
+    </g>
+    <g
+       id="g180">
+      <rect
+         fill="#FFA182"
+         stroke="none"
+         x="1296"
+         y="544"
+         width="244.76171875"
+         height="128"
+         transform="matrix(1 0 0 1 -86 -54)"
+         id="rect179" />
+    </g>
+    <g
+       id="g181">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1210 490 L 1454.76171875 490 L 1454.76171875 618 L 1210 618 L 1210 490 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path180" />
+    </g>
+    <g
+       id="g182">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1210 528 L 1454.76171875 528"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path181" />
+    </g>
+    <g
+       id="g183">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1210 566 L 1454.76171875 566"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path182" />
+    </g>
+    <g
+       id="g185">
+      <g
+         id="g184">
+        <path
+           fill="none"
+           stroke="none"
+           id="path183" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="1418.880859375"
+           y="555.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text183">«Coroutine»</text>
+      </g>
+    </g>
+    <g
+       id="g187">
+      <g
+         id="g186">
+        <path
+           fill="none"
+           stroke="none"
+           id="path185" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="1418.880859375"
+           y="570.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text185">PortWebSocketServer</text>
+      </g>
+    </g>
+    <g
+       id="g189">
+      <g
+         id="g188">
+        <path
+           fill="none"
+           stroke="none"
+           id="path187" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="1301"
+           y="593.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text187">+signal_thread_websocket_client_info</text>
+      </g>
+    </g>
+    <g
+       id="g191">
+      <g
+         id="g190">
+        <path
+           fill="none"
+           stroke="none"
+           id="path189" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="1301"
+           y="608.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text189">+signal_thread_websocket_client_recv</text>
+      </g>
+    </g>
+    <g
+       id="g193">
+      <g
+         id="g192">
+        <path
+           fill="none"
+           stroke="none"
+           id="path191" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="1301"
+           y="631.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text191">+send_data()</text>
+      </g>
+    </g>
+    <g
+       id="g195">
+      <g
+         id="g194">
+        <path
+           fill="none"
+           stroke="none"
+           id="path193" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="1301"
+           y="646.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text193">+run()</text>
+      </g>
+    </g>
+    <g
+       id="g196">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="295"
+         y="327"
+         width="139.873046875"
+         height="80"
+         transform="matrix(1 0 0 1 -86 -54)"
+         fill-opacity="0.2"
+         id="rect195" />
+    </g>
+    <g
+       id="g197">
+      <rect
+         fill="#A3E0FF"
+         stroke="none"
+         x="288"
+         y="320"
+         width="139.873046875"
+         height="80"
+         transform="matrix(1 0 0 1 -86 -54)"
+         id="rect196" />
+    </g>
+    <g
+       id="g198">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 202 266 L 341.873046875 266 L 341.873046875 346 L 202 346 L 202 266 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path197" />
+    </g>
+    <g
+       id="g199">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 202 304 L 341.873046875 304"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path198" />
+    </g>
+    <g
+       id="g200">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 202 314 L 341.873046875 314"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path199" />
+    </g>
+    <g
+       id="g202">
+      <g
+         id="g201">
+        <path
+           fill="none"
+           stroke="none"
+           id="path200" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="358.4365234375"
+           y="331.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text200">«object»</text>
+      </g>
+    </g>
+    <g
+       id="g204">
+      <g
+         id="g203">
+        <path
+           fill="none"
+           stroke="none"
+           id="path202" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="358.4365234375"
+           y="346.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text202">ManagerCoroutines</text>
+      </g>
+    </g>
+    <g
+       id="g206">
+      <g
+         id="g205">
+        <path
+           fill="none"
+           stroke="none"
+           id="path204" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="293"
+           y="379.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text204">+run()</text>
+      </g>
+    </g>
+    <g
+       id="g207">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 218 203 L 250 265"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path206" />
+    </g>
+    <g
+       id="g208">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 241.5982966963885 257.899902705027 L 250 265 L 249.0796255648586 254.0385716761392 L 239.90985576505443 245.45034554479298"
+         id="path207" />
+    </g>
+    <g
+       id="g209">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 241.5982966963885 257.899902705027 L 250 265 L 249.0796255648586 254.0385716761392 L 239.90985576505443 245.45034554479298 L 241.5982966963885 257.899902705027"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path208" />
+    </g>
+    <g
+       id="g210">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 257 347 L 237 409"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path209" />
+    </g>
+    <g
+       id="g211">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 236.1137351077253 398.0357611052695 L 237 409 L 244.12620375775822 400.6204284117317 L 243.75406115830066 388.0624104092679"
+         id="path210" />
+    </g>
+    <g
+       id="g212">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 236.1137351077253 398.0357611052695 L 237 409 L 244.12620375775822 400.6204284117317 L 243.75406115830066 388.0624104092679 L 236.1137351077253 398.0357611052695"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path211" />
+    </g>
+    <g
+       id="g213">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="535"
+         y="471"
+         width="272"
+         height="448"
+         transform="matrix(1 0 0 1 -86 -54)"
+         fill-opacity="0.2"
+         id="rect212" />
+    </g>
+    <g
+       id="g214">
+      <rect
+         fill="#A3E0FF"
+         stroke="none"
+         x="528"
+         y="464"
+         width="272"
+         height="448"
+         transform="matrix(1 0 0 1 -86 -54)"
+         id="rect213" />
+    </g>
+    <g
+       id="g215">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 442 410 L 714 410 L 714 858 L 442 858 L 442 410 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path214" />
+    </g>
+    <g
+       id="g216">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 442 448 L 714 448"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path215" />
+    </g>
+    <g
+       id="g217">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 442 458 L 714 458"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path216" />
+    </g>
+    <g
+       id="g219">
+      <g
+         id="g218">
+        <path
+           fill="none"
+           stroke="none"
+           id="path217" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="664.5"
+           y="475.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text217">«Thread»</text>
+      </g>
+    </g>
+    <g
+       id="g221">
+      <g
+         id="g220">
+        <path
+           fill="none"
+           stroke="none"
+           id="path219" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="664.5"
+           y="490.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text219">Optimizer</text>
+      </g>
+    </g>
+    <g
+       id="g222">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 441 634 L 315 634"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path221" />
+    </g>
+    <g
+       id="g223">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 325.16267485762415 629.790482243984 L 315 634 L 325.16267485762415 638.209517756016 L 337 634"
+         id="path222" />
+    </g>
+    <g
+       id="g224">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 325.16267485762415 629.790482243984 L 315 634 L 325.16267485762415 638.209517756016 L 337 634 L 325.16267485762415 629.790482243984"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path223" />
+    </g>
+    <g
+       id="g225">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 119 203 L 58 322 L 87 409"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path224" />
+    </g>
+    <g
+       id="g226">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 79.79278084503858 400.6900064950472 L 87 409 L 87.77977922099748 398.02767370306094"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path225" />
+    </g>
+    <g
+       id="g227">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="107"
+         y="362"
+         width="56.9130859375"
+         height="13"
+         transform="matrix(1 0 0 1 -86 -54)"
+         id="rect226" />
+    </g>
+    <g
+       id="g229">
+      <g
+         id="g228">
+        <path
+           fill="none"
+           stroke="none"
+           id="path227" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="135.45654296875"
+           y="368.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text227">«signals»</text>
+      </g>
+    </g>
+    <g
+       id="g230">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 167 203 L 165 409"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path229" />
+    </g>
+    <g
+       id="g231">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 160.88934272004622 398.7969368948946 L 165 409 L 169.30798147270514 398.8786712517165"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path230" />
+    </g>
+    <g
+       id="g232">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="223"
+         y="352"
+         width="41.49462890625"
+         height="13"
+         transform="matrix(1 0 0 1 -86 -54)"
+         id="rect231" />
+    </g>
+    <g
+       id="g234">
+      <g
+         id="g233">
+        <path
+           fill="none"
+           stroke="none"
+           id="path232" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="243.747314453125"
+           y="358.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text232">«func»</text>
+      </g>
+    </g>
+    <g
+       id="g235">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="1399"
+         y="327"
+         width="144"
+         height="112"
+         transform="matrix(1 0 0 1 -86 -54)"
+         fill-opacity="0.2"
+         id="rect234" />
+    </g>
+    <g
+       id="g236">
+      <rect
+         fill="#FFA182"
+         stroke="none"
+         x="1392"
+         y="320"
+         width="144"
+         height="112"
+         transform="matrix(1 0 0 1 -86 -54)"
+         id="rect235" />
+    </g>
+    <g
+       id="g237">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1306 266 L 1450 266 L 1450 378 L 1306 378 L 1306 266 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path236" />
+    </g>
+    <g
+       id="g238">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1306 304 L 1450 304"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path237" />
+    </g>
+    <g
+       id="g239">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1306 314 L 1450 314"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path238" />
+    </g>
+    <g
+       id="g241">
+      <g
+         id="g240">
+        <path
+           fill="none"
+           stroke="none"
+           id="path239" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="1464.5"
+           y="331.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text239">«object»</text>
+      </g>
+    </g>
+    <g
+       id="g243">
+      <g
+         id="g242">
+        <path
+           fill="none"
+           stroke="none"
+           id="path241" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="1464.5"
+           y="346.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text241">ManagerCoroutines</text>
+      </g>
+    </g>
+    <g
+       id="g245">
+      <g
+         id="g244">
+        <path
+           fill="none"
+           stroke="none"
+           id="path243" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="1397"
+           y="379.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text243">+run()</text>
+      </g>
+    </g>
+    <g
+       id="g246">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1105 108 L 1241 110"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path245" />
+    </g>
+    <g
+       id="g247">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 1230.7765258891982 114.05962770531539 L 1241 110 L 1230.9003218494456 105.64150240848821 L 1219.0023785069532 109.67650556627873"
+         id="path246" />
+    </g>
+    <g
+       id="g248">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1230.7765258891982 114.05962770531539 L 1241 110 L 1230.9003218494456 105.64150240848821 L 1219.0023785069532 109.67650556627873 L 1230.7765258891982 114.05962770531539"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path247" />
+    </g>
+    <g
+       id="g249">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1189 223 L 1241 195"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path248" />
+    </g>
+    <g
+       id="g250">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 1234.0477901131462 203.52448108034338 L 1241 195 L 1230.0563268667663 196.1117636227807 L 1221.629635801712 205.43019610677038"
+         id="path249" />
+    </g>
+    <g
+       id="g251">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1234.0477901131462 203.52448108034338 L 1241 195 L 1230.0563268667663 196.1117636227807 L 1221.629635801712 205.43019610677038 L 1234.0477901131462 203.52448108034338"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path250" />
+    </g>
+    <g
+       id="g252">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1388 215 L 1383 265"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path251" />
+    </g>
+    <g
+       id="g253">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 1379.8225972234495 254.46889789264344 L 1383 265 L 1388.19985066362 255.30662323666047 L 1385.189081818462 243.10918181538023"
+         id="path252" />
+    </g>
+    <g
+       id="g254">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1379.8225972234495 254.46889789264344 L 1383 265 L 1388.19985066362 255.30662323666047 L 1385.189081818462 243.10918181538023 L 1379.8225972234495 254.46889789264344"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path253" />
+    </g>
+    <g
+       id="g255">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1451 351 L 1593 407"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path254" />
+    </g>
+    <g
+       id="g256">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 1582.0016004844772 407.1876382075878 L 1593 407 L 1585.09027687138 399.35563736936996 L 1572.5339955278077 398.9288996447693"
+         id="path255" />
+    </g>
+    <g
+       id="g257">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1582.0016004844772 407.1876382075878 L 1593 407 L 1585.09027687138 399.35563736936996 L 1572.5339955278077 398.9288996447693 L 1582.0016004844772 407.1876382075878"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path256" />
+    </g>
+    <g
+       id="g258">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1110 554 L 1209 554"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path257" />
+    </g>
+    <g
+       id="g259">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 1198.837325142376 558.209517756016 L 1209 554 L 1198.837325142376 549.790482243984 L 1187 554"
+         id="path258" />
+    </g>
+    <g
+       id="g260">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1198.837325142376 558.209517756016 L 1209 554 L 1198.837325142376 549.790482243984 L 1187 554 L 1198.837325142376 558.209517756016"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path259" />
+    </g>
+    <g
+       id="g261">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1345 489 L 1367 379"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path260" />
+    </g>
+    <g
+       id="g262">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 1369.1347072497838 389.79087693182163 L 1367 379 L 1360.8791637187296 388.1397682256108 L 1362.68544502696 400.57277486520024"
+         id="path261" />
+    </g>
+    <g
+       id="g263">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1369.1347072497838 389.79087693182163 L 1367 379 L 1360.8791637187296 388.1397682256108 L 1362.68544502696 400.57277486520024 L 1369.1347072497838 389.79087693182163"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path262" />
+    </g>
+    <g
+       id="g264">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1754 841 L 1754 723"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path263" />
+    </g>
+    <g
+       id="g265">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 1758.2095177560159 733.1626748576241 L 1754 723 L 1749.7904822439841 733.1626748576241 L 1754 745"
+         id="path264" />
+    </g>
+    <g
+       id="g266">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1758.2095177560159 733.1626748576241 L 1754 723 L 1749.7904822439841 733.1626748576241 L 1754 745 L 1758.2095177560159 733.1626748576241"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path265" />
+    </g>
+    <g
+       id="g267">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="999"
+         y="823"
+         width="240"
+         height="144"
+         transform="matrix(1 0 0 1 -86 -54)"
+         fill-opacity="0.2"
+         id="rect266" />
+    </g>
+    <g
+       id="g268">
+      <rect
+         fill="#FFA182"
+         stroke="none"
+         x="992"
+         y="816"
+         width="240"
+         height="144"
+         transform="matrix(1 0 0 1 -86 -54)"
+         id="rect267" />
+    </g>
+    <g
+       id="g269">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 906 762 L 1146 762 L 1146 906 L 906 906 L 906 762 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path268" />
+    </g>
+    <g
+       id="g270">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 906 800 L 1146 800"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path269" />
+    </g>
+    <g
+       id="g271">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 906 853 L 1146 853"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path270" />
+    </g>
+    <g
+       id="g273">
+      <g
+         id="g272">
+        <path
+           fill="none"
+           stroke="none"
+           id="path271" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="1112.5"
+           y="827.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text271">«Thread»</text>
+      </g>
+    </g>
+    <g
+       id="g275">
+      <g
+         id="g274">
+        <path
+           fill="none"
+           stroke="none"
+           id="path273" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="1112.5"
+           y="842.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text273">PortWebServerChargePoint</text>
+      </g>
+    </g>
+    <g
+       id="g277">
+      <g
+         id="g276">
+        <path
+           fill="none"
+           stroke="none"
+           id="path275" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="997"
+           y="865.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text275">+signal_thread_web_server_info</text>
+      </g>
+    </g>
+    <g
+       id="g279">
+      <g
+         id="g278">
+        <path
+           fill="none"
+           stroke="none"
+           id="path277" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="997"
+           y="880.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text277">+signal_thread_web_server_recv</text>
+      </g>
+    </g>
+    <g
+       id="g281">
+      <g
+         id="g280">
+        <path
+           fill="none"
+           stroke="none"
+           id="path279" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="997"
+           y="895.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text279">+signal_thread_webs_server_finished</text>
+      </g>
+    </g>
+    <g
+       id="g283">
+      <g
+         id="g282">
+        <path
+           fill="none"
+           stroke="none"
+           id="path281" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="997"
+           y="918.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text281">+send_message()</text>
+      </g>
+    </g>
+    <g
+       id="g285">
+      <g
+         id="g284">
+        <path
+           fill="none"
+           stroke="none"
+           id="path283" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="997"
+           y="933.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text283">+run()</text>
+      </g>
+    </g>
+    <g
+       id="g287">
+      <g
+         id="g286">
+        <path
+           fill="none"
+           stroke="none"
+           id="path285" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="997"
+           y="948.5"
+           text-anchor="start"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text285">+stop()</text>
+      </g>
+    </g>
+    <g
+       id="g288">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1147 812 L 1418 762 L 1593 610"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path287" />
+    </g>
+    <g
+       id="g289">
+      <path
+         fill="#000000"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 1588.0878121833991 619.8422767109262 L 1593 610 L 1582.5670180798093 613.4860992890299 L 1576.390507964734 624.4265302249167"
+         id="path288" />
+    </g>
+    <g
+       id="g290">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1588.0878121833991 619.8422767109262 L 1593 610 L 1582.5670180798093 613.4860992890299 L 1576.390507964734 624.4265302249167 L 1588.0878121833991 619.8422767109262"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path289" />
+    </g>
+    <g
+       id="g291">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 715 106 L 905 106"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path290" />
+    </g>
+    <g
+       id="g292">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 894.8373251423759 110.209517756016 L 905 106 L 894.8373251423758 101.790482243984"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path291" />
+    </g>
+    <g
+       id="g293">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 905 106 L 715 106"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path292" />
+    </g>
+    <g
+       id="g294">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 725.1626748576241 101.790482243984 L 715 106 L 725.1626748576241 110.209517756016"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path293" />
+    </g>
+    <g
+       id="g295">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="833"
+         y="168"
+         width="124.68701171875"
+         height="13"
+         transform="matrix(1 0 0 1 -86 -54)"
+         id="rect294" />
+    </g>
+    <g
+       id="g297">
+      <g
+         id="g296">
+        <path
+           fill="none"
+           stroke="none"
+           id="path295" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="895.343505859375"
+           y="174.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text295">+Request/Response</text>
+      </g>
+    </g>
+    <g
+       id="g298">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="843"
+         y="143"
+         width="105.73291015625"
+         height="13"
+         transform="matrix(1 0 0 1 -86 -54)"
+         id="rect297" />
+    </g>
+    <g
+       id="g300">
+      <g
+         id="g299">
+        <path
+           fill="none"
+           stroke="none"
+           id="path298" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="895.866455078125"
+           y="149.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text298">«OCPP Protocol»</text>
+      </g>
+    </g>
+    <g
+       id="g301">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1556 109 L 1754 106 L 1754 217"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path300" />
+    </g>
+    <g
+       id="g302">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1749.7904822439841 206.83732514237585 L 1754 217 L 1758.2095177560159 206.83732514237585"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path301" />
+    </g>
+    <g
+       id="g303">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="1807"
+         y="152"
+         width="56.9130859375"
+         height="13"
+         transform="matrix(1 0 0 1 -86 -54)"
+         id="rect302" />
+    </g>
+    <g
+       id="g305">
+      <g
+         id="g304">
+        <path
+           fill="none"
+           stroke="none"
+           id="path303" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="1835.45654296875"
+           y="158.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text303">«signals»</text>
+      </g>
+    </g>
+    <g
+       id="g306">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1409 489 L 1474 434 L 1593 449"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path305" />
+    </g>
+    <g
+       id="g307">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1582.390665810666 451.9055168316545 L 1593 449 L 1583.4435571963331 443.5525785053622"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path306" />
+    </g>
+    <g
+       id="g308">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="1535"
+         y="480"
+         width="56.9130859375"
+         height="13"
+         transform="matrix(1 0 0 1 -86 -54)"
+         id="rect307" />
+    </g>
+    <g
+       id="g310">
+      <g
+         id="g309">
+        <path
+           fill="none"
+           stroke="none"
+           id="path308" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="1563.45654296875"
+           y="486.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text308">«signals»</text>
+      </g>
+    </g>
+    <g
+       id="g311">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1556 156 L 1634 178 L 1650 217"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path310" />
+    </g>
+    <g
+       id="g312">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1642.2481784348654 209.19556136404975 L 1650 217 L 1650.0372058875798 206.00006292191046"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path311" />
+    </g>
+    <g
+       id="g313">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="1695"
+         y="223"
+         width="41.49462890625"
+         height="13"
+         transform="matrix(1 0 0 1 -86 -54)"
+         id="rect312" />
+    </g>
+    <g
+       id="g315">
+      <g
+         id="g314">
+        <path
+           fill="none"
+           stroke="none"
+           id="path313" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="1715.747314453125"
+           y="229.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text313">«func»</text>
+      </g>
+    </g>
+    <g
+       id="g316">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1456 529 L 1593 502"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path315" />
+    </g>
+    <g
+       id="g317">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1583.8430745399614 508.09513872847026 L 1593 502 L 1582.215161985213 499.8349898395611"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path316" />
+    </g>
+    <g
+       id="g318">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="1584"
+         y="564"
+         width="41.49462890625"
+         height="13"
+         transform="matrix(1 0 0 1 -86 -54)"
+         id="rect317" />
+    </g>
+    <g
+       id="g320">
+      <g
+         id="g319">
+        <path
+           fill="none"
+           stroke="none"
+           id="path318" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="1604.747314453125"
+           y="570.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text318">«func»</text>
+      </g>
+    </g>
+    <g
+       id="g321">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1147 779 L 1362 682 L 1593 557"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path320" />
+    </g>
+    <g
+       id="g322">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1586.0653901829594 565.5388047574239 L 1593 557 L 1582.0586436262854 558.1343371206902"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path321" />
+    </g>
+    <g
+       id="g323">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="1423"
+         y="727"
+         width="41.49462890625"
+         height="13"
+         transform="matrix(1 0 0 1 -86 -54)"
+         id="rect322" />
+    </g>
+    <g
+       id="g325">
+      <g
+         id="g324">
+        <path
+           fill="none"
+           stroke="none"
+           id="path323" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="1443.747314453125"
+           y="733.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text323">«func»</text>
+      </g>
+    </g>
+    <g
+       id="g326">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1147 796 L 1378 722 L 1593 578"
+         stroke-miterlimit="10"
+         stroke-dasharray="3"
+         id="path325" />
+    </g>
+    <g
+       id="g327">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1586.8987699514967 587.1528679601117 L 1593 578 L 1582.213723857224 580.1578338610242"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path326" />
+    </g>
+    <g
+       id="g328">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="1448"
+         y="769"
+         width="53.45361328125"
+         height="13"
+         transform="matrix(1 0 0 1 -86 -54)"
+         id="rect327" />
+    </g>
+    <g
+       id="g330">
+      <g
+         id="g329">
+        <path
+           fill="none"
+           stroke="none"
+           id="path328" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="1474.726806640625"
+           y="775.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -86 -54)"
+           id="text328">«signas»</text>
+      </g>
+    </g>
+  </g>
+</svg>

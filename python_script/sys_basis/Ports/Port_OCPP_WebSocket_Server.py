@@ -20,8 +20,10 @@ class PortOCPPWebsocketServer(object):
         - charge_point_version(str): 充电桩版本, 支持:
             - "v16", "v1.6", "v1_6", "ocpp16", "ocpp1.6", "ocpp1_6"
             - "v2.0.1", "v2_0_1", "ocpp201", "ocpp2.0.1", "ocpp2_0_1"
-        - ping_interval(int): 心跳包间隔, 单位为秒, 默认为 30 秒
-        - ping_timeout(int): 心跳包超时时间, 单位为秒, 默认为 40 秒
+        - recv_timeout_s(int|float): 接收消息超时时间, 单位为秒, 须大于0, 默认值为 30.
+        - ocpp_response_timeout_s(int|float): OCPP响应超时时间, 单位为秒, 须大于0, 默认值为 30.
+        - ping_interval_S(int): 心跳包间隔, 单位为秒, 默认为 30 秒
+        - ping_timeout_S(int): 心跳包超时时间, 单位为秒, 默认为 40 秒
         - info_title(str): 信息标题, 默认为 "OCPP_Server_Port"
         - websocket_info_title(str): WebSocket信息标题, 默认为 "OCPP_WebSocket_Server"
 
@@ -37,16 +39,16 @@ class PortOCPPWebsocketServer(object):
             - `action`(str): 消息类型
             - `data`(dict): OCPP消息的字典形式
             - `send_time`(float): 请求发送时间,  这里send 含义是从 OCPP端口 向外部发送的动作
-            - `response_status`(int): 响应状态, 表示响应是否成功收到. 
+            - `result`(int): 响应结果, 表示响应是否成功收到. 
                 - 枚举类 `CP_Params.RESPONSE`
                 - 枚举项: `SUCCESS`, `TIMEOUT`, `ERROR`
         - signal_thread_ocpp_server_recv_response_result(dict): OOCPP响应消息结果信号. 向系统反馈消息是否在响应时间内发送出去了, 包含具体发送信息的内容, 与函数返回值不同的一点在于其记录了详细的消息信息, 可以用于后续对发送失败的消息进行处理, 内容为字典, 结构如下:
             - `action`(str): 消息类型
             - `data`(dict): OCPP消息的字典形式
             - `send_time`(float): 接收的信号中的时间戳
-            - `status`(int): 发送结果
+            - `result`(int): 发送结果
                 - 枚举类 `CP_Params.RESPONSE_RESULT`
-                - 枚举项: `SUCCESS`, `TIMEOUT`
+                - 枚举项: `SUCCESS`, `TIMEOUT`, `ERROR`
 
     属性: 
         - isRunning: 是否正在运行
@@ -55,7 +57,7 @@ class PortOCPPWebsocketServer(object):
         - run: 启动方法, 请通过传入给 asyncio.gather() 进行调用
         - send_normal_message(message): 发送普通消息
         - send_request_message(message): 发送请求消息
-        - send_response_message(message_action, message, send_time): 发送响应消息
+        - send_response_message(message_action, message, send_time, message_id): 发送响应消息
     """
 
     def __init__(
@@ -66,8 +68,8 @@ class PortOCPPWebsocketServer(object):
         charge_point_version: str = 'v2.0.1',
         recv_timeout_s: int | float = 30,
         ocpp_response_timeout_s: int | float = 30,
-        ping_interval: float = 30,
-        ping_timeout: float = 40,
+        ping_interval_s: float = 30,
+        ping_timeout_s: float = 40,
         info_title: str = 'OCPP_Server_Port',
         websocket_info_title: str = 'OCPP_WebSocket_Server'
     ) -> None:
@@ -83,8 +85,8 @@ class PortOCPPWebsocketServer(object):
             port=port,
             info_title=websocket_info_title,
             recv_timeout_s=recv_timeout_s,
-            ping_interval_s=ping_interval,
-            ping_timeout_s=ping_timeout
+            ping_interval_s=ping_interval_s,
+            ping_timeout_s=ping_timeout_s
         )
         self.__websocket.signal_websocket_server_info.connect(self.signal_thread_ocpp_server_info.emit)
         self.__websocket.signal_websocket_server_recv.connect(self.signal_thread_ocpp_server_recv.emit)
@@ -114,6 +116,14 @@ class PortOCPPWebsocketServer(object):
         self.__charge_point.signal_charge_point_ocpp_response.connect(self.signal_thread_ocpp_server_recv_response.emit)
         self.__charge_point.signal_charge_point_ocpp_response_result.connect(self.signal_thread_ocpp_server_recv_response_result.emit)
         self.__charge_point.signal_charge_point_info.connect(self.signal_thread_ocpp_server_info.emit)
+
+    @property
+    def websocket(self):
+        return self.__websocket
+
+    @property
+    def ocpp_cp(self):
+        return self.__charge_point
 
     @property
     def signal_thread_ocpp_server_info(self) -> XSignal:
@@ -147,7 +157,7 @@ class PortOCPPWebsocketServer(object):
             - `action`(str): 消息类型
             - `data`(dict): OCPP消息的字典形式
             - `send_time`(float): 请求发送时间,  这里send 含义是从 OCPP端口 向外部发送的动作
-            - `response_status`(int): 响应状态, 表示响应是否成功收到. 
+            - `result`(int): 响应结果, 表示响应是否成功收到. 
                 - 枚举类 `CP_Params.RESPONSE`
                 - 枚举项: `SUCCESS`, `TIMEOUT`, `ERROR`
         """
@@ -160,9 +170,9 @@ class PortOCPPWebsocketServer(object):
             - `action`(str): 消息类型
             - `data`(dict): OCPP消息的字典形式
             - `send_time`(float): 接收的信号中的时间戳
-            - `status`(int): 发送结果
+            - `result`(int): 发送结果
                 - 枚举类 `CP_Params.RESPONSE_RESULT`
-                - 枚举项: `SUCCESS`, `TIMEOUT`
+                - 枚举项: `SUCCESS`, `TIMEOUT`, `ERROR`
         """
         return self.__signal_thread_ocpp_server_recv_response_result
 
@@ -210,13 +220,13 @@ class PortOCPPWebsocketServer(object):
         self.__list_request_message.append(message)
         self.__event_request_message.set()
 
-    def send_response_message(self,  message_action: str, message, send_time: float) -> int:
+    def send_response_message(self,  message_action: str, message, send_time: float, message_id: str) -> int:
         """ 
         发送响应消息, 结果将通过信号 __signal_thread_ocpp_server_recv_response_result 以字典形式发送, 结构如下: 
             - `action`(str): 消息类型
             - `data`(dict): OCPP消息的字典形式
             - `send_time`(float): 请求发送时间,  这里send 含义是从 OCPP端口 向外部发送的动作
-            - `status`(int): 响应状态, 表示响应是否成功收到. 
+            - `result`(int): 响应结果, 表示响应是否成功收到. 
                 - 枚举类 `CP_Params.RESPONSE_RESULT`
                 - 枚举项: `SUCCESS`, `TIMEOUT`, `ERROR`
 
@@ -234,12 +244,18 @@ class PortOCPPWebsocketServer(object):
             - 例如: `authorize_response.generate(authorize_response.get_id_token_info('Accepted'))`
         - send_time: 接收的信号中的时间戳, 用于判断消息是否过期, 键名 `send_time` . 
             - 例如: request_message['send_time']
+        - message_id(str): 消息ID, 用于判断消息是否过期, 键名 `message_id` .
+            - 例如: request_message['message_id']
+
+        - 返回:
+            - flag(int): 
+                - `RESPONSE_RESULT.SUCCESS` `0 - 成功`
+                - `RESPONSE_RESULT.TIMEOUT ` `1 - 超时`
+                - `RESPONSE_RESULT.ERROR` `2 - 错误`
         """
-        # self.__list_response_message.append((message_action, message, send_time))
-        # self.__event_response_message.set()
         try:
             # 此处结果将通过信号 signal_thread_ocpp_server_recv_response_result 传递, 无需手动处理
-            flag: int = self.__charge_point.send_response_message(message_action, message, send_time)
+            flag: int = self.__charge_point.send_response_message(message_action, message, send_time, message_id)
             return flag
         except:
             self.__send_signal_info(f'<Error - send_response_message>\n{traceback.format_exc()}')

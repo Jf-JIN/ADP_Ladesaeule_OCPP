@@ -65,11 +65,12 @@ function handleTitleClick (selectedElement) {
 
 title_home.addEventListener('click', () => {
     handleTitleClick(title_home);
-    socket.emit('input_data', 'home');
+    socket.emit('input_data', 'home1');
 });
 
 title_console.addEventListener('click', () => {
     handleTitleClick(title_console);
+    socket.emit('input_data', 'home');
 });
 
 title_image.addEventListener('click', () => {

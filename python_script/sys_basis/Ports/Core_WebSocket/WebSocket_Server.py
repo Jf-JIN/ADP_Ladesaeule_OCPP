@@ -38,15 +38,15 @@ class WebSocketServer(object):
         info_title: str | None = 'WebSocket_Server',
         recv_timeout_s: int | float = 30,
         ping_interval_s: int | float = 20,
-        ping_timeout_s=20
+        ping_timeout_s: int | float = 20
     ) -> None:
         self.__signal_websocket_server_recv = XSignal()
         self.__signal_websocket_server_info = XSignal()
-        self.__host = host
-        self.__port = port
-        self.__server = None
-        self.__clients = set()
-        self.__message_queue = asyncio.Queue()
+        self.__host: str = host
+        self.__port: int = port
+        self.__server: Server | None = None
+        self.__clients: set = set()
+        self.__message_queue: asyncio.Queue = asyncio.Queue()
         try:
             if info_title is not None:
                 self.__info_title = str(info_title)
@@ -82,7 +82,7 @@ class WebSocketServer(object):
         """ 服务器对象 """
         return self.__server
 
-    async def send(self, message) -> None:
+    async def send(self, message: str) -> None:
         """
         发送消息
 
@@ -136,22 +136,21 @@ class WebSocketServer(object):
         await websocket.send(f'<Response> {websocket.remote_address}')
         await self.send(f'<Response> {websocket.remote_address}')
         self.__send_signal_info(f'--<Client_Connected> {websocket.remote_address}')
-        try:
-            while True:
-                try:
-                    message = await asyncio.wait_for(websocket.recv(), timeout=self.__recv_timeout_s)
-                    self.__send_signal_info(f'->>> Received_From - {websocket.remote_address}>  {message}')  # 使用 from 明确来源
-                    self.__send_signal_recv(message)
-                    await self.__filter_for_ocpp(message=message)
-                except asyncio.TimeoutError:
-                    pass
-                except Exception as e:
-                    self.__send_signal_info(f'--<Exception> {traceback.format_exc()}')
-
-        except websockets.ConnectionClosed as e:
-            self.__send_signal_info(f'--<Connection_Closed> {traceback.format_exc()}')
-        except Exception as e:
-            self.__send_signal_info(f'--<Exception> {traceback.format_exc()}')
+        wb_address = websocket.remote_address
+        while True:
+            try:
+                message = await asyncio.wait_for(websocket.recv(), timeout=self.__recv_timeout_s)
+                self.__send_signal_info(f'->>> Received_From - {websocket.remote_address}>  {message}')  # 使用 from 明确来源
+                self.__send_signal_recv(message)
+                await self.__filter_for_ocpp(message=message)
+            except asyncio.TimeoutError:
+                pass
+            except (OSError, ConnectionResetError, websockets.exceptions.ConnectionClosed):
+                self.__send_signal_info(f'--<Connection_Closed> Client {wb_address} is disconnected')
+                break
+            except Exception as e:
+                self.__send_signal_info(f'--<Exception> {traceback.format_exc()}')
+                break
 
     async def __filter_for_ocpp(self, message: str) -> None:
         """
@@ -175,7 +174,7 @@ class WebSocketServer(object):
         - 参数:
             - args: 可变数量的参数, 每个参数都应该是能够被转换为字符串的对象. 建议传递字符串数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式.
         """
-        self.__send_signal(signal=self.signal_websocket_server_recv, error_hint='send_signal_recv', log=Log.WS.info, doShowTitle=False, doPrintInfo=False, args=args)
+        self.__send_signal(signal=self.signal_websocket_server_recv, error_hint='send_signal_recv', log=None, doShowTitle=False, doPrintInfo=False, args=args)
 
     def __send_signal_info(self, *args) -> None:
         """
