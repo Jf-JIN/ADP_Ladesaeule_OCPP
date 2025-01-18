@@ -7,7 +7,7 @@ from sys_basis.XSignal import XSignal
 
 class EVSEReadWrite(object):
 
-    def __init__(self, client):
+    def __init__(self, client,evse_id):
         """
         Modbus读写功能
         读写的结果被打包成一个新列表，结构为[flag, registers_result_list, message]
@@ -17,6 +17,7 @@ class EVSEReadWrite(object):
         """
 
         self._client = client
+        self.__slave_address = evse_id
         self.__signal_EVSE_info = XSignal()
         self.__signal_EVSE_read_data = XSignal()
         self.__signal_EVSE_failure = XSignal()
@@ -99,20 +100,20 @@ class EVSEReadWrite(object):
     def get_min_current(self) -> Optional[List[int]]:
         return self.read_register(method= 'get_min_current', address = 2002)
 
-    def read_register(self, method: str, address: int, count: int = 1, slave: int = 1) -> Optional[List[int]]:
+    def read_register(self, method: str, address: int, count: int = 1,) -> Optional[List[int]]:
         """
         读取保持寄存器（Holding Registers）
         参数:
             - method: 使用写功能的方法名
             - address: 起始寄存器地址（零偏移）
             - count: 读取的寄存器数量，默认为 1
-            - slave: 从站地址，EVSE 从站地址为 1
+            - slave: 从站地址，传入的EVSE地址
         返回
             - 成功时返回[成功flag,[寄存器返回值列表]，'消息']，失败时返回 [失败flag,None(pymodbus要求返回None),'消息']
         """
         try:
             # 读取寄存器
-            result = self._client.read_holding_registers(address=address, count=count, slave=slave)
+            result = self._client.read_holding_registers(address=address, count=count, slave=self.__slave_address)
             if not result.isError():
                 message = [ResultFlag.SUCCESS, result.registers, f"=={method}==\n读取成功\n成功读取到 {count} 个寄存器，从地址 {address} 开始: {result.registers}"]
             else:
@@ -136,20 +137,20 @@ class EVSEReadWrite(object):
         return self.write_register(method= 'enableRCD', address=2005, value=REG2005.RCD_FEEDBACK_ENABLE)
 
 
-    def write_register(self, method: str, address: int, value: int, slave: int = 1,) -> Optional[List[int]]:
+    def write_register(self, method: str, address: int, value: int,) -> Optional[List[int]]:
         """
         写入一个保持寄存器（Holding Register）
         参数:
             - method: 使用写功能的方法名
             - address: 寄存器地址
             - value: 要写入的值
-            - slave: 从站地址，默认值为 1
+            - slave: 从站地址，传入的evse地址
         返回:
             - 成功时返回[成功flag,[寄存器返回值列表]，'消息']，失败时返回 [失败flag,None(pymodbus要求返回None),'消息']
         """
         try:
             # 将值封装成列表，因为 pymodbus 的 write_registers 接收列表
-            result = self._client.write_registers(address=address, values=[value], slave=slave)
+            result = self._client.write_registers(address=address, values=[value], slave=self.__slave_address)
             if not result.isError():
                 message = [ResultFlag.SUCCESS, result.registers,f"=={method}==\n写入成功\n成功写入寄存器 {address}，值为 {value}"]
             else:

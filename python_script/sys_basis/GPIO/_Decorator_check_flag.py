@@ -42,7 +42,7 @@ def check_flag(used_method):
 
         if flag == ResultFlag.FAIL:
             # 如果 flag 失败，执行错误处理
-            instance.checking_connection()
+            instance.send_EVSE_read_write_error()
             #return None
 
         # 将 value 和 message 传递给被装饰的函数
