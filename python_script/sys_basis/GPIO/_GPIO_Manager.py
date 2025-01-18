@@ -186,7 +186,8 @@ class GPIOManager:
 
         self.__evse_instances[evse_id]["evse"].close()
         self.__evse_instances[evse_id]["shelly"].close()
-
+        self.__evse_id_list.append(evse_id)
+        
 
     def _send_signal_info(self, *args) -> None:
             """
