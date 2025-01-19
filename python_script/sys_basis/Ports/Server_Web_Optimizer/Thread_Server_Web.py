@@ -29,7 +29,7 @@ class ServerWeb(Thread):
             self.__send_signal_info(f'<Error - __init__> info_title must be convertible to a string. It has been set to None. The provided type is {type(info_title)}')
             self.__info_title = None
         self.__app.add_url_rule('/', 'home', self.__home_route, methods=['GET', 'POST'])
-        self.__listening_update()
+        self.__listening_submit()
 
     @property
     def signal_web_server_info(self):
@@ -43,16 +43,31 @@ class ServerWeb(Thread):
     def signal_web_server_finished(self):
         return self.__signal_web_server_finished
 
-    def update_data(self, message: dict):
+    def update_console_data(self, message: dict):
         if not message:
             return
         self.__socketio.emit('update_data', message)
 
+    def update_charging_needs(self, message: dict):
+        if not message:
+            return
+        self.__socketio.emit('update_charging_needs', message)
+
+    def update_connection_status(self, message: dict):
+        if not message:
+            return
+        self.__socketio.emit('update_connection_status', message)
+
+    def update_results(self, message: dict):
+        if not message:
+            return
+        self.__socketio.emit('update_results', message)
+
     def __home_route(self):
         return render_template('HomePage.html')
 
-    def __listening_update(self):
-        @self.__socketio.on('update', namespace='/')
+    def __listening_submit(self):
+        @self.__socketio.on('submit')
         def handle_test(message):
             self.__send_signal_info(f'->>> Web Received> {message}')
             self.signal_web_server_recv.emit(message)
