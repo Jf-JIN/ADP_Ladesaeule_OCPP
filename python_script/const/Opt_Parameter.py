@@ -1,6 +1,6 @@
 
 from const.Analog_Define import AnalogDefine
-from sys_basis.Optimize.data_gene import DataGene
+from tools.data_gene import DataGene
 
 
 class OptParams(AnalogDefine):
