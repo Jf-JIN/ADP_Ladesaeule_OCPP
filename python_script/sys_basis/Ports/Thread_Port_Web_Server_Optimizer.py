@@ -43,8 +43,17 @@ class PortWebServerOptimizer(Thread):
     def signal_thread_webs_server_finished(self) -> XSignal:
         return self.__signal_thread_webs_server_finished
 
-    def send_message(self, message: dict):
-        self.__web_server.update_data(message)
+    def send_console_message(self, message: dict):
+        self.__web_server.update_console_data(message)
+
+    def send_charging_needs(self, message: dict):
+        self.__web_server.update_charging_needs(message)
+
+    def send_connection_status(self, message: dict):
+        self.__web_server.update_connection_status(message)
+
+    def send_results(self, message: dict):
+        self.__web_server.update_results(message)
 
     def __send_signal_info(self, *args) -> None:
         """
