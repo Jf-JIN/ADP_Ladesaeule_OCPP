@@ -11,6 +11,7 @@ from sys_basis.GPIO._evse_r_w import EVSEReadWrite
 from _Thread_evse_output_current import ThreadOutputCurrent
 from _Thread_evse_fail_check import ThreadFailCheck
 from _Thread_evse_vehicle_state import ThreadVehicleState
+from _Thread_evse_wait_for_EV import ThreadWaitForEV
 
 
 
@@ -24,15 +25,24 @@ class EVSEManager(object):
              - evse_id: 分配的EVSE id
              - poll_interval: 读取数据的间隔时间，默认 5 秒
              - poll_interval_check: 检查充电头是否拔出，默认 1 秒
+        信号:
+
+             -   __signal_EVSE_info = EVSE信息
+             -   __signal_EVSE_read_write_error = 读写错误，发生错误后，GPIOmanager会检查MODBUS连接
+             -   __signal_EVSE_ready_to_go = 车辆第一次连接EVSE后，会发送第一个数据包
+             -   __signal_vehicle_departed = 车辆离开的信号，会触发归还id和清除evse和shelly实例
+             -   __signal_EVSE_failure = EVSE故障,格式为list[evse_id, bool]
         """
 
         self.__output_current_polling_thread = None
         self.__vehicle_state_polling_thread = None
         self.__evse_failure_polling_thread = None
+        self.__thread_wait_for_ev = None
         self.__poll_interval = poll_interval
         self.__poll_interval_check = poll_interval_check
 
         self.__isRCD = RCD
+        self.__evse_id =evse_id
         self.__evse_data = {
             'EVSE_ID': evse_id,
             'min_current': -1,
@@ -58,7 +68,7 @@ class EVSEManager(object):
         self.__current_vehicle_state = None
         self.__previous_vehicle_state = None
         self.__EVSE_state_list = [0,'steady 12V','PWM is being generated(only if 1000 >= 6)','OFF, steady 12V']
-        self.EVSE = EVSEReadWrite(client= self._client, evse_id=self.__evse_data['evse_id'])
+        self.EVSE = EVSEReadWrite(client= self._client, evse_id=self.__evse_id)
         self.booting()
 
 
@@ -72,7 +82,7 @@ class EVSEManager(object):
 
     @property
     def get_id(self):
-        return self.__evse_data['evse_id']
+        return self.__evse_id
 
     @property
     def get_evse_data(self):
@@ -96,28 +106,8 @@ class EVSEManager(object):
         self.selftest()
         if not self.__evse_data['EVSE_Failure'] :
             self.start_polling()
-
             self.wait_for_EV()
 
-            self.__evse_data['allowed_current'] = self.get_allowed_current()
-            self.__evse_data['min_current']= self.get_min_current()
-            if self.__evse_data['allowed_current']>=0:
-                self._send_signal_info(f"允许最大电流为{self.__evse_data['allowed_current']}A")
-            else:
-                self._send_signal_info("获取允许电流失败")
-
-            if self.__evse_data['min_current']>=0:
-                self._send_signal_info(f"允许最小电流为{self.__evse_data['min_current']}A")
-            else:
-                self._send_signal_info("获取最小电流失败")
-
-            if self.__evse_data['min_current'] == -1 or self.__evse_data['allowed_current'] == -1:
-                self.send_EVSE_read_write_error()
-                self._send_signal_info('Booting:读写错误')
-                return
-            else:
-                self._send_signal_info('Booting:成功')
-                self.signal_EVSE_ready_to_go.emit(self.__evse_data)
         #print('booting end')
 
 
@@ -141,18 +131,11 @@ class EVSEManager(object):
                 self.__evse_data['EVSE_selftest_Fail'] = True
                 self.__evse_data['EVSE_Failure'] = True
                 self._send_signal_info("RCD failed to alarm")
-                self.signal_EVSE_failure.emit([self.__evse_data['evse_id'],True])
+                self.signal_EVSE_failure.emit([self.__evse_id,True])
 
         self.handle_EVSE_fail(self.EVSE.get_EVSE_status_fails())
 
-    def wait_for_EV(self):
-        while True:
-           current_vehicle_state = self.__vehicle_state
-           self._send_signal_info("waiting for EV...")
-           if current_vehicle_state == VehicleState.EV_IS_PRESENT:
-               self._send_signal_info("EV is present")
-           break
-        time.sleep(1)
+
 
 
     @check_flag(used_method =lambda self: self.EVSE.get_EVSE_config())
@@ -170,7 +153,7 @@ class EVSEManager(object):
         self._send_signal_info(message)
 
     @check_flag(used_method=lambda self: self.EVSE.turn_off_charging_now())
-    def __turn_off_charging_now(self,value, message):
+    def turn_off_charging_now(self,value, message):
         self._send_signal_info(message)
 
     @check_flag(used_method =lambda self: self.EVSE.get_allowed_current())
@@ -200,18 +183,18 @@ class EVSEManager(object):
 
     def update_state(self, new_state):
         if new_state == VehicleState.READY and self.__previous_vehicle_state in {VehicleState.EV_IS_PRESENT, VehicleState.CHARGING, VehicleState.CHARGING_WITH_VENTILATION}:
-            self.__turn_off_charging_now()
-            self.signal_vehicle_departed.emit(self.__evse_data['evse_id'])
+            self.turn_off_charging_now()
+            self.signal_vehicle_departed.emit(self.__evse_id)
         __previous_vehicle_state = self.__current_vehicle_state
         self.__current_vehicle_state = new_state
 
     @check_flag(used_method =lambda self: self.EVSE.get_min_current())
     def get_min_current(self,value,message) -> int:
         """
-              检查flag,获取最低电流
-              返回:
-                  - 成功时返回 self.__evse_data['min_current']，失败时返回 -1
-              """
+          检查flag,获取最低电流
+          返回:
+              - 成功时返回 self.__evse_data['min_current']，失败时返回 -1
+        """
         if value:
             self.__evse_data['min_current'] = value[0]
         else:
@@ -296,8 +279,8 @@ class EVSEManager(object):
     def close(self) -> None:
         """关闭连接"""
         self.stop_polling()
-        self.__turn_off_charging_now()
-        self._send_signal_info(f"id为{self.__evse_data['EVSE_ID']}的实例已关闭")
+        self.turn_off_charging_now()
+        self._send_signal_info(f"id为{self.__evse_id}的实例已关闭")
 
     def set_current(self, current: int) -> bool:
         """
@@ -343,21 +326,29 @@ class EVSEManager(object):
         启动定时轮询，定期读取寄存器值并发送
         线程为：
             1. OutputCurrent：轮询当前输出电流
-            2. VehicleState：轮询车辆状态
-            3. FailCheck：轮询EVSE失效
+            2. FailCheck：轮询EVSE失效
         """
         if self.__output_current_polling_thread is None:
-            self.__output_current_polling_thread = ThreadOutputCurrent(polling_interval=self.__poll_interval, client=self._client, evse_id=self.__evse_data['evse_id'])
+            self.__output_current_polling_thread = ThreadOutputCurrent(polling_interval=self.__poll_interval, client=self._client, evse_id=self.__evse_id)
             self.__output_current_polling_thread.signal_transfer_data.connect(self.send_actual_current)
             self.__output_current_polling_thread.start()
-        if self.__vehicle_state_polling_thread is None:
-            self.__vehicle_state_polling_thread = ThreadVehicleState(polling_interval=self.__poll_interval_check, client=self._client, evse_id=self.__evse_data['evse_id'])
-            self.__vehicle_state_polling_thread.signal_transfer_data.connect(self.handle_vehicle_state)
-            self.__vehicle_state_polling_thread.start()
+
         if self.__evse_failure_polling_thread is None:
-            self.__evse_failure_polling_thread = ThreadFailCheck(polling_interval=self.__poll_interval, client=self._client, evse_id=self.__evse_data['evse_id'])
+            self.__evse_failure_polling_thread = ThreadFailCheck(polling_interval=self.__poll_interval, client=self._client, evse_id=self.__evse_id)
             self.__evse_failure_polling_thread.signal_transfer_data.connect(self.handle_EVSE_fail)
             self.__evse_failure_polling_thread.start()
+
+    def start_checking_vehcile_state(self):
+        """
+        启动定时轮询，定期读取寄存器值并发送,
+        线程为：
+            VehicleState：轮询车辆状态
+
+        """
+        if self.__vehicle_state_polling_thread is None:
+            self.__vehicle_state_polling_thread = ThreadVehicleState(polling_interval=self.__poll_interval_check, client=self._client, evse_id=self.__evse_id)
+            self.__vehicle_state_polling_thread.signal_transfer_data.connect(self.handle_vehicle_state)
+            self.__vehicle_state_polling_thread.start()
 
     def stop_polling(self):
         """
@@ -375,18 +366,49 @@ class EVSEManager(object):
             self.__evse_failure_polling_thread.stop()
             self.__evse_failure_polling_thread = None
 
+        if self.__thread_wait_for_ev is not None:
+            self.__thread_wait_for_ev.stop()
+            self.__thread_wait_for_ev = None
 
-    # def __handle_connection_error(self, message):
-    #     """
-    #     统一处理错误逻辑，检查连接并发送错误信息
-    #     """
-    #     self._send_signal_info(message)  # 发送错误消息
-    #     self.checking_connection()  # 检查连接
+    def wait_for_EV(self):
+        self.__thread_wait_for_ev = ThreadWaitForEV(polling_interval=self.__poll_interval_check, client=self._client, evse_id=self.__evse_id)
+        self.__thread_wait_for_ev.signal_EV_is_present.connect(self.on_vehicle_ready)
+        self.__thread_wait_for_ev.signal_transfer_data.connect(self.handle_vehicle_state)
+        self.__thread_wait_for_ev.signal_info.connect(self._send_signal_info)
+        self.__thread_wait_for_ev.start()
+
+    def on_vehicle_ready(self,) -> None:
+
+        if self.__thread_wait_for_ev is not None:
+            self.__thread_wait_for_ev.stop()
+            self.__thread_wait_for_ev = None
+
+        self.start_checking_vehcile_state()
+
+        self.__evse_data['allowed_current'] = self.get_allowed_current()
+        self.__evse_data['min_current'] = self.get_min_current()
+        if self.__evse_data['allowed_current'] >= 0:
+            self._send_signal_info(f"允许最大电流为{self.__evse_data['allowed_current']}A")
+        else:
+            self._send_signal_info("获取允许电流失败")
+
+        if self.__evse_data['min_current'] >= 0:
+            self._send_signal_info(f"允许最小电流为{self.__evse_data['min_current']}A")
+        else:
+            self._send_signal_info("获取最小电流失败")
+
+        if self.__evse_data['min_current'] == -1 or self.__evse_data['allowed_current'] == -1:
+            self.send_EVSE_read_write_error()
+            self._send_signal_info('Booting:读写错误')
+            return
+        else:
+            self._send_signal_info('Booting:成功')
+            self.signal_EVSE_ready_to_go.emit(self.__evse_data)
 
     def __emergency_shut_down(self):
         self.__evse_data['EVSE_Failure']= True
-        self.signal_EVSE_failure.emit([self.__evse_data['evse_id'],True])
-        self.__turn_off_charging_now()
+        self.signal_EVSE_failure.emit([self.__evse_id,True])
+        self.turn_off_charging_now()
 
     def _send_signal_info(self, *args) -> None:
         """

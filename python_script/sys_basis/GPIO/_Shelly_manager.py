@@ -11,15 +11,18 @@ class ShellyManager:
 
     def __init__(self, evse_id):
         """
-
             参数:
                  - __evse_id: 对应的EVSE ID
+
+            信号:
+                 -__signal_Shelly_data(dict): Shelly数据,格式如下,列表的0,1,2位代表第1,2,3个电流钳数据
+
         """
         self.__evse_id = evse_id
         self.__shelly_polling_thread = GetShellyData(self.__evse_id)
         self.__signal_Shelly_error = XSignal()
         self.__signal_Shelly_data = XSignal()
-        self.__shelly_polling_thread.signal_Shelly_error.connect(self.__signal_Shelly_error.emit)
+        self.__shelly_polling_thread.signal_Shelly_error.connect(self.signal_Shelly_error.emit)
         self.__shelly_polling_thread.signal_Shelly_data.connect(self.send_data)
         self.__shelly_data = {
             'evse_id': self.__evse_id,

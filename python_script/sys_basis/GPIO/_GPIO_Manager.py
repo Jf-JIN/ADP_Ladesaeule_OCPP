@@ -3,15 +3,15 @@ from _EVSE_manager import EVSEManager
 from _Shelly_manager import ShellyManager
 from const.GPIO_Parameter import *
 from pymodbus.client import ModbusSerialClient
-from _Thread_evse_try_connect import ThreadTryConnection
+from _Thread_try_connect import ThreadTryConnection
 from _Thread_evse_charge_profile import ThreadChargeProfile
 from const.Const_Parameter import *
+import threading
 
 class GPIOManager:
     """
     参数:
     - RCD: bool, 是否安装RCD
-    - new_charge: bool, 是否是新的一次充电
     - port: 串口端口，默认 '/dev/ttyS0'
     - baudrate: 波特率，默认 9600
     - parity: 有无校验位
@@ -22,15 +22,7 @@ class GPIOManager:
     -   __signal_GPIO_EVSE_failure: EVSE故障,格式为list[evse_id, bool]
     -   __signal_GPIO_Shelly_error: Shelly故障
     -   __signal_GPIO_Shelly_data: Shelly数据,格式如下,列表的0,1,2位代表第1,2,3个电流钳数据
-        {
-            'power': [0, 10, 20],
-            'pf': [0, 0.95, 0.9],
-            'current': [0, 5, 10],
-            'voltage': [0, 220, 215],
-            'is_valid': [True, True, True],
-            'total': [0, 100, 200],
-            'total_returned': [0, 5, 10]
-        }
+
     方法:
     - set_current: 设置EVSE输出电流
     """
@@ -57,14 +49,16 @@ class GPIOManager:
 
         self.__evse_id_list = [num for num in range(1,GPIOParams.EVSE_QUANTITY+1)]
         self.__evse_instances = {}
-        self.__init_signal_define()
-        self.isModbus_Connected()
-        self.data_dict = { 1:{'evse': {}, 'shelly': {}},
+
+        self.__data_dict = { 1:{'evse': {},'shelly': {}},
                            2:{'evse': {},'shelly': {}},
                            3:{'evse': {},'shelly': {}},
                            4:{'evse': {},'shelly': {}},
                            5:{'evse': {},'shelly': {}}
         }
+
+        self.__init_signal_define()
+        self.isModbus_Connected()
 
     def __init_signal_define(self):
 
@@ -78,7 +72,6 @@ class GPIOManager:
     def check_Modbus_connection(self):
         return self.__Modbus_isConnected
 
-
     @property
     def signal_GPIO_EVSE_failure(self):
         return self.__signal_GPIO_EVSE_failure
@@ -89,26 +82,9 @@ class GPIOManager:
 
 
 
-    # @property
-    # def signal_GPIO_vehicle_state(self):
-    #     return self.__signal_GPIO_vehicle_state
-    #
-    # @property
-    # def signal_GPIO_Shelly_error(self):
-    #     return self.__signal_GPIO_Shelly_error
-    #
-    # @property
-    # def signal_GPIO_Shelly_data(self):
-    #     return self.__signal_GPIO_Shelly_data
-
-    def __update_evse_data(self, data):
-        self.data_dict[data['EVSE_ID']]['evse'] = data
-
-    def __update_shelly_data(self, data):
-        self.data_dict[data['EVSE_ID']]['shelly'] = data
 
     def get_GPIO_data(self):
-        return self.data_dict
+        return self.__data_dict
 
     def isModbus_Connected(self) -> bool:
         """
@@ -169,18 +145,6 @@ class GPIOManager:
         self.__evse_instances[new_EVSE_ID]["shelly"].signal_Shelly_data.connect(self.__update_shelly_data)
         return
 
-    def set_charging_profile(self,target_energy,depart_time,evse_id, charging_plan: dict):
-        evse_instance = self.__evse_instances[evse_id]["evse"]
-        shelly_instance = self.__evse_instances[evse_id]["shelly"]
-        if target_energy or depart_time:
-            shelly_instance.reset_total()
-            new_target_energy = target_energy
-            new_depart_time = depart_time
-        else:
-            new_target_energy = self.data_dict[evse_id]['evse']['target_energy']
-            new_depart_time = self.data_dict[evse_id]['evse']['planed_depart_time']
-        charge_profile = ThreadChargeProfile(charging_plan = charging_plan,evse_instance = evse_instance,shelly_instance = shelly_instance,target_energy = new_target_energy,depart_time = new_depart_time)
-        charge_profile.signal_charging_data.connect(self.__update_evse_data)
 
     def kill_evse(self,evse_id):
 
