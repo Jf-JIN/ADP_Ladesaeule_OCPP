@@ -4,6 +4,7 @@ import os
 import inspect
 import re
 import traceback
+import logging
 from datetime import datetime
 
 _LOG_FOLDER_NAME = 'Logs'
@@ -36,26 +37,6 @@ class EnumBaseMeta(type):
 
 class EnumBase(metaclass=EnumBaseMeta):
     pass
-
-
-class _LogSignal(object):
-    def __init__(self) -> None:
-        self.__slots = []
-
-    def connect(self, slot) -> None:
-        if callable(slot):
-            if slot not in self.__slots:
-                self.__slots.append(slot)
-        else:
-            raise ValueError("Slot must be callable")
-
-    def disconnect(self, slot) -> None:
-        if slot in self.__slots:
-            self.__slots.remove(slot)
-
-    def emit(self, *args, **kwargs) -> None:
-        for slot in self.__slots:
-            slot(*args, **kwargs)
 
 
 class _TxtColor(EnumBase):
@@ -98,13 +79,15 @@ class _BgColor(EnumBase):
     LIGHTWHITE = '107'
 
 
-class _LogLevel(EnumBase):
+class LogLevel(EnumBase):
     """ 日志级别枚举类 """
+    NOTSET = 'NOTSET'
     DEBUG = 'DEBUG'
     INFO = 'INFO'
     WARNING = 'WARNING'
     ERROR = 'ERROR'
     CRITICAL = 'CRITICAL'
+    NOOUT = 'NOOUT'
 
 
 class _HighlightType(EnumBase):
@@ -149,6 +132,71 @@ def asni_ct(
     style_list.append(bg_color) if bg_color in _BgColor else ''  # 背景颜色
     style_str = ';'.join(item for item in style_list if item)
     return f'\x1B[{style_str}m{text}\x1B[0m'
+
+
+class _LogSignal(object):
+    def __init__(self) -> None:
+        self.__slots = []
+
+    def connect(self, slot) -> None:
+        if callable(slot):
+            if slot not in self.__slots:
+                self.__slots.append(slot)
+        else:
+            raise ValueError("Slot must be callable")
+
+    def disconnect(self, slot) -> None:
+        if slot in self.__slots:
+            self.__slots.remove(slot)
+
+    def emit(self, *args, **kwargs) -> None:
+        for slot in self.__slots:
+            slot(*args, **kwargs)
+
+
+class _LoggingListener(logging.Handler):
+    def __init__(self, level) -> None:
+        super().__init__(level=level)
+        self.__signal_debug = _LogSignal()
+        self.__signal_info = _LogSignal()
+        self.__signal_warning = _LogSignal()
+        self.__signal_error = _LogSignal()
+        self.__signal_critical = _LogSignal()
+
+    @property
+    def signal_debug(self) -> _LogSignal:
+        return self.__signal_debug
+
+    @property
+    def signal_info(self) -> _LogSignal:
+        return self.__signal_info
+
+    @property
+    def signal_warning(self) -> _LogSignal:
+        return self.__signal_warning
+
+    @property
+    def signal_error(self) -> _LogSignal:
+        return self.__signal_error
+
+    @property
+    def signal_critical(self) -> _LogSignal:
+        return self.__signal_critical
+
+    def emit(self, record):
+        level = record.levelname
+        # message = self.format(record)
+        message = record.getMessage()
+        if level == LogLevel.DEBUG:
+            self.__signal_debug.emit(message)
+        elif level == LogLevel.INFO:
+            self.__signal_info.emit(message)
+        elif level == LogLevel.WARNING:
+            self.__signal_warning.emit(message)
+        elif level == LogLevel.ERROR:
+            self.__signal_error.emit(message)
+        elif level == LogLevel.CRITICAL:
+            self.__signal_critical.emit(message)
 
 
 class Logger(object):
@@ -234,8 +282,8 @@ class Logger(object):
         log_name: str,
         log_folder_path: str = '',
         log_sub_folder_name: str = '',
-        log_level: str = _LogLevel.INFO,
-        default_level: str = _LogLevel.INFO,
+        log_level: str = LogLevel.INFO,
+        default_level: str = LogLevel.INFO,
         console_output: bool = True,
         file_output: bool = True,
         size_limit: int = -1,  # KB
@@ -244,6 +292,8 @@ class Logger(object):
         split_by_day: bool = False,
         message_format: str = '%(consoleLine)s\n[%(asctime)s] [module: %(moduleName)s] [class: %(className)s] [function: %(functionName)s] [line: %(lineNum)s]- %(levelName)s\n%(message)s\n',
         exclude_funcs: list = [],
+        exclude_classes: list = [],
+        exclude_modules: list = [],
         highlight_type: str | None = 'ASNI',
         ** kwargs,
     ) -> None:
@@ -259,10 +309,11 @@ class Logger(object):
         elif log_folder_path:
             raise FileNotFoundError(f'Log folder path "{log_folder_path}" does not exist, create it.')
         else:
-            self.__printf(f'<{self.__log_name}>\nNo log file will be recorded because the log folder path is not specified. The current file path input is {self.__log_path}{type(self.__log_path)}\n')
+            self.__printf(
+                f'No File Output from <{self.__log_name}>\n   - No log file will be recorded because the log folder path is not specified. The current file path input is {self.__log_path}{type(self.__log_path)}\n')
         self.__log_sub_folder_name = log_sub_folder_name if isinstance(log_sub_folder_name, str) else ''
-        self.__log_level = log_level if log_level in _LogLevel else _LogLevel.INFO
-        self.__default_level = default_level if default_level in _LogLevel else _LogLevel.INFO
+        self.__log_level = log_level if log_level in LogLevel else LogLevel.INFO
+        self.__default_level = default_level if default_level in LogLevel else LogLevel.INFO
         self.__size_limit = size_limit * 1000 if isinstance(size_limit, int) else -1
         self.__count_limit = count_limit if isinstance(count_limit, int) else -1
         self.__days_limit = days_limit if isinstance(days_limit, int) else -1
@@ -270,6 +321,8 @@ class Logger(object):
         self.__message_format = message_format if isinstance(
             message_format, str) else '%(consoleLine)s\n[%(asctime)s] [module: %(moduleName)s] [class: %(className)s] [function: %(functionName)s] [line: %(lineNum)s]- %(levelName)s\n%(message)s\n'
         self.__exclude_funcs_list = exclude_funcs if isinstance(exclude_funcs, list) else []
+        self.__exclude_classes_list = exclude_classes if isinstance(exclude_classes, list) else []
+        self.__exclude_modules_list = exclude_modules if isinstance(exclude_modules, list) else []
         self.__highlight_type = highlight_type if isinstance(highlight_type, (str, type(None))) and highlight_type in _HighlightType else _HighlightType.ASNI
         self.__kwargs = kwargs
         self.__dict__.update(kwargs)
@@ -288,30 +341,63 @@ class Logger(object):
             'scriptName': '',
             'consoleLine': '',
         }
+        self.__self_class_name: str = self.__class__.__name__
+        self.__self_module_name: str = os.path.splitext(os.path.basename(__file__))[0]
         self.__start_time = datetime.now()
         self.__var_dict.update(self.__kwargs)
         self.__exclude_funcs = {}  # 存储 __find_caller 中忽略的函数
         self.__exclude_funcs.update(self.__class__.__dict__)
+        self.__exclude_classes = {
+            self.__self_class_name: '',
+            '_LoggingListener': '',
+            '_LogSignal': '',
+        }
+        self.__exclude_modules = {
+            # self.__self_module_name: '',
+        }
         for item in self.__exclude_funcs_list:
             self.__exclude_funcs[item] = ''
+        for item in self.__exclude_classes_list:
+            self.__exclude_classes[item] = ''
+        for item in self.__exclude_modules_list:
+            self.__exclude_modules[item] = ''
         self.__current_size = 0
         self.__current_day = datetime.today().date()
         self.__isNewFile = True
         self.__signal_log_instance = _LogSignal()
         self.__level_color_dict = {
-            _LogLevel.DEBUG: (_TxtColor.LIGHTGREEN, '', False, False),
-            _LogLevel.INFO: (_TxtColor.BLUE, '', False, False),
-            _LogLevel.WARNING: (_TxtColor.LIGHTYELLOW, '', True, False),
-            _LogLevel.ERROR: (_TxtColor.WHITE, _BgColor.LIGHTRED, True, False),
-            _LogLevel.CRITICAL: (_TxtColor.LIGHTYELLOW, _BgColor.RED, True, True),
+            LogLevel.DEBUG: (_TxtColor.LIGHTGREEN, '', False, False),
+            LogLevel.INFO: (_TxtColor.BLUE, '', False, False),
+            LogLevel.WARNING: (_TxtColor.LIGHTYELLOW, '', True, False),
+            LogLevel.ERROR: (_TxtColor.WHITE, _BgColor.LIGHTRED, True, False),
+            LogLevel.CRITICAL: (_TxtColor.LIGHTYELLOW, _BgColor.RED, True, True),
         }
         self.__log_level_dict = {
-            _LogLevel.DEBUG: 10,
-            _LogLevel.INFO: 20,
-            _LogLevel.WARNING: 30,
-            _LogLevel.ERROR: 40,
-            _LogLevel.CRITICAL: 50,
+            LogLevel.NOTSET: 10,
+            LogLevel.DEBUG: 10,
+            LogLevel.INFO: 20,
+            LogLevel.WARNING: 30,
+            LogLevel.ERROR: 40,
+            LogLevel.CRITICAL: 50,
+            LogLevel.NOOUT: 60,
         }
+        listen_level_dict = {
+            LogLevel.DEBUG: LogLevel.NOTSET,
+            LogLevel.INFO: LogLevel.DEBUG,
+            LogLevel.WARNING: LogLevel.INFO,
+            LogLevel.ERROR: LogLevel.WARNING,
+            LogLevel.CRITICAL: LogLevel.ERROR,
+            LogLevel.NOOUT: LogLevel.CRITICAL
+        }
+        self.__logging_listener_handler = _LoggingListener(0)
+        self.__logging_listener_handler.signal_debug.connect(self.debug)
+        self.__logging_listener_handler.signal_info.connect(self.info)
+        self.__logging_listener_handler.signal_warning.connect(self.warning)
+        self.__logging_listener_handler.signal_error.connect(self.error)
+        self.__logging_listener_handler.signal_critical.connect(self.critical)
+        self.__logging_listener = logging.getLogger()
+        self.__logging_listener.setLevel(self.__log_level)
+        self.__logging_listener.addHandler(self.__logging_listener_handler)
 
     @property
     def signal_log_instance(self) -> _LogSignal:
@@ -335,11 +421,11 @@ class Logger(object):
 
     def __call__(self, *args, **kwargs) -> None:
         call_dict = {
-            _LogLevel.DEBUG: self.debug,
-            _LogLevel.INFO: self.info,
-            _LogLevel.WARNING: self.warning,
-            _LogLevel.ERROR: self.error,
-            _LogLevel.CRITICAL: self.critical,
+            LogLevel.DEBUG: self.debug,
+            LogLevel.INFO: self.info,
+            LogLevel.WARNING: self.warning,
+            LogLevel.ERROR: self.error,
+            LogLevel.CRITICAL: self.critical,
         }
         if self.__default_level in call_dict:
             call_dict[self.__default_level](*args, **kwargs)
@@ -396,12 +482,19 @@ class Logger(object):
         func = None
         for idx, fn in enumerate(stack):
             unprefix_variable = fn.function.lstrip('__')
-            if fn.function not in self.__exclude_funcs and f'_Logger__{unprefix_variable}' not in self.__exclude_funcs:  # 不在排除列表中, 同时也排除当前类中的私有方法
+            temp_class_name = fn.frame.f_locals.get('self', None).__class__.__name__ if 'self' in fn.frame.f_locals else ''
+            temp_module_name = os.path.splitext(os.path.basename(fn.filename))[0]
+            if (fn.function not in self.__exclude_funcs
+                        and f'_Logger__{unprefix_variable}' not in self.__exclude_funcs
+                        and temp_class_name not in self.__exclude_classes
+                        and temp_module_name not in self.__exclude_modules
+                    ):  # 不在排除列表中, 同时也排除当前类中的私有方法
                 caller_name = fn.function
-                class_name = fn.frame.f_locals.get('self', None).__class__.__name__ if 'self' in fn.frame.f_locals else ''
+                class_name = temp_class_name
                 linenum = fn.lineno
-                module_name = os.path.splitext(os.path.basename(fn.filename))[0]
+                module_name = temp_module_name
                 script_name = os.path.basename(fn.filename)
+                script_path = fn.filename
                 func = fn
                 break
         return {
@@ -411,7 +504,7 @@ class Logger(object):
             'line_num': linenum,
             'module_name': module_name,
             'script_name': script_name,
-            'script_path': func.filename,
+            'script_path': script_path,
         }
 
     def __color(self, message: str, *args, **kwargs) -> str:
@@ -528,27 +621,27 @@ class Logger(object):
 
     def debug(self, *args, **kwargs) -> None:
         """ 打印调试信息 """
-        if self.__log_level_dict[self.__log_level] > self.__log_level_dict[_LogLevel.DEBUG]:
+        if self.__log_level_dict[self.__log_level] > self.__log_level_dict[LogLevel.DEBUG]:
             return
-        self.__output(_LogLevel.DEBUG, *args, **kwargs)
+        self.__output(LogLevel.DEBUG, *args, **kwargs)
 
     def info(self, *args, **kwargs) -> None:
         """ 打印信息 """
-        if self.__log_level_dict[self.__log_level] > self.__log_level_dict[_LogLevel.INFO]:
+        if self.__log_level_dict[self.__log_level] > self.__log_level_dict[LogLevel.INFO]:
             return
-        self.__output(_LogLevel.INFO, *args, **kwargs)
+        self.__output(LogLevel.INFO, *args, **kwargs)
 
     def warning(self, *args, **kwargs) -> None:
         """ 打印警告信息 """
-        if self.__log_level_dict[self.__log_level] > self.__log_level_dict[_LogLevel.WARNING]:
+        if self.__log_level_dict[self.__log_level] > self.__log_level_dict[LogLevel.WARNING]:
             return
-        self.__output(_LogLevel.WARNING, *args, **kwargs)
+        self.__output(LogLevel.WARNING, *args, **kwargs)
 
     def error(self, *args, **kwargs) -> None:
         """ 打印错误信息 """
-        if self.__log_level_dict[self.__log_level] > self.__log_level_dict[_LogLevel.ERROR]:
+        if self.__log_level_dict[self.__log_level] > self.__log_level_dict[LogLevel.ERROR]:
             return
-        self.__output(_LogLevel.ERROR, *args, **kwargs)
+        self.__output(LogLevel.ERROR, *args, **kwargs)
 
     def exception(self, *args, **kwargs) -> None:
         """ 打印异常信息 """
@@ -559,9 +652,9 @@ class Logger(object):
 
     def critical(self, *args, **kwargs) -> None:
         """ 打印严重错误信息 """
-        if self.__log_level_dict[self.__log_level] > self.__log_level_dict[_LogLevel.CRITICAL]:
+        if self.__log_level_dict[self.__log_level] > self.__log_level_dict[LogLevel.CRITICAL]:
             return
-        self.__output(_LogLevel.CRITICAL, *args, **kwargs)
+        self.__output(LogLevel.CRITICAL, *args, **kwargs)
 
 
 class LoggerGroup(object):
