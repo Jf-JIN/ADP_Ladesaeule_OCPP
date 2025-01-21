@@ -401,12 +401,13 @@ class ChargePointBase(object):
             else:
                 self.__time_table_for_send_message[message_action][message_id]['send_time'] = send_time
 
-    def _unpack_data_and_send_signal_ocpp_response(self, data, send_time: float) -> None:
+    def _unpack_data_and_send_signal_ocpp_response(self, data, send_time: float, ori_data=None) -> None:
         """
         解包数据并发送信号
 
         数据将通过 `self._send_signal_charge_point_ocpp_response` 发送, 数据格式为:
             - `action`(str): 消息类型, 实际是数据类的名称, 例如: `call.Authorize` 中的 `'Authorize'`, 在1.6版本中可能存在数据类名称与消息类型不一致的情况
+            - `ori_data`: 原始数据, 发送的Request数据
             - `data`(dict): 解包后的数据
             - `send_time`(float): 请求发送时间
             - `result`(int): 响应结果,
@@ -424,6 +425,7 @@ class ChargePointBase(object):
             return
         temp_dict = {
             'action': data.__class__.__name__,
+            'ori_data': ori_data,
             'data': {},
             'send_time': send_time,
             'result': CP_Params.RESPONSE.SUCCESS,

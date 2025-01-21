@@ -65,6 +65,7 @@ class ChargePointV201(cpv201, ChargePointBase):
 
         数据将通过信号 `signal_charge_point_ocpp_response` 发送回来, 数据格式如下: 
             - `action`(str): 消息类型, 实际是数据类的名称, 例如: `call.Authorize` 中的 `'Authorize'`, 在1.6版本中可能存在数据类名称与消息类型不一致的情况
+            - `ori_data`: 原始数据, 发送的Request数据
             - `data`(dict): 解包后的数据
             - `send_time`(float): 请求发送时间
             - `result`(int): 响应结果, 
@@ -86,12 +87,13 @@ class ChargePointV201(cpv201, ChargePointBase):
         try:
             response = await self.call(message)
             # signal_charge_point_ocpp_response 将在此函数发送
-            self._unpack_data_and_send_signal_ocpp_response(response, request_time)
+            self._unpack_data_and_send_signal_ocpp_response(response, request_time, ori_data=message)
         except asyncio.TimeoutError:
             self._send_signal_info(f'< Error - Request - Response_Timeout - {message.__class__.__name__} > No response was received within {self.response_timeout_in_baseclass} seconds.')
             self.signal_charge_point_ocpp_response.emit(
                 {
                     'action': message.__class__.__name__,
+                    'ori_data': message,
                     'data': {},
                     'send_time': request_time,
                     'result': CP_Params.RESPONSE.TIMEOUT,
@@ -102,6 +104,7 @@ class ChargePointV201(cpv201, ChargePointBase):
             self.signal_charge_point_ocpp_response.emit(
                 {
                     'action': message.__class__.__name__,
+                    'ori_data': message,
                     'data': {},
                     'send_time': request_time,
                     'result': CP_Params.RESPONSE.ERROR,

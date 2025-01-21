@@ -60,10 +60,11 @@ class ChargePointV16(cpv16, ChargePointBase):
         发送请求消息 (不清楚调用的call会不会因版本不同而有差别, 所以写在子类这里)
 
         数据将通过信号 `signal_charge_point_ocpp_response` 发送回来, 数据格式如下: 
-            - `action`(str): 消息类型
+            - `action`(str): 消息类型, 实际是数据类的名称, 例如: `call.Authorize` 中的 `'Authorize'`, 在1.6版本中可能存在数据类名称与消息类型不一致的情况
+            - `ori_data`: 原始数据, 发送的Request数据
             - `data`(dict): 解包后的数据
             - `send_time`(float): 请求发送时间
-            - `response_status`(int): 响应状态, 
+            - `result`(int): 响应结果, 
                 - 枚举类 `CP_Params.RESPONSE`
                 - 枚举项: `SUCCESS`, `TIMEOUT`, `ERROR`
 
@@ -82,15 +83,16 @@ class ChargePointV16(cpv16, ChargePointBase):
         try:
             response = await self.call(message)
             # signal_charge_point_ocpp_response 将在此函数发送
-            self._unpack_data_and_send_signal_ocpp_response(response, request_time)
+            self._unpack_data_and_send_signal_ocpp_response(response, request_time, ori_data=message)
         except asyncio.TimeoutError:
-            self._send_signal_info(f'< Error - Request - Response_Timeout> No response was received within {self.response_timeout_in_baseclass} seconds.')
+            self._send_signal_info(f'< Error - Request - Response_Timeout - {message.__class__.__name__} > No response was received within {self.response_timeout_in_baseclass} seconds.')
             self.signal_charge_point_ocpp_response.emit(
                 {
                     'action': message.__class__.__name__,
+                    'ori_data': message,
                     'data': {},
                     'send_time': request_time,
-                    'response_status': CP_Params.RESPONSE.TIMEOUT,
+                    'result': CP_Params.RESPONSE.TIMEOUT,
                 }
             )
         except Exception:
@@ -98,9 +100,10 @@ class ChargePointV16(cpv16, ChargePointBase):
             self.signal_charge_point_ocpp_response.emit(
                 {
                     'action': message.__class__.__name__,
+                    'ori_data': message,
                     'data': {},
                     'send_time': request_time,
-                    'response_status': CP_Params.RESPONSE.ERROR,
+                    'result': CP_Params.RESPONSE.ERROR,
                 }
             )
 
