@@ -27,7 +27,7 @@ class ThreadTryConnection(Thread):
 
     def run(self):
         """
-        轮询循环，每隔一定时间读取寄存器并发送信息
+        轮询循环, 每隔一定时间读取寄存器并发送信息
          """
         while self.__isRunning and not self.checking():
             time.sleep(self.__polling_interval)  # 等待指定的轮询间隔

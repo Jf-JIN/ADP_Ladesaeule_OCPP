@@ -3,16 +3,16 @@ from const.GPIO_Parameter import *
 #
 # def check_flag(method):
 #     """
-#     检查flag装饰器，如果结果为FAIL，调用错误处理方法。
+#     检查flag装饰器, 如果结果为FAIL, 调用错误处理方法. 
 #     """
 #
 #     def decorator(func):
 #         @wraps(func)
 #         def wrapper(self, *args, **kwargs):
-#             # 调用配置方法，获取flag和结果
+#             # 调用配置方法, 获取flag和结果
 #             flag, value, message = method(self)
 #
-#             # 如果 flag 是 FAIL，执行错误处理
+#             # 如果 flag 是 FAIL, 执行错误处理
 #             if flag == ResultFlag.FAIL:
 #                 self.checking_connection()
 #
@@ -32,7 +32,7 @@ import wrapt
 
 def check_flag(used_method):
     """
-    装饰器：检查 flag，如果返回 FAIL，执行错误处理逻辑。
+    装饰器: 检查 flag, 如果返回 FAIL, 执行错误处理逻辑. 
     """
 
     @wrapt.decorator
@@ -41,7 +41,7 @@ def check_flag(used_method):
         flag, value, message = used_method(instance)
 
         if flag == ResultFlag.FAIL:
-            # 如果 flag 失败，执行错误处理
+            # 如果 flag 失败, 执行错误处理
             instance.send_EVSE_read_write_error()
             #return None
 

@@ -10,7 +10,7 @@ class EVSEReadWrite(object):
     def __init__(self, client):
         """
         Modbus读写功能
-        读写的结果被打包成一个新列表，结构为[flag, registers_result_list, message]
+        读写的结果被打包成一个新列表, 结构为[flag, registers_result_list, message]
         flag用于标记此命令是否成功执行
         参数:
              - client: Modbus客户端对象
@@ -22,7 +22,7 @@ class EVSEReadWrite(object):
         self.__signal_EVSE_failure = XSignal()
         self.__signal_EVSE_check_connection = XSignal()
         self.__vehicle_state = [0, 'ready', 'EV is present', 'charging', 'charging with ventilation',
-                                'failure (e.g. diode check, RCD failure)']  # get_vehicle_state返回1~5，0用于占位
+                                'failure (e.g. diode check, RCD failure)']  # get_vehicle_state返回1~5, 0用于占位
         self.__EVSE_state = [0, 'steady 12V', 'PWM is being generated(only if 1000 >= 6)', 'OFF, steady 12V']
 
     # @property
@@ -39,7 +39,7 @@ class EVSEReadWrite(object):
          Maximum current limitation according to a cable based on PP
          resistor detection
         返回:
-            - 成功时返回[成功flag,[寄存器返回值列表]，'消息']，失败时返回 [失败flag,None(pymodbus要求返回None),'消息']
+            - 成功时返回[成功flag,[寄存器返回值列表], '消息'], 失败时返回 [失败flag,None(pymodbus要求返回None),'消息']
         """
         return [ResultFlag.SUCCESS,[25],'get_allowed_current测试数据']#测试
 
@@ -47,7 +47,7 @@ class EVSEReadWrite(object):
         """
          Actual amps value output
         返回:
-            - 成功时返回[成功flag,[寄存器返回值列表]，'消息']，失败时返回 [失败flag,None(pymodbus要求返回None),'消息']
+            - 成功时返回[成功flag,[寄存器返回值列表], '消息'], 失败时返回 [失败flag,None(pymodbus要求返回None),'消息']
         """
 
         return [ResultFlag.SUCCESS,[20],'get_actual_current测试数据']#测试
@@ -61,7 +61,7 @@ class EVSEReadWrite(object):
             4: charging with ventilation
             5: failure (e.g. diode check, RCD failure)
         返回:
-            - 成功时返回[成功flag,[寄存器返回值列表]，'消息']，失败时返回 [失败flag,None(pymodbus要求返回None),'消息']
+            - 成功时返回[成功flag,[寄存器返回值列表], '消息'], 失败时返回 [失败flag,None(pymodbus要求返回None),'消息']
         """
         return [ResultFlag.SUCCESS, [2], 'get_vehicle_state测试数据']  # 测试
 
@@ -72,7 +72,7 @@ class EVSEReadWrite(object):
             2: PWM is being generated(only if 1000 >= 6)
             3: OFF, steady 12V
         返回:
-            - 成功时返回[成功flag,[寄存器返回值列表]，'消息']，失败时返回 [失败flag,None(pymodbus要求返回None),'消息']
+            - 成功时返回[成功flag,[寄存器返回值列表], '消息'], 失败时返回 [失败flag,None(pymodbus要求返回None),'消息']
         """
         #self.__send_signal_info(self.__EVSE_state[self.read_register(address=1006)[0]])
         return self.read_register(method= 'get_EVSE_state', address=1006)
@@ -99,20 +99,20 @@ class EVSEReadWrite(object):
 
     def read_register(self, method: str, address: int, count: int = 1, slave: int = 1) -> Optional[List[int]]:
         """
-        读取保持寄存器（Holding Registers）
+        读取保持寄存器(Holding Registers)
         参数:
             - method: 使用写功能的方法名
-            - address: 起始寄存器地址（零偏移）
-            - count: 读取的寄存器数量，默认为 1
-            - slave: 从站地址，EVSE 从站地址为 1
+            - address: 起始寄存器地址(零偏移)
+            - count: 读取的寄存器数量, 默认为 1
+            - slave: 从站地址, EVSE 从站地址为 1
         返回
-            - 成功时返回[成功flag,[寄存器返回值列表]，'消息']，失败时返回 [失败flag,None(pymodbus要求返回None),'消息']
+            - 成功时返回[成功flag,[寄存器返回值列表], '消息'], 失败时返回 [失败flag,None(pymodbus要求返回None),'消息']
         """
         try:
             # 读取寄存器
             result = self._client.read_holding_registers(address=address, count=count, slave=slave)
             if not result.isError():
-                message = [ResultFlag.SUCCESS, result.registers, f"=={method}==\n读取成功\n成功读取到 {count} 个寄存器，从地址 {address} 开始: {result.registers}"]
+                message = [ResultFlag.SUCCESS, result.registers, f"=={method}==\n读取成功\n成功读取到 {count} 个寄存器, 从地址 {address} 开始: {result.registers}"]
             else:
                 message = [ResultFlag.FAIL, result.registers, f"=={method}==\n==读取失败==\n功能码返回错误或无效响应: {result.registers}"]
 
@@ -136,22 +136,22 @@ class EVSEReadWrite(object):
 
     def write_register(self, method: str, address: int, value: int, slave: int = 1,) -> Optional[List[int]]:
         """
-        写入一个保持寄存器（Holding Register）
+        写入一个保持寄存器(Holding Register)
         参数:
             - method: 使用写功能的方法名
             - address: 寄存器地址
             - value: 要写入的值
-            - slave: 从站地址，默认值为 1
+            - slave: 从站地址, 默认值为 1
         返回:
-            - 成功时返回[成功flag,[寄存器返回值列表]，'消息']，失败时返回 [失败flag,None(pymodbus要求返回None),'消息']
+            - 成功时返回[成功flag,[寄存器返回值列表], '消息'], 失败时返回 [失败flag,None(pymodbus要求返回None),'消息']
         """
         try:
-            # 将值封装成列表，因为 pymodbus 的 write_registers 接收列表
+            # 将值封装成列表, 因为 pymodbus 的 write_registers 接收列表
             result = self._client.write_registers(address=address, values=[value], slave=slave)
             if not result.isError():
-                message = [ResultFlag.SUCCESS, result.registers,f"=={method}==\n写入成功\n成功写入寄存器 {address}，值为 {value}"]
+                message = [ResultFlag.SUCCESS, result.registers,f"=={method}==\n写入成功\n成功写入寄存器 {address}, 值为 {value}"]
             else:
-                message = [ResultFlag.FAIL, None,f"=={method}==\n==写入失败==\n写入寄存器 {address}，值为 {value}"]
+                message = [ResultFlag.FAIL, None,f"=={method}==\n==写入失败==\n写入寄存器 {address}, 值为 {value}"]
 
         except ModbusException as e:
                # 捕获 Modbus 异常

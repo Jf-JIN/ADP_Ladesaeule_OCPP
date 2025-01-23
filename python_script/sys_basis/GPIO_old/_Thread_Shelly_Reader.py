@@ -44,7 +44,7 @@ class GetShellyData(Thread):
             data_3 = current_clamp_3.json()
 
             merged_data = {key: [data_1[key], data_2[key], data_3[key]] for key in data_1.keys()}
-            _info(f"汇总的电能数据：", merged_data)
+            _info(f"汇总的电能数据: ", merged_data)
             return merged_data
         except requests.exceptions.RequestException as e:
             _info(f"请求失败: {traceback.format_exc()}")
@@ -56,7 +56,7 @@ class GetShellyData(Thread):
             data = self.get_data()
             if data:
                 self.signal_Shelly_data.emit(data)
-                _info(f"Shelly数据：{data}")
+                _info(f"Shelly数据: {data}")
             time.sleep(self.__interval)
 
     def stop(self):
