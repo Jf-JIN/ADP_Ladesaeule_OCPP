@@ -36,36 +36,36 @@ class WebSocketClient(object):
 
     def __init__(
         self,
-        uri,
+        uri: str,
         recv_timeout_s: int | float = 30,
         retry_interval_s: int | float = 1,
         max_retries: int = -1,
         info_title: str | None = 'WebSocket_Client',
         ping_interval_s: int | float = 20,
-        ping_timeout_s=20
+        ping_timeout_s: int | float = 20
     ) -> None:
-        self.__signal_websocket_client_recv = XSignal()  # WebSocket 客户端接收信号
-        self.__signal_websocket_client_info = XSignal()  # 普通信号, 用于信息显示, 调试等
-        self.__uri = uri
-        self.__websocket = None
-        self.__isConnected = False
+        self.__signal_websocket_client_recv: XSignal = XSignal()  # WebSocket 客户端接收信号
+        self.__signal_websocket_client_info: XSignal = XSignal()  # 普通信号, 用于信息显示, 调试等
+        self.__uri: str = uri
+        self.__websocket: ClientConnection | None = None
+        self.__isConnected: bool = False
         if not isinstance(recv_timeout_s, (int, float)) or recv_timeout_s <= 0:
             self.__send_signal_info(
                 f'<Error - __init__> recv_timeout_s must be a positive integer or float. It has been set to 30. The provided type and value are {type(recv_timeout_s)} | {recv_timeout_s}')
             self.__recv_timeout_s = 30
         else:
-            self.__recv_timeout_s = recv_timeout_s
+            self.__recv_timeout_s: int | float = recv_timeout_s
         if not isinstance(retry_interval_s, (int, float)) or retry_interval_s <= 0:
             self.__send_signal_info(
                 f'<Error - __init__> retry_interval_s must be a positive integer or float. It has been set to 1. The provided type and value are {type(retry_interval_s)} | {retry_interval_s}')
             self.__retry_interval_s = 1
         else:
-            self.__retry_interval_s = retry_interval_s
+            self.__retry_interval_s: int | float = retry_interval_s
         if not isinstance(max_retries, int):
             self.__send_signal_info(f'<Error - __init__> max_retries must be an integer. It has been set to -1. The provided type is {type(max_retries)}')
             self.__max_retries = -1
         else:
-            self.__max_retries = max_retries
+            self.__max_retries: int = max_retries
         try:
             if info_title is not None:
                 self.__info_title = str(info_title)
@@ -83,7 +83,7 @@ class WebSocketClient(object):
                 f'<Error - __init__> ping_timeout_s must be a positive integer or float. It has been set to 20. The provided type and value are {type(ping_timeout_s)} | {ping_timeout_s}')
             self.__ping_timeout_s = 20
         else:
-            self.__ping_timeout_s = ping_timeout_s
+            self.__ping_timeout_s: int | float = ping_timeout_s
 
     @property
     def websocket(self) -> ClientConnection:
@@ -138,7 +138,15 @@ class WebSocketClient(object):
             except asyncio.TimeoutError as e:
                 await self.__websocket.ping()
                 # await self.__connect()
-            except websockets.exceptions.ConnectionClosedError as e:
+            except (websockets.exceptions.ConnectionClosedError, ConnectionResetError) as e:
+                self.__isConnected = False
+                self.__send_signal_info(f'--<Connection_Failed>: Connection closed, reconnecting...')
+                if self.__websocket is not None:
+                    await self.__websocket.close()
+                    self.__websocket = None
+                await self.__connect()
+                return await self.recv()
+            except Exception as e:
                 self.__isConnected = False
                 self.__send_signal_info(f'--<Connection_Failed>: Connection closed, reconnecting... ({traceback.format_exc()})')
                 if self.__websocket is not None:
@@ -175,7 +183,18 @@ class WebSocketClient(object):
                 await self.__websocket.send('Successfully connected to the server')
                 self.__isConnected = True
                 return self
-            # except (ConnectionRefusedError, websockets.exceptions.WebSocketException, TimeoutError, EOFError, websockets.exceptions.ConnectionClosedError) as e:
+            except (ConnectionRefusedError, websockets.exceptions.WebSocketException, TimeoutError, EOFError, websockets.exceptions.ConnectionClosedError) as e:
+                if self.__max_retries < 0:
+                    self.__send_signal_info(f'--<Connection_Failed>: The Client is disconnected with {self.__uri}. Reconnecting...')
+                    self.__isConnected = False
+                elif retries <= self.__max_retries:
+                    self.__send_signal_info(f'--<Connection_Failed>: The Client is disconnected with {self.__uri}. Reconnecting... ({retries}/{self.__max_retries})...')
+                    self.__isConnected = False
+                    retries += 1
+                else:
+                    self.__send_signal_info(f'--<Connection_Failed>: Unable to connect to the server. Maximum retry attempts reached. ({self.__max_retries})')
+                    self.__isConnected = False
+                await asyncio.sleep(self.__retry_interval_s)
             except Exception as e:
                 if self.__max_retries < 0:
                     self.__send_signal_info(f'--<Connection_Failed>: {traceback.format_exc()} Reconnecting...')
@@ -198,7 +217,7 @@ class WebSocketClient(object):
         - 参数:
             - args: 可变数量的参数, 每个参数都应该是能够被转换为字符串的对象. 建议传递字符串、数字或任何有明确 `__str__` 或 `__repr__` 方法的对象, 以确保能够正确地将参数转换为字符串形式.
         """
-        self.__send_signal(signal=self.signal_websocket_client_recv, error_hint='send_signal_recv', log=Log.WS.info, doShowTitle=False, doPrintInfo=False, args=args)
+        self.__send_signal(signal=self.signal_websocket_client_recv, error_hint='send_signal_recv', log=None, doShowTitle=False, doPrintInfo=False, args=args)
 
     def __send_signal_info(self, *args) -> None:
         """

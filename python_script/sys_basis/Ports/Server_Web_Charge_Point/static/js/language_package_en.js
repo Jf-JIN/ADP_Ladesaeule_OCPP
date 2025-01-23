@@ -14,5 +14,21 @@ const lang_pkg_en = {
     "text_current_time": "Current Time: ",
     "text_rasberry_pi_system": "Rasberry Pi System Information",
     "text_optimisation_system": "Optimisation System Information",
-    "text_GPIO": "Hardware Information"
+    "text_GPIO": "Hardware Information",
+    // 用户界面
+    "welcome_title": "OCPP Charge Station",
+    "welcome_text": "Welcome to use OCPP charging pile, which is a charging pile software based on OCPP protocol.",
+    "Testen_btn": "Test",
+    "charge_mode_label": " Charging Mode:",
+    "select_dynamic": "Dynamic Adjustment",
+    "select_shortest_time": "Minimum Charging Time",
+    "select_least_cost": "Minimum Charging Cost",
+    "charge_power_label": "Charging Energy",
+    "departure_time_label": "Estimated Departure Time",
+    "save_settings": "Submit and save",
+    "home_current_current": "Current Current",
+    "home_current_voltage": "Current Voltage",
+    "home_charged_energy": "Charged Amount",
+    "home_left_time": "Left Time",
+    "home_charging_status": "charging Status",
 }

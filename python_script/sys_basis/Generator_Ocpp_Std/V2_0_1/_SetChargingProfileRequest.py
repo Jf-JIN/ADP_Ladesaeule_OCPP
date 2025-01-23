@@ -294,7 +294,7 @@ class GenSetChargingProfileRequest(Base_OCPP_Struct_V2_0_1):
                 - 推荐使用 `get_charging_schedule_period()` 传入列表元素 或 自行创建列表.
             - start_schedule(str|None): 
                 - 充电计划表的绝对起始时间, 如果缺失, 则等同于充电开始时间. 
-                - 格式: date-time
+                - 格式: '%Y-%m-%dT%H:%M:%SZ'
             - duration(int|None): 
                 - 充电计划表持续时间(单位: 秒), 如果缺失, 最后一个周期将无限循环, 直到交易结束, 或 chargingProfilePurpose = TxProfile . 
             - min_charging_rate(int|float|None): 
