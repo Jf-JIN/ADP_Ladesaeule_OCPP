@@ -275,12 +275,12 @@ class DataGene:
         参数:
             - start_time(datetime): 开始时间
             - end_time(datetime): 结束时间
-            - eprices(list): 电价列表（每15分钟一个数）
-            - his_usage(list): 历史用电量列表（每15分钟一个数）
+            - eprices(list): 电价列表(每15分钟一个数)
+            - his_usage(list): 历史用电量列表(每15分钟一个数)
             - max_grid_power(int): 最大电网功率
             - max_power(int): 最大功率
             - min_power(int): 最小功率
-            - interval(int): 分割间隔（可选15, 30, 60, 120分钟）
+            - interval(int): 分割间隔(可选15, 30, 60, 120分钟)
 
         返回:
             - list: 包含每段时间的持续时间、电价和可用功率的列表

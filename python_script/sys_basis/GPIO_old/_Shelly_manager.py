@@ -46,14 +46,14 @@ class ShellyManager:
         try:
             # 发送 POST 请求
             response = requests.post(GPIOParams.SHELLY_IP, timeout=5)
-            response.raise_for_status()  # 如果返回状态码不是 2xx，会抛出异常
-            _info("复位成功！")
+            response.raise_for_status()  # 如果返回状态码不是 2xx, 会抛出异常
+            _info("复位成功! ")
         except requests.exceptions.RequestException as e:
             _info(f"复位失败: {e}")
 
     def send_data(self,data):
         """
-        将shelly data发送，并判断shelly是否正常工作，如果不正常，则停止线程
+        将shelly data发送, 并判断shelly是否正常工作, 如果不正常, 则停止线程
         """
         if not isinstance(data, dict):
             self.signal_Shelly_error.emit(True)

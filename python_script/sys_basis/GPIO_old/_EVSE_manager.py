@@ -18,12 +18,12 @@ class EVSEManager(object):
 
     def __init__(self, RCD: bool, evse_id: int, client, poll_interval=GPIOParams.POLL_INTERVAL, poll_interval_check= GPIOParams.POLL_INTERVAL_CHECK,):
         """
-        初始化通信对象，设置串口参数
+        初始化通信对象, 设置串口参数
         参数:
              - RCD: 是否使用RCD
              - evse_id: 分配的EVSE id
-             - poll_interval: 读取数据的间隔时间，默认 5 秒
-             - poll_interval_check: 检查充电头是否拔出，默认 1 秒
+             - poll_interval: 读取数据的间隔时间, 默认 5 秒
+             - poll_interval_check: 检查充电头是否拔出, 默认 1 秒
         """
 
         self.__output_current_polling_thread = None
@@ -54,7 +54,7 @@ class EVSEManager(object):
         self.__signal_vehicle_departed = XSignal()
         self.__signal_EVSE_failure = XSignal()
         
-        self.__vehicle_state_list = [0, 'ready', 'EV is present', 'charging', 'charging with ventilation','failure (e.g. diode check, RCD failure)']  # get_vehicle_state返回1~5，0用于占位
+        self.__vehicle_state_list = [0, 'ready', 'EV is present', 'charging', 'charging with ventilation','failure (e.g. diode check, RCD failure)']  # get_vehicle_state返回1~5, 0用于占位
         self.__current_vehicle_state = None
         self.__previous_vehicle_state = None
         self.__EVSE_state_list = [0,'steady 12V','PWM is being generated(only if 1000 >= 6)','OFF, steady 12V']
@@ -129,11 +129,11 @@ class EVSEManager(object):
         if self.__isRCD:
             # 检查 EVSE 状态
             flag, value, message = self.EVSE.get_EVSE_status_fails()
-            # 如果失败标志为 FAIL，检查连接
+            # 如果失败标志为 FAIL, 检查连接
             if flag == ResultFlag.FAIL:
                 self.send_EVSE_read_write_error()
                 self._send_signal_info(message)
-            # 如果包含 RCD_CHECK_ERROR，清除错误
+            # 如果包含 RCD_CHECK_ERROR, 清除错误
             elif value & EVSEFails.RCD_CHECK_ERROR:
                 self.__clear(address=1007, bit=EVSEFails.RCD_CHECK_ERROR)
 
@@ -187,7 +187,7 @@ class EVSEManager(object):
         """
         检查flag,获取并改变车辆状态,并赋值给self.__vehicle_state
         返回:
-            - 成功时返回 self.__vehicle_state，失败时返回 None
+            - 成功时返回 self.__vehicle_state, 失败时返回 None
         """
         if value:
             self.__vehicle_state = value[0]
@@ -210,7 +210,7 @@ class EVSEManager(object):
         """
               检查flag,获取最低电流
               返回:
-                  - 成功时返回 self.__evse_data['min_current']，失败时返回 -1
+                  - 成功时返回 self.__evse_data['min_current'], 失败时返回 -1
               """
         if value:
             self.__evse_data['min_current'] = value[0]
@@ -239,7 +239,7 @@ class EVSEManager(object):
             self.__vehicle_state = value[0]
             if self.__vehicle_state == VehicleState.FAILURE:
                 self.__emergency_shut_down()
-                self._send_signal_info(f'车辆状态异常，已紧急断电')
+                self._send_signal_info(f'车辆状态异常, 已紧急断电')
             self.__evse_data['vehicle_state'] = self.__vehicle_state_list[self.__vehicle_state]
 
     def handle_EVSE_fail(self,data):
@@ -248,7 +248,7 @@ class EVSEManager(object):
             self.send_EVSE_read_write_error()
             self._send_signal_info(message)
         else:
-            state_value = value[0]  # 假设 value 是列表，我们取第一个元素
+            state_value = value[0]  # 假设 value 是列表, 我们取第一个元素
             num_bits = EVSEFails.NUM_BIT  # 你可以根据实际情况调整位数
             status = [False] * num_bits  # 初始化为全 False
 
@@ -277,7 +277,7 @@ class EVSEManager(object):
     def __clear(self, address, bit):
         # 获取 EVSE 状态
         flag,value,message = self.EVSE.get_EVSE_status_fails()
-        # 如果状态失败，检查连接
+        # 如果状态失败, 检查连接
         if flag == ResultFlag.FAIL:
             self.send_EVSE_read_write_error()
             self._send_signal_info(message)
@@ -301,19 +301,19 @@ class EVSEManager(object):
 
     def set_current(self, current: int) -> bool:
         """
-        设置电流，该电流应小于允许值
+        设置电流, 该电流应小于允许值
         会对设置电流的大小做一次判断
         参数:
             - current: Actual configured amps value (from reg 2002 to 80A)
         返回:
-            - 成功时返回 True，失败时返回 False
+            - 成功时返回 True, 失败时返回 False
         """
         self.get_vehicle_state()
         if self.__vehicle_state == VehicleState.FAILURE:
-            self._send_signal_info("车辆状态异常，无法设置电流")
+            self._send_signal_info("车辆状态异常, 无法设置电流")
             return False
         if self.__vehicle_state == VehicleState.READY:
-            self._send_signal_info("车辆未连接，无法设置电流")
+            self._send_signal_info("车辆未连接, 无法设置电流")
             return False
 
         if self.__evse_data['min_current']<= current <= self.__evse_data['allowed_current']:
@@ -340,11 +340,11 @@ class EVSEManager(object):
 
     def start_polling(self):
         """
-        启动定时轮询，定期读取寄存器值并发送
-        线程为：
-            1. OutputCurrent：轮询当前输出电流
-            2. VehicleState：轮询车辆状态
-            3. FailCheck：轮询EVSE失效
+        启动定时轮询, 定期读取寄存器值并发送
+        线程为: 
+            1. OutputCurrent: 轮询当前输出电流
+            2. VehicleState: 轮询车辆状态
+            3. FailCheck: 轮询EVSE失效
         """
         if self.__output_current_polling_thread is None:
             self.__output_current_polling_thread = ThreadOutputCurrent(polling_interval=self.__poll_interval, client=self._client, evse_id=self.__evse_data['evse_id'])
@@ -378,7 +378,7 @@ class EVSEManager(object):
 
     # def __handle_connection_error(self, message):
     #     """
-    #     统一处理错误逻辑，检查连接并发送错误信息
+    #     统一处理错误逻辑, 检查连接并发送错误信息
     #     """
     #     self._send_signal_info(message)  # 发送错误消息
     #     self.checking_connection()  # 检查连接

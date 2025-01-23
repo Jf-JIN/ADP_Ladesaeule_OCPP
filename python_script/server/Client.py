@@ -154,7 +154,7 @@ class Client:
     def send_test1(self):
         self.coroutine_OCPP_client.send_request_message(
             GenAuthorizeRequest.generate(
-                id_token=GenAuthorizeRequest.get_id_token('想不到是中文吧，哈哈哈哈', IdTokenType.central),
+                id_token=GenAuthorizeRequest.get_id_token('想不到是中文吧, 哈哈哈哈', IdTokenType.central),
             )
         )
 
@@ -165,7 +165,7 @@ class Client:
         message_id = message['message_id']
         data = message['data']
         if isinstance(action, call.SetChargingProfile):
-            # 向GPIO发送信息，得到回复后：
+            # 向GPIO发送信息, 得到回复后: 
             response_message = GenSetChargingProfileResponse.generate(
                 status=ChargingProfileStatus.accepted
             )

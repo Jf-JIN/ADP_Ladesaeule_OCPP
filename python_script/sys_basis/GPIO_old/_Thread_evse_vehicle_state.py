@@ -5,7 +5,7 @@ from sys_basis.XSignal  import XSignal
 
 
 
-class ThreadFailCheck(Thread):
+class ThreadVehicleState(Thread):
 
     def __init__(self, polling_interval,client,evse_id):
         super().__init__()
@@ -26,13 +26,12 @@ class ThreadFailCheck(Thread):
 
     def run(self):
         """
-        轮询循环，每隔一定时间读取寄存器并发送信息
+        轮询循环, 每隔一定时间读取寄存器并发送信息
         """
         while self.__isRunning:
-            self.signal_transfer_data.emit(self.read.get_EVSE_status_fails())
+            self.signal_transfer_data.emit(self.read.get_vehicle_state())
             time.sleep(self.__polling_interval)  # 等待指定的轮询间隔
         self.signal_finished.emit()  # 发送完成信号
-
 
     def stop(self):
         self.__isRunning = False
