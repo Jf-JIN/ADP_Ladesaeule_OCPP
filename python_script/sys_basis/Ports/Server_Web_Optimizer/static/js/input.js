@@ -80,5 +80,7 @@ socket.on('update_results', (data) => {
         optimizationResults.innerText = '❌ Optimization failed ';
         optimizationResults.classList.remove('success');
         optimizationResults.classList.add('failed');
+        chargingImg.src = `https://via.placeholder.com/500x200?text=充电随时间变化图`;
+        comparisonImg.src = `https://via.placeholder.com/500x200?text=充电随时间变化图`;
     }
 });

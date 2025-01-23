@@ -18,6 +18,7 @@ class PortWebServerOptimizer(Thread):
         self.__web_server = ServerWeb(host, port)
         self.__web_server.signal_web_server_info.connect(self.signal_thread_web_server_info.emit)
         self.__web_server.signal_web_server_recv.connect(self.signal_thread_web_server_recv.emit)
+        self.__web_server.signal_web_server_finished.connect(self.signal_thread_webs_server_finished.emit)
 
         self.__isRunning = True
         try:

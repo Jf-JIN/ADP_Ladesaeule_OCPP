@@ -45,8 +45,12 @@ input, select {
     border-radius: 5px;
 }
 .button-container {
+    display: flex;
+    justify-content: center;
     text-align: center;
+    align-items: center;
     margin-top: auto;
+    gap: 10px;
 }
 button {
     padding: 10px 20px;
@@ -61,6 +65,8 @@ button:hover {
     background-color: #0056b3;
 }
 .success-message {
+    font-size: 14px;
+    display: none;
     margin-top: 10px;
     color: #28a745;
     font-weight: bold;
@@ -99,6 +105,7 @@ span {
 }
 .console_contain {
     height: 40vh;
+    max-width: 45vw;
     padding: 10px;
     border-radius: 10px;
     font-family: Arial, Helvetica, sans-serif;
