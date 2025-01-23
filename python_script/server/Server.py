@@ -1,3 +1,6 @@
+import json
+import time
+
 from sys_basis.Ports import *
 from sys_basis.Manager_Coroutine import ManagerCoroutines
 from sys_basis.Optimize.Optimizer import Optimizer
@@ -24,6 +27,7 @@ class Server:
         self.__init_coroutines()
         self.__init_signal_connections()
         self.__thread_web_server.start()
+        time.sleep(1)
         self.__manager_coroutines.start()
 
     def __init_signals(self):
@@ -32,7 +36,7 @@ class Server:
     def __init_signal_connections(self):
         self.__coroutine_OCPP_server.signal_thread_ocpp_server_info.connect(self.__send_info_ocpp_message)
         self.__coroutine_OCPP_server.signal_thread_ocpp_server_recv.connect(self.__send_info_ocpp_message)
-        self.__coroutine_OCPP_server.signal_thread_ocpp_server_normal_message.connect(self.__send_info_ocpp_message)
+        # self.__coroutine_OCPP_server.signal_thread_ocpp_server_normal_message.connect(self.__send_info_ocpp_message)
         self.__coroutine_OCPP_server.signal_thread_ocpp_server_recv_request.connect(self.__handle_request_message)
         self.__coroutine_OCPP_server.signal_thread_ocpp_server_recv_response.connect(self.__handle_response_message)
         self.__coroutine_OCPP_server.signal_thread_ocpp_server_recv_response_result.connect(self.__handle_response_result_message)
@@ -64,11 +68,12 @@ class Server:
         temp_dict = {
             'web_console': message
         }
+        _info(message)
         if 'max_grid_power' in message:
-            self._max_grid_power = message['max_grid_power']
+            self._max_grid_power = int(message['max_grid_power'])
             self.__thread_web_server.send_console_message({'web_console': 'max_grid_power updated to ' + str(self._max_grid_power)})
         if 'charging_interval' in message:
-            self._charging_interval = message['charging_interval']
+            self._charging_interval = int(message['charging_interval'])
             self.__thread_web_server.send_console_message({'web_console': 'charging_interval updated to ' + str(self._charging_interval)})
         if 'eprices' in message:
             self._eprices = message['eprices']
@@ -85,9 +90,9 @@ class Server:
         }
         self.__thread_web_server.send_console_message(temp_dict)
         if "--<Client_Connected>" in message:
-            self.__thread_web_server.send_connection_status({'connection_status': True, 'ip': message.split("--<Client_Connected> ")[1]})
+            self.__thread_web_server.send_connection_status({'connection_status': 1, 'ip': message.split("--<Client_Connected> ")[1]})
         if "--<Connection_Closed>" in message:
-            self.__thread_web_server.send_connection_status({'connection_status': False, 'ip': None})
+            self.__thread_web_server.send_connection_status({'connection_status': 0, 'ip': None})
 
     def __handle_request_message(self, message):
         """
@@ -119,9 +124,16 @@ class Server:
         )
         self._isopt = opt.IsOpt()
         self.__thread_web_server.send_results({
-            "results": self._isopt,
+            "results": 1 if self._isopt else 0,
             "img_charging": opt.get_img_charging(),
             "img_comparison": opt.get_img_comparison()})
+        self.__coroutine_OCPP_server.send_normal_message(str({
+            "opt_img": {
+                "results": 1 if self._isopt else 0,
+                "img_charging": opt.get_img_charging(),
+                "img_comparison": opt.get_img_comparison()
+            }
+        }))
         _debug(self._isopt)
         if self._isopt:
             temp_request = GenSetChargingProfileRequest.generate(

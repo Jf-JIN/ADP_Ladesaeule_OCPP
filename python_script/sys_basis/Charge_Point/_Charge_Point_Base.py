@@ -13,6 +13,7 @@ import time
 import uuid
 
 _info = Log.CP.info
+_debug = Log.CP.debug
 
 
 class ChargePointBase(object):
@@ -136,7 +137,7 @@ class ChargePointBase(object):
         current_time = time.time()
 
         # 情况1
-        _info(self.__time_table_for_send_message, message_action in self.__time_table_for_send_message, message_id, message_id not in self.__time_table_for_send_message[message_action])
+        _debug(self.__time_table_for_send_message, message_action in self.__time_table_for_send_message, message_id, message_id not in self.__time_table_for_send_message[message_action])
         if (message_action in self.__time_table_for_send_message and
                 message_id in self.__time_table_for_send_message[message_action] and
                 self.__time_table_for_send_message[message_action][message_id]['send_time'] > send_time):
@@ -248,13 +249,13 @@ class ChargePointBase(object):
                 if not self.__doSendDefaultResponse:
                     await asyncio.sleep(self.__network_buffer_time + CP_Params.RESPONSE_DELAY_TIME)  # 延迟到超时后发送, 此举为了结束该函数, 但实际上消息已无效
                 return default_message
-        _info(f'Response消息队列完整 前  {self.__current_message_to_send}')
-        _info(f'Response消息队列 前 {type(self.__current_message_to_send[message_action])}  {self.__current_message_to_send[message_action]}')
+        _debug(f'Response消息队列完整 前  {self.__current_message_to_send}')
+        _debug(f'Response消息队列 前 {type(self.__current_message_to_send[message_action])}  {self.__current_message_to_send[message_action]}')
         message = self.__current_message_to_send[message_action].pop(0)
-        _info(f'Response消息队列 后 {type(self.__current_message_to_send[message_action])}  {self.__current_message_to_send[message_action]}')
+        _debug(f'Response消息队列 后 {type(self.__current_message_to_send[message_action])}  {self.__current_message_to_send[message_action]}')
         if self.__current_message_to_send[message_action] == []:
             del self.__current_message_to_send[message_action]
-        _info(f'Response消息队列 删除后 {message_action in self.__current_message_to_send}  {self.__current_message_to_send}')
+        _debug(f'Response消息队列 删除后 {message_action in self.__current_message_to_send}  {self.__current_message_to_send}')
         return message
 
     def _send_signal_info_and_ocpp_request(self, message_action: str | Action, message_id: str,  info_action: str | None = None) -> None:

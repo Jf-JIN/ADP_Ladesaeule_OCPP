@@ -2,6 +2,8 @@
 const socket = io();
 
 submit_button = document.getElementById("submit_Button");
+submit_success = document.getElementById("successMessage");
+
 submit_button.addEventListener('click', () => {
     const max_grid_power = document.getElementById("MaxGridPower").value;
     const interval = document.getElementById("chargeInterval").value;
@@ -26,4 +28,5 @@ submit_button.addEventListener('click', () => {
             'charging_interval': interval,
         });
     }
+    submit_success.style.display = 'block';
 })

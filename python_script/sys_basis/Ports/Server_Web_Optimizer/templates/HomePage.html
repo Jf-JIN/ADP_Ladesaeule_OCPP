@@ -18,7 +18,7 @@
 
             <!-- number -->
             <label for="MaxGridPower">Max grid power (Wh) :</label>
-            <input type="number" id="MaxGridPower" name="MaxGridPower" placeholder="16000" required>
+            <input type="number" id="MaxGridPower" name="MaxGridPower" value="16000" required>
 
             <!-- selection -->
             <label for="chargeInterval">Optimize interval (min) :</label>
@@ -35,7 +35,7 @@
             <!-- button -->
             <div class="button-container">
                 <button id="submit_Button">Submit</button>
-                <p id="successMessage" class="success-message" style="display: none;">✅ Submit successfully！</p>
+                <p id="successMessage" class="success-message">✅ Submit successfully！</p>
             </div>
         </div>
 
@@ -49,7 +49,7 @@
             <h3>Charging Needs</h3>
 
             <!-- charging needs data-->
-            <p>EVSE id: <span id="evseId">1</span></p>
+            <p>EVSE id: <span id="evseId">unknown</span></p>
             <p>Departure time: <span id="departureTime">unknown</span></p>
             <p>Energy amount: <span id="energyAmount">0 Wh</span></p>
             <p>EV max voltage: <span id="evMaxVoltage">0 V</span></p>
@@ -65,7 +65,9 @@
             <h3>System Status</h3>
 
             <!-- system console-->
-            <div id="console_contain" class="console_contain">System is idle...<br></div>
+            <div id="console_contain" class="console_contain">System is idle...
+
+            </div>
         </div>
 
         <!-- graphics area -->

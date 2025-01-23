@@ -207,12 +207,12 @@ if __name__ == "__main__":
     #             "evMaxVoltage": 400,
     #         },
     #         "departureTime": DataGene.time2str(datetime.now() + timedelta(hours=10))
-    #     }
+    #     },
     #     "customData": {
     #         "vendorId": 123,
     #         "mod": 0
     #     }
-    # # }
+    # }
     charging_needs = {
         "requestedEnergyTransfer": EnergyTransferModeType.ac_three_phase,
         "acChargingParameters": {
