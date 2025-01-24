@@ -32,8 +32,8 @@ class Evse(object):
     def doUseRCD(self):
         return self.__doUseRCD
 
-    def set_data(self, data):
-        pass
+    def set_vehicle_state(self, data):
+        self.__vehicle_status = data
 
     def set_evse_error(self, error_index: str):
         self.__evse_error.add(error_index)
