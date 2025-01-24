@@ -137,7 +137,7 @@ class ModbusIO(object):
             data_list.add(EVSEErrorInfo.RCD_CHECK_ERROR)
         return data_list
 
-    def read_vehicle_status(self) -> None | bool:
+    def read_vehicle_status(self) -> None | int:
         """
         读取车辆状态
 
@@ -175,7 +175,7 @@ class ModbusIO(object):
         return self.write(address=EVSERegAddress.TURN_OFF_SELFTEST_OPERATION, value=BitsFlag.REG1004.SELFTEST_RCDTEST)
 
     def set_current(self, value: int) -> None | bool:
-        return self.write(address=EVSERegAddress.CURRENT, value=value)
+        return self.write(address=EVSERegAddress.CONFIGURED_AMPS, value=value)
 
     def enable_charge(self, flag: bool = True) -> None | bool:
         """
