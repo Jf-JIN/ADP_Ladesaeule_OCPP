@@ -14,9 +14,12 @@ class Log(AnalogDefine):
     WS = Logger(log_name='websocket', log_folder_path=APP_WORKSPACE_PATH, log_sub_folder_name='websocket', count_limit=10, exclude_funcs=__EXCLUDE_FUNCS)
     CP = Logger(log_name='charge_point', log_folder_path=APP_WORKSPACE_PATH, log_sub_folder_name='charge_point',
                 count_limit=10, exclude_funcs=__EXCLUDE_FUNCS)
-    OCPP = Logger(log_name='ocpp_port', log_folder_path=APP_WORKSPACE_PATH, log_sub_folder_name='ocpp_port', count_limit=10, exclude_funcs=__EXCLUDE_FUNCS)
+    OCPP = Logger(log_name='ocpp_port', log_folder_path=APP_WORKSPACE_PATH, log_sub_folder_name='ocpp_port', count_limit=10, exclude_funcs=__EXCLUDE_FUNCS, log_level='INFO')
     WEB = Logger(log_name='web', log_folder_path=APP_WORKSPACE_PATH, log_sub_folder_name='web_server', count_limit=10, exclude_funcs=__EXCLUDE_FUNCS)
     GPIO = Logger(log_name='gpio', log_folder_path=APP_WORKSPACE_PATH, log_sub_folder_name='gpio', count_limit=10, exclude_funcs=__EXCLUDE_FUNCS)
+    MODBUS = Logger(log_name='modbus', log_folder_path=APP_WORKSPACE_PATH, log_sub_folder_name='modbus', count_limit=10, exclude_funcs=__EXCLUDE_FUNCS)
+    SHELLY = Logger(log_name='shelly', log_folder_path=APP_WORKSPACE_PATH, log_sub_folder_name='shelly', count_limit=10, exclude_funcs=__EXCLUDE_FUNCS)
+    EVSE = Logger(log_name='evse', log_folder_path=APP_WORKSPACE_PATH, log_sub_folder_name='evse', count_limit=10, exclude_funcs=__EXCLUDE_FUNCS)
     OPT = Logger(log_name='optimize', log_folder_path=APP_WORKSPACE_PATH, log_sub_folder_name='optimize', count_limit=10, exclude_funcs=__EXCLUDE_FUNCS)
     GUI = Logger(log_name='gui_port', log_folder_path=APP_WORKSPACE_PATH, log_sub_folder_name='gui_port', count_limit=10, exclude_funcs=__EXCLUDE_FUNCS)
     GROUP = LoggerGroup(log_folder_path=APP_WORKSPACE_PATH, count_limit=10, size_limit=100)
