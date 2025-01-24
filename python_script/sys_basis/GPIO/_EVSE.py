@@ -6,15 +6,17 @@ from sys_basis.XSignal import XSignal
 from _Modbus_IO import  ModbusIO
 from _EVSE_Self_Check import EVSESelfCheck
 
+_error = Log.EVSE.error
+
 class Evse(object):
     def __init__(self, id, doUseRCD):
         self.__id = id
         self.__vehicle_status = None
-        #这个vehicle_status是哪里改?
-        self.__evse_error = set()
+        self.__evse_status_error = set()
         self.__doUseRCD = doUseRCD
-        self.__isEnableCharging = None
-        self.modbus = ModbusIO(id)
+        self.__isEnableCharging = True
+        self.__modbus = ModbusIO(id)
+        self.__signal_selftest_finished = XSignal()
 
     @property
     def id(self):
@@ -25,51 +27,81 @@ class Evse(object):
         return self.__vehicle_status
 
     @property
-    def evse_error(self):
-        return self.__evse_error
+    def evse_status_error(self):
+        return self.__evse_status_error
+
+    @property
+    def isEnableCharging(self):
+        return self.__isEnableCharging
 
     @property
     def doUseRCD(self):
         return self.__doUseRCD
 
-    def set_vehicle_state(self, data):
+    @property
+    def signal_selftest_finished(self):
+        return self.__signal_selftest_finished
+
+    def set_vehicle_state(self, data:int):
         self.__vehicle_status = data
 
-    def set_evse_error(self, error_index: str):
-        self.__evse_error.add(error_index)
-        self.__isEnableCharging = False
+    def set_evse_status_error(self, data: set):
+        if (EVSEErrorInfo.WRITE_ERROR in data
+            or EVSEErrorInfo.READ_ERROR in data):
+            self.__isEnableCharging = False
+            return
+        self.__evse_status_error = data
+        if (
+                EVSEErrorInfo.RCD_CHECK_FAILED in data
+                or EVSEErrorInfo.RCD_CHECK_ERROR in data
+                or EVSEErrorInfo.RELAY_OFF in data
+                or EVSEErrorInfo.DIODE_CHECK_FAIL in data
+                or EVSEErrorInfo.WAITING_FOR_PILOT_RELEASE in data
+                or EVSEErrorInfo.VENT_REQUIRED_FAIL in data
+        ):
+            self.__isEnableCharging = False
 
     def set_current(self, value) -> bool :
         """
         给1000寄存器赋值,代表充电电流
         """
-        with self.modbus as modbus:
-            m = modbus.write(address=1000,value = value)
+        if not self.__isEnableCharging:
+            return False
+        with self.__modbus as modbus:
+            res0 = modbus.enable_charge(True)
+            if not res0:
+                _error(f'EVSE {self.__id} enable charge failed')
+                return False
+            m = modbus.set_current(value)
+            if not m:
+                _error(f'EVSE {self.__id} set current failed')
         return m
 
-    def stop_charging(self, ):
+    def stop_charging(self)-> bool:
         """
         将1004寄存器的bit0: turn off charging now,置为1,表示立即停止充电
         """
-        with self.modbus as modbus:
-            m = modbus.write(address=1004,value = REG1004.TURN_OFF_CHARGING_NOW)
+        with self.__modbus as modbus:
+            m = modbus.enable_charge(False)
+            if not m:
+                _error(f'EVSE {self.__id} stop charging failed')
         return m
 
-    def start_self_check(self, ) -> bool :
+    def start_self_check(self) -> None :
         selftest = EVSESelfCheck(self.__id, self.__doUseRCD)
-        selftest.signal_self_test_error.connect(self.__enable_charging)
+        selftest.signal_self_test_error.connect(self.set_evse_status_error)
+        selftest.signal_test_finished.connect(self.signal_selftest_finished.emit)
         selftest.start()
-        #这个要如何返回bool值？
 
-    def get_current_limit(self, id) -> list:
+    def get_current_limit(self) -> list:
         """
         limit[0] = 最小电流
         limit[1] = 最大电流
         """
         limit = [-1, -1]
-        with self.modbus as modbus:
-            limit[0] = modbus.read(address=2002)
-            limit[1] = modbus.read(address=1003)
+        with self.__modbus as modbus:
+            limit[0] = modbus.read_current_min()
+            limit[1] = modbus.read_current_max()
         return limit
 
     def __enable_charging(self, flag: bool) -> bool:
