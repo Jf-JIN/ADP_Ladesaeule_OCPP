@@ -1973,25 +1973,6 @@
 										},
 										{
 											"_type": "UMLAttributeView",
-											"_id": "AAAAAAGUis40h6TbTCM=",
-											"_parent": {
-												"$ref": "AAAAAAGUioE7QNrROzA="
-											},
-											"model": {
-												"$ref": "AAAAAAGUis40gqTYM7E="
-											},
-											"visible": false,
-											"font": "Arial;13;0",
-											"parentStyle": true,
-											"left": 53,
-											"top": 621,
-											"width": 602.33251953125,
-											"height": 13,
-											"text": "+isCharging: bool {readOnly}",
-											"horizontalAlignment": 0
-										},
-										{
-											"_type": "UMLAttributeView",
 											"_id": "AAAAAAGUk8nJV97UAxs=",
 											"_parent": {
 												"$ref": "AAAAAAGUioE7QNrROzA="
@@ -2078,25 +2059,6 @@
 											"width": 637.60009765625,
 											"height": 13,
 											"text": "«signal»+signal_request_charge_plan_calibration: XSignal {readOnly}",
-											"horizontalAlignment": 0
-										},
-										{
-											"_type": "UMLAttributeView",
-											"_id": "AAAAAAGUitf2dwXh0HU=",
-											"_parent": {
-												"$ref": "AAAAAAGUioE7QNrROzA="
-											},
-											"model": {
-												"$ref": "AAAAAAGUitf2cgXeTGs="
-											},
-											"visible": false,
-											"font": "Arial;13;0",
-											"parentStyle": true,
-											"left": 53,
-											"top": 554,
-											"width": 602.33251953125,
-											"height": 13,
-											"text": "«signal»+signal_finished_charge_plan: XSignal {readOnly}",
 											"horizontalAlignment": 0
 										},
 										{
@@ -2227,25 +2189,6 @@
 										},
 										{
 											"_type": "UMLAttributeView",
-											"_id": "AAAAAAGUis4I9qKyaDE=",
-											"_parent": {
-												"$ref": "AAAAAAGUioE7QNrROzA="
-											},
-											"model": {
-												"$ref": "AAAAAAGUis4I8qKvDDc="
-											},
-											"visible": false,
-											"font": "Arial;13;0",
-											"parentStyle": true,
-											"left": 53,
-											"top": 756,
-											"width": 602.33251953125,
-											"height": 13,
-											"text": "-__isCharging: bool",
-											"horizontalAlignment": 0
-										},
-										{
-											"_type": "UMLAttributeView",
 											"_id": "AAAAAAGUitCybsC992s=",
 											"_parent": {
 												"$ref": "AAAAAAGUioE7QNrROzA="
@@ -2278,25 +2221,6 @@
 											"width": 637.60009765625,
 											"height": 13,
 											"text": "-__time_depart: str",
-											"horizontalAlignment": 0
-										},
-										{
-											"_type": "UMLAttributeView",
-											"_id": "AAAAAAGUkyylqkg09f0=",
-											"_parent": {
-												"$ref": "AAAAAAGUioE7QNrROzA="
-											},
-											"model": {
-												"$ref": "AAAAAAGUkyylnkgxSUg="
-											},
-											"visible": false,
-											"font": "Arial;13;0",
-											"parentStyle": true,
-											"left": 53,
-											"top": 786,
-											"width": 602.33251953125,
-											"height": 13,
-											"text": "-__time_last_item: int|float",
 											"horizontalAlignment": 0
 										},
 										{
@@ -2427,25 +2351,6 @@
 										},
 										{
 											"_type": "UMLAttributeView",
-											"_id": "AAAAAAGUitMditGHK0o=",
-											"_parent": {
-												"$ref": "AAAAAAGUioE7QNrROzA="
-											},
-											"model": {
-												"$ref": "AAAAAAGUitMdhNGEt7k="
-											},
-											"visible": false,
-											"font": "Arial;13;0",
-											"parentStyle": true,
-											"left": 53,
-											"top": 794,
-											"width": 602.33251953125,
-											"height": 13,
-											"text": "«signal»-__signal_finished_charge_plan: XSignal",
-											"horizontalAlignment": 0
-										},
-										{
-											"_type": "UMLAttributeView",
 											"_id": "AAAAAAGUiv44kC025oA=",
 											"_parent": {
 												"$ref": "AAAAAAGUioE7QNrROzA="
@@ -2514,25 +2419,6 @@
 											"width": 637.60009765625,
 											"height": 13,
 											"text": "+get_current_limit(id: int): list",
-											"horizontalAlignment": 0
-										},
-										{
-											"_type": "UMLOperationView",
-											"_id": "AAAAAAGUjrRftt/+NQo=",
-											"_parent": {
-												"$ref": "AAAAAAGUioE7QNrSWYY="
-											},
-											"model": {
-												"$ref": "AAAAAAGUjrRfsN/72vM="
-											},
-											"visible": false,
-											"font": "Arial;13;0",
-											"parentStyle": true,
-											"left": 53,
-											"top": 832,
-											"width": 602.33251953125,
-											"height": 13,
-											"text": "+get_max_current()",
 											"horizontalAlignment": 0
 										},
 										{
@@ -2678,27 +2564,6 @@
 									"model": {
 										"$ref": "AAAAAAGUioE7QNrJrU0="
 									},
-									"subViews": [
-										{
-											"_type": "UMLReceptionView",
-											"_id": "AAAAAAGUiwi0NDXwxCQ=",
-											"_parent": {
-												"$ref": "AAAAAAGUioE7QNrTMUs="
-											},
-											"model": {
-												"$ref": "AAAAAAGUiwi0LjXtJzM="
-											},
-											"visible": false,
-											"font": "Arial;13;0",
-											"parentStyle": true,
-											"left": -371,
-											"top": 789,
-											"width": 567,
-											"height": 13,
-											"text": "+Reception1()",
-											"horizontalAlignment": 0
-										}
-									],
 									"visible": false,
 									"font": "Arial;13;0",
 									"parentStyle": true,
@@ -11438,16 +11303,6 @@
 						},
 						{
 							"_type": "UMLAttribute",
-							"_id": "AAAAAAGUis40gqTYM7E=",
-							"_parent": {
-								"$ref": "AAAAAAGUioE7QNrJrU0="
-							},
-							"name": "isCharging",
-							"type": "bool",
-							"isReadOnly": true
-						},
-						{
-							"_type": "UMLAttribute",
 							"_id": "AAAAAAGUk8nJU97RtL4=",
 							"_parent": {
 								"$ref": "AAAAAAGUioE7QNrJrU0="
@@ -11493,17 +11348,6 @@
 								"$ref": "AAAAAAGUioE7QNrJrU0="
 							},
 							"name": "signal_request_charge_plan_calibration",
-							"stereotype": "signal",
-							"type": "XSignal",
-							"isReadOnly": true
-						},
-						{
-							"_type": "UMLAttribute",
-							"_id": "AAAAAAGUitf2cgXeTGs=",
-							"_parent": {
-								"$ref": "AAAAAAGUioE7QNrJrU0="
-							},
-							"name": "signal_finished_charge_plan",
 							"stereotype": "signal",
 							"type": "XSignal",
 							"isReadOnly": true
@@ -11588,16 +11432,6 @@
 						},
 						{
 							"_type": "UMLAttribute",
-							"_id": "AAAAAAGUis4I8qKvDDc=",
-							"_parent": {
-								"$ref": "AAAAAAGUioE7QNrJrU0="
-							},
-							"name": "__isCharging",
-							"visibility": "private",
-							"type": "bool"
-						},
-						{
-							"_type": "UMLAttribute",
 							"_id": "AAAAAAGUitCyaMC6Sz4=",
 							"_parent": {
 								"$ref": "AAAAAAGUioE7QNrJrU0="
@@ -11615,16 +11449,6 @@
 							"name": "__time_depart",
 							"visibility": "private",
 							"type": "str"
-						},
-						{
-							"_type": "UMLAttribute",
-							"_id": "AAAAAAGUkyylnkgxSUg=",
-							"_parent": {
-								"$ref": "AAAAAAGUioE7QNrJrU0="
-							},
-							"name": "__time_last_item",
-							"visibility": "private",
-							"type": "int|float"
 						},
 						{
 							"_type": "UMLAttribute",
@@ -11699,17 +11523,6 @@
 						},
 						{
 							"_type": "UMLAttribute",
-							"_id": "AAAAAAGUitMdhNGEt7k=",
-							"_parent": {
-								"$ref": "AAAAAAGUioE7QNrJrU0="
-							},
-							"name": "__signal_finished_charge_plan",
-							"stereotype": "signal",
-							"visibility": "private",
-							"type": "XSignal"
-						},
-						{
-							"_type": "UMLAttribute",
 							"_id": "AAAAAAGUiv44jC0zm9g=",
 							"_parent": {
 								"$ref": "AAAAAAGUioE7QNrJrU0="
@@ -11759,14 +11572,6 @@
 									"direction": "return"
 								}
 							]
-						},
-						{
-							"_type": "UMLOperation",
-							"_id": "AAAAAAGUjrRfsN/72vM=",
-							"_parent": {
-								"$ref": "AAAAAAGUioE7QNrJrU0="
-							},
-							"name": "get_max_current"
 						},
 						{
 							"_type": "UMLOperation",
@@ -11964,16 +11769,6 @@
 									"direction": "return"
 								}
 							]
-						}
-					],
-					"receptions": [
-						{
-							"_type": "UMLReception",
-							"_id": "AAAAAAGUiwi0LjXtJzM=",
-							"_parent": {
-								"$ref": "AAAAAAGUioE7QNrJrU0="
-							},
-							"name": "Reception1"
 						}
 					]
 				},
