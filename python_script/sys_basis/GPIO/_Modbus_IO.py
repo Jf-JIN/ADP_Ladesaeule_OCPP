@@ -38,9 +38,10 @@ class ModbusIO(object):
             self.__exit__(e.__class__, e, e.__traceback__)
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
+    def __exit__(self, exc_type, exc_val, exc_tb) -> bool:
         if exc_type is not None:
             _exception(f'ModbusIO {self.__context_action_error} with error: {exc_val}')
+        self.__client.close()
         return True
 
     def read(self, address: int) -> None | int:
@@ -110,7 +111,7 @@ class ModbusIO(object):
             _exception(f'ModbusIO write error: {e}\naddress: {address}\nvalue: {value}')
 
     def read_evse_status_fails(self) -> None | set:
-        """ 
+        """
         读取EVSE状态和故障
 
         - 返回值：
@@ -136,7 +137,7 @@ class ModbusIO(object):
         return data_list
 
     def read_vehicle_status(self) -> None | bool:
-        """ 
+        """
         读取车辆状态
 
         - 返回值:
@@ -146,7 +147,7 @@ class ModbusIO(object):
         return self.read(address=EVSERegAddress.VEHICLE_STATE)
 
     def read_current_min(self) -> None | int:
-        """ 
+        """
         读取允许的最小电流值
 
         - 返回值:
@@ -156,7 +157,7 @@ class ModbusIO(object):
         return self.read(address=EVSERegAddress.CURRENT_MIN)
 
     def read_current_max(self) -> None | int:
-        """ 
+        """
         读取允许的最大电流值
 
         - 返回值:
@@ -165,26 +166,6 @@ class ModbusIO(object):
         """
         return self.read(address=EVSERegAddress.CURRENT_MAX)
 
-    def disable_charge(self) -> None | bool:
-        """ 
-        立即停止充电
-
-        - 返回值:
-            - 如果写入成功, 返回True.
-            - 如果写入失败或发生错误, 返回False.
-        """
-        return self.write(address=EVSERegAddress.TURN_OFF_SELFTEST_OPERATION, value=BitsFlag.REG1004.TURN_OFF_CHARGING_NOW)
-
-    def enable_charge(self) -> None | bool:
-        """ 
-        允许开始充电
-
-        - 返回值:
-            - 如果写入成功, 返回True.
-            - 如果写入失败或发生错误, 返回False.
-        """
-        return self.write(address=EVSERegAddress.TURN_OFF_SELFTEST_OPERATION, value=BitsFlag.REG1004.TURN_OFF_CHARGING_NOW, bit_operation=0)
-
     def run_selftest_and_RCD_test_procedure(self) -> None | bool:
         """
         注意: 在EVSE类中, 需要在自检结束时将 id 从 isSelfChecking中删除, 否则无法继续读取数据.
@@ -192,5 +173,24 @@ class ModbusIO(object):
         __class__.isSelfChecking.add(self.__id)
         return self.write(address=EVSERegAddress.TURN_OFF_SELFTEST_OPERATION, value=BitsFlag.REG1004.SELFTEST_RCDTEST)
 
-    def enable_RCD(self) -> None | bool:
-        return self.write(address=EVSERegAddress.CHARGE_OPERATION, value=BitsFlag.REG2005.ENABLE_RCD_FEEDBACK)
+    def set_current(self, value: int) -> None | bool:
+        return self.write(address=EVSERegAddress.CURRENT, value=value)
+
+    def enable_charge(self, flag: bool = True) -> None | bool:
+        """
+        允许充电/停止充电
+
+        - 返回值:
+            - 如果写入成功, 返回True.
+            - 如果写入失败或发生错误, 返回False.
+        """
+        if flag:
+            return self.write(address=EVSERegAddress.TURN_OFF_SELFTEST_OPERATION, value=BitsFlag.REG1004.TURN_OFF_CHARGING_NOW, bit_operation=0)
+        else:
+            return self.write(address=EVSERegAddress.TURN_OFF_SELFTEST_OPERATION, value=BitsFlag.REG1004.TURN_OFF_CHARGING_NOW, bit_operation=1)
+
+    def enable_RCD(self, flag: bool) -> None | bool:
+        if flag:
+            return self.write(address=EVSERegAddress.CHARGE_OPERATION, value=BitsFlag.REG2005.ENABLE_RCD_FEEDBACK, bit_operation=1)
+        else:
+            return self.write(address=EVSERegAddress.CHARGE_OPERATION, value=BitsFlag.REG2005.ENABLE_RCD_FEEDBACK, bit_operation=0)
