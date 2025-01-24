@@ -648,6 +648,7 @@ class Logger(object):
         exception_str = traceback.format_exc()
         if exception_str == f'{type(None).__name__}: {None}\n':
             return
+        exception_str += '\n'
         self.error(exception_str, *args, **kwargs)
 
     def critical(self, *args, **kwargs) -> None:
