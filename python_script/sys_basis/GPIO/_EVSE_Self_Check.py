@@ -4,28 +4,28 @@ from threading import Thread
 from const.GPIO_Parameter import *
 from const.Const_Parameter import *
 from sys_basis.XSignal import XSignal
-from _Modbus_IO import  ModbusIO
+from _Modbus_IO import ModbusIO
 import time
 
 _info = Log.EVSE.info
 _error = Log.EVSE.error
 
+
 class EVSESelfCheck(Thread):
     isChecking = False
-    def __init__(self,id:int,doUseRCD:bool=False):
+
+    def __init__(self, id: int, doUseRCD: bool = False):
         super().__init__()
-        self.__id:int = id
+        self.__id: int = id
         self.__doUseRCD: bool = doUseRCD
         if doUseRCD:
-           self.__set_RCD_test()
+            self.__set_RCD_test()
         self.__modbus: ModbusIO = ModbusIO(id)
-        self.__timeout:int|float = GPIOParams.SELF_CHECK_TIMEOUT
+        self.__timeout: int | float = GPIOParams.SELF_CHECK_TIMEOUT
         self.__rw_error: set = set()
         self.__isRunning: bool = True
-        self.__signal_self_test_error:XSignal= XSignal()
-        self.__signal_test_finished:XSignal = XSignal()
-
-
+        self.__signal_self_test_error: XSignal = XSignal()
+        self.__signal_test_finished: XSignal = XSignal()
 
     @property
     def id(self):
@@ -57,14 +57,14 @@ class EVSESelfCheck(Thread):
         if self.__id in self.__modbus.__class__.isSelfChecking:
             self.__modbus.__class__.isSelfChecking.remove(self.__id)
         self.__isRunning = False
-        __class__.isChecking = False
+        self.__class__.isChecking = False
         self.__signal_test_finished.emit()
 
     def run(self):
-        if __class__.isChecking:
+        if self.__class__.isChecking:
             _error(f'EVSE {self.__id} is self checking. Cannot start again.')
             return
-        __class__.isChecking = True
+        self.__class__.isChecking = True
 
         while self.__isRunning:
             with self.__modbus as modbus:
@@ -73,7 +73,7 @@ class EVSESelfCheck(Thread):
                     self.__rw_error.add(EVSEErrorInfo.READ_ERROR)
                     self.__signal_self_test_error.emit(self.__rw_error)
                     self.__exit_self_test()
-                    return # 读写错误，直接结束自检
+                    return  # 读写错误，直接结束自检
 
                 time.sleep(self.__timeout)
 
@@ -82,20 +82,20 @@ class EVSESelfCheck(Thread):
                     self.__rw_error.add(EVSEErrorInfo.READ_ERROR)
                     self.__signal_self_test_error.emit(self.__rw_error)
                     self.__exit_self_test()
-                    return # 读写错误，直接结束自检
+                    return  # 读写错误，直接结束自检
 
                 if self.__doUseRCD:
                     if EVSEErrorInfo.RCD_CHECK_ERROR in response:
                         response.remove(EVSEErrorInfo.RCD_CHECK_ERROR)
                         success_clear = modbus.clear_RCD()
                         if not success_clear:
-                            #这里应该反馈通讯错误？
+                            # 这里应该反馈通讯错误？
                             self.__rw_error.add(EVSEErrorInfo.WRITE_ERROR)
                             self.__signal_self_test_error.emit(self.__rw_error)
                             self.__exit_self_test()
                             return
-                    else :
-                        #如果没有正常显示RCD错误，则认为RCD测试失败
+                    else:
+                        # 如果没有正常显示RCD错误，则认为RCD测试失败
                         response.add(EVSEErrorInfo.RCD_CHECK_FAILED)
 
                 self.signal_self_test_error.emit(response)

@@ -29,7 +29,7 @@ class ModbusIO(object):
         )
 
     def __enter__(self):
-        if self.__id in __class__.isSelfChecking:
+        if self.__id in self.__class__.isSelfChecking:
             self.__exit__(None, None, None)
         try:
             self.__client.connect()
@@ -171,7 +171,7 @@ class ModbusIO(object):
         """
         注意: 在EVSE类中, 需要在自检结束时将 id 从 isSelfChecking中删除, 否则无法继续读取数据.
         """
-        __class__.isSelfChecking.add(self.__id)
+        self.__class__.isSelfChecking.add(self.__id)
         return self.write(address=EVSERegAddress.TURN_OFF_SELFTEST_OPERATION, value=BitsFlag.REG1004.SELFTEST_RCDTEST)
 
     def set_current(self, value: int) -> None | bool:
