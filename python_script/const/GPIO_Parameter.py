@@ -36,6 +36,7 @@ class EVSEErrorInfo(AnalogDefine):
     VENT_REQUIRED_FAIL = 'Vent Required Fail'
     WAITING_FOR_PILOT_RELEASE = 'Waiting For Pilot Release'
     RCD_CHECK_ERROR = 'RCD Check Error'
+    RCD_CHECK_FAIL = 'RCD Check Failed'
 
 
 class RaspPins(AnalogDefine):
