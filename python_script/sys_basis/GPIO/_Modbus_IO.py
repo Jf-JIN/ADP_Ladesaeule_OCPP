@@ -109,7 +109,7 @@ class ModbusIO(object):
         except Exception as e:
             _exception(f'ModbusIO write error: {e}\naddress: {address}\nvalue: {value}')
 
-    def read_evse_status_and_fails(self) -> None | set:
+    def read_evse_status_fails(self) -> None | set:
         """ 
         读取EVSE状态和故障
 
@@ -192,5 +192,5 @@ class ModbusIO(object):
         __class__.isSelfChecking.add(self.__id)
         return self.write(address=EVSERegAddress.TURN_OFF_SELFTEST_OPERATION, value=BitsFlag.REG1004.SELFTEST_RCDTEST)
 
-    def enableRCD(self) -> None | bool:
+    def enable_RCD(self) -> None | bool:
         return self.write(address=EVSERegAddress.CHARGE_OPERATION, value=BitsFlag.REG2005.ENABLE_RCD_FEEDBACK)
