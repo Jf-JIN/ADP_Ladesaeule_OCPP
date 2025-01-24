@@ -14,6 +14,7 @@ class GPIOParams(AnalogDefine):
         # (1, 'url1'),
     ]
     MAX_VOLTAGE = 220
+    SELF_CHECK_TIMEOUT=31
 
 
 class ResultFlag(AnalogDefine):
@@ -36,7 +37,9 @@ class EVSEErrorInfo(AnalogDefine):
     VENT_REQUIRED_FAIL = 'Vent Required Fail'
     WAITING_FOR_PILOT_RELEASE = 'Waiting For Pilot Release'
     RCD_CHECK_ERROR = 'RCD Check Error'
-    RCD_CHECK_FAIL = 'RCD Check Failed'
+    RCD_CHECK_FAILED = 'RCD Check Failed'
+    READ_ERROR = 'Read Error'
+    WRITE_ERROR = 'Write Error'
 
 
 class RaspPins(AnalogDefine):
