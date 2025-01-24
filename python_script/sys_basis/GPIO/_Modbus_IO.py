@@ -29,7 +29,7 @@ class ModbusIO(object):
         )
 
     def __enter__(self):
-        if self.__id in self.isSelfChecking:
+        if self.__id in __class__.isSelfChecking:
             self.__exit__(None, None, None)
         try:
             self.__client.connect()
