@@ -50,7 +50,7 @@
 											"parentStyle": true,
 											"left": 1077,
 											"top": 1157,
-											"width": 386.5439453125,
+											"width": 418.4853515625,
 											"height": 13,
 											"text": "«ContextManager»"
 										},
@@ -64,7 +64,7 @@
 											"parentStyle": true,
 											"left": 1077,
 											"top": 1172,
-											"width": 386.5439453125,
+											"width": 418.4853515625,
 											"height": 13,
 											"text": "ModbusIO"
 										},
@@ -102,7 +102,7 @@
 									"parentStyle": true,
 									"left": 1072,
 									"top": 1152,
-									"width": 396.5439453125,
+									"width": 428.4853515625,
 									"height": 38,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGUin4oMtn9ZFA="
@@ -140,7 +140,7 @@
 											"parentStyle": true,
 											"left": 1077,
 											"top": 1195,
-											"width": 386.5439453125,
+											"width": 418.4853515625,
 											"height": 13,
 											"underline": true,
 											"text": "+isSelfChecking: set",
@@ -159,7 +159,7 @@
 											"parentStyle": true,
 											"left": 1077,
 											"top": 1210,
-											"width": 386.5439453125,
+											"width": 418.4853515625,
 											"height": 13,
 											"text": "-__id: int",
 											"horizontalAlignment": 0
@@ -177,7 +177,7 @@
 											"parentStyle": true,
 											"left": 1077,
 											"top": 1225,
-											"width": 386.5439453125,
+											"width": 418.4853515625,
 											"height": 13,
 											"text": "-__context_action_error: str = 'exit'",
 											"horizontalAlignment": 0
@@ -195,7 +195,7 @@
 											"parentStyle": true,
 											"left": 1077,
 											"top": 1240,
-											"width": 386.5439453125,
+											"width": 418.4853515625,
 											"height": 13,
 											"text": "-__client: ModbusSerialClient",
 											"horizontalAlignment": 0
@@ -205,7 +205,7 @@
 									"parentStyle": true,
 									"left": 1072,
 									"top": 1190,
-									"width": 396.5439453125,
+									"width": 428.4853515625,
 									"height": 68
 								},
 								{
@@ -231,7 +231,7 @@
 											"parentStyle": true,
 											"left": 1077,
 											"top": 1263,
-											"width": 386.5439453125,
+											"width": 418.4853515625,
 											"height": 13,
 											"text": "+read(address: int): int|None",
 											"horizontalAlignment": 0
@@ -249,7 +249,7 @@
 											"parentStyle": true,
 											"left": 1077,
 											"top": 1278,
-											"width": 386.5439453125,
+											"width": 418.4853515625,
 											"height": 13,
 											"text": "+read_evse_status_fails(): set | None",
 											"horizontalAlignment": 0
@@ -267,7 +267,7 @@
 											"parentStyle": true,
 											"left": 1077,
 											"top": 1293,
-											"width": 386.5439453125,
+											"width": 418.4853515625,
 											"height": 13,
 											"text": "+write(address: int, value: int, bit_operation: 0|1|None): bool | None",
 											"horizontalAlignment": 0
@@ -285,7 +285,7 @@
 											"parentStyle": true,
 											"left": 1077,
 											"top": 1308,
-											"width": 386.5439453125,
+											"width": 418.4853515625,
 											"height": 13,
 											"text": "+read_vehicle_status(): int|None",
 											"horizontalAlignment": 0
@@ -303,7 +303,7 @@
 											"parentStyle": true,
 											"left": 1077,
 											"top": 1323,
-											"width": 386.5439453125,
+											"width": 418.4853515625,
 											"height": 13,
 											"text": "+read_current_max(): int|None",
 											"horizontalAlignment": 0
@@ -321,7 +321,7 @@
 											"parentStyle": true,
 											"left": 1077,
 											"top": 1338,
-											"width": 386.5439453125,
+											"width": 418.4853515625,
 											"height": 13,
 											"text": "+run_selftest_and_RCD_test_procedure(): bool|None",
 											"horizontalAlignment": 0
@@ -339,7 +339,7 @@
 											"parentStyle": true,
 											"left": 1077,
 											"top": 1353,
-											"width": 386.5439453125,
+											"width": 418.4853515625,
 											"height": 13,
 											"text": "+enable_charge(flag: bool = True): bool|None",
 											"horizontalAlignment": 0
@@ -357,7 +357,7 @@
 											"parentStyle": true,
 											"left": 1077,
 											"top": 1368,
-											"width": 386.5439453125,
+											"width": 418.4853515625,
 											"height": 13,
 											"text": "+set_current(value: int): boolNone",
 											"horizontalAlignment": 0
@@ -375,7 +375,7 @@
 											"parentStyle": true,
 											"left": 1077,
 											"top": 1383,
-											"width": 386.5439453125,
+											"width": 418.4853515625,
 											"height": 13,
 											"text": "+enable_RCD(flag: bool): boolNone",
 											"horizontalAlignment": 0
@@ -393,7 +393,7 @@
 											"parentStyle": true,
 											"left": 1077,
 											"top": 1398,
-											"width": 386.5439453125,
+											"width": 418.4853515625,
 											"height": 13,
 											"text": "+clear_RCD(): bool|None",
 											"horizontalAlignment": 0
@@ -411,7 +411,7 @@
 											"parentStyle": true,
 											"left": 1077,
 											"top": 1413,
-											"width": 386.5439453125,
+											"width": 418.4853515625,
 											"height": 13,
 											"text": "-__init__(id: int): None",
 											"horizontalAlignment": 0
@@ -429,7 +429,7 @@
 											"parentStyle": true,
 											"left": 1077,
 											"top": 1428,
-											"width": 386.5439453125,
+											"width": 418.4853515625,
 											"height": 13,
 											"text": "-__enter__(): self",
 											"horizontalAlignment": 0
@@ -447,7 +447,7 @@
 											"parentStyle": true,
 											"left": 1077,
 											"top": 1443,
-											"width": 386.5439453125,
+											"width": 418.4853515625,
 											"height": 13,
 											"text": "-__exit__(exc_type, exc_val, exc_tb): bool",
 											"horizontalAlignment": 0
@@ -457,7 +457,7 @@
 									"parentStyle": true,
 									"left": 1072,
 									"top": 1258,
-									"width": 396.5439453125,
+									"width": 428.4853515625,
 									"height": 203
 								},
 								{
@@ -500,7 +500,7 @@
 							"containerChangeable": true,
 							"left": 1072,
 							"top": 1152,
-							"width": 395.5439453125,
+							"width": 427.4853515625,
 							"height": 309,
 							"nameCompartment": {
 								"$ref": "AAAAAAGUin4oMdn8uUI="
@@ -1433,7 +1433,7 @@
 											"parentStyle": true,
 											"left": 1365,
 											"top": 773,
-											"width": 503,
+											"width": 504.74365234375,
 											"height": 13,
 											"text": "«Thread»"
 										},
@@ -1447,7 +1447,7 @@
 											"parentStyle": true,
 											"left": 1365,
 											"top": 788,
-											"width": 503,
+											"width": 504.74365234375,
 											"height": 13,
 											"text": "PollingShelly"
 										},
@@ -1485,7 +1485,7 @@
 									"parentStyle": true,
 									"left": 1360,
 									"top": 768,
-									"width": 513,
+									"width": 514.74365234375,
 									"height": 38,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGUioDUzNqbMuc="
@@ -1523,7 +1523,7 @@
 											"parentStyle": true,
 											"left": 1365,
 											"top": 811,
-											"width": 503,
+											"width": 504.74365234375,
 											"height": 13,
 											"text": "+isRunning: bool {readOnly}",
 											"horizontalAlignment": 0
@@ -1541,7 +1541,7 @@
 											"parentStyle": true,
 											"left": 1365,
 											"top": 826,
-											"width": 503,
+											"width": 504.74365234375,
 											"height": 13,
 											"text": "-__parent: GPIOManager",
 											"horizontalAlignment": 0
@@ -1559,7 +1559,7 @@
 											"parentStyle": true,
 											"left": 1365,
 											"top": 841,
-											"width": 503,
+											"width": 504.74365234375,
 											"height": 13,
 											"text": "-__shelly_list: list",
 											"horizontalAlignment": 0
@@ -1577,7 +1577,7 @@
 											"parentStyle": true,
 											"left": 1365,
 											"top": 856,
-											"width": 503,
+											"width": 504.74365234375,
 											"height": 13,
 											"text": "-__interval: int|float",
 											"horizontalAlignment": 0
@@ -1595,7 +1595,7 @@
 											"parentStyle": true,
 											"left": 1365,
 											"top": 871,
-											"width": 503,
+											"width": 504.74365234375,
 											"height": 13,
 											"text": "-__timeout: int|float",
 											"horizontalAlignment": 0
@@ -1613,7 +1613,7 @@
 											"parentStyle": true,
 											"left": 1365,
 											"top": 886,
-											"width": 503,
+											"width": 504.74365234375,
 											"height": 13,
 											"text": "-__data_collector: DataCollector",
 											"horizontalAlignment": 0
@@ -1631,7 +1631,7 @@
 											"parentStyle": true,
 											"left": 1365,
 											"top": 901,
-											"width": 503,
+											"width": 504.74365234375,
 											"height": 13,
 											"text": "-__isRunning: bool",
 											"horizontalAlignment": 0
@@ -1649,7 +1649,7 @@
 											"parentStyle": true,
 											"left": 1365,
 											"top": 916,
-											"width": 503,
+											"width": 504.74365234375,
 											"height": 13,
 											"text": "-__current_index: int",
 											"horizontalAlignment": 0
@@ -1659,7 +1659,7 @@
 									"parentStyle": true,
 									"left": 1360,
 									"top": 806,
-									"width": 513,
+									"width": 514.74365234375,
 									"height": 128
 								},
 								{
@@ -1685,7 +1685,7 @@
 											"parentStyle": true,
 											"left": 1365,
 											"top": 939,
-											"width": 503,
+											"width": 504.74365234375,
 											"height": 13,
 											"text": "+run(): None",
 											"horizontalAlignment": 0
@@ -1703,7 +1703,7 @@
 											"parentStyle": true,
 											"left": 1365,
 											"top": 954,
-											"width": 503,
+											"width": 504.74365234375,
 											"height": 13,
 											"text": "+stop(): None",
 											"horizontalAlignment": 0
@@ -1721,7 +1721,7 @@
 											"parentStyle": true,
 											"left": 1365,
 											"top": 969,
-											"width": 503,
+											"width": 504.74365234375,
 											"height": 13,
 											"text": "+__init__(parent, charge_unit_dict: dict, intervall: int|float, timeout: int|float): None",
 											"horizontalAlignment": 0
@@ -1731,7 +1731,7 @@
 									"parentStyle": true,
 									"left": 1360,
 									"top": 934,
-									"width": 513,
+									"width": 514.74365234375,
 									"height": 53
 								},
 								{
@@ -1774,7 +1774,7 @@
 							"containerChangeable": true,
 							"left": 1360,
 							"top": 768,
-							"width": 512,
+							"width": 513.74365234375,
 							"height": 240,
 							"nameCompartment": {
 								"$ref": "AAAAAAGUioDUzNqa9Pw="
@@ -2792,7 +2792,7 @@
 											"parentStyle": true,
 											"left": 709,
 											"top": 1159,
-											"width": 296.9404296875,
+											"width": 312.873046875,
 											"height": 13,
 											"text": "Evse"
 										},
@@ -2830,7 +2830,7 @@
 									"parentStyle": true,
 									"left": 704,
 									"top": 1152,
-									"width": 306.9404296875,
+									"width": 322.873046875,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGUioHPFdr5b5M="
@@ -2868,7 +2868,7 @@
 											"parentStyle": true,
 											"left": 709,
 											"top": 1182,
-											"width": 296.9404296875,
+											"width": 312.873046875,
 											"height": 13,
 											"text": "+id: str {readOnly}",
 											"horizontalAlignment": 0
@@ -2905,7 +2905,7 @@
 											"parentStyle": true,
 											"left": 709,
 											"top": 1197,
-											"width": 296.9404296875,
+											"width": 312.873046875,
 											"height": 13,
 											"text": "+vehicle_state: int {readOnly}",
 											"horizontalAlignment": 0
@@ -2923,7 +2923,7 @@
 											"parentStyle": true,
 											"left": 709,
 											"top": 1212,
-											"width": 296.9404296875,
+											"width": 312.873046875,
 											"height": 13,
 											"text": "+evse_status_error: set {readOnly}",
 											"horizontalAlignment": 0
@@ -2941,7 +2941,7 @@
 											"parentStyle": true,
 											"left": 709,
 											"top": 1227,
-											"width": 296.9404296875,
+											"width": 312.873046875,
 											"height": 13,
 											"text": "+isEnableCharging: bool {readOnly}",
 											"horizontalAlignment": 0
@@ -2959,7 +2959,7 @@
 											"parentStyle": true,
 											"left": 709,
 											"top": 1242,
-											"width": 296.9404296875,
+											"width": 312.873046875,
 											"height": 13,
 											"text": "+doUseRCD: bool {readOnly}",
 											"horizontalAlignment": 0
@@ -2977,7 +2977,7 @@
 											"parentStyle": true,
 											"left": 709,
 											"top": 1257,
-											"width": 296.9404296875,
+											"width": 312.873046875,
 											"height": 13,
 											"text": "«signal»+signal_test_finished: XSignal() {readOnly}",
 											"horizontalAlignment": 0
@@ -2995,7 +2995,7 @@
 											"parentStyle": true,
 											"left": 709,
 											"top": 1272,
-											"width": 296.9404296875,
+											"width": 312.873046875,
 											"height": 13,
 											"text": "-__id: str",
 											"horizontalAlignment": 0
@@ -3051,7 +3051,7 @@
 											"parentStyle": true,
 											"left": 709,
 											"top": 1287,
-											"width": 296.9404296875,
+											"width": 312.873046875,
 											"height": 13,
 											"text": "-__vehicle_status: int|None",
 											"horizontalAlignment": 0
@@ -3069,7 +3069,7 @@
 											"parentStyle": true,
 											"left": 709,
 											"top": 1302,
-											"width": 296.9404296875,
+											"width": 312.873046875,
 											"height": 13,
 											"text": "-__evse_status_error: int",
 											"horizontalAlignment": 0
@@ -3087,7 +3087,7 @@
 											"parentStyle": true,
 											"left": 709,
 											"top": 1317,
-											"width": 296.9404296875,
+											"width": 312.873046875,
 											"height": 13,
 											"text": "-__doUseRCD: bool",
 											"horizontalAlignment": 0
@@ -3105,7 +3105,7 @@
 											"parentStyle": true,
 											"left": 709,
 											"top": 1332,
-											"width": 296.9404296875,
+											"width": 312.873046875,
 											"height": 13,
 											"text": "-__isEnableCharging: bool = True",
 											"horizontalAlignment": 0
@@ -3123,7 +3123,7 @@
 											"parentStyle": true,
 											"left": 709,
 											"top": 1347,
-											"width": 296.9404296875,
+											"width": 312.873046875,
 											"height": 13,
 											"text": "-__modbus: ModbusIO",
 											"horizontalAlignment": 0
@@ -3141,7 +3141,7 @@
 											"parentStyle": true,
 											"left": 709,
 											"top": 1362,
-											"width": 296.9404296875,
+											"width": 312.873046875,
 											"height": 13,
 											"text": "«signal»-__signal_test_finished: XSignal()",
 											"horizontalAlignment": 0
@@ -3151,7 +3151,7 @@
 									"parentStyle": true,
 									"left": 704,
 									"top": 1177,
-									"width": 306.9404296875,
+									"width": 322.873046875,
 									"height": 203
 								},
 								{
@@ -3196,7 +3196,7 @@
 											"parentStyle": true,
 											"left": 709,
 											"top": 1387,
-											"width": 296.9404296875,
+											"width": 312.873046875,
 											"height": 13,
 											"text": "+set_vehicle_state(data: int): None",
 											"horizontalAlignment": 0
@@ -3214,7 +3214,7 @@
 											"parentStyle": true,
 											"left": 709,
 											"top": 1402,
-											"width": 296.9404296875,
+											"width": 312.873046875,
 											"height": 13,
 											"text": "+set_evse_status_error(data: set): None",
 											"horizontalAlignment": 0
@@ -3232,7 +3232,7 @@
 											"parentStyle": true,
 											"left": 709,
 											"top": 1417,
-											"width": 296.9404296875,
+											"width": 312.873046875,
 											"height": 13,
 											"text": "+set_current(value: int): bool",
 											"horizontalAlignment": 0
@@ -3250,7 +3250,7 @@
 											"parentStyle": true,
 											"left": 709,
 											"top": 1432,
-											"width": 296.9404296875,
+											"width": 312.873046875,
 											"height": 13,
 											"text": "+stop_charging(): bool",
 											"horizontalAlignment": 0
@@ -3268,7 +3268,7 @@
 											"parentStyle": true,
 											"left": 709,
 											"top": 1447,
-											"width": 296.9404296875,
+											"width": 312.873046875,
 											"height": 13,
 											"text": "+start_self_check(): None",
 											"horizontalAlignment": 0
@@ -3286,7 +3286,7 @@
 											"parentStyle": true,
 											"left": 709,
 											"top": 1462,
-											"width": 296.9404296875,
+											"width": 312.873046875,
 											"height": 13,
 											"text": "+get_current_limit(): list",
 											"horizontalAlignment": 0
@@ -3304,7 +3304,7 @@
 											"parentStyle": true,
 											"left": 709,
 											"top": 1477,
-											"width": 296.9404296875,
+											"width": 312.873046875,
 											"height": 13,
 											"text": "-__init__(id: int, doUseRCD: bool = False): None",
 											"horizontalAlignment": 0
@@ -3322,7 +3322,7 @@
 											"parentStyle": true,
 											"left": 709,
 											"top": 1492,
-											"width": 296.9404296875,
+											"width": 312.873046875,
 											"height": 13,
 											"text": "-__enable_charging(flag: bool): bool",
 											"horizontalAlignment": 0
@@ -3351,7 +3351,7 @@
 									"parentStyle": true,
 									"left": 704,
 									"top": 1380,
-									"width": 306.9404296875,
+									"width": 322.873046875,
 									"height": 130
 								},
 								{
@@ -3394,7 +3394,7 @@
 							"containerChangeable": true,
 							"left": 704,
 							"top": 1152,
-							"width": 305.9404296875,
+							"width": 321.873046875,
 							"height": 368,
 							"nameCompartment": {
 								"$ref": "AAAAAAGUioHPFdr4C3E="
@@ -3455,7 +3455,7 @@
 											"parentStyle": true,
 											"left": 309,
 											"top": 1159,
-											"width": 359,
+											"width": 367.9326171875,
 											"height": 13,
 											"text": "Shelly"
 										},
@@ -3493,7 +3493,7 @@
 									"parentStyle": true,
 									"left": 304,
 									"top": 1152,
-									"width": 369,
+									"width": 377.9326171875,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGUioHxodsjkp0="
@@ -3531,7 +3531,7 @@
 											"parentStyle": true,
 											"left": 309,
 											"top": 1182,
-											"width": 359,
+											"width": 367.9326171875,
 											"height": 13,
 											"text": "+id: int {readOnly}",
 											"horizontalAlignment": 0
@@ -3549,7 +3549,7 @@
 											"parentStyle": true,
 											"left": 309,
 											"top": 1197,
-											"width": 359,
+											"width": 367.9326171875,
 											"height": 13,
 											"text": "+main_address: str {readOnly}",
 											"horizontalAlignment": 0
@@ -3567,7 +3567,7 @@
 											"parentStyle": true,
 											"left": 309,
 											"top": 1212,
-											"width": 359,
+											"width": 367.9326171875,
 											"height": 13,
 											"text": "+address_list: list {readOnly}",
 											"horizontalAlignment": 0
@@ -3585,7 +3585,7 @@
 											"parentStyle": true,
 											"left": 309,
 											"top": 1227,
-											"width": 359,
+											"width": 367.9326171875,
 											"height": 13,
 											"text": "+sub_address_0: str {readOnly}",
 											"horizontalAlignment": 0
@@ -3603,7 +3603,7 @@
 											"parentStyle": true,
 											"left": 309,
 											"top": 1242,
-											"width": 359,
+											"width": 367.9326171875,
 											"height": 13,
 											"text": "+sub_address_1: str {readOnly}",
 											"horizontalAlignment": 0
@@ -3621,7 +3621,7 @@
 											"parentStyle": true,
 											"left": 309,
 											"top": 1257,
-											"width": 359,
+											"width": 367.9326171875,
 											"height": 13,
 											"text": "+sub_address_2: str {readOnly}",
 											"horizontalAlignment": 0
@@ -3639,7 +3639,7 @@
 											"parentStyle": true,
 											"left": 309,
 											"top": 1272,
-											"width": 359,
+											"width": 367.9326171875,
 											"height": 13,
 											"text": "+isAvailable: bool {readOnly}",
 											"horizontalAlignment": 0
@@ -3657,7 +3657,7 @@
 											"parentStyle": true,
 											"left": 309,
 											"top": 1287,
-											"width": 359,
+											"width": 367.9326171875,
 											"height": 13,
 											"text": "+charged_energy: int|float {readOnly}",
 											"horizontalAlignment": 0
@@ -3675,7 +3675,7 @@
 											"parentStyle": true,
 											"left": 309,
 											"top": 1302,
-											"width": 359,
+											"width": 367.9326171875,
 											"height": 13,
 											"text": "+data: dict {readOnly}",
 											"horizontalAlignment": 0
@@ -3693,7 +3693,7 @@
 											"parentStyle": true,
 											"left": 309,
 											"top": 1317,
-											"width": 359,
+											"width": 367.9326171875,
 											"height": 13,
 											"text": "+data_ph0: dict {readOnly}",
 											"horizontalAlignment": 0
@@ -3711,7 +3711,7 @@
 											"parentStyle": true,
 											"left": 309,
 											"top": 1332,
-											"width": 359,
+											"width": 367.9326171875,
 											"height": 13,
 											"text": "+data_ph1: dict {readOnly}",
 											"horizontalAlignment": 0
@@ -3729,7 +3729,7 @@
 											"parentStyle": true,
 											"left": 309,
 											"top": 1347,
-											"width": 359,
+											"width": 367.9326171875,
 											"height": 13,
 											"text": "+data_ph2: dict {readOnly}",
 											"horizontalAlignment": 0
@@ -3747,7 +3747,7 @@
 											"parentStyle": true,
 											"left": 309,
 											"top": 1362,
-											"width": 359,
+											"width": 367.9326171875,
 											"height": 13,
 											"text": "«signal»+signal_shelly_error_occured: XSignal() {readOnly}",
 											"horizontalAlignment": 0
@@ -3765,7 +3765,7 @@
 											"parentStyle": true,
 											"left": 309,
 											"top": 1377,
-											"width": 359,
+											"width": 367.9326171875,
 											"height": 13,
 											"text": "«signal»+signal_current_no: XSignal(bool) {readOnly}",
 											"horizontalAlignment": 0
@@ -3783,7 +3783,7 @@
 											"parentStyle": true,
 											"left": 309,
 											"top": 1392,
-											"width": 359,
+											"width": 367.9326171875,
 											"height": 13,
 											"text": "«signal»+signal_current_overload: XSignal(bool) {readOnly}",
 											"horizontalAlignment": 0
@@ -3801,7 +3801,7 @@
 											"parentStyle": true,
 											"left": 309,
 											"top": 1407,
-											"width": 359,
+											"width": 367.9326171875,
 											"height": 13,
 											"text": "-__id: int",
 											"horizontalAlignment": 0
@@ -3819,7 +3819,7 @@
 											"parentStyle": true,
 											"left": 309,
 											"top": 1422,
-											"width": 359,
+											"width": 367.9326171875,
 											"height": 13,
 											"text": "-__main_address: str",
 											"horizontalAlignment": 0
@@ -3837,7 +3837,7 @@
 											"parentStyle": true,
 											"left": 309,
 											"top": 1437,
-											"width": 359,
+											"width": 367.9326171875,
 											"height": 13,
 											"text": "-__data: dict",
 											"horizontalAlignment": 0
@@ -3855,7 +3855,7 @@
 											"parentStyle": true,
 											"left": 309,
 											"top": 1452,
-											"width": 359,
+											"width": 367.9326171875,
 											"height": 13,
 											"text": "-__isAvailable: bool",
 											"horizontalAlignment": 0
@@ -3873,7 +3873,7 @@
 											"parentStyle": true,
 											"left": 309,
 											"top": 1467,
-											"width": 359,
+											"width": 367.9326171875,
 											"height": 13,
 											"text": "-__charged_energy: int|float",
 											"horizontalAlignment": 0
@@ -3891,7 +3891,7 @@
 											"parentStyle": true,
 											"left": 309,
 											"top": 1482,
-											"width": 359,
+											"width": 367.9326171875,
 											"height": 13,
 											"text": "«signal»-__signal_current_no: XSignal(bool)",
 											"horizontalAlignment": 0
@@ -3909,7 +3909,7 @@
 											"parentStyle": true,
 											"left": 309,
 											"top": 1497,
-											"width": 359,
+											"width": 367.9326171875,
 											"height": 13,
 											"text": "«signal»-__signal_current_overload: XSignal(bool)",
 											"horizontalAlignment": 0
@@ -3927,7 +3927,7 @@
 											"parentStyle": true,
 											"left": 309,
 											"top": 1512,
-											"width": 359,
+											"width": 367.9326171875,
 											"height": 13,
 											"text": "«signal»-__signal_shelly_error_occurred: XSignal()",
 											"horizontalAlignment": 0
@@ -3937,7 +3937,7 @@
 									"parentStyle": true,
 									"left": 304,
 									"top": 1177,
-									"width": 369,
+									"width": 377.9326171875,
 									"height": 353
 								},
 								{
@@ -3963,7 +3963,7 @@
 											"parentStyle": true,
 											"left": 309,
 											"top": 1535,
-											"width": 359,
+											"width": 367.9326171875,
 											"height": 13,
 											"text": "+set_data(data: dict): None",
 											"horizontalAlignment": 0
@@ -3981,7 +3981,7 @@
 											"parentStyle": true,
 											"left": 309,
 											"top": 1550,
-											"width": 359,
+											"width": 367.9326171875,
 											"height": 13,
 											"text": "+reset(): None",
 											"horizontalAlignment": 0
@@ -3999,7 +3999,7 @@
 											"parentStyle": true,
 											"left": 309,
 											"top": 1565,
-											"width": 359,
+											"width": 367.9326171875,
 											"height": 13,
 											"text": "-__init__(id: int, address: str): None",
 											"horizontalAlignment": 0
@@ -4028,7 +4028,7 @@
 									"parentStyle": true,
 									"left": 304,
 									"top": 1530,
-									"width": 369,
+									"width": 377.9326171875,
 									"height": 53
 								},
 								{
@@ -4071,7 +4071,7 @@
 							"containerChangeable": true,
 							"left": 304,
 							"top": 1152,
-							"width": 368,
+							"width": 376.9326171875,
 							"height": 446,
 							"nameCompartment": {
 								"$ref": "AAAAAAGUioHxodsiXKI="
@@ -4132,7 +4132,7 @@
 											"parentStyle": true,
 											"left": 21,
 											"top": 1159,
-											"width": 244.2041015625,
+											"width": 251.8720703125,
 											"height": 13,
 											"text": "LatchMotor"
 										},
@@ -4170,7 +4170,7 @@
 									"parentStyle": true,
 									"left": 16,
 									"top": 1152,
-									"width": 254.2041015625,
+									"width": 261.8720703125,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGUioIzVttP1Rg="
@@ -4208,7 +4208,7 @@
 											"parentStyle": true,
 											"left": 21,
 											"top": 1182,
-											"width": 244.2041015625,
+											"width": 251.8720703125,
 											"height": 13,
 											"text": "+id: int {readOnly}",
 											"horizontalAlignment": 0
@@ -4226,7 +4226,7 @@
 											"parentStyle": true,
 											"left": 21,
 											"top": 1197,
-											"width": 244.2041015625,
+											"width": 251.8720703125,
 											"height": 13,
 											"text": "+isLocked: bool {readOnly}",
 											"horizontalAlignment": 0
@@ -4244,7 +4244,7 @@
 											"parentStyle": true,
 											"left": 21,
 											"top": 1212,
-											"width": 244.2041015625,
+											"width": 251.8720703125,
 											"height": 13,
 											"text": "-__id: int",
 											"horizontalAlignment": 0
@@ -4262,7 +4262,7 @@
 											"parentStyle": true,
 											"left": 21,
 											"top": 1227,
-											"width": 244.2041015625,
+											"width": 251.8720703125,
 											"height": 13,
 											"text": "-__isLocked: bool = False",
 											"horizontalAlignment": 0
@@ -4280,7 +4280,7 @@
 											"parentStyle": true,
 											"left": 21,
 											"top": 1242,
-											"width": 244.2041015625,
+											"width": 251.8720703125,
 											"height": 13,
 											"text": "-__status_pin_lock: bool = False",
 											"horizontalAlignment": 0
@@ -4298,7 +4298,7 @@
 											"parentStyle": true,
 											"left": 21,
 											"top": 1257,
-											"width": 244.2041015625,
+											"width": 251.8720703125,
 											"height": 13,
 											"text": "-__status_pin_unlock: bool = False",
 											"horizontalAlignment": 0
@@ -4316,7 +4316,7 @@
 											"parentStyle": true,
 											"left": 21,
 											"top": 1272,
-											"width": 244.2041015625,
+											"width": 251.8720703125,
 											"height": 13,
 											"text": "-__isRunning: bool = False",
 											"horizontalAlignment": 0
@@ -4334,7 +4334,7 @@
 											"parentStyle": true,
 											"left": 21,
 											"top": 1287,
-											"width": 244.2041015625,
+											"width": 251.8720703125,
 											"height": 13,
 											"text": "-__command_list: list = []",
 											"horizontalAlignment": 0
@@ -4352,7 +4352,7 @@
 											"parentStyle": true,
 											"left": 21,
 											"top": 1302,
-											"width": 244.2041015625,
+											"width": 251.8720703125,
 											"height": 13,
 											"text": "-__lock_pin: LED = LED(23)",
 											"horizontalAlignment": 0
@@ -4370,7 +4370,7 @@
 											"parentStyle": true,
 											"left": 21,
 											"top": 1317,
-											"width": 244.2041015625,
+											"width": 251.8720703125,
 											"height": 13,
 											"text": "-__unlock_pin: LED = LED(24)",
 											"horizontalAlignment": 0
@@ -4388,7 +4388,7 @@
 											"parentStyle": true,
 											"left": 21,
 											"top": 1332,
-											"width": 244.2041015625,
+											"width": 251.8720703125,
 											"height": 13,
 											"text": "-__timer: threading.Timer",
 											"horizontalAlignment": 0
@@ -4406,7 +4406,7 @@
 											"parentStyle": true,
 											"left": 21,
 											"top": 1347,
-											"width": 244.2041015625,
+											"width": 251.8720703125,
 											"height": 13,
 											"text": "-__timer_intervall: int|float",
 											"horizontalAlignment": 0
@@ -4416,7 +4416,7 @@
 									"parentStyle": true,
 									"left": 16,
 									"top": 1177,
-									"width": 254.2041015625,
+									"width": 261.8720703125,
 									"height": 188
 								},
 								{
@@ -4442,7 +4442,7 @@
 											"parentStyle": true,
 											"left": 21,
 											"top": 1370,
-											"width": 244.2041015625,
+											"width": 251.8720703125,
 											"height": 13,
 											"text": "+lock(): None",
 											"horizontalAlignment": 0
@@ -4460,7 +4460,7 @@
 											"parentStyle": true,
 											"left": 21,
 											"top": 1385,
-											"width": 244.2041015625,
+											"width": 251.8720703125,
 											"height": 13,
 											"text": "+unlock(): None",
 											"horizontalAlignment": 0
@@ -4478,7 +4478,7 @@
 											"parentStyle": true,
 											"left": 21,
 											"top": 1400,
-											"width": 244.2041015625,
+											"width": 251.8720703125,
 											"height": 13,
 											"text": "+stop(): None",
 											"horizontalAlignment": 0
@@ -4496,7 +4496,7 @@
 											"parentStyle": true,
 											"left": 21,
 											"top": 1415,
-											"width": 244.2041015625,
+											"width": 251.8720703125,
 											"height": 13,
 											"text": "-__off_lock_pin(): None",
 											"horizontalAlignment": 0
@@ -4514,7 +4514,7 @@
 											"parentStyle": true,
 											"left": 21,
 											"top": 1430,
-											"width": 244.2041015625,
+											"width": 251.8720703125,
 											"height": 13,
 											"text": "-__off_unlock_pin(): None",
 											"horizontalAlignment": 0
@@ -4532,7 +4532,7 @@
 											"parentStyle": true,
 											"left": 21,
 											"top": 1445,
-											"width": 244.2041015625,
+											"width": 251.8720703125,
 											"height": 13,
 											"text": "-__handle_signal_action_finished(): None",
 											"horizontalAlignment": 0
@@ -4550,7 +4550,7 @@
 											"parentStyle": true,
 											"left": 21,
 											"top": 1460,
-											"width": 244.2041015625,
+											"width": 251.8720703125,
 											"height": 13,
 											"text": "-__init__(id: int): None",
 											"horizontalAlignment": 0
@@ -4560,7 +4560,7 @@
 									"parentStyle": true,
 									"left": 16,
 									"top": 1365,
-									"width": 254.2041015625,
+									"width": 261.8720703125,
 									"height": 113
 								},
 								{
@@ -4603,7 +4603,7 @@
 							"containerChangeable": true,
 							"left": 16,
 							"top": 1152,
-							"width": 253.2041015625,
+							"width": 260.8720703125,
 							"height": 326,
 							"nameCompartment": {
 								"$ref": "AAAAAAGUioIzVttORF8="
@@ -6367,7 +6367,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"parentStyle": false,
-									"left": 1040,
+									"left": 1048,
 									"top": 1321,
 									"height": 13,
 									"alpha": 1.5707963267948966,
@@ -6389,7 +6389,7 @@
 									"visible": null,
 									"font": "Arial;13;0",
 									"parentStyle": false,
-									"left": 1040,
+									"left": 1048,
 									"top": 1336,
 									"height": 13,
 									"alpha": 1.5707963267948966,
@@ -6411,7 +6411,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"parentStyle": false,
-									"left": 1041,
+									"left": 1049,
 									"top": 1291,
 									"height": 13,
 									"alpha": -1.5707963267948966,
@@ -6499,7 +6499,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"parentStyle": false,
-									"left": 1035,
+									"left": 1051,
 									"top": 1320,
 									"height": 13,
 									"alpha": -0.5235987755982988,
@@ -6520,7 +6520,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"parentStyle": false,
-									"left": 1038,
+									"left": 1054,
 									"top": 1334,
 									"height": 13,
 									"alpha": -0.7853981633974483,
@@ -6541,7 +6541,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"parentStyle": false,
-									"left": 1031,
+									"left": 1047,
 									"top": 1293,
 									"height": 13,
 									"alpha": 0.5235987755982988,
@@ -6594,7 +6594,7 @@
 								"$ref": "AAAAAAGUin4oMdn7fmM="
 							},
 							"lineStyle": 2,
-							"points": "1072:1312;1010:1312",
+							"points": "1072:1312;1026:1312",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAGUioaHjvXvTTE="
@@ -8931,7 +8931,7 @@
 											"parentStyle": true,
 											"left": 1109,
 											"top": 1525,
-											"width": 311,
+											"width": 313.1396484375,
 											"height": 13,
 											"text": "«Thread»"
 										},
@@ -8945,7 +8945,7 @@
 											"parentStyle": true,
 											"left": 1109,
 											"top": 1540,
-											"width": 311,
+											"width": 313.1396484375,
 											"height": 13,
 											"text": "EVSESelfCheck"
 										},
@@ -8983,7 +8983,7 @@
 									"parentStyle": true,
 									"left": 1104,
 									"top": 1520,
-									"width": 321,
+									"width": 323.1396484375,
 									"height": 38,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGUjonW5H1Jr3I="
@@ -9021,7 +9021,7 @@
 											"parentStyle": true,
 											"left": 1109,
 											"top": 1563,
-											"width": 311,
+											"width": 313.1396484375,
 											"height": 13,
 											"underline": true,
 											"text": "+isChecking: bool",
@@ -9040,7 +9040,7 @@
 											"parentStyle": true,
 											"left": 1109,
 											"top": 1578,
-											"width": 311,
+											"width": 313.1396484375,
 											"height": 13,
 											"text": "+id: int {readOnly}",
 											"horizontalAlignment": 0
@@ -9058,7 +9058,7 @@
 											"parentStyle": true,
 											"left": 1109,
 											"top": 1593,
-											"width": 311,
+											"width": 313.1396484375,
 											"height": 13,
 											"text": "+timeout: int|float {readOnly}",
 											"horizontalAlignment": 0
@@ -9076,7 +9076,7 @@
 											"parentStyle": true,
 											"left": 1109,
 											"top": 1608,
-											"width": 311,
+											"width": 313.1396484375,
 											"height": 13,
 											"text": "+isRunning: bool {readOnly}",
 											"horizontalAlignment": 0
@@ -9094,7 +9094,7 @@
 											"parentStyle": true,
 											"left": 1109,
 											"top": 1623,
-											"width": 311,
+											"width": 313.1396484375,
 											"height": 13,
 											"text": "«signal»+signal_test_finished: XSignal {readOnly}",
 											"horizontalAlignment": 0
@@ -9112,7 +9112,7 @@
 											"parentStyle": true,
 											"left": 1109,
 											"top": 1638,
-											"width": 311,
+											"width": 313.1396484375,
 											"height": 13,
 											"text": "«signal»+signal_self_test_error: XSignal {readOnly}",
 											"horizontalAlignment": 0
@@ -9130,7 +9130,7 @@
 											"parentStyle": true,
 											"left": 1109,
 											"top": 1653,
-											"width": 311,
+											"width": 313.1396484375,
 											"height": 13,
 											"text": "-__id: int",
 											"horizontalAlignment": 0
@@ -9148,7 +9148,7 @@
 											"parentStyle": true,
 											"left": 1109,
 											"top": 1668,
-											"width": 311,
+											"width": 313.1396484375,
 											"height": 13,
 											"text": "-__timeout: int|float",
 											"horizontalAlignment": 0
@@ -9166,7 +9166,7 @@
 											"parentStyle": true,
 											"left": 1109,
 											"top": 1683,
-											"width": 311,
+											"width": 313.1396484375,
 											"height": 13,
 											"text": "-__doUseRCD: bool",
 											"horizontalAlignment": 0
@@ -9184,7 +9184,7 @@
 											"parentStyle": true,
 											"left": 1109,
 											"top": 1698,
-											"width": 311,
+											"width": 313.1396484375,
 											"height": 13,
 											"text": "-__modbus: ModbusIO",
 											"horizontalAlignment": 0
@@ -9202,7 +9202,7 @@
 											"parentStyle": true,
 											"left": 1109,
 											"top": 1713,
-											"width": 311,
+											"width": 313.1396484375,
 											"height": 13,
 											"text": "-__timeout: int|float",
 											"horizontalAlignment": 0
@@ -9220,7 +9220,7 @@
 											"parentStyle": true,
 											"left": 1109,
 											"top": 1728,
-											"width": 311,
+											"width": 313.1396484375,
 											"height": 13,
 											"text": "-__rw_error: set",
 											"horizontalAlignment": 0
@@ -9238,7 +9238,7 @@
 											"parentStyle": true,
 											"left": 1109,
 											"top": 1743,
-											"width": 311,
+											"width": 313.1396484375,
 											"height": 13,
 											"text": "-__isRunning: bool = True",
 											"horizontalAlignment": 0
@@ -9256,7 +9256,7 @@
 											"parentStyle": true,
 											"left": 1109,
 											"top": 1758,
-											"width": 311,
+											"width": 313.1396484375,
 											"height": 13,
 											"text": "«signal»-__signal_test_finished: XSignal",
 											"horizontalAlignment": 0
@@ -9274,7 +9274,7 @@
 											"parentStyle": true,
 											"left": 1109,
 											"top": 1773,
-											"width": 311,
+											"width": 313.1396484375,
 											"height": 13,
 											"text": "«signal»-__signal_self_test_error: XSignal",
 											"horizontalAlignment": 0
@@ -9284,7 +9284,7 @@
 									"parentStyle": true,
 									"left": 1104,
 									"top": 1558,
-									"width": 321,
+									"width": 323.1396484375,
 									"height": 233
 								},
 								{
@@ -9310,7 +9310,7 @@
 											"parentStyle": true,
 											"left": 1109,
 											"top": 1796,
-											"width": 311,
+											"width": 313.1396484375,
 											"height": 13,
 											"text": "+run(): None",
 											"horizontalAlignment": 0
@@ -9328,7 +9328,7 @@
 											"parentStyle": true,
 											"left": 1109,
 											"top": 1811,
-											"width": 311,
+											"width": 313.1396484375,
 											"height": 13,
 											"text": "+stop(): None",
 											"horizontalAlignment": 0
@@ -9346,7 +9346,7 @@
 											"parentStyle": true,
 											"left": 1109,
 											"top": 1826,
-											"width": 311,
+											"width": 313.1396484375,
 											"height": 13,
 											"text": "-__init__(id: int, doUseRCD: bool = False): None",
 											"horizontalAlignment": 0
@@ -9364,7 +9364,7 @@
 											"parentStyle": true,
 											"left": 1109,
 											"top": 1841,
-											"width": 311,
+											"width": 313.1396484375,
 											"height": 13,
 											"text": "-__set_RCD_test(): None",
 											"horizontalAlignment": 0
@@ -9382,7 +9382,7 @@
 											"parentStyle": true,
 											"left": 1109,
 											"top": 1856,
-											"width": 311,
+											"width": 313.1396484375,
 											"height": 13,
 											"text": "-__exit_self_test(): None",
 											"horizontalAlignment": 0
@@ -9392,7 +9392,7 @@
 									"parentStyle": true,
 									"left": 1104,
 									"top": 1791,
-									"width": 321,
+									"width": 323.1396484375,
 									"height": 83
 								},
 								{
@@ -9435,7 +9435,7 @@
 							"containerChangeable": true,
 							"left": 1104,
 							"top": 1520,
-							"width": 320,
+							"width": 322.1396484375,
 							"height": 354,
 							"nameCompartment": {
 								"$ref": "AAAAAAGUjonW5H1Iht4="
@@ -11044,7 +11044,8 @@
 									"_parent": {
 										"$ref": "AAAAAAGUirvQNPN0CU8="
 									},
-									"name": "parent"
+									"name": "parent",
+									"type": ""
 								},
 								{
 									"_type": "UMLParameter",
@@ -11311,7 +11312,8 @@
 									"_parent": {
 										"$ref": "AAAAAAGUir788Tk2DlI="
 									},
-									"name": "parent"
+									"name": "parent",
+									"type": ""
 								},
 								{
 									"_type": "UMLParameter",
