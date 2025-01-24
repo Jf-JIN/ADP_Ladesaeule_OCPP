@@ -16,6 +16,9 @@ class GPIOParams(AnalogDefine):
     SHELLY_IP = [0,'192.168.1.100','url2','url3','url4','url5']#预先设置的5个IP,根据启用的EVSE选择对应的URL
     EVSE_QUANTITY = 5 # EVSE数量
     MAX_VOLTAGE = 220
+    SELF_CHECK_TIMEOUT = 31 # 自检超时时间
+    GPIO_PIN_17 = 17
+    GPIO_PIN_27 = 27
 
 
 class ResultFlag(AnalogDefine):
