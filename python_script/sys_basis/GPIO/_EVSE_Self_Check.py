@@ -12,19 +12,10 @@ _info = Log.GPIO
 class EVSESelfCheck(Thread):
     def __init__(self,id,doUseRCD):
         super().__init__()
-<<<<<<< Updated upstream
-
-        self.__id = id
-        self.__timeout = GPIOParams.SELF_CHECK_TIMEOUT
-        self.__signal_self_test_error = XSignal()
-        self.__running = True
-        self.modbus = ModbusIO(id)
-        self.__doUseRCD = doUseRCD
-=======
         self.__id:int = id
         self.__doUseRCD: bool = doUseRCD
         if doUseRCD:
-            ...
+           self.__set_RCD_test()
         self.__modbus: ModbusIO = ModbusIO(id)
         self.__timeout:int|float = GPIOParams.SELF_CHECK_TIMEOUT
         self.__evse_status_error: set = set()
@@ -32,10 +23,6 @@ class EVSESelfCheck(Thread):
         self.__signal_self_test_error:XSignal= XSignal()
 
 
-
-
-
->>>>>>> Stashed changes
 
     @property
     def id(self):
