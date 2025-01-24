@@ -9,14 +9,14 @@ from _EVSE_Self_Check import EVSESelfCheck
 _error = Log.EVSE.error
 
 class Evse(object):
-    def __init__(self, id, doUseRCD):
-        self.__id = id
-        self.__vehicle_status = None
-        self.__evse_status_error = set()
-        self.__doUseRCD = doUseRCD
-        self.__isEnableCharging = True
-        self.__modbus = ModbusIO(id)
-        self.__signal_selftest_finished = XSignal()
+    def __init__(self, id: int, doUseRCD: bool = False):
+        self.__id: int = id
+        self.__vehicle_status: int | None = None
+        self.__evse_status_error: set = set()
+        self.__doUseRCD: bool = doUseRCD
+        self.__isEnableCharging: bool = True
+        self.__modbus: ModbusIO = ModbusIO(id)
+        self.__signal_selftest_finished: XSignal = XSignal()
 
     @property
     def id(self):
