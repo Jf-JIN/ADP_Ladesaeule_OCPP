@@ -14,7 +14,6 @@ class GPIOParams(AnalogDefine):
         # (1, 'url1'),
     ]
     MAX_VOLTAGE = 220
-    SELF_CHECK_TIMEOUT=31
 
 
 class ResultFlag(AnalogDefine):
@@ -38,8 +37,6 @@ class EVSEErrorInfo(AnalogDefine):
     WAITING_FOR_PILOT_RELEASE = 'Waiting For Pilot Release'
     RCD_CHECK_ERROR = 'RCD Check Error'
     RCD_CHECK_FAILED = 'RCD Check Failed'
-    READ_ERROR = 'Read Error'
-    WRITE_ERROR = 'Write Error'
 
 
 class RaspPins(AnalogDefine):
@@ -83,6 +80,35 @@ class RaspPins(AnalogDefine):
     GPI0_20 = 38
     GROUND_7 = 39
     GPI0_21 = 40
+
+    BCM_PIN_0 = 0
+    BCM_PIN_1 = 1
+    BCM_PIN_2 = 2
+    BCM_PIN_3 = 3
+    BCM_PIN_4 = 4
+    BCM_PIN_5 = 5
+    BCM_PIN_6 = 6
+    BCM_PIN_7 = 7
+    BCM_PIN_8 = 8
+    BCM_PIN_9 = 9
+    BCM_PIN_10 = 10
+    BCM_PIN_11 = 11
+    BCM_PIN_12 = 12
+    BCM_PIN_13 = 13
+    BCM_PIN_14 = 14
+    BCM_PIN_15 = 15
+    BCM_PIN_16 = 16
+    BCM_PIN_17 = 17
+    BCM_PIN_18 = 18
+    BCM_PIN_19 = 19
+    BCM_PIN_20 = 20
+    BCM_PIN_21 = 21
+    BCM_PIN_22 = 22
+    BCM_PIN_23 = 23
+    BCM_PIN_24 = 24
+    BCM_PIN_25 = 25
+    BCM_PIN_26 = 26
+    BCM_PIN_27 = 27
 
 
 class ModbusParams(AnalogDefine):
