@@ -1,3 +1,4 @@
+import copy
 from threading import Thread
 
 from const.GPIO_Parameter import *
@@ -11,6 +12,7 @@ _info = Log.GPIO
 class EVSESelfCheck(Thread):
     def __init__(self,id,doUseRCD):
         super().__init__()
+<<<<<<< Updated upstream
 
         self.__id = id
         self.__timeout = GPIOParams.SELF_CHECK_TIMEOUT
@@ -18,6 +20,22 @@ class EVSESelfCheck(Thread):
         self.__running = True
         self.modbus = ModbusIO(id)
         self.__doUseRCD = doUseRCD
+=======
+        self.__id:int = id
+        self.__doUseRCD: bool = doUseRCD
+        if doUseRCD:
+            ...
+        self.__modbus: ModbusIO = ModbusIO(id)
+        self.__timeout:int|float = GPIOParams.SELF_CHECK_TIMEOUT
+        self.__evse_status_error: set = set()
+        self.__running: bool = True
+        self.__signal_self_test_error:XSignal= XSignal()
+
+
+
+
+
+>>>>>>> Stashed changes
 
     @property
     def id(self):
@@ -28,18 +46,28 @@ class EVSESelfCheck(Thread):
         return self.__timeout
 
     @property
-    def signal_self_test_error(self,error_index):
+    def signal_self_test_error(self):
+        return self.__signal_self_test_error
+
+    def __set_RCD_test(self):
+        if not self.__doUseRCD:
+            return
+        with self.__modbus as modbus:
+            modbus.enable_RCD(True)
+
+    def set_evse_status_error(self, data:set):
         """
         False 传给EVSE的__enable_charging,True表示可充电,False表示不可充电
         """
-        return self.__signal_self_test_error.emit(error_index)
+        self.__evse_status_error = data
+        return True
 
     def set_selfcheck(self):
         with self.modbus as modbus:
             response = modbus.write_reg1004(bit = 1,flag = 1 )
         return response
 
-    def run(self, ):
+    def run(self):
         while self.__running:
             self.set_selfcheck()
             time.sleep(self.__timeout)
