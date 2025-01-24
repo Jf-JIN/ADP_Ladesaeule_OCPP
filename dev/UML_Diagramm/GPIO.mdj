@@ -2763,7 +2763,7 @@
 											"top": 1212,
 											"width": 243.46142578125,
 											"height": 13,
-											"text": "+evse_error: Set {readOnly}",
+											"text": "+evse_status_error: set {readOnly}",
 											"horizontalAlignment": 0
 										},
 										{
@@ -2964,7 +2964,7 @@
 											"top": 1327,
 											"width": 243.46142578125,
 											"height": 13,
-											"text": "+set_data(data): None",
+											"text": "+set_vehicle_state(state: int): None",
 											"horizontalAlignment": 0
 										},
 										{
@@ -11152,8 +11152,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGUioHPFdr1nEs="
 							},
-							"name": "evse_error",
-							"type": "Set",
+							"name": "evse_status_error",
+							"type": "set",
 							"isReadOnly": true
 						},
 						{
@@ -11280,7 +11280,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGUioHPFdr1nEs="
 							},
-							"name": "set_data",
+							"name": "set_vehicle_state",
 							"parameters": [
 								{
 									"_type": "UMLParameter",
@@ -11288,8 +11288,8 @@
 									"_parent": {
 										"$ref": "AAAAAAGUirlgKJqVNPU="
 									},
-									"name": "data",
-									"type": ""
+									"name": "state",
+									"type": "int"
 								},
 								{
 									"_type": "UMLParameter",
