@@ -95,7 +95,7 @@ class ModbusIO(object):
                 _error(f'ModbusIO read error by writing.\naddress: {address}')
                 return False
             if bit_operation == 0:  # 置0
-                ori_value &= ~(value)
+                ori_value &= ~value
                 value = ori_value
             else:  # 置1
                 ori_value |= value
