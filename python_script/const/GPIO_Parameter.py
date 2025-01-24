@@ -1,4 +1,4 @@
-""" 
+"""
 GPIO 枚举类
 
 
@@ -9,6 +9,7 @@ from const.Analog_Define import AnalogDefine
 class GPIOParams(AnalogDefine):
     MESSAGE_SEND_INTERVAL = 60  # seconds
     CHARGE_UNITS = [
+        # (EVSE_Id, Shelly_main_url)
         (0, '192.168.1.100'),
         # (1, 'url1'),
     ]
@@ -26,6 +27,15 @@ class VehicleState(AnalogDefine):
     CHARGING = 3
     CHARGING_WITH_VENTILATION = 4
     FAILURE = 5
+
+
+class EVSEErrorInfo(AnalogDefine):
+    RELAY_OFF = 'Relay Off'
+    RELAY_ON = 'Relay On'
+    DIODE_CHECK_FAIL = 'diode Check Fail'
+    VENT_REQUIRED_FAIL = 'Vent Required Fail'
+    WAITING_FOR_PILOT_RELEASE = 'Waiting For Pilot Release'
+    RCD_CHECK_ERROR = 'RCD Check Error'
 
 
 class RaspPins(AnalogDefine):
