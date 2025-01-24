@@ -40,9 +40,9 @@ class EVSEErrorInfo(AnalogDefine):
 
 class RaspPins(AnalogDefine):
     POWER_3V3_0 = 1
-    PORWER_5V_0 = 2
+    POWER_5V_0 = 2
     GPIO_2 = 3
-    PORWER_5V_1 = 4
+    POWER_5V_1 = 4
     GPIO_3 = 5
     GROUND_0 = 6
     GPIO_4 = 7
