@@ -3,18 +3,13 @@
 import threading
 
 from gpiozero import LED
-
 from const import RaspPins
-from const.GPIO_Parameter import GPIOParams
-import time
 
-from sys_basis.XSignal import XSignal
 
 
 class LatchMotor:
     """
     数值默认正数是上锁
-
     """
     def __init__(self,id:int)->None:
         self.__id:int = id
@@ -23,8 +18,8 @@ class LatchMotor:
         self.__command_list:list = [] # 存储命令的列表
         self.__status_pin_lock:bool = False # 电机上锁控制引脚的状态，可表示电机是否在正转
         self.__status_pin_unlock:bool = False # 电机解锁控制引脚的状态，可表示电机是否在反转
-        self.__lock_pin:LED = LED(23) # 电机上锁控制引脚
-        self.__unlock_pin:LED = LED(24) # 电机解锁控制引脚
+        self.__lock_pin:LED = LED(RaspPins.BCM_PIN_23) # 电机上锁控制引脚
+        self.__unlock_pin:LED = LED(RaspPins.BCM_PIN_24) # 电机解锁控制引脚
         self.__timer:threading.Timer = threading.Timer(99, self.__off_lock_pin)
         self.__timer_intervall:int|float = 2 # 引脚状态转换的时间
 

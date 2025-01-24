@@ -14,6 +14,7 @@ class GPIOParams(AnalogDefine):
         # (1, 'url1'),
     ]
     MAX_VOLTAGE = 220
+    SELF_CHECK_TIMEOUT = 31
 
 
 class ResultFlag(AnalogDefine):
