@@ -32,6 +32,7 @@ class PollingShelly(Thread):
         return self.__isRunning
 
     def run(self) -> None:  # TODO 数据整合
+
         while self.__isRunning:
             shelly: Shelly = self.__shelly_list[self.__current_index]
             shelly_id = shelly.id
@@ -52,6 +53,20 @@ class PollingShelly(Thread):
                 response_2.raise_for_status()
                 data_2: dict = response_2.json()
                 shelly_data[2] = data_2
+                """ 
+                {
+                "power": 0,
+                "pf": 0,
+                "current": 0,
+                "voltage": 0,
+                "is_valid": true,
+                "total": 0,
+                "total_returned": 0
+                }
+                """
+                shelly_data['charged_energy'] = data_0['total'] + data_1['total'] + data_2['total']
+                shelly_data['return_energy'] = data_0['total_returned'] + data_1['total_returned'] + data_2['total_returned']
+                shelly_data['is_valid'] = data_0['is_valid'] and data_1['is_valid'] and data_2['is_valid']
                 shelly.set_data(shelly_data)
                 self.__data_collector.set_shelly_data(shelly_id, shelly_data)
             except Exception as e:
