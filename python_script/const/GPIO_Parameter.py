@@ -13,6 +13,9 @@ class GPIOParams(AnalogDefine):
         # (1, 'url1'),
     ]
     MAX_VOLTAGE = 220
+    SELF_CHECK_TIMEOUT = 31 # 自检超时时间
+    GPIO_PIN_17 = 17
+    GPIO_PIN_27 = 27
 
 
 class ModbusParams(AnalogDefine):
