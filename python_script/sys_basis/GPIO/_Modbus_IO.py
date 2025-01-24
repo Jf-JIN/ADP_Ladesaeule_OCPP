@@ -2,7 +2,7 @@
 from pymodbus.pdu.pdu import ModbusPDU
 from pymodbus.client import ModbusSerialClient
 from const.Const_Parameter import *
-from const.GPIO_Parameter import BitsFlag, EVSERegAddress, ModbusParams
+from const.GPIO_Parameter import BitsFlag, EVSEErrorInfo, EVSERegAddress, ModbusParams
 
 _debug = Log.MODBUS.debug
 _error = Log.MODBUS.error
@@ -109,6 +109,7 @@ class ModbusIO(object):
             return True
         except Exception as e:
             _exception(f'ModbusIO write error: {e}\naddress: {address}\nvalue: {value}')
+            return False
 
     def read_evse_status_fails(self) -> None | set:
         """
@@ -123,17 +124,17 @@ class ModbusIO(object):
         if status is None:
             return None
         if status & BitsFlag.REG1007.RELAY_OFF:
-            data_list.add('Relay Off')
+            data_list.add(EVSEErrorInfo.RELAY_OFF)
         else:
-            data_list.add('Relay On')
+            data_list.add(EVSEErrorInfo.RELAY_ON)
         if status & BitsFlag.REG1007.DIODE_CHECK_FAIL:
-            data_list.add('diode Check Fail')
+            data_list.add(EVSEErrorInfo.DIODE_CHECK_FAIL)
         if status & BitsFlag.REG1007.VENT_REQUIRED_FAIL:
-            data_list.add('Vent Required Fail')
+            data_list.add(EVSEErrorInfo.VENT_REQUIRED_FAIL)
         if status & BitsFlag.REG1007.WAITING_FOR_PILOT_RELEASE:
-            data_list.add('Waiting For Pilot Release')
+            data_list.add(EVSEErrorInfo.WAITING_FOR_PILOT_RELEASE)
         if status & BitsFlag.REG1007.RCD_CHECK_ERROR:
-            data_list.add('RCD Check Error')
+            data_list.add(EVSEErrorInfo.RCD_CHECK_ERROR)
         return data_list
 
     def read_vehicle_status(self) -> None | bool:
@@ -194,3 +195,6 @@ class ModbusIO(object):
             return self.write(address=EVSERegAddress.CHARGE_OPERATION, value=BitsFlag.REG2005.ENABLE_RCD_FEEDBACK, bit_operation=1)
         else:
             return self.write(address=EVSERegAddress.CHARGE_OPERATION, value=BitsFlag.REG2005.ENABLE_RCD_FEEDBACK, bit_operation=0)
+
+    def clear_RCD(self) -> None | bool:
+        return self.write(address=EVSERegAddress.TURN_OFF_SELFTEST_OPERATION, value=BitsFlag.REG1004.CLEAR_RCD_ERROR, bit_operation=0)
