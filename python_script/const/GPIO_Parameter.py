@@ -13,9 +13,62 @@ class GPIOParams(AnalogDefine):
         # (1, 'url1'),
     ]
     MAX_VOLTAGE = 220
-    SELF_CHECK_TIMEOUT = 31 # 自检超时时间
-    GPIO_PIN_17 = 17
-    GPIO_PIN_27 = 27
+
+
+class ResultFlag(AnalogDefine):
+    SUCCESS = 0
+    FAIL = 1
+
+
+class VehicleState(AnalogDefine):
+    READY = 1
+    EV_IS_PRESENT = 2
+    CHARGING = 3
+    CHARGING_WITH_VENTILATION = 4
+    FAILURE = 5
+
+
+class RaspPins(AnalogDefine):
+    POWER_3V3_0 = 1
+    PORWER_5V_0 = 2
+    GPIO_2 = 3
+    PORWER_5V_1 = 4
+    GPIO_3 = 5
+    GROUND_0 = 6
+    GPIO_4 = 7
+    GPI0_14 = 8
+    GROUND_1 = 9
+    GPI0_15 = 10
+    GPI0_17 = 11
+    GPI0_18 = 12
+    GPI0_27 = 13
+    GROUND_2 = 14
+    GPI0_22 = 15
+    GPI0_23 = 16
+    POWER_3V3_1 = 17
+    GPI0_24 = 18
+    GPI0_10 = 19
+    GROUND_3 = 20
+    GPI0_9 = 21
+    GPI0_25 = 22
+    GPI0_11 = 23
+    GPI0_8 = 24
+    GROUND_4 = 25
+    GPI0_7 = 26
+    GPI0_0 = 27
+    GPI0_1 = 28
+    GPI0_5 = 29
+    GROUND_5 = 30
+    GPI0_6 = 31
+    GPI0_12 = 32
+    GPI0_13 = 33
+    GROUND_7 = 34
+    GPI0_19 = 35
+    GPI0_16 = 36
+    GPI0_26 = 37
+    GPI0_20 = 38
+    GROUND_7 = 39
+    GPI0_21 = 40
 
 
 class ModbusParams(AnalogDefine):
@@ -145,16 +198,3 @@ class BitsFlag(AnalogDefine):
     - `DISABLE_EVSE`: disable EVSE (write 16384)
     - `ENABLE_BOOTLOADER_MODE`: enable bootloader mode (write 32768)
     """
-
-
-class ResultFlag(AnalogDefine):
-    SUCCESS = 0
-    FAIL = 1
-
-
-class VehicleState(AnalogDefine):
-    READY = 1
-    EV_IS_PRESENT = 2
-    CHARGING = 3
-    CHARGING_WITH_VENTILATION = 4
-    FAILURE = 5
