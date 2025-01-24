@@ -14,6 +14,7 @@ class GPIOParams(AnalogDefine):
         # (1, 'url1'),
     ]
     MAX_VOLTAGE = 220
+    SELF_CHECK_TIMEOUT = 31
 
 
 class ResultFlag(AnalogDefine):
@@ -73,7 +74,7 @@ class RaspPins(AnalogDefine):
     GPI0_6 = 31
     GPI0_12 = 32
     GPI0_13 = 33
-    GROUND_7 = 34
+    GROUND_6 = 34
     GPI0_19 = 35
     GPI0_16 = 36
     GPI0_26 = 37
