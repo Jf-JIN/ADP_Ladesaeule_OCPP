@@ -1,4 +1,6 @@
 import threading
+import time
+
 
 charging_plan = {
     'evseId': 1,
@@ -34,6 +36,7 @@ request_periode = 4
 def set_current(value):
     print(value)
 
+time.time()
 
 def get_limit_value(item: dict):
     if unit == 'W':
@@ -43,6 +46,9 @@ def get_limit_value(item: dict):
 
 
 def periodic_timer(current_periode:list):
+
+    wait_time= charging_plan['chargingProfile']['chargingSchedule'][0]['startSchedule'] - time.time()
+
     if len(charging_plan['chargingProfile']['chargingSchedule'][0]['chargingSchedulePeriod']) <= 0:
         return
     current_plan = charging_plan['chargingProfile']['chargingSchedule'][0]['chargingSchedulePeriod'].pop(0)
