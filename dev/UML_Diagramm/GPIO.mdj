@@ -50,7 +50,7 @@
 											"parentStyle": true,
 											"left": 1077,
 											"top": 1157,
-											"width": 231,
+											"width": 245.384765625,
 											"height": 13,
 											"text": "«ContextManager»"
 										},
@@ -64,7 +64,7 @@
 											"parentStyle": true,
 											"left": 1077,
 											"top": 1172,
-											"width": 231,
+											"width": 245.384765625,
 											"height": 13,
 											"text": "ModbusIO"
 										},
@@ -102,7 +102,7 @@
 									"parentStyle": true,
 									"left": 1072,
 									"top": 1152,
-									"width": 241,
+									"width": 255.384765625,
 									"height": 38,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGUin4oMtn9ZFA="
@@ -140,7 +140,7 @@
 											"parentStyle": true,
 											"left": 1077,
 											"top": 1195,
-											"width": 231,
+											"width": 245.384765625,
 											"height": 13,
 											"underline": true,
 											"text": "+isSelfChecking: set",
@@ -159,7 +159,7 @@
 											"parentStyle": true,
 											"left": 1077,
 											"top": 1210,
-											"width": 231,
+											"width": 245.384765625,
 											"height": 13,
 											"text": "-__id: int",
 											"horizontalAlignment": 0
@@ -169,7 +169,7 @@
 									"parentStyle": true,
 									"left": 1072,
 									"top": 1190,
-									"width": 241,
+									"width": 255.384765625,
 									"height": 38
 								},
 								{
@@ -195,9 +195,9 @@
 											"parentStyle": true,
 											"left": 1077,
 											"top": 1233,
-											"width": 231,
+											"width": 245.384765625,
 											"height": 13,
-											"text": "+read(address: int)",
+											"text": "+read(address: int): int|None",
 											"horizontalAlignment": 0
 										},
 										{
@@ -213,9 +213,9 @@
 											"parentStyle": true,
 											"left": 1077,
 											"top": 1248,
-											"width": 231,
+											"width": 245.384765625,
 											"height": 13,
-											"text": "+read_evse_status_and_fails(): Set",
+											"text": "+read_evse_status_and_fails(): set | None",
 											"horizontalAlignment": 0
 										},
 										{
@@ -231,47 +231,9 @@
 											"parentStyle": true,
 											"left": 1077,
 											"top": 1263,
-											"width": 231,
+											"width": 245.384765625,
 											"height": 13,
-											"text": "+write(address: int, value: int): str",
-											"horizontalAlignment": 0
-										},
-										{
-											"_type": "UMLOperationView",
-											"_id": "AAAAAAGUjsdx0JbqmvQ=",
-											"_parent": {
-												"$ref": "AAAAAAGUin4oMtoCo0A="
-											},
-											"model": {
-												"$ref": "AAAAAAGUjsdxypbnDrE="
-											},
-											"visible": false,
-											"font": "Arial;13;0",
-											"parentStyle": true,
-											"left": 1077,
-											"top": 1487,
-											"width": 211.52294921875,
-											"height": 13,
-											"text": "+write_reg1004(bit: int, flag: bool)",
-											"horizontalAlignment": 0
-										},
-										{
-											"_type": "UMLOperationView",
-											"_id": "AAAAAAGUjsp4v58UoR0=",
-											"_parent": {
-												"$ref": "AAAAAAGUin4oMtoCo0A="
-											},
-											"model": {
-												"$ref": "AAAAAAGUjsp4up8Rm60="
-											},
-											"visible": false,
-											"font": "Arial;13;0",
-											"parentStyle": true,
-											"left": 1077,
-											"top": 1502,
-											"width": 209.45703125,
-											"height": 13,
-											"text": "+clear_turnOffChargingNow()",
+											"text": "+write(address: int, value: int): bool | None",
 											"horizontalAlignment": 0
 										},
 										{
@@ -287,7 +249,7 @@
 											"parentStyle": true,
 											"left": 1077,
 											"top": 1278,
-											"width": 231,
+											"width": 245.384765625,
 											"height": 13,
 											"text": "-__init__(id)",
 											"horizontalAlignment": 0
@@ -305,7 +267,7 @@
 											"parentStyle": true,
 											"left": 1077,
 											"top": 1293,
-											"width": 231,
+											"width": 245.384765625,
 											"height": 13,
 											"text": "-__enter__()",
 											"horizontalAlignment": 0
@@ -323,7 +285,7 @@
 											"parentStyle": true,
 											"left": 1077,
 											"top": 1308,
-											"width": 231,
+											"width": 245.384765625,
 											"height": 13,
 											"text": "-__exit__()",
 											"horizontalAlignment": 0
@@ -333,7 +295,7 @@
 									"parentStyle": true,
 									"left": 1072,
 									"top": 1228,
-									"width": 241,
+									"width": 255.384765625,
 									"height": 98
 								},
 								{
@@ -376,7 +338,7 @@
 							"containerChangeable": true,
 							"left": 1072,
 							"top": 1152,
-							"width": 240,
+							"width": 254.384765625,
 							"height": 208,
 							"nameCompartment": {
 								"$ref": "AAAAAAGUin4oMdn8uUI="
@@ -1210,7 +1172,7 @@
 											"top": 969,
 											"width": 503,
 											"height": 13,
-											"text": "-__init__(parent, charge_unit_list: list, intervall: int|float, timeout: int|float): None",
+											"text": "-__init__(parent, charge_unit_dict: dict, intervall: int|float): None",
 											"horizontalAlignment": 0
 										}
 									],
@@ -1599,7 +1561,7 @@
 											"top": 969,
 											"width": 503,
 											"height": 13,
-											"text": "+__init__(parent, charge_unit_list: list, intervall: int|float, timeout: int|float): None",
+											"text": "+__init__(parent, charge_unit_dict: dict, intervall: int|float, timeout: int|float): None",
 											"horizontalAlignment": 0
 										}
 									],
@@ -3020,7 +2982,7 @@
 											"top": 1342,
 											"width": 243.46142578125,
 											"height": 13,
-											"text": "+set_evse_error(error_index: str)",
+											"text": "+set_evse_status_error(data: set)",
 											"horizontalAlignment": 0
 										},
 										{
@@ -9545,6 +9507,15 @@
 									},
 									"name": "address",
 									"type": "int"
+								},
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAGUlf50OULkf74=",
+									"_parent": {
+										"$ref": "AAAAAAGUirVpwHgumv4="
+									},
+									"type": "int|None",
+									"direction": "return"
 								}
 							]
 						},
@@ -9562,7 +9533,7 @@
 									"_parent": {
 										"$ref": "AAAAAAGUjrqVu2sqBLw="
 									},
-									"type": "Set",
+									"type": "set | None",
 									"direction": "return"
 								}
 							]
@@ -9581,7 +9552,7 @@
 									"_parent": {
 										"$ref": "AAAAAAGUirWqlHoym6I="
 									},
-									"type": "str",
+									"type": "bool | None",
 									"direction": "return"
 								},
 								{
@@ -9603,42 +9574,6 @@
 									"type": "int"
 								}
 							]
-						},
-						{
-							"_type": "UMLOperation",
-							"_id": "AAAAAAGUjsdxypbnDrE=",
-							"_parent": {
-								"$ref": "AAAAAAGUin4oMdn5Uq4="
-							},
-							"name": "write_reg1004",
-							"parameters": [
-								{
-									"_type": "UMLParameter",
-									"_id": "AAAAAAGUjsjgIpkLmvg=",
-									"_parent": {
-										"$ref": "AAAAAAGUjsdxypbnDrE="
-									},
-									"name": "bit",
-									"type": "int"
-								},
-								{
-									"_type": "UMLParameter",
-									"_id": "AAAAAAGUjsjgIpkMHNo=",
-									"_parent": {
-										"$ref": "AAAAAAGUjsdxypbnDrE="
-									},
-									"name": "flag",
-									"type": "bool"
-								}
-							]
-						},
-						{
-							"_type": "UMLOperation",
-							"_id": "AAAAAAGUjsp4up8Rm60=",
-							"_parent": {
-								"$ref": "AAAAAAGUin4oMdn5Uq4="
-							},
-							"name": "clear_turnOffChargingNow"
 						},
 						{
 							"_type": "UMLOperation",
@@ -10211,8 +10146,7 @@
 									"_parent": {
 										"$ref": "AAAAAAGUirvQNPN0CU8="
 									},
-									"name": "parent",
-									"type": ""
+									"name": "parent"
 								},
 								{
 									"_type": "UMLParameter",
@@ -10229,8 +10163,8 @@
 									"_parent": {
 										"$ref": "AAAAAAGUirvQNPN0CU8="
 									},
-									"name": "charge_unit_list",
-									"type": "list"
+									"name": "charge_unit_dict",
+									"type": "dict"
 								},
 								{
 									"_type": "UMLParameter",
@@ -10239,15 +10173,6 @@
 										"$ref": "AAAAAAGUirvQNPN0CU8="
 									},
 									"name": "intervall",
-									"type": "int|float"
-								},
-								{
-									"_type": "UMLParameter",
-									"_id": "AAAAAAGUixK90EiQxos=",
-									"_parent": {
-										"$ref": "AAAAAAGUirvQNPN0CU8="
-									},
-									"name": "timeout",
 									"type": "int|float"
 								}
 							]
@@ -10488,8 +10413,7 @@
 									"_parent": {
 										"$ref": "AAAAAAGUir788Tk2DlI="
 									},
-									"name": "parent",
-									"type": ""
+									"name": "parent"
 								},
 								{
 									"_type": "UMLParameter",
@@ -10497,8 +10421,8 @@
 									"_parent": {
 										"$ref": "AAAAAAGUir788Tk2DlI="
 									},
-									"name": "charge_unit_list",
-									"type": "list"
+									"name": "charge_unit_dict",
+									"type": "dict"
 								},
 								{
 									"_type": "UMLParameter",
@@ -11384,7 +11308,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGUioHPFdr1nEs="
 							},
-							"name": "set_evse_error",
+							"name": "set_evse_status_error",
 							"parameters": [
 								{
 									"_type": "UMLParameter",
@@ -11392,8 +11316,8 @@
 									"_parent": {
 										"$ref": "AAAAAAGUjpLnCjmkTwo="
 									},
-									"name": "error_index",
-									"type": "str"
+									"name": "data",
+									"type": "set"
 								}
 							]
 						},
