@@ -38,6 +38,8 @@ class EVSEErrorInfo(AnalogDefine):
     WAITING_FOR_PILOT_RELEASE = 'Waiting For Pilot Release'
     RCD_CHECK_ERROR = 'RCD Check Error'
     RCD_CHECK_FAILED = 'RCD Check Failed'
+    READ_ERROR = 'Read Error'
+    WRITE_ERROR = 'Write Error'
 
 
 class RaspPins(AnalogDefine):
