@@ -45,10 +45,12 @@ class PollingShelly(Thread):
                 response_0.raise_for_status()
                 data_0: dict = response_0.json()
                 shelly_data[0] = data_0
+
                 response_1: requests.Response = requests.get(sub_url1, timeout=self.__timeout)
                 response_1.raise_for_status()
-                shelly_data[1] = data_1
                 data_1: dict = response_1.json()
+                shelly_data[1] = data_1
+
                 response_2: requests.Response = requests.get(sub_url2, timeout=self.__timeout)
                 response_2.raise_for_status()
                 data_2: dict = response_2.json()
