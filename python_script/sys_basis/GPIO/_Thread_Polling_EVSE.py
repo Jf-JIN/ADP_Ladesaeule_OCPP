@@ -44,15 +44,15 @@ class PollingEVSE(Thread):
                 vehicle_state: int | None = io.read_vehicle_status()  # timeout 由 Modbus 决定
                 if vehicle_state is not None:
                     evse_data['vehicle_state'] = vehicle_state
+                    evse.set_vehicle_state(vehicle_state)
 
-                evse_error = io.read_evse_status_and_fails()
+                evse_error = io.read_evse_status_fails()
                 if evse_error is not None:
                     evse_data['evse_error'] = evse_error
                     evse.set_evse_status_error(evse_error)
 
                 if len(evse_data):
                     self.__data_collector.set_evse_data(evse_id, evse_data)
-                    evse.set_data(evse_data)
             self.__current_index = (self.__current_index + 1) % self.__evse_quantity
             time.sleep(self.__interval)
 
