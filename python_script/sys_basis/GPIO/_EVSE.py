@@ -1,5 +1,4 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
+
 from const.GPIO_Parameter import *
 from const.Const_Parameter import *
 from sys_basis.XSignal import XSignal
@@ -10,7 +9,7 @@ _error = Log.EVSE.error
 
 
 class Evse(object):
-    def __init__(self, id: int, doUseRCD: bool = False):
+    def __init__(self, id: int, doUseRCD: bool = False) -> None:
         self.__id: int = id
         self.__vehicle_status: int | None = None
         self.__evse_status_error: set = set()
@@ -18,6 +17,7 @@ class Evse(object):
         self.__isEnableCharging: bool = True
         self.__modbus: ModbusIO = ModbusIO(id)
         self.__signal_selftest_finished: XSignal = XSignal()
+        self.__signal_selftest_finished.connect(self.__handle_selftest_finished)
 
     @property
     def id(self):
@@ -105,3 +105,6 @@ class Evse(object):
             limit[0] = modbus.read_current_min()
             limit[1] = modbus.read_current_max()
         return limit
+
+    def __handle_selftest_finished(self) -> None:
+        self.__modbus.run_selftest_and_RCD_test_procedure()
