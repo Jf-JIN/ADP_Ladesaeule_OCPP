@@ -28,6 +28,7 @@ class VehicleState(AnalogDefine):
     CHARGING = 3
     CHARGING_WITH_VENTILATION = 4
     FAILURE = 5
+    CRITICAL = 666
 
 
 class EVSEErrorInfo(AnalogDefine):
