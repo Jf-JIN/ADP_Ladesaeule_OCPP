@@ -73,8 +73,8 @@ class DataCollector:
                 {'startPeriod': 5, 'limit': 9724, 'startTime':'2025-01-26T15:00:02Z','finishedTime': '2025-01-26T15:20:02Z', 'chargedEnergy':6958,},
             ],
             'finished_plan_figure_base64': <base64_string>,
-            'start_time': '2025-01-26T14:40:29Z', # 此开始时间指的是整个充电过程，校正的计划表中的开始一时间不会记录
-            'period_start_time': '2025-01-26T14:40:29Z', # 此开始时间指一个充电表的开始时间，校正的计划表中的开始时间会被记录
+            'start_time': '2025-01-26T14:40:29Z', # 此开始时间指的是整个充电过程, 校正的计划表中的开始一时间不会记录
+            'period_start_time': '2025-01-26T14:40:29Z', # 此开始时间指一个充电表的开始时间, 校正的计划表中的开始时间会被记录
             'target_energy': 700000,
             'depart_time': '2025-01-30T13:39:00Z',
             'isLatched': True,
@@ -167,9 +167,9 @@ class DataCollector:
         """ 
         设置充电单元当前充电计划.
 
-        应输入的格式为字典，键值对为:
-        - `startPeriod`：计划开始时间
-        - `limit`：充电限制
+        应输入的格式为字典, 键值对为:
+        - `startPeriod`: 计划开始时间
+        - `limit`: 充电限制
         """
         self.__check_id(id)
         plan = copy.deepcopy(plan)
@@ -182,7 +182,7 @@ class DataCollector:
         """ 
         设置充电单元开始充电时间.
 
-        应输入的格式为字符串，格式为"%Y-%m-%dT%H:%M:%SZ"
+        应输入的格式为字符串, 格式为"%Y-%m-%dT%H:%M:%SZ"
         """
         self.__check_id(id)
         self.__all_data[id]['start_time'] = start_time
@@ -199,7 +199,7 @@ class DataCollector:
             self.__all_data[id]['period_start_time'] = period_start_time
         elif 'period_start_time' not in self.__all_data[id] and 'start_time' in self.__all_data[id]:
             self.__all_data[id]['period_start_time'] = self.__all_data[id]['start_time']
-        # 如果开始时间大于计划开始时间，则将开始时间设置为计划开始时间
+        # 如果开始时间大于计划开始时间, 则将开始时间设置为计划开始时间
         if ('period_start_time' in self.__all_data and 'start_time' in self.__all_data[id]
             and (
             DataGene.str2time(self.__all_data[id]['start_time'])
@@ -238,14 +238,14 @@ class DataCollector:
 
     def __add_charging_unit(self, id: int) -> None:
         """ 
-        加入一个充电单元，该方法会在线程检查时被 set_CU_status 自动调用.
+        加入一个充电单元, 该方法会在线程检查时被 set_CU_status 自动调用.
         """
         self.__charging_units_id_set.add(id)
         self.__available_charge_units_id_set.discard(id)
 
     def __remove_charging_unit(self, id: int) -> None:
         """ 
-        移除一个充电单元，该方法会在线程检查时被 set_CU_status 自动调用.
+        移除一个充电单元, 该方法会在线程检查时被 set_CU_status 自动调用.
         """
         self.__charging_units_id_set.discard(id)
         self.__available_charge_units_id_set.add(id)
@@ -254,24 +254,24 @@ class DataCollector:
         """ 
         写入充电单元状态.
 
-        当状态为：
-        - `VehicleState.READY`：充电单元就绪状态，可以充电
-        - `VehicleState.EV_IS_PRESENT`：充电单元就绪状态，可以充电
-        - `VehicleState.CHARGING`：充电单元正在充电，充电桩被占用
-        - `VehicleState.CHARGING_WITH_VENTILATION`：充电单元正在充电，充电桩被占用
-        - `VehicleState.FAILURE`：充电单元故障状态，充电桩被占用
-        - `VehicleState.CRITICAL`：充电单元严重故障状态，充电桩被占用
+        当状态为: 
+        - `VehicleState.READY`: 充电单元就绪状态, 可以充电
+        - `VehicleState.EV_IS_PRESENT`: 充电单元就绪状态, 可以充电
+        - `VehicleState.CHARGING`: 充电单元正在充电, 充电桩被占用
+        - `VehicleState.CHARGING_WITH_VENTILATION`: 充电单元正在充电, 充电桩被占用
+        - `VehicleState.FAILURE`: 充电单元故障状态, 充电桩被占用
+        - `VehicleState.CRITICAL`: 充电单元严重故障状态, 充电桩被占用
         """
         self.__check_id(id)
         self.__all_data[id]['status'] = status
         if status in [VehicleState.READY]:
-            # 充电单元就绪状态，可以充电
+            # 充电单元就绪状态, 可以充电
             self.__remove_charging_unit(id)
         elif status in [VehicleState.EV_IS_PRESENT, VehicleState.CHARGING, VehicleState.CHARGING_WITH_VENTILATION]:
-            # 充电单元正在充电，充电桩被占用
+            # 充电单元正在充电, 充电桩被占用
             self.__add_charging_unit(id)
         elif status in [VehicleState.FAILURE, VehicleState.CRITICAL]:
-            # 充电单元故障状态，充电桩被占用
+            # 充电单元故障状态, 充电桩被占用
             self.__add_charging_unit(id)
 
     def __check_id(self, id: int) -> None:
