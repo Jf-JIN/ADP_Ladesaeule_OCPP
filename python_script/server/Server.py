@@ -41,7 +41,8 @@ class Server:
         self.__coroutine_OCPP_server.signal_thread_ocpp_server_recv_response.connect(self.__handle_response_message)
         self.__coroutine_OCPP_server.signal_thread_ocpp_server_recv_response_result.connect(self.__handle_response_result_message)
         # self.__thread_web_server.signal_thread_web_server_info.connect(self.__send_info_web_message)
-        self.__thread_web_server.signal_thread_web_server_recv.connect(self.__send_info_web_message)
+        # self.__thread_web_server.signal_thread_web_server_recv.connect(self.__send_info_web_message)
+        LoggerGroup.signal_group_public_html.connect(self.__send_info_web_message)
 
     def __init_parameters(self):
         pass
@@ -68,7 +69,7 @@ class Server:
         temp_dict = {
             'web_console': message
         }
-        _info(message)
+        # _info(message)
         if 'max_grid_power' in message:
             self._max_grid_power = int(message['max_grid_power'])
             self.__thread_web_server.send_console_message({'web_console': 'max_grid_power updated to ' + str(self._max_grid_power)})
