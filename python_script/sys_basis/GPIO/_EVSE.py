@@ -21,37 +21,37 @@ class Evse(object):
         self.__signal_selftest_finished.connect(self.__handle_selftest_finished)
 
     @property
-    def id(self):
+    def id(self) -> int:
         return self.__id
 
     @property
-    def vehicle_state(self):
+    def vehicle_state(self) -> int | None:
         return self.__vehicle_status
 
     @property
-    def evse_status_error(self):
+    def evse_status_error(self) -> set:
         return self.__evse_status_error
 
     @property
-    def isEnableCharging(self):
+    def isEnableCharging(self) -> bool:
         return self.__isEnableCharging
 
     @property
-    def doUseRCD(self):
+    def doUseRCD(self) -> bool:
         return self.__doUseRCD
 
     @property
-    def signal_selftest_finished(self):
+    def signal_selftest_finished(self) -> XSignal:
         return self.__signal_selftest_finished
 
     @property
     def signal_evse_status_error(self):
         return self.__signal_evse_status_error
 
-    def set_vehicle_state(self, data: int):
+    def set_vehicle_state(self, data: int) -> None:
         self.__vehicle_status = data
 
-    def set_evse_status_error(self, data: set):
+    def set_evse_status_error(self, data: set) -> None:
         if (EVSEErrorInfo.WRITE_ERROR in data
                 or EVSEErrorInfo.READ_ERROR in data):
             self.__isEnableCharging = False
@@ -99,6 +99,7 @@ class Evse(object):
         selftest = EVSESelfCheck(self.__id, self.__doUseRCD)
         selftest.signal_self_test_error.connect(self.set_evse_status_error)
         selftest.signal_test_finished.connect(self.signal_selftest_finished.emit)
+        selftest.signal_test_finished.connect(self.__handle_selftest_finished)
         selftest.start()
 
     def get_current_limit(self) -> list:
@@ -113,4 +114,4 @@ class Evse(object):
         return limit
 
     def __handle_selftest_finished(self) -> None:
-        self.__modbus.run_selftest_and_RCD_test_procedure()
+        self.__modbus.finish_selftest_and_RCD_test_procedure()  # 不能使用with, isSelfChecking是True的状态，不能进入with

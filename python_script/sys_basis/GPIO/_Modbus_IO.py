@@ -169,10 +169,19 @@ class ModbusIO(object):
 
     def run_selftest_and_RCD_test_procedure(self) -> None | bool:
         """
-        注意: 在EVSE类中, 需要在自检结束时将 id 从 isSelfChecking中删除, 否则无法继续读取数据.
+        执行自检和RCD测试程序
+
+        注意: 在EVSE类中, 必须在自检结束时调用`finish_selftest_and_RCD_test_procedure`来关闭自检和RCD测试程序, 否则对应id下的Modbus无法进行读取
         """
         self.__class__.isSelfChecking.add(self.__id)
         return self.write(address=EVSERegAddress.TURN_OFF_SELFTEST_OPERATION, value=BitsFlag.REG1004.SELFTEST_RCDTEST)
+
+    def finish_selftest_and_RCD_test_procedure(self) -> None:
+        """
+        结束自检和RCD测试程序
+        """
+        if self.__id in self.__class__.isSelfChecking:
+            self.__class__.isSelfChecking.remove(self.__id)
 
     def set_current(self, value: int) -> None | bool:
         return self.write(address=EVSERegAddress.CONFIGURED_AMPS, value=value)
@@ -191,10 +200,16 @@ class ModbusIO(object):
             return self.write(address=EVSERegAddress.TURN_OFF_SELFTEST_OPERATION, value=BitsFlag.REG1004.TURN_OFF_CHARGING_NOW, bit_operation=1)
 
     def enable_RCD(self, flag: bool) -> None | bool:
+        """ 
+        开启/关闭RCD检查
+        """
         if flag:
             return self.write(address=EVSERegAddress.CHARGE_OPERATION, value=BitsFlag.REG2005.ENABLE_RCD_FEEDBACK, bit_operation=1)
         else:
             return self.write(address=EVSERegAddress.CHARGE_OPERATION, value=BitsFlag.REG2005.ENABLE_RCD_FEEDBACK, bit_operation=0)
 
     def clear_RCD(self) -> None | bool:
+        """ 
+        清除RCD错误
+        """
         return self.write(address=EVSERegAddress.TURN_OFF_SELFTEST_OPERATION, value=BitsFlag.REG1004.CLEAR_RCD_ERROR, bit_operation=0)
