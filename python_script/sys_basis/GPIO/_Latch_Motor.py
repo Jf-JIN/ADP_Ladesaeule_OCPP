@@ -50,8 +50,8 @@ class LatchMotor:
         上锁操作
         """
         if self.__isRunning:
-            self.__command_list.append(1)
-        if self.__isLocked:
+            self.__command_list.append(1)  # 正数表示上锁
+        if self.__isLocked or self.__timer_intervall <= 0:
             return
         self.__unlock_pin.off()
         self.__status_pin_unlock = False
@@ -64,17 +64,21 @@ class LatchMotor:
         """
         解锁操作
         """
+        if self.__isRunning:
+            self.__command_list.append(-1)  # 负数表示解锁
+        if not self.__isLocked or self.__timer_intervall <= 0:
+            return
+        self.__unlock_pin.on()
+        self.__status_pin_unlock = True
         self.__lock_pin.off()
         self.__status_pin_lock = False
-        self.__unlock_pin.on()
-        self.__isLocked = False
-        self.__status_pin_unlock = True
         self.__timer = threading.Timer(self.__timer_intervall, self.__off_unlock_pin)
         self.__timer.start()
 
     def stop(self) -> None:
         self.__lock_pin.off()
         self.__unlock_pin.off()
+        # 缺少安全措施，比如锁在一半停下了，可以置默认操作，上锁或解锁
 
     def __off_lock_pin(self) -> None:
         """
@@ -98,7 +102,8 @@ class LatchMotor:
         """
         处理动作完成信号, 检查是否有后续连续操作
         """
-        self.__data_collector.set_CU_isLatched(self.__isLocked)
+        self.__data_collector.set_CU_isLatched(id=self.id, flag=self.__isLocked)
+        setattr(self.__parent, f'_{self.__parent.__class__.__name__}__isLatched', self.__isLocked)
         if len(self.__command_list) == 0:
             return
         command = self.__command_list.pop(0)
