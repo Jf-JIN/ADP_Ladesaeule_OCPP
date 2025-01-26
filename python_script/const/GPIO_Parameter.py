@@ -23,12 +23,12 @@ class ResultFlag(AnalogDefine):
 
 
 class VehicleState(AnalogDefine):
-    READY = 1
-    EV_IS_PRESENT = 2
-    CHARGING = 3
-    CHARGING_WITH_VENTILATION = 4
-    FAILURE = 5
-    CRITICAL = 666
+    READY = 1  # 准备就绪, 可以开始充电
+    EV_IS_PRESENT = 2  # 车辆已插入
+    CHARGING = 3  # 充电中
+    CHARGING_WITH_VENTILATION = 4  # 充电中，需要通风
+    FAILURE = 5  # 故障
+    CRITICAL = 666  # 严重故障
 
 
 class EVSEErrorInfo(AnalogDefine):
