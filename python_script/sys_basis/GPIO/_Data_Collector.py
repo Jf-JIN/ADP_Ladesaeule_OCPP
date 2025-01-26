@@ -299,12 +299,7 @@ class DataCollector:
             self.__check_id(cu_id)
             finished_plan = self.__all_data[cu_id].get('finished_plan', [])
             current_charge_action = self.__all_data[cu_id].get('current_charge_action', {})
-            fig: str = DataGene.plan2figure(
-                {
-                    'finished_plan': finished_plan,
-                    'current_charge_action': current_charge_action,
-                }
-            )
+            fig: str = DataGene.plan2figure(finished_plan + current_charge_action)
             self.__all_data[cu_id]['finished_plan_figure_base64'] = fig
             data[cu_id] = fig
         self.__signal_DC_figure_display.emit(data)
