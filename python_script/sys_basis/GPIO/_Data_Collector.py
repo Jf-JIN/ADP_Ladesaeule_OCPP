@@ -4,7 +4,6 @@ from threading import Timer
 import copy
 import datetime
 
-from python_script.sys_basis.GPIO._GPIO_Manager import GPIOManager
 from sys_basis.XSignal import XSignal
 from const.GPIO_Parameter import *
 from tools.data_gene import *
@@ -85,42 +84,32 @@ class DataCollector:
         },
         ...
     }
-
-{'current_charge_action': {
-    'startPeriod': 20, 
-    'limit': 8523,
-    'startTime': '2025-01-26T15:00:02Z',
-    'finishedTime': '2025-01-26T15:25:02Z', 
-    'chargedEnergy': 7510,
-    },
-'finished_plan': [
-    {'startPeriod': 0, 'limit': 9852, 'startTime':'2025-01-26T14:40:29Z','finishedTime': '2025-01-26T14:45:21Z', 'chargedEnergy':780,}, 
-    {'startPeriod': 5, 'limit': 9724, 'startTime':'2025-01-26T14:40:29Z','finishedTime': '2025-01-26T15:00:02Z', 'chargedEnergy':3500,},
-    {'startPeriod': 0, 'limit': 9852, 'startTime':'2025-01-26T15:00:02Z','finishedTime': '2025-01-26T15:05:02Z', 'chargedEnergy':4108,}, 
-    {'startPeriod': 5, 'limit': 9724, 'startTime':'2025-01-26T15:00:02Z','finishedTime': '2025-01-26T15:20:02Z', 'chargedEnergy':6958,},
-],}
-
-{'current_charge_action': {
-    'chargedEnergy': 3600,
-    },
-'finished_plan': [],
-}
     """
 
-    def __init__(self, parent: GPIOManager, interval: int | float) -> None:
+    def __init__(self, parent: GPIOManager, interval_send_data: int | float = 1, interval_send_fig: int | float = 30,) -> None:
         self.__parent: GPIOManager = parent
-        self.__intervall: int | float = interval
+        self.__interval_send_data: int | float = interval_send_data
+        self.__interval_send_fig: int | float = interval_send_fig
         self.__all_data: dict = {}
         self.__evse_data: dict = {}
         self.__shelly_data: dict = {}
-        self.__timer_data: Timer = Timer(self.__intervall, self.__send_display_data)
-        self.__timer_figure: Timer = Timer(self.__intervall, self.__send_figure_data)
+        self.__timer_data: Timer = Timer(self.__interval_send_data, self.__send_display_data)
+        self.__timer_figure: Timer = Timer(self.__interval_send_fig, self.__send_figure_data)
         self.__charging_units_id_set: set = None
         self.__available_charge_units_id_set: set = None
         self.__signal_DC_data_display: XSignal = XSignal()
         self.__signal_DC_figure_display: XSignal = XSignal()
         self.__timer_data.start()
         self.__timer_figure.start()
+
+    def __str__(self) -> str:
+        return f"""Data Collector:\
+< all_data >: {str(self.__all_data)}
+
+< evse >: {str(self.__evse_data)}
+
+< shelly >: {str(self.__shelly_data)}
+"""
 
     @property
     def charging_units_id_set(self) -> set:
@@ -139,7 +128,7 @@ class DataCollector:
     @property
     def signal_DC_data_display(self) -> XSignal:
         """
-        用于在数据收集器中发送数据的信号, 每隔 `self.__intervall` 秒发送一次.
+        用于在数据收集器中发送数据的信号, 每隔 `self.__interval_send_data` 秒发送一次.
         """
         return self.__signal_DC_data_display
 
@@ -149,6 +138,10 @@ class DataCollector:
         用于在数据收集器中发送图片数据的信号, 每当数据更新时就发送一次.
         """
         return self.__signal_DC_figure_display
+
+    @property
+    def parent_obj(self) -> GPIOManager:
+        return self.__parent
 
     def set_evse_data(self, id: int, data: dict) -> None:
         """ 
@@ -169,44 +162,6 @@ class DataCollector:
         if not self.__all_data[id].get('current_charge_action', None):
             self.__all_data[id]['current_charge_action'] = {}
         self.__all_data[id]['current_charge_action']['chargedEnergy'] = data.get('charged_energy', 0)
-
-    def __add_charging_unit(self, id: int) -> None:
-        """ 
-        加入一个充电单元，该方法会在线程检查时被 set_CU_status 自动调用.
-        """
-        self.__charging_units_id_set.add(id)
-        self.__available_charge_units_id_set.discard(id)
-
-    def __remove_charging_unit(self, id: int) -> None:
-        """ 
-        移除一个充电单元，该方法会在线程检查时被 set_CU_status 自动调用.
-        """
-        self.__charging_units_id_set.discard(id)
-        self.__available_charge_units_id_set.add(id)
-
-    def __set_CU_status(self, id: int, status: int) -> None:
-        """ 
-        写入充电单元状态.
-
-        当状态为：
-        - `VehicleState.READY`：充电单元就绪状态，可以充电
-        - `VehicleState.EV_IS_PRESENT`：充电单元就绪状态，可以充电
-        - `VehicleState.CHARGING`：充电单元正在充电，充电桩被占用
-        - `VehicleState.CHARGING_WITH_VENTILATION`：充电单元正在充电，充电桩被占用
-        - `VehicleState.FAILURE`：充电单元故障状态，充电桩被占用
-        - `VehicleState.CRITICAL`：充电单元严重故障状态，充电桩被占用
-        """
-        self.__check_id(id)
-        self.__all_data[id]['status'] = status
-        if status in [VehicleState.READY]:
-            # 充电单元就绪状态，可以充电
-            self.__remove_charging_unit(id)
-        elif status in [VehicleState.EV_IS_PRESENT, VehicleState.CHARGING, VehicleState.CHARGING_WITH_VENTILATION]:
-            # 充电单元正在充电，充电桩被占用
-            self.__add_charging_unit(id)
-        elif status in [VehicleState.FAILURE, VehicleState.CRITICAL]:
-            # 充电单元故障状态，充电桩被占用
-            self.__add_charging_unit(id)
 
     def set_CU_current_charge_action(self, id: int, plan: dict) -> None:
         """ 
@@ -281,6 +236,44 @@ class DataCollector:
         self.__check_id(id)
         self.__all_data[id]['isLatched'] = flag
 
+    def __add_charging_unit(self, id: int) -> None:
+        """ 
+        加入一个充电单元，该方法会在线程检查时被 set_CU_status 自动调用.
+        """
+        self.__charging_units_id_set.add(id)
+        self.__available_charge_units_id_set.discard(id)
+
+    def __remove_charging_unit(self, id: int) -> None:
+        """ 
+        移除一个充电单元，该方法会在线程检查时被 set_CU_status 自动调用.
+        """
+        self.__charging_units_id_set.discard(id)
+        self.__available_charge_units_id_set.add(id)
+
+    def __set_CU_status(self, id: int, status: int) -> None:
+        """ 
+        写入充电单元状态.
+
+        当状态为：
+        - `VehicleState.READY`：充电单元就绪状态，可以充电
+        - `VehicleState.EV_IS_PRESENT`：充电单元就绪状态，可以充电
+        - `VehicleState.CHARGING`：充电单元正在充电，充电桩被占用
+        - `VehicleState.CHARGING_WITH_VENTILATION`：充电单元正在充电，充电桩被占用
+        - `VehicleState.FAILURE`：充电单元故障状态，充电桩被占用
+        - `VehicleState.CRITICAL`：充电单元严重故障状态，充电桩被占用
+        """
+        self.__check_id(id)
+        self.__all_data[id]['status'] = status
+        if status in [VehicleState.READY]:
+            # 充电单元就绪状态，可以充电
+            self.__remove_charging_unit(id)
+        elif status in [VehicleState.EV_IS_PRESENT, VehicleState.CHARGING, VehicleState.CHARGING_WITH_VENTILATION]:
+            # 充电单元正在充电，充电桩被占用
+            self.__add_charging_unit(id)
+        elif status in [VehicleState.FAILURE, VehicleState.CRITICAL]:
+            # 充电单元故障状态，充电桩被占用
+            self.__add_charging_unit(id)
+
     def __check_id(self, id: int) -> None:
         """ 
         确保 id 一定在 __all_data 中存在.
@@ -294,7 +287,7 @@ class DataCollector:
         """
         data: dict = {}
         self.__signal_DC_data_display.emit(data)
-        self.__timer_data = Timer(self.__intervall, self.__send_display_data)
+        self.__timer_data = Timer(self.__interval_send_data, self.__send_display_data)
         self.__timer_data.start()
 
     def __send_figure_data(self) -> None:
@@ -315,5 +308,5 @@ class DataCollector:
             self.__all_data[cu_id]['finished_plan_figure_base64'] = fig
             data[cu_id] = fig
         self.__signal_DC_figure_display.emit(data)
-        self.__timer_figure = Timer(self.__intervall, self.__send_figure_data)
+        self.__timer_figure = Timer(self.__interval_send_fig, self.__send_figure_data)
         self.__timer_figure.start()
