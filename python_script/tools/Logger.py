@@ -39,44 +39,78 @@ class EnumBase(metaclass=EnumBaseMeta):
     pass
 
 
-class _TxtColor(EnumBase):
-    """ 文字颜色枚举类 """
-    BLACK = '30'
-    RED = '31'
-    GREEN = '32'
-    YELLOW = '33'
-    BLUE = '34'
-    PINK = '35'
-    CYAN = '36'
-    WHITE = '37'
-    GRAY = '90'
-    LIGHTRED = '91'
-    LIGHTGREEN = '92'
-    LIGHTYELLOW = '93'
-    LIGHTBLUE = '94'
-    LIGHTPINK = '95'
-    LIGHTCYAN = '96'
-    LIGHTWHITE = '97'
-
-
-class _BgColor(EnumBase):
-    """ 背景颜色枚举类 """
-    BLACK = '40'
-    RED = '41'
-    GREEN = '42'
-    YELLOW = '43'
-    BLUE = '44'
-    PINK = '45'
-    CYAN = '46'
-    WHITE = '47'
-    GRAY = '100'
-    LIGHTRED = '101'
-    LIGHTGREEN = '102'
-    LIGHTYELLOW = '103'
-    LIGHTBLUE = '104'
-    LIGHTPINK = '105'
-    LIGHTCYAN = '106'
-    LIGHTWHITE = '107'
+class _ColorMap(EnumBase):
+    """ 颜色枚举类 """
+    BLACK = '#010101'
+    RED = '#DE382B'
+    GREEN = '#39B54A'
+    YELLOW = '#FFC706'
+    BLUE = '#006FB8'
+    PINK = '#762671'
+    CYAN = '#2CB5E9'
+    WHITE = '#CCCCCC'
+    GRAY = '#808080'
+    LIGHTRED = '#FF0000'
+    LIGHTGREEN = '#00FF00'
+    LIGHTYELLOW = '#FFFF00'
+    LIGHTBLUE = '#0000FF'
+    LIGHTPINK = '#FF00FF'
+    LIGHTCYAN = '#00FFFF'
+    LIGHTWHITE = '#FFFFFF'
+    MAP_RGB_ANSI_TXT: dict = {
+        '#010101': '30',  # BLACK
+        '#DE382B': '31',  # RED
+        '#39B54A': '32',  # GREEN
+        '#FFC706': '33',  # YELLOW
+        '#006FB8': '34',  # BLUE
+        '#762671': '35',  # PINK
+        '#2CB5E9': '36',  # CYAN
+        '#CCCCCC': '37',  # WHITE
+        '#808080': '90',  # GRAY
+        '#FF0000': '91',  # LIGHTRED
+        '#00FF00': '92',  # LIGHTGREEN
+        '#FFFF00': '93',  # LIGHTYELLOW
+        '#0000FF': '94',  # LIGHTBLUE
+        '#FF00FF': '95',  # LIGHTPINK
+        '#00FFFF': '96',  # LIGHTCYAN
+        '#FFFFFF': '97',  # LIGHTWHITE
+    }
+    MAP_RGB_ANSI_BG: dict = {
+        '#010101': '40',  # BLACK
+        '#DE382B': '41',  # RED
+        '#39B54A': '42',  # GREEN
+        '#FFC706': '43',  # YELLOW
+        '#006FB8': '44',  # BLUE
+        '#762671': '45',  # PINK
+        '#2CB5E9': '46',  # CYAN
+        '#CCCCCC': '47',  # WHITE
+        '#808080': '100',  # GRAY
+        '#FF0000': '101',  # LIGHTRED
+        '#00FF00': '102',  # LIGHTGREEN
+        '#FFFF00': '103',  # LIGHTYELLOW
+        '#0000FF': '104',  # LIGHTBLUE
+        '#FF00FF': '105',  # LIGHTPINK
+        '#00FFFF': '106',  # LIGHTCYAN
+        '#FFFFFF': '107',  # LIGHTWHITE
+    }
+    MAP_RGB_HTML: dict = {
+        '#010101': '#010101',
+        '#DE382B': '#DE382B',
+        '#39B54A': '#39B54A',
+        '#FFC706': '#FFC706',
+        '#006FB8': '#006FB8',
+        '#762671': '#762671',
+        '#2CB5E9': '#2CB5E9',
+        '#CCCCCC': '#CCCCCC',
+        '#808080': '#808080',
+        '#FF0000': '#FF0000',
+        '#00FF00': '#00FF00',
+        '#FFFF00': '#FFFF00',
+        '#0000FF': '#0000FF',
+        '#FF00FF': '#FF00FF',
+        '#00FFFF': '#00FFFF',
+        '#FFFFFF': '#FFFFFF',
+    }
 
 
 class LogLevel(EnumBase):
@@ -93,6 +127,7 @@ class LogLevel(EnumBase):
 class _HighlightType(EnumBase):
     """ 高亮类型枚举类 """
     ASNI = 'ASNI'
+    HTML = 'HTML'
     NONE = None
 
 
@@ -104,7 +139,8 @@ def asni_ct(
     bold: bool = False,
     italic: bool = False,
     underline: bool = False,
-    blink: bool = False
+    blink: bool = False,
+    *args, **kwargs
 ) -> str:
     """
     ANSI转义序列生成器
@@ -128,10 +164,49 @@ def asni_ct(
     style_list.append('3') if italic else ''  # 斜体
     style_list.append('4') if underline else ''  # 下划线
     style_list.append('5') if blink else ''  # 闪烁
-    style_list.append(txt_color) if txt_color in _TxtColor else ''  # 字体颜色
-    style_list.append(bg_color) if bg_color in _BgColor else ''  # 背景颜色
+    style_list.append(_ColorMap.MAP_RGB_ANSI_TXT[txt_color]) if txt_color in _ColorMap else ''  # 字体颜色
+    style_list.append(_ColorMap.MAP_RGB_ANSI_BG[bg_color]) if bg_color in _ColorMap else ''  # 背景颜色
     style_str = ';'.join(item for item in style_list if item)
     return f'\x1B[{style_str}m{text}\x1B[0m'
+
+
+def html_ct(
+    text: str,
+    txt_color: str | None = None,
+    bg_color: str | None = None,
+    dim: bool = False,
+    bold: bool = False,
+    italic: bool = False,
+    underline: bool = False,
+    blink: bool = False,
+    *args, **kwargs
+) -> str:
+    """
+    HTML转义序列生成器
+
+    参数:
+    - text: 需要转义的文本
+    - txt_color: 文本颜色
+    - bg_color: 背景颜色
+    - dim: 是否为暗色
+    - bold: 是否为粗体
+    - italic: 是否为斜体
+    - underline: 是否为下划线
+    - blink: 是否为闪烁
+
+    返回:
+    - 转义后的文本
+    """
+
+    style_list = []
+    style_list.append(f'color: {_ColorMap.MAP_RGB_HTML[txt_color]}') if txt_color in _ColorMap else ''
+    style_list.append(f'background-color: {_ColorMap.MAP_RGB_HTML[bg_color]}') if bg_color in _ColorMap else ''
+    style_list.append('font-weight: bold') if bold else ''
+    style_list.append('font-style: italic') if italic else ''
+    style_list.append('text-decoration: underline') if underline else ''
+    style_list.append('opacity: 0.7;animation: blink 1s step-end infinite') if blink else ''
+    style_str = ';'.join(item for item in style_list if item)+';'
+    return f'<span style="{style_str}">{text}</span>'
 
 
 class _LogSignal(object):
@@ -282,6 +357,7 @@ class Logger(object, metaclass=_LogMeta):
     __logging_listener = logging.getLogger()
     signal_log_public = _LogSignal()
     signal_log_public_color = _LogSignal()
+    signal_log_public_html = _LogSignal()
 
     def __init__(
         self,
@@ -372,11 +448,11 @@ class Logger(object, metaclass=_LogMeta):
         self.__isNewFile = True
         self.__signal_log_instance = _LogSignal()
         self.__level_color_dict = {
-            LogLevel.DEBUG: (_TxtColor.LIGHTGREEN, '', False, False),
-            LogLevel.INFO: (_TxtColor.BLUE, '', False, False),
-            LogLevel.WARNING: (_TxtColor.LIGHTYELLOW, '', True, False),
-            LogLevel.ERROR: (_TxtColor.WHITE, _BgColor.LIGHTRED, True, False),
-            LogLevel.CRITICAL: (_TxtColor.LIGHTYELLOW, _BgColor.RED, True, True),
+            LogLevel.DEBUG: (_ColorMap.LIGHTGREEN, '', False, False),
+            LogLevel.INFO: (_ColorMap.BLUE, '', False, False),
+            LogLevel.WARNING: (_ColorMap.LIGHTYELLOW, '', True, False),
+            LogLevel.ERROR: (_ColorMap.WHITE, _ColorMap.LIGHTRED, True, False),
+            LogLevel.CRITICAL: (_ColorMap.LIGHTYELLOW, _ColorMap.RED, True, True),
         }
         self.__log_level_int_dict = {
             LogLevel.NOTSET: 10,
@@ -519,12 +595,16 @@ class Logger(object, metaclass=_LogMeta):
             'script_path': script_path,
         }
 
-    def __color(self, message: str, *args, **kwargs) -> str:
+    def __color(self, message: str, *args, highlight_type=None, **kwargs) -> str:
         """ 颜色样式渲染 """
-        if self.__highlight_type is None:
-            return message
-        if self.__highlight_type == _HighlightType.ASNI:
+        if highlight_type is None:
+            highlight_type = self.__highlight_type
+            if self.__highlight_type is None:
+                return message
+        if highlight_type == _HighlightType.ASNI:
             return asni_ct(text=message, *args, **kwargs)
+        if highlight_type == _HighlightType.HTML:
+            return html_ct(text=message, *args, **kwargs)
         return message
 
     def __format(self, log_level: str, *args) -> tuple:
@@ -555,6 +635,46 @@ class Logger(object, metaclass=_LogMeta):
         used_vars = {name[0]: self.__var_dict[name[0]] for name in used_var_names if name[0] in self.__var_dict}
         text = self.__message_format % used_vars + '\n'
         # 高亮消息
+        html_dict = {
+            'levelName': self.__color(
+                log_level,
+                txt_color=self.__level_color_dict[log_level][0],
+                bg_color=self.__level_color_dict[log_level][1],
+                bold=self.__level_color_dict[log_level][2],
+                blink=self.__level_color_dict[log_level][3],
+                highlight_type='HTML'),
+            'asctime': self.__color(
+                self.__var_dict['asctime'],
+                txt_color=_ColorMap.GREEN,
+                bold=True,
+                highlight_type='HTML'),
+            'moduleName': self.__color(
+                self.__var_dict['moduleName'],
+                txt_color=_ColorMap.CYAN,
+                highlight_type='HTML'),
+            'functionName': self.__color(
+                self.__var_dict['functionName'],
+                txt_color=_ColorMap.CYAN,
+                highlight_type='HTML'),
+            'className': self.__color(
+                self.__var_dict['className'],
+                txt_color=_ColorMap.CYAN,
+                highlight_type='HTML'),
+            'lineNum': self.__color(
+                self.__var_dict['lineNum'],
+                txt_color=_ColorMap.CYAN,
+                highlight_type='HTML'),
+            'scriptPath': self.__color(
+                self.__var_dict['scriptPath'],
+                txt_color=_ColorMap.CYAN,
+                highlight_type='HTML'),
+            'consoleLine': self.__color(
+                self.__var_dict['consoleLine'],
+                txt_color=_ColorMap.RED,
+                italic=True,
+                highlight_type='HTML'),
+            'message': msg,
+        }
         if log_level in self.__level_color_dict:
             self.__var_dict['levelName'] = self.__color(
                 log_level,
@@ -564,30 +684,36 @@ class Logger(object, metaclass=_LogMeta):
                 blink=self.__level_color_dict[log_level][3])
         self.__var_dict['asctime'] = self.__color(
             self.__var_dict['asctime'],
-            txt_color=_TxtColor.GREEN,
+            txt_color=_ColorMap.GREEN,
             bold=True)
         self.__var_dict['moduleName'] = self.__color(
             self.__var_dict['moduleName'],
-            txt_color=_TxtColor.CYAN)
+            txt_color=_ColorMap.CYAN)
         self.__var_dict['functionName'] = self.__color(
             self.__var_dict['functionName'],
-            txt_color=_TxtColor.CYAN)
+            txt_color=_ColorMap.CYAN)
         self.__var_dict['className'] = self.__color(
             self.__var_dict['className'],
-            txt_color=_TxtColor.CYAN)
+            txt_color=_ColorMap.CYAN)
         self.__var_dict['lineNum'] = self.__color(
             self.__var_dict['lineNum'],
-            txt_color=_TxtColor.CYAN)
+            txt_color=_ColorMap.CYAN)
         self.__var_dict['scriptPath'] = self.__color(
             self.__var_dict['scriptPath'],
-            txt_color=_TxtColor.CYAN)
+            txt_color=_ColorMap.CYAN)
         self.__var_dict['consoleLine'] = self.__color(
             self.__var_dict['consoleLine'],
-            txt_color=_TxtColor.RED,
+            txt_color=_ColorMap.RED,
             italic=True)
         used_vars = {name[0]: self.__var_dict[name[0]] for name in used_var_names if name[0] in self.__var_dict}
         text_with_color = self.__message_format % used_vars + '\n'
-        return text_with_color, text
+        used_vars_html = {name[0]: html_dict[name[0]] for name in used_var_names if name[0] in html_dict}
+        html_text = self.__message_format % used_vars_html + '\n'
+        pre_blick_text = '<style > @keyframes blink{50% {opacity: 50;}}</style>'
+        text_with_color_HTML = (pre_blick_text + html_text).replace('\n', '<br>')
+        if self.__highlight_type == _HighlightType.HTML:
+            text_with_color = text_with_color_HTML
+        return text_with_color, text, text_with_color_HTML
 
     def __printf(self, message: str) -> None:
         """ 打印日志信息 """
@@ -625,12 +751,13 @@ class Logger(object, metaclass=_LogMeta):
             f.write(message)
 
     def __output(self, level, *args, **kwargs) -> None:
-        txs, tx = self.__format(level, *args)
+        txs, tx, thtml = self.__format(level, *args)
         self.__write(tx)
         self.__printf(txs)
         self.__signal_log_instance.emit(tx)
         Logger.signal_log_public.emit(tx)
         Logger.signal_log_public_color.emit(txs)
+        Logger.signal_log_public_html.emit(thtml)
 
     def debug(self, *args, **kwargs) -> None:
         """ 打印调试信息 """
@@ -730,6 +857,7 @@ class LoggerGroup(object, metaclass=_LogMeta):
     __isInstance = False
     signal_group_public = _LogSignal()
     signal_group_public_color = _LogSignal()
+    signal_group_public_html = _LogSignal()
 
     def __new__(cls, *args, **kwargs):
         if cls.__isInstance:
@@ -764,6 +892,7 @@ class LoggerGroup(object, metaclass=_LogMeta):
         self.__clear_files()
         Logger.signal_log_public.connect(self.signal_group_public.emit)
         Logger.signal_log_public_color.connect(self.signal_group_public_color.emit)
+        Logger.signal_log_public_html.connect(self.signal_group_public_html.emit)
 
     def set_log_group(self, log_group: list) -> None:
         if not isinstance(log_group, list):
