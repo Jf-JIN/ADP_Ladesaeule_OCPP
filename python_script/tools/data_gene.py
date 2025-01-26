@@ -1,3 +1,5 @@
+import pprint
+import scienceplots
 from datetime import datetime, timedelta
 import numpy as np
 import pytz
@@ -18,10 +20,15 @@ class DataGene:
         - `gene_eprices`: 生成电价列表(区分日间, 夜间电价)
         - `time2str`: 生成指定字符串格式的柏林时间
         - `str2time`: 将字符串格式时间(柏林时间)转换为 datetime 对象
+        - `gene_his_usage_seed`: 由seed生成固定的一天家庭的用电数据, 每隔15分钟一个数据点, 单位为Wh
         - `gene_his_usage`: 生成一天家庭的用电数据, 每隔15分钟一个数据点, 单位为Wh
         - `plot_usage`: 绘制用电数据图
-        - `plot_charging_schedule`: 根据优化前和优化后的用电记录绘制家庭用电曲线图
+        - `plot_charging_curve`: 绘制充电曲线图
+        - `plot_usage_comparison`: 绘制用电数据对比图
+        - `plan2figure`: 由充电计划绘制充电曲线图
         - `split_time`: 将开始时间和结束时间按照15分钟间隔分割, 返回每段时间的持续时间、电价和可用功率.
+        - `snake_to_camel_case`: 将字符串从蛇形命名法转换为驼峰命名法.
+        - `convert_dict_keys`: 将字典的键从蛇形命名法转换为驼峰命名法.
     """
 
     @staticmethod
@@ -161,7 +168,7 @@ class DataGene:
         time_labels = [f"{hour}:00" for hour in hours_labels]  # 创建小时标签
 
         # 绘制用电量图
-        plt.figure(figsize=(10, 6))
+        plt.figure(figsize=(12, 6))
         plt.plot(time_slots, usage_record, label='Electricity Usage (Wh)', color='b')
 
         # 设置坐标轴和标题
@@ -176,7 +183,7 @@ class DataGene:
         plt.show()
 
     @staticmethod
-    def plot_charging_curve(start_time, time_split, charging_list) -> str:
+    def plot_charging_curve(start_time: datetime, time_split: list, charging_list: list, style: Style = Style.PLOT) -> str:
         """
         绘制充电曲线图
 
@@ -184,10 +191,13 @@ class DataGene:
             - start_time: 充电开始时间
             - time_split: 每次充电的持续时间(单位: 分钟)
             - charging_list: 每次充电的功率(单位: W)
+            - style: 绘图风格, 默认为折线图(Style.PLOT), 可选柱状图(Style.BAR)
 
         返回:
             - str: 充电曲线图的base64编码字符串
         """
+        plt.style.use(['science', 'no-latex'])
+
         times = [start_time]
         cumulative_energy = [0]
         for duration, power in zip(time_split, charging_list):
@@ -195,24 +205,31 @@ class DataGene:
             times.append(times[-1] + timedelta(minutes=duration))
 
         plt.figure(figsize=(12, 6))
-        plt.step(times, cumulative_energy, where='post')
-        plt.xlabel('Time')
-        plt.ylabel('Cumulative Energy (Wh)')
-        plt.title('Cumulative Charging Energy Over Time')
-        plt.xticks(rotation=45)
-        plt.grid(True)
-        plt.tight_layout()
-        # plt.show()
+        if style == Style.PLOT:
+            plt.plot(times[1:], cumulative_energy[1:], marker='o', linestyle='-', color=Color.BLUE, label='Cumulative Energy')
+        elif style == Style.BAR:
+            plt.bar(times[1:], cumulative_energy[1:], width=[-timedelta(minutes=t) for t in time_split], align='edge', color=Color.BLUE_BAR, edgecolor='black', label='Energy Added')
+
+        plt.grid(True, linestyle='--', alpha=0.7)
+        plt.xticks(fontsize=FontSize.TICKS)
+        plt.xlabel('Time', fontsize=FontSize.LABEL)
+        plt.ylabel('Cumulative Energy (Wh)', fontsize=FontSize.LABEL)
+        plt.title('Cumulative Charging Energy Over Time', fontsize=FontSize.TITLE)
+        plt.ylim(bottom=0)
+        plt.legend()
+        plt.show()
+
         # save to base64
         buf = io.BytesIO()
         plt.savefig(buf, format='png')
         buf.seek(0)
         base64_image = base64.b64encode(buf.read()).decode('utf-8')
         buf.close()
+        plt.close()
         return base64_image
 
     @staticmethod
-    def plot_usage_comparison(start_time, time_split, charging_list, his_usage, max_grid_power) -> str:
+    def plot_usage_comparison(start_time: datetime, time_split: list, charging_list: list, his_usage: list, max_grid_power: int) -> str:
         """
         绘制用电量对比图
 
@@ -226,6 +243,8 @@ class DataGene:
         返回:
             - str: 用电量对比图的base64编码字符串
         """
+        plt.style.use(['science', 'no-latex'])
+
         times = [start_time]
         for duration, power in zip(time_split, charging_list):
             times.append(times[-1] + timedelta(minutes=duration))
@@ -240,16 +259,15 @@ class DataGene:
             updated_usage.append(matching_usage + power)
 
         plt.figure(figsize=(12, 6))
-        plt.plot(times[:-1], original_usage, label='Historical Usage', linestyle='--')
-        plt.plot(times[:-1], updated_usage, label='Updated Usage', linestyle='-')
-        plt.axhline(y=max_grid_power, color='r', linestyle=':', label='Max Grid Power')
-        plt.xlabel('Time')
-        plt.ylabel('Power (W)')
-        plt.title('Power Usage Comparison')
+        plt.plot(times[:-1], original_usage, color=Color.GREEN, label='Historical Usage', linestyle='--')
+        plt.plot(times[:-1], updated_usage, color=Color.BLUE, label='Updated Usage', linestyle='-')
+        plt.axhline(y=max_grid_power, color=Color.RED, linestyle=':', label='Max Grid Power')
+        plt.xlabel('Time', fontsize=FontSize.LABEL)
+        plt.ylabel('Power (W)', fontsize=FontSize.LABEL)
+        plt.title('Power Usage Comparison', fontsize=FontSize.TITLE)
         plt.legend()
-        plt.xticks(rotation=45)
-        plt.grid(True)
-        plt.tight_layout()
+        plt.xticks(fontsize=FontSize.TICKS)
+        plt.grid(True, linestyle='--', alpha=0.7)
         # plt.show()
         # save to base64
         buf = io.BytesIO()
@@ -257,6 +275,53 @@ class DataGene:
         buf.seek(0)
         base64_image = base64.b64encode(buf.read()).decode('utf-8')
         buf.close()
+        plt.close()
+        return base64_image
+
+    @staticmethod
+    def plan2figure(charge_plan: list) -> str:
+        """
+        将充电计划转换为美化的图表
+
+        参数:
+            - charge_plan: 充电计划
+
+        返回:
+            - str: 图表的base64编码字符串
+        """
+        plt.style.use(['science', 'no-latex'])
+
+        charge_plan = [DataGene.convert_dict_keys(charge_item) for charge_item in charge_plan]
+        time = [DataGene.str2time(charge_item['startTime']) + timedelta(minutes=charge_item['startPeriod']) for
+                charge_item in charge_plan] + [DataGene.str2time(charge_plan[-1]['finishedTime'])]
+        time_split = [(time[i + 1] - time[i]).seconds / 60 for i in range(len(time) - 1)]
+        limit = [charge_item['limit'] for charge_item in charge_plan]
+        charged_energy_predict = [0]
+        for duration, power in zip(time_split, limit):
+            charged_energy_predict.append(charged_energy_predict[-1] + power * duration / 60)
+        charged_energy_actual = [0] + [charge_item['chargedEnergy'] for charge_item in charge_plan]
+
+        plt.figure(figsize=(12, 6))  # 增加图表分辨率和大小
+        plt.plot(time, charged_energy_actual, marker='o', linestyle='-', color=Color.BLUE, linewidth=2, label='actual charged energy')
+        plt.plot(time, charged_energy_predict, marker='o', linestyle='--', color=Color.RED, linewidth=2, label='predict charged energy')
+
+        plt.xticks(fontsize=FontSize.TICKS)
+        plt.grid(True, linestyle='--', alpha=0.7)
+        plt.xlabel('Time', fontsize=FontSize.LABEL)
+        plt.ylabel('Charged Energy (Wh)', fontsize=FontSize.LABEL)
+        plt.title('Charged Energy Over Time', fontsize=FontSize.TITLE)
+        plt.ylim(bottom=0)
+        plt.legend()
+        # plt.show()
+
+        # 保存为base64
+        buf = io.BytesIO()
+        plt.savefig(buf, format='png', bbox_inches='tight')
+        buf.seek(0)
+        base64_image = base64.b64encode(buf.read()).decode('utf-8')
+        buf.close()
+        plt.close()
+
         return base64_image
 
     @staticmethod
@@ -332,6 +397,9 @@ class DataGene:
 
     @staticmethod
     def snake_to_camel_string(snake_str) -> str:
+        """
+        将下划线命名法 (snake_case) 转换为驼峰命名法 (camelCase)
+        """
         if not isinstance(snake_str, str):
             raise ValueError("Input must be a string")
         snake_str = snake_str.replace("soc_limit_reached", "SOCLimitReached")
@@ -342,15 +410,77 @@ class DataGene:
         camel_case = components[0] + "".join(x.capitalize() for x in components[1:])
         return camel_case
 
+    @staticmethod
+    def convert_dict_keys(d: dict) -> dict:
+        """
+        递归地将嵌套字典中所有含有'_'的键转换为驼峰命名法
+
+        参数:
+            - d: 需要处理的嵌套字典
+
+        返回:
+            - dict: 替换后的字典
+        """
+        if not isinstance(d, dict):
+            return d  # 如果当前元素不是字典，直接返回
+
+        new_dict = {}
+        for key, value in d.items():
+            new_key = DataGene.snake_to_camel_string(key) if '_' in key else key
+            if isinstance(value, dict):
+                new_dict[new_key] = DataGene.convert_dict_keys(value)  # 递归处理子字典
+            elif isinstance(value, list):
+                new_dict[new_key] = [DataGene.convert_dict_keys(item) if isinstance(item, dict) else item for item in value]
+            else:
+                new_dict[new_key] = value
+        return new_dict
+
 
 if __name__ == "__main__":
-    eprices = DataGene.gene_eprices(0.33, 0.3, 6, 22)
-    his_usage = DataGene.gene_his_usage()
+    # eprices = DataGene.gene_eprices(0.33, 0.3, 6, 22)
+    # his_usage = DataGene.gene_his_usage()
     # DataGene.plot_usage(eprices)
     # DataGene.plot_usage(his_usage)
     # print(DataGene.time2str())
     # print(datetime.now())
     # print(DataGene.str2time('2024-07-25T10:00:00Z'))
-    start = DataGene.str2time('2024-12-29T21:12:00Z')
-    [time_split, eprices_split, max_power_split] = DataGene.split_time(start, start+timedelta(hours=8), eprices, his_usage, 16000, 12800, 2400, 60)
-    print(time_split, eprices_split, max_power_split)
+    # start = DataGene.str2time('2024-12-29T21:12:00Z')
+    # [time_split, eprices_split, max_power_split] = DataGene.split_time(start, start+timedelta(hours=8), eprices, his_usage, 16000, 12800, 2400, 60)
+    # print(time_split, eprices_split, max_power_split)
+
+
+    # message = {
+    #     'chargingProfile': {
+    #         'charging_schedule': [
+    #             {
+    #                 'chargingSchedule_period': [
+    #                     {'start_period': 0, 'limit': 1},
+    #                     {'startPeriod': 3, 'limit': 2},
+    #                     {'startPeriod': 18, 'limit': 3},
+    #                     {'startPeriod': 33, 'limit': 4},
+    #                     {'startPeriod': 48, 'limit': 5},
+    #                     {'startPeriod': 63, 'limit': 6},
+    #                     {'startPeriod': 78, 'limit': 7},
+    #                     {'startPeriod': 93, 'limit': 8},
+    #                     {'startPeriod': 108, 'limit': 9}
+    #                 ]
+    #             }
+    #         ]
+    #     }
+    # }
+    # message = DataGene.convert_dict_keys(message)
+    # pprint.pprint(message)
+    # charge_plan = message['chargingProfile']['chargingSchedule'][0]['chargingSchedulePeriod']
+    # time_split = [0] + [charge_plan[i + 1]['startPeriod'] - charge_plan[i]['startPeriod'] for i in range(len(charge_plan) - 1)]
+    # limit = [charge_item['limit'] for charge_item in charge_plan]
+    # img = DataGene.plot_charging_curve(datetime.now(), time_split, limit, Style.BAR)
+
+
+    charge_plan = [
+            {'startPeriod': 0, 'limit': 9852, 'startTime': '2025-01-26T14:40:29Z', 'finishedTime': '2025-01-26T14:45:21Z', 'chargedEnergy': 780, },
+            {'startPeriod': 5, 'limit': 9724, 'startTime': '2025-01-26T14:40:29Z', 'finishedTime': '2025-01-26T15:00:02Z', 'chargedEnergy': 3500, },
+            {'startPeriod': 0, 'limit': 9852, 'startTime': '2025-01-26T15:00:02Z', 'finishedTime': '2025-01-26T15:05:02Z', 'chargedEnergy': 4108, },
+            {'startPeriod': 5, 'limit': 9724, 'startTime': '2025-01-26T15:00:02Z', 'finishedTime': '2025-01-26T15:20:02Z', 'chargedEnergy': 6958, },
+            {'startPeriod': 20, 'limit': 8523, 'startTime': '2025-01-26T15:00:02Z', 'finishedTime': '2025-01-26T15:25:02Z', 'chargedEnergy': 7510, },
+    ]
+    img = DataGene.plan2figure(charge_plan)
