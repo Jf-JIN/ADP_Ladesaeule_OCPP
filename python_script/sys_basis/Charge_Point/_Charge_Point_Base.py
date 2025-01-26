@@ -8,6 +8,7 @@ from sys_basis.XSignal import XSignal
 from ocpp.v201.enums import *
 from const.Charge_Point_Parameters import *
 from const.Const_Parameter import *
+from tools.data_gene import *
 import inspect
 import time
 import uuid
@@ -289,7 +290,7 @@ class ChargePointBase(object):
         }
         for name, value in bound_arguments.arguments.items():
             struct_params_info += f"\t - {name}: {value}\n"
-            temp_dict['data'][self.__snake_to_camel_string(name)] = snake_to_camel_case(value)
+            temp_dict['data'][DataGene.snake_to_camel_string(name)] = snake_to_camel_case(value)
         self.__set_time_table_for_send_message(message_action, temp_dict['send_time'], temp_dict['message_id'])
         # self.__set_message_id_table_for_send_message(message_action, temp_dict['message_id'])
         self._send_signal_info(struct_params_info)
@@ -332,17 +333,6 @@ class ChargePointBase(object):
     def __init__(self, response_timeout=30) -> None:
         self._response_timeout: int = response_timeout
         self._init_parameters_in_baseclass()
-
-    def __snake_to_camel_string(self, snake_str) -> str:
-        if not isinstance(snake_str, str):
-            raise ValueError("Input must be a string")
-        snake_str = snake_str.replace("soc_limit_reached", "SOCLimitReached")
-        snake_str = snake_str.replace("ocpp_csms", "ocppCSMS")
-        snake_str = snake_str.replace("_v2x", "V2X").replace("_v2g", "V2G").replace("_url", "URL")
-        snake_str = snake_str.replace("soc", "SoC").replace("_socket", "Socket")
-        components = snake_str.split("_")
-        camel_case = components[0] + "".join(x.capitalize() for x in components[1:])
-        return camel_case
 
     def __get_func_name_and_params(self, frame: types.FrameType) -> dict | None:
         """
