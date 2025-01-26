@@ -113,12 +113,14 @@ class DataCollector:
         self.__all_data: dict = {}
         self.__evse_data: dict = {}
         self.__shelly_data: dict = {}
-        self.__timer: Timer = Timer(self.__intervall, self.__send_display_data)
+        self.__timer_data: Timer = Timer(self.__intervall, self.__send_display_data)
+        self.__timer_figure: Timer = Timer(self.__intervall, self.__send_figure_data)
         self.__charging_units_id_set: set = None
         self.__available_charge_units_id_set: set = None
         self.__signal_DC_data_display: XSignal = XSignal()
         self.__signal_DC_figure_display: XSignal = XSignal()
-        self.__timer.start()
+        self.__timer_data.start()
+        self.__timer_figure.start()
 
     @property
     def charging_units_id_set(self) -> set:
@@ -155,6 +157,7 @@ class DataCollector:
         self.__evse_data[id] = data
         self.__check_id(id)
         self.__all_data[id]['evse'] = data
+        self.__set_CU_status(id, data['vehicle_state'])
 
     def set_shelly_data(self, id: int, data: dict) -> None:
         """ 
@@ -181,7 +184,7 @@ class DataCollector:
         self.__charging_units_id_set.discard(id)
         self.__available_charge_units_id_set.add(id)
 
-    def set_CU_status(self, id: int, status: int) -> None:
+    def __set_CU_status(self, id: int, status: int) -> None:
         """ 
         写入充电单元状态.
 
@@ -233,41 +236,48 @@ class DataCollector:
 
     def set_CU_waiting_plan(self, id: int, plan: list, period_start_time: str | None = None) -> None:
         """
-        设置充电单元等待充电计划.
+        设置充电单元等待的充电计划.
         """
         self.__check_id(id)
         self.__all_data[id]['waiting_plan'] = plan
         if period_start_time:
             self.__all_data[id]['period_start_time'] = period_start_time
-        else:
+        elif 'period_start_time' not in self.__all_data[id] and 'start_time' in self.__all_data[id]:
             self.__all_data[id]['period_start_time'] = self.__all_data[id]['start_time']
         # 如果开始时间大于计划开始时间，则将开始时间设置为计划开始时间
-        if (
+        if ('period_start_time' in self.__all_data and 'start_time' in self.__all_data[id]
+            and (
             DataGene.str2time(self.__all_data[id]['start_time'])
             > DataGene.str2time(self.__all_data[id]['period_start_time'])
+        )
         ):
             self.__all_data[id]['period_start_time'] = self.__all_data[id]['start_time']
 
     def append_CU_finished_plan(self, id: int, plan: dict) -> None:
+        """ 
+        追加充电单元已完成的充电计划.
+        """
         plan = copy.deepcopy(plan)
         plan['startTime'] = self.__all_data[id]['period_start_time']
         plan['finishedTime'] = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
         plan['chargedEnergy'] = self.__all_data[id]['shelly']['charged_energy']
         self.__check_id(id)
-        self.__all_data[id]['finished_plan'] = plan
-        fig = plan2figure(
-            {
-                'finished_plan': plan,
-                'current_charge_action': self.__all_data[id]['current_charge_action'],
-            }
-        )
-        self.__all_data[id]['finished_plan_figure_base64'] = fig
-        self.__signal_DC_figure_display.emit({'id': id, 'figure': fig})
+        if 'finished_plan' not in self.__all_data[id]:
+            self.__all_data[id]['finished_plan'] = []
+        self.__all_data[id]['finished_plan'].append(plan)
+        self.__send_figure_data()
 
     def clear_CU_finished_plan(self, id: int) -> None:
+        """
+        清空充电单元已完成的充电计划.
+        """
+        self.__check_id(id)
         self.__all_data[id]['finished_plan'] = []
 
     def set_CU_isLatched(self, id: int, flag: bool) -> None:
+        """ 
+        设置充电单元是否上锁.
+        """
         self.__check_id(id)
         self.__all_data[id]['isLatched'] = flag
 
@@ -279,7 +289,31 @@ class DataCollector:
             self.__all_data[id] = {}
 
     def __send_display_data(self) -> None:
+        """ 
+        发送文字数据
+        """
         data: dict = {}
         self.__signal_DC_data_display.emit(data)
-        self.__timer = Timer(self.__intervall, self.__send_display_data)
-        self.__timer.start()
+        self.__timer_data = Timer(self.__intervall, self.__send_display_data)
+        self.__timer_data.start()
+
+    def __send_figure_data(self) -> None:
+        """ 
+        发送图片数据
+        """
+        data: dict = {}
+        for cu_id in self.__all_data:
+            self.__check_id(cu_id)
+            finished_plan = self.__all_data[cu_id].get('finished_plan', [])
+            current_charge_action = self.__all_data[cu_id].get('current_charge_action', {})
+            fig: str = DataGene.plan2figure(
+                {
+                    'finished_plan': finished_plan,
+                    'current_charge_action': current_charge_action,
+                }
+            )
+            self.__all_data[cu_id]['finished_plan_figure_base64'] = fig
+            data[cu_id] = fig
+        self.__signal_DC_figure_display.emit(data)
+        self.__timer_figure = Timer(self.__intervall, self.__send_figure_data)
+        self.__timer_figure.start()
