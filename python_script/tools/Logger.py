@@ -183,7 +183,7 @@ class _LoggingListener(logging.Handler):
     def signal_critical(self) -> _LogSignal:
         return self.__signal_critical
 
-    def emit(self, record):
+    def emit(self, record) -> None:
         level = record.levelname
         # message = self.format(record)
         message = record.getMessage()
@@ -199,7 +199,14 @@ class _LoggingListener(logging.Handler):
             self.__signal_critical.emit(message)
 
 
-class Logger(object):
+class _LogMeta(type):
+    def __setattr__(self, name, value):
+        if 'signal' in name:
+            raise AttributeError('signals are read-only attributes, cannot be modified')
+        super().__setattr__(name, value)
+
+
+class Logger(object, metaclass=_LogMeta):
     """
     日志类
 
@@ -224,6 +231,7 @@ class Logger(object):
 
     信号:
     - signal_log_public: 公共日志消息信号对象, 用于在类外部接收所有日志类的日志消息
+    - signal_log_public_color: 公共日志消息信号对象, 用于在类外部接收所有日志类的日志消息, 并带有颜色高亮
     - signal_log_instance: 日志消息信号对象, 用于在类外部接收当前日志实例的日志消息
 
     方法:
@@ -269,13 +277,11 @@ class Logger(object):
 
     得到输出: `2025-01-01 06:30:00-INFO -debug message -True`
     """
-    _isExistSignalLogPublic = False
-
-    def __new__(cls, *args, **kwargs):
-        if not cls._isExistSignalLogPublic:
-            cls._isExistSignalLogPublic = True
-            cls.signal_log_public = _LogSignal()
-        return super().__new__(cls)
+    __logging_listening_level_int = 100
+    __logging_listener_handler = _LoggingListener(0)
+    __logging_listener = logging.getLogger()
+    signal_log_public = _LogSignal()
+    signal_log_public_color = _LogSignal()
 
     def __init__(
         self,
@@ -345,22 +351,22 @@ class Logger(object):
         self.__self_module_name: str = os.path.splitext(os.path.basename(__file__))[0]
         self.__start_time = datetime.now()
         self.__var_dict.update(self.__kwargs)
-        self.__exclude_funcs = {}  # 存储 __find_caller 中忽略的函数
-        self.__exclude_funcs.update(self.__class__.__dict__)
-        self.__exclude_classes = {
-            self.__self_class_name: '',
-            '_LoggingListener': '',
-            '_LogSignal': '',
+        self.__exclude_funcs = set()  # 存储 __find_caller 中忽略的函数
+        self.__exclude_funcs.update(self.__class__.__dict__.keys())
+        self.__exclude_funcs.difference_update(dir(object))
+        self.__exclude_classes: set = {
+            self.__self_class_name,
+            '_LoggingListener',
+            '_LogSignal',
         }
-        self.__exclude_modules = {
-            # self.__self_module_name: '',
-        }
+        self.__exclude_modules = set()
+        # self.__exclude_modules.add(self.__self_module_name)
         for item in self.__exclude_funcs_list:
-            self.__exclude_funcs[item] = ''
+            self.__exclude_funcs.add(item)
         for item in self.__exclude_classes_list:
-            self.__exclude_classes[item] = ''
+            self.__exclude_classes.add(item)
         for item in self.__exclude_modules_list:
-            self.__exclude_modules[item] = ''
+            self.__exclude_modules.add(item)
         self.__current_size = 0
         self.__current_day = datetime.today().date()
         self.__isNewFile = True
@@ -372,7 +378,7 @@ class Logger(object):
             LogLevel.ERROR: (_TxtColor.WHITE, _BgColor.LIGHTRED, True, False),
             LogLevel.CRITICAL: (_TxtColor.LIGHTYELLOW, _BgColor.RED, True, True),
         }
-        self.__log_level_dict = {
+        self.__log_level_int_dict = {
             LogLevel.NOTSET: 10,
             LogLevel.DEBUG: 10,
             LogLevel.INFO: 20,
@@ -389,15 +395,18 @@ class Logger(object):
             LogLevel.CRITICAL: LogLevel.ERROR,
             LogLevel.NOOUT: LogLevel.CRITICAL
         }
-        self.__logging_listener_handler = _LoggingListener(0)
-        self.__logging_listener_handler.signal_debug.connect(self.debug)
-        self.__logging_listener_handler.signal_info.connect(self.info)
-        self.__logging_listener_handler.signal_warning.connect(self.warning)
-        self.__logging_listener_handler.signal_error.connect(self.error)
-        self.__logging_listener_handler.signal_critical.connect(self.critical)
-        self.__logging_listener = logging.getLogger()
-        self.__logging_listener.setLevel(self.__log_level)
-        self.__logging_listener.addHandler(self.__logging_listener_handler)
+        name_logging_listening_level = f'_{self.__class__.__name__}__logging_listening_level_int'
+        attr_logging_listening_level = getattr(self.__class__, name_logging_listening_level, 100)
+        if attr_logging_listening_level >= 100:
+            self.__logging_listener_handler.signal_debug.connect(self.debug)
+            self.__logging_listener_handler.signal_info.connect(self.info)
+            self.__logging_listener_handler.signal_warning.connect(self.warning)
+            self.__logging_listener_handler.signal_error.connect(self.error)
+            self.__logging_listener_handler.signal_critical.connect(self.critical)
+            self.__logging_listener.addHandler(self.__logging_listener_handler)
+        if self.__log_level_int_dict[self.__log_level] <= attr_logging_listening_level:
+            self.__logging_listener.setLevel(listen_level_dict[self.__log_level])
+            setattr(self.__class__, name_logging_listening_level, self.__log_level_int_dict[self.__log_level])
 
     @property
     def signal_log_instance(self) -> _LogSignal:
@@ -435,6 +444,8 @@ class Logger(object):
     def __setattr__(self, name: str, value) -> None:
         if hasattr(self, '_Logger__kwargs') and name == 'signal_log_public' and name in self.__dict__['_Logger__exclude_funcs']:
             raise AttributeError("'signal_log_public' is a read-only property.")
+        if hasattr(self, '_Logger__kwargs') and name == 'signal_log_public_color' and name in self.__dict__['_Logger__exclude_funcs']:
+            raise AttributeError("'signal_log_public_color' is a read-only property.")
         if hasattr(self, '_Logger__kwargs') and name != '_Logger__kwargs' and name in self.__kwargs:
             self.__kwargs[name] = value
             self.__var_dict[name] = value
@@ -484,11 +495,12 @@ class Logger(object):
             unprefix_variable = fn.function.lstrip('__')
             temp_class_name = fn.frame.f_locals.get('self', None).__class__.__name__ if 'self' in fn.frame.f_locals else ''
             temp_module_name = os.path.splitext(os.path.basename(fn.filename))[0]
-            if (fn.function not in self.__exclude_funcs
-                        and f'_Logger__{unprefix_variable}' not in self.__exclude_funcs
-                        and temp_class_name not in self.__exclude_classes
-                        and temp_module_name not in self.__exclude_modules
-                    ):  # 不在排除列表中, 同时也排除当前类中的私有方法
+            if (
+                fn.function not in self.__exclude_funcs
+                and f'_Logger__{unprefix_variable}' not in self.__exclude_funcs
+                and temp_class_name not in self.__exclude_classes
+                and temp_module_name not in self.__exclude_modules
+            ):  # 不在排除列表中, 同时也排除当前类中的私有方法
                 caller_name = fn.function
                 class_name = temp_class_name
                 linenum = fn.lineno
@@ -618,28 +630,29 @@ class Logger(object):
         self.__printf(txs)
         self.__signal_log_instance.emit(tx)
         Logger.signal_log_public.emit(tx)
+        Logger.signal_log_public_color.emit(txs)
 
     def debug(self, *args, **kwargs) -> None:
         """ 打印调试信息 """
-        if self.__log_level_dict[self.__log_level] > self.__log_level_dict[LogLevel.DEBUG]:
+        if self.__log_level_int_dict[self.__log_level] > self.__log_level_int_dict[LogLevel.DEBUG]:
             return
         self.__output(LogLevel.DEBUG, *args, **kwargs)
 
     def info(self, *args, **kwargs) -> None:
         """ 打印信息 """
-        if self.__log_level_dict[self.__log_level] > self.__log_level_dict[LogLevel.INFO]:
+        if self.__log_level_int_dict[self.__log_level] > self.__log_level_int_dict[LogLevel.INFO]:
             return
         self.__output(LogLevel.INFO, *args, **kwargs)
 
     def warning(self, *args, **kwargs) -> None:
         """ 打印警告信息 """
-        if self.__log_level_dict[self.__log_level] > self.__log_level_dict[LogLevel.WARNING]:
+        if self.__log_level_int_dict[self.__log_level] > self.__log_level_int_dict[LogLevel.WARNING]:
             return
         self.__output(LogLevel.WARNING, *args, **kwargs)
 
     def error(self, *args, **kwargs) -> None:
         """ 打印错误信息 """
-        if self.__log_level_dict[self.__log_level] > self.__log_level_dict[LogLevel.ERROR]:
+        if self.__log_level_int_dict[self.__log_level] > self.__log_level_int_dict[LogLevel.ERROR]:
             return
         self.__output(LogLevel.ERROR, *args, **kwargs)
 
@@ -653,12 +666,12 @@ class Logger(object):
 
     def critical(self, *args, **kwargs) -> None:
         """ 打印严重错误信息 """
-        if self.__log_level_dict[self.__log_level] > self.__log_level_dict[LogLevel.CRITICAL]:
+        if self.__log_level_int_dict[self.__log_level] > self.__log_level_int_dict[LogLevel.CRITICAL]:
             return
         self.__output(LogLevel.CRITICAL, *args, **kwargs)
 
 
-class LoggerGroup(object):
+class LoggerGroup(object, metaclass=_LogMeta):
     """
     日志组类
 
@@ -668,6 +681,10 @@ class LoggerGroup(object):
     - count_limit(int): 文件数量限制, 默认不限制
     - days_limit(int): 天数限制, 默认不限制
     - split_by_day(bool): 是否按天分割日志, 默认不分割
+
+    信号:
+    - signal_group_public: 公共日志消息信号对象, 用于在类外部接收所有日志类的日志消息
+    - signal_group_public_color: 公共日志消息信号对象, 用于在类外部接收所有日志类的日志消息, 并带有颜色高亮
 
     方法:
     - set_log_group
@@ -711,6 +728,8 @@ class LoggerGroup(object):
     得到输出: `2025-01-01 06:30:00-INFO -debug message -True`
     """
     __isInstance = False
+    signal_group_public = _LogSignal()
+    signal_group_public_color = _LogSignal()
 
     def __new__(cls, *args, **kwargs):
         if cls.__isInstance:
@@ -743,6 +762,8 @@ class LoggerGroup(object):
         self.__current_day = datetime.today().date()
         self.set_log_group(log_group)
         self.__clear_files()
+        Logger.signal_log_public.connect(self.signal_group_public.emit)
+        Logger.signal_log_public_color.connect(self.signal_group_public_color.emit)
 
     def set_log_group(self, log_group: list) -> None:
         if not isinstance(log_group, list):
