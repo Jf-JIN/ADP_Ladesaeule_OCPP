@@ -17,6 +17,8 @@ class Evse(object):
         self.__isEnableCharging: bool = True
         self.__modbus: ModbusIO = ModbusIO(id)
         self.__signal_selftest_finished: XSignal = XSignal()
+        self.__signal_evse_status_error: XSignal = XSignal()
+        self.__signal_selftest_finished.connect(self.__handle_selftest_finished)
 
     @property
     def id(self) -> int:
@@ -42,6 +44,10 @@ class Evse(object):
     def signal_selftest_finished(self) -> XSignal:
         return self.__signal_selftest_finished
 
+    @property
+    def signal_evse_status_error(self):
+        return self.__signal_evse_status_error
+
     def set_vehicle_state(self, data: int) -> None:
         self.__vehicle_status = data
 
@@ -60,6 +66,7 @@ class Evse(object):
                 or EVSEErrorInfo.VENT_REQUIRED_FAIL in data
         ):
             self.__isEnableCharging = False
+            self.__signal_evse_status_error.emit( self.__evse_status_error)
 
     def set_current(self, value) -> bool:
         """
