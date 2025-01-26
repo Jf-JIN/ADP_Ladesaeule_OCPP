@@ -15,6 +15,98 @@ if 0:
 
 
 class DataCollector:
+    """ 
+    {
+        1: {
+            'evse': {
+                'vehicle_state': VehicleState.EVSE_IS_PRESENT,
+                'evse_error': EVSEErrorInfo.RELAY_ON
+            },
+            'shelly': {
+                0: {
+                    'power': 0,
+                    'pf': 0,
+                    'current': 0,
+                    'voltage': 0,
+                    'is_valid': true,
+                    'total': 0,
+                    'total_returned': 0
+                },
+                1: {
+                    'power': 0,
+                    'pf': 0,
+                    'current': 0,
+                    'voltage': 0,
+                    'is_valid': true,
+                    'total': 0,
+                    'total_returned': 0
+                },
+                2: {
+                    'power': 0,
+                    'pf': 0,
+                    'current': 0,
+                    'voltage': 0,
+                    'is_valid': true,
+                    'total': 0,
+                    'total_returned': 0
+                },
+                'charged_energy': 0,
+                'return_energy': 0
+                'is_valid': true,
+            },
+            'status': VehicleState.EV_IS_PRESENT,
+            'waiting_plan': [
+                {'startPeriod': 35, 'limit': 9855}, 
+                {'startPeriod': 50, 'limit': 8863}, 
+                ...
+            ],
+            'current_charge_action': {
+                'startPeriod': 20, 
+                'limit': 8523,
+                'startTime': '2025-01-26T14:40:29Z',
+                'finishedTime': '2025-01-26T15:09:02Z', 
+                'chargedEnergy': 3600,
+                },
+            'finished_plan': [
+                {'startPeriod': 0, 'limit': 9852, 'startTime':'2025-01-26T14:40:29Z','finishedTime': '2025-01-26T14:45:21Z', 'chargedEnergy':780,}, 
+                {'startPeriod': 5, 'limit': 9724, 'startTime':'2025-01-26T14:40:29Z','finishedTime': '2025-01-26T15:00:02Z', 'chargedEnergy':3500,},
+                {'startPeriod': 0, 'limit': 9852, 'startTime':'2025-01-26T15:00:02Z','finishedTime': '2025-01-26T15:05:02Z', 'chargedEnergy':4108,}, 
+                {'startPeriod': 5, 'limit': 9724, 'startTime':'2025-01-26T15:00:02Z','finishedTime': '2025-01-26T15:20:02Z', 'chargedEnergy':6958,},
+            ],
+            'finished_plan_figure_base64': <base64_string>,
+            'start_time': '2025-01-26T14:40:29Z', # 此开始时间指的是整个充电过程，校正的计划表中的开始一时间不会记录
+            'period_start_time': '2025-01-26T14:40:29Z', # 此开始时间指一个充电表的开始时间，校正的计划表中的开始时间会被记录
+            'target_energy': 700000,
+            'depart_time': '2025-01-30T13:39:00Z',
+            'isLatched': True,
+        },
+        2:{
+            ...
+        },
+        ...
+    }
+
+{'current_charge_action': {
+    'startPeriod': 20, 
+    'limit': 8523,
+    'startTime': '2025-01-26T15:00:02Z',
+    'finishedTime': '2025-01-26T15:25:02Z', 
+    'chargedEnergy': 7510,
+    },
+'finished_plan': [
+    {'startPeriod': 0, 'limit': 9852, 'startTime':'2025-01-26T14:40:29Z','finishedTime': '2025-01-26T14:45:21Z', 'chargedEnergy':780,}, 
+    {'startPeriod': 5, 'limit': 9724, 'startTime':'2025-01-26T14:40:29Z','finishedTime': '2025-01-26T15:00:02Z', 'chargedEnergy':3500,},
+    {'startPeriod': 0, 'limit': 9852, 'startTime':'2025-01-26T15:00:02Z','finishedTime': '2025-01-26T15:05:02Z', 'chargedEnergy':4108,}, 
+    {'startPeriod': 5, 'limit': 9724, 'startTime':'2025-01-26T15:00:02Z','finishedTime': '2025-01-26T15:20:02Z', 'chargedEnergy':6958,},
+],}
+
+{'current_charge_action': {
+    'chargedEnergy': 3600,
+    },
+'finished_plan': [],
+}
+    """
+
     def __init__(self, parent: GPIOManager, interval: int | float) -> None:
         self.__parent: GPIOManager = parent
         self.__intervall: int | float = interval
@@ -25,6 +117,7 @@ class DataCollector:
         self.__charging_units_id_set: set = None
         self.__available_charge_units_id_set: set = None
         self.__signal_DC_data_display: XSignal = XSignal()
+        self.__signal_DC_figure_display: XSignal = XSignal()
         self.__timer.start()
 
     @property
@@ -48,6 +141,13 @@ class DataCollector:
         """
         return self.__signal_DC_data_display
 
+    @property
+    def signal_DC_figure_display(self) -> XSignal:
+        """
+        用于在数据收集器中发送图片数据的信号, 每当数据更新时就发送一次.
+        """
+        return self.__signal_DC_figure_display
+
     def set_evse_data(self, id: int, data: dict) -> None:
         """ 
         写入 EVSE 数据.
@@ -63,6 +163,9 @@ class DataCollector:
         self.__shelly_data[id] = data
         self.__check_id(id)
         self.__all_data[id]['shelly'] = data
+        if not self.__all_data[id].get('current_charge_action', None):
+            self.__all_data[id]['current_charge_action'] = {}
+        self.__all_data[id]['current_charge_action']['chargedEnergy'] = data.get('charged_energy', 0)
 
     def __add_charging_unit(self, id: int) -> None:
         """ 
@@ -111,32 +214,57 @@ class DataCollector:
         - `limit`：充电限制
         """
         self.__check_id(id)
+        plan = copy.deepcopy(plan)
+        plan['startTime'] = self.__all_data[id]['period_start_time']
+        plan['finishedTime'] = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
+        plan['chargedEnergy'] = self.__all_data[id]['shelly']['charged_energy']
         self.__all_data[id]['current_charge_action'] = plan
 
-    def set_charge_start_time(self, id: int, time: str) -> None:
+    def set_CU_charge_start_time(self, id: int, start_time: str, target_energy: int, depart_time: str) -> None:
         """ 
         设置充电单元开始充电时间.
 
         应输入的格式为字符串，格式为"%Y-%m-%dT%H:%M:%SZ"
         """
         self.__check_id(id)
-        self.__all_data[id]['start_time'] = time
+        self.__all_data[id]['start_time'] = start_time
+        self.__all_data[id]['target_energy'] = target_energy
+        self.__all_data[id]['depart_time'] = depart_time
 
-    def set_CU_waiting_plan(self, id: int, plan: list) -> None:
+    def set_CU_waiting_plan(self, id: int, plan: list, period_start_time: str | None = None) -> None:
         """
         设置充电单元等待充电计划.
         """
         self.__check_id(id)
         self.__all_data[id]['waiting_plan'] = plan
+        if period_start_time:
+            self.__all_data[id]['period_start_time'] = period_start_time
+        else:
+            self.__all_data[id]['period_start_time'] = self.__all_data[id]['start_time']
+        # 如果开始时间大于计划开始时间，则将开始时间设置为计划开始时间
+        if (
+            DataGene.str2time(self.__all_data[id]['start_time'])
+            > DataGene.str2time(self.__all_data[id]['period_start_time'])
+        ):
+            self.__all_data[id]['period_start_time'] = self.__all_data[id]['start_time']
 
-    def set_CU_finished_plan(self, id: int, plan: dict) -> None:
+    def append_CU_finished_plan(self, id: int, plan: dict) -> None:
         plan = copy.deepcopy(plan)
-        plan['finishedTime'] = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
+        plan['startTime'] = self.__all_data[id]['period_start_time']
+        plan['finishedTime'] = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
+        plan['chargedEnergy'] = self.__all_data[id]['shelly']['charged_energy']
         self.__check_id(id)
         self.__all_data[id]['finished_plan'] = plan
+        fig = plan2figure(
+            {
+                'finished_plan': plan,
+                'current_charge_action': self.__all_data[id]['current_charge_action'],
+            }
+        )
+        self.__all_data[id]['finished_plan_figure_base64'] = fig
+        self.__signal_DC_figure_display.emit({'id': id, 'figure': fig})
 
     def clear_CU_finished_plan(self, id: int) -> None:
-        self.__check_id(id)
         self.__all_data[id]['finished_plan'] = []
 
     def set_CU_isLatched(self, id: int, flag: bool) -> None:
