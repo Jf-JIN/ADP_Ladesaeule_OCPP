@@ -19,11 +19,11 @@ class LatchMotor:
         self.__id: int = id
         self.__parent: ChargeUnit = parent
         self.__data_collector: DataCollector = self.__parent.parent_obj.data_collector
-        self.__isLocked: bool = False  # 锁的状态，是否是上锁状态
-        self.__isRunning: bool = False  # 是否电机正在运行，用于避免电机转动时，动作冲突
+        self.__isLocked: bool = False  # 锁的状态, 是否是上锁状态
+        self.__isRunning: bool = False  # 是否电机正在运行, 用于避免电机转动时, 动作冲突
         self.__command_list: list = []  # 存储命令的列表
-        self.__status_pin_lock: bool = False  # 电机上锁控制引脚的状态，可表示电机是否在正转
-        self.__status_pin_unlock: bool = False  # 电机解锁控制引脚的状态，可表示电机是否在反转
+        self.__status_pin_lock: bool = False  # 电机上锁控制引脚的状态, 可表示电机是否在正转
+        self.__status_pin_unlock: bool = False  # 电机解锁控制引脚的状态, 可表示电机是否在反转
         self.__lock_pin: LED = LED(RaspPins.BCM_PIN_23)  # 电机上锁控制引脚
         self.__unlock_pin: LED = LED(RaspPins.BCM_PIN_24)  # 电机解锁控制引脚
         self.__timer: threading.Timer = threading.Timer(99, self.__off_lock_pin)
@@ -78,11 +78,11 @@ class LatchMotor:
     def stop(self) -> None:
         self.__lock_pin.off()
         self.__unlock_pin.off()
-        # 缺少安全措施，比如锁在一半停下了，可以置默认操作，上锁或解锁
+        # 缺少安全措施, 比如锁在一半停下了, 可以置默认操作, 上锁或解锁
 
     def __off_lock_pin(self) -> None:
         """
-        一段时间后将上锁正转引脚置否，停止电机运转
+        一段时间后将上锁正转引脚置否, 停止电机运转
         """
         self.__lock_pin.off()
         self.__status_pin_lock = False
@@ -91,7 +91,7 @@ class LatchMotor:
 
     def __off_unlock_pin(self) -> None:
         """
-        一段时间后将解锁反转引脚置否，停止电机运转
+        一段时间后将解锁反转引脚置否, 停止电机运转
         """
         self.__unlock_pin.off()
         self.__status_pin_unlock = False

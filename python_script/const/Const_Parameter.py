@@ -9,7 +9,7 @@ APP_WORKSPACE_PATH = os.getcwd()
 
 class FontSize(AnalogDefine):
     """
-    tools/data_gene.py 中使用，用于决定画图字体大小
+    tools/data_gene.py 中使用, 用于决定画图字体大小
     """
     TITLE = 16
     LABEL = 14
@@ -19,7 +19,7 @@ class FontSize(AnalogDefine):
 
 class Color(AnalogDefine):
     """
-tools/data_gene.py 中使用，用于决定画图颜色
+tools/data_gene.py 中使用, 用于决定画图颜色
     """
     RED = '#FF6347'
     GREEN = '#2E8B57'
@@ -29,7 +29,7 @@ tools/data_gene.py 中使用，用于决定画图颜色
 
 class Style(AnalogDefine):
     """
-    tools/data_gene.py 中使用，用于决定画图样式
+    tools/data_gene.py 中使用, 用于决定画图样式
     """
     BAR = 0
     PLOT = 1

@@ -114,4 +114,4 @@ class Evse(object):
         return limit
 
     def __handle_selftest_finished(self) -> None:
-        self.__modbus.finish_selftest_and_RCD_test_procedure()  # 不能使用with, isSelfChecking是True的状态，不能进入with
+        self.__modbus.finish_selftest_and_RCD_test_procedure()  # 不能使用with, isSelfChecking是True的状态, 不能进入with

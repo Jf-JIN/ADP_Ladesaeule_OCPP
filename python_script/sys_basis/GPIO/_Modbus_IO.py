@@ -115,7 +115,7 @@ class ModbusIO(object):
         """
         读取EVSE状态和故障
 
-        - 返回值：
+        - 返回值: 
             - None: 读取失败
             - set: EVSE状态和故障集合
         """

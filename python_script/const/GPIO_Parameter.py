@@ -15,7 +15,9 @@ class GPIOParams(AnalogDefine):
     ]
     MAX_VOLTAGE = 220
     SELF_CHECK_TIMEOUT = 31
+    """ EVSE 自检时间, 单位: 秒. 该值必须 >=30 秒, 否则自检将不会启动 """
     LETCH_MOTOR_RUNTIME = 2
+    """ 栓电机运行时间, 单位: 秒. 该值必须大于0秒, 否则电机将不会启动 """
 
 
 class ResultFlag(AnalogDefine):
@@ -27,7 +29,7 @@ class VehicleState(AnalogDefine):
     READY = 1  # 准备就绪, 可以开始充电
     EV_IS_PRESENT = 2  # 车辆已插入
     CHARGING = 3  # 充电中
-    CHARGING_WITH_VENTILATION = 4  # 充电中，需要通风
+    CHARGING_WITH_VENTILATION = 4  # 充电中, 需要通风
     FAILURE = 5  # 故障
     CRITICAL = 666  # 严重故障
 

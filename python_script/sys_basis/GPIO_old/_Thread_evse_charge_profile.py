@@ -50,7 +50,7 @@ class ThreadChargeProfile(Thread):
         current_periode[0] = current_plan['startPeriod']  # current_periode += interval
         if current_periode[0] // self.__request_periode >= current_periode[1]:
             if current_periode[1] != 0:
-                #加字典保护和只发送需要信息，改个新的信号
+                #加字典保护和只发送需要信息, 改个新的信号
                 data = self.__evse_instance.get_evse_data()
                 data['planed_depart_time'] = self.__depart_time
                 data['remained_to_charge'] = self.__target_energy - self.__shelly_instance.charged_energy()
