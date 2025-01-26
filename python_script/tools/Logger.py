@@ -298,7 +298,7 @@ class Logger(object, metaclass=_LogMeta):
     - count_limit(int): 文件数量限制, 默认不限制
     - days_limit(int): 天数限制, 默认不限制
     - split_by_day(bool): 是否按天分割日志, 默认不分割
-    - message_format(str): 消息格式, 可自定义, 详细方法见示例. 默认格式为: `%(consoleLine)s\\n[%(asctime)s] [module: %(moduleName)s] [class: %(className)s] [function: %(functionName)s] [line: %(lineNum)s]- %(levelName)s\\n%(message)s\\n`
+    - message_format(str): 消息格式, 可自定义, 详细方法见示例. 默认格式为: `%(consoleLine)s\\n[%(asctime)s] [log: %(logName)s] [module: %(moduleName)s] [class: %(className)s] [function: %(functionName)s] [line: %(lineNum)s]- %(levelName)s\\n%(message)s\\n`
     - exclude_funcs(list[str]): 排除的函数列表, 用于追溯调用位置时, 排除父级调用函数, 排除的函数链应是完整的, 只写顶层的函数名将可能不会产生效果, 默认为空列表
     - highlight_type(str|None): 高亮模式. 默认为 `ASNI`, 取消高亮则使用 None. 当前支持 `ASNI`
     - **kwargs, 消息格式中的自定义参数, 使用方法见示例
@@ -372,7 +372,7 @@ class Logger(object, metaclass=_LogMeta):
         count_limit: int = -1,
         days_limit: int = -1,
         split_by_day: bool = False,
-        message_format: str = '%(consoleLine)s\n[%(asctime)s] [module: %(moduleName)s] [class: %(className)s] [function: %(functionName)s] [line: %(lineNum)s]- %(levelName)s\n%(message)s\n',
+        message_format: str = '%(consoleLine)s\n[%(asctime)s] [log: %(logName)s] [module: %(moduleName)s] [class: %(className)s] [function: %(functionName)s] [line: %(lineNum)s]- %(levelName)s\n%(message)s\n',
         exclude_funcs: list = [],
         exclude_classes: list = [],
         exclude_modules: list = [],
@@ -401,7 +401,7 @@ class Logger(object, metaclass=_LogMeta):
         self.__days_limit = days_limit if isinstance(days_limit, int) else -1
         self.__doSplitByDay = split_by_day if isinstance(split_by_day, bool) else False
         self.__message_format = message_format if isinstance(
-            message_format, str) else '%(consoleLine)s\n[%(asctime)s] [module: %(moduleName)s] [class: %(className)s] [function: %(functionName)s] [line: %(lineNum)s]- %(levelName)s\n%(message)s\n'
+            message_format, str) else '%(consoleLine)s\n[%(asctime)s] [log: %(logName)s] [module: %(moduleName)s] [class: %(className)s] [function: %(functionName)s] [line: %(lineNum)s]- %(levelName)s\n%(message)s\n'
         self.__exclude_funcs_list = exclude_funcs if isinstance(exclude_funcs, list) else []
         self.__exclude_classes_list = exclude_classes if isinstance(exclude_classes, list) else []
         self.__exclude_modules_list = exclude_modules if isinstance(exclude_modules, list) else []
@@ -413,6 +413,7 @@ class Logger(object, metaclass=_LogMeta):
 
     def __init_params(self) -> None:
         self.__var_dict = {  # 日志变量字典
+            'logName': '',
             'asctime': '',
             'moduleName': '',
             'functionName': '',
@@ -617,6 +618,7 @@ class Logger(object, metaclass=_LogMeta):
                 msg_list.append(str(arg))
         msg = ' '.join(message for message in msg_list)
         caller_info = self.__find_caller()
+        self.__var_dict['logName'] = self.__log_name
         self.__var_dict['asctime'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         self.__var_dict['moduleName'] = caller_info['module_name']
         self.__var_dict['scriptName'] = caller_info['script_name']
@@ -642,6 +644,10 @@ class Logger(object, metaclass=_LogMeta):
                 bg_color=self.__level_color_dict[log_level][1],
                 bold=self.__level_color_dict[log_level][2],
                 blink=self.__level_color_dict[log_level][3],
+                highlight_type='HTML'),
+            'logName': self.__color(
+                self.__var_dict['logName'],
+                txt_color=_ColorMap.CYAN,
                 highlight_type='HTML'),
             'asctime': self.__color(
                 self.__var_dict['asctime'],
@@ -682,6 +688,9 @@ class Logger(object, metaclass=_LogMeta):
                 bg_color=self.__level_color_dict[log_level][1],
                 bold=self.__level_color_dict[log_level][2],
                 blink=self.__level_color_dict[log_level][3])
+        self.__var_dict['logName'] = self.__color(
+            self.__var_dict['logName'],
+            txt_color=_ColorMap.CYAN)
         self.__var_dict['asctime'] = self.__color(
             self.__var_dict['asctime'],
             txt_color=_ColorMap.GREEN,
@@ -833,6 +842,7 @@ class LoggerGroup(object, metaclass=_LogMeta):
     3. 关于格式的设置:
 
     - 提供的默认格式参数有:
+        - `logName` 日志名称
         - `asctime` 当前时间
         - `moduleName` 模块名称
         - `functionName` 函数/方法名称
@@ -888,6 +898,7 @@ class LoggerGroup(object, metaclass=_LogMeta):
         self.__log_folder_path = os.path.join(log_folder_path, _LOG_FOLDER_NAME)
         self.__current_size = 0
         self.__current_day = datetime.today().date()
+        self.__set_log_file_path()
         self.set_log_group(log_group)
         self.__clear_files()
         Logger.signal_log_public.connect(self.signal_group_public.emit)
@@ -943,6 +954,7 @@ class LoggerGroup(object, metaclass=_LogMeta):
     def __set_log_file_path(self) -> None:
         """ 设置日志文件路径 """
         # 支持的字符 {}[];'',.!~@#$%^&()_+-=
+
         if self.__isExistsPath is False:
             return
         if not hasattr(self, f'_{self.__class__.__name__}__log_sub_folder_path'):  # 初始化, 创建属性
@@ -1001,7 +1013,6 @@ class LoggerGroup(object, metaclass=_LogMeta):
         if self.__isNewFile:
             # 创建新文件
             self.__isNewFile = False
-            self.__set_log_file_path()
             self.__current_day = datetime.today().date()
             file_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             start_time = self.__start_time.strftime('%Y-%m-%d %H:%M:%S')
