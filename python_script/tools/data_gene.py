@@ -292,7 +292,7 @@ class DataGene:
         plt.style.use(['science', 'no-latex'])
 
         charge_plan = [DataGene.convert_dict_keys(charge_item) for charge_item in charge_plan]
-        time = [DataGene.str2time(charge_item['startTime']) + timedelta(minutes=charge_item['startPeriod']) for
+        time = [DataGene.str2time(charge_item['startTime']) + timedelta(seconds=charge_item['startPeriod']) for
                 charge_item in charge_plan] + [DataGene.str2time(charge_plan[-1]['finishedTime'])]
         time_split = [(time[i + 1] - time[i]).seconds / 60 for i in range(len(time) - 1)]
         limit = [charge_item['limit'] for charge_item in charge_plan]
@@ -312,7 +312,7 @@ class DataGene:
         plt.title('Charged Energy Over Time', fontsize=FontSize.TITLE)
         plt.ylim(bottom=0)
         plt.legend()
-        # plt.show()
+        plt.show()
 
         # 保存为base64
         buf = io.BytesIO()
@@ -478,9 +478,9 @@ if __name__ == "__main__":
 
     charge_plan = [
             {'startPeriod': 0, 'limit': 9852, 'startTime': '2025-01-26T14:40:29Z', 'finishedTime': '2025-01-26T14:45:21Z', 'chargedEnergy': 780, },
-            {'startPeriod': 5, 'limit': 9724, 'startTime': '2025-01-26T14:40:29Z', 'finishedTime': '2025-01-26T15:00:02Z', 'chargedEnergy': 3500, },
+            {'startPeriod': 300, 'limit': 9724, 'startTime': '2025-01-26T14:40:29Z', 'finishedTime': '2025-01-26T15:00:02Z', 'chargedEnergy': 3500, },
             {'startPeriod': 0, 'limit': 9852, 'startTime': '2025-01-26T15:00:02Z', 'finishedTime': '2025-01-26T15:05:02Z', 'chargedEnergy': 4108, },
-            {'startPeriod': 5, 'limit': 9724, 'startTime': '2025-01-26T15:00:02Z', 'finishedTime': '2025-01-26T15:20:02Z', 'chargedEnergy': 6958, },
-            {'startPeriod': 20, 'limit': 8523, 'startTime': '2025-01-26T15:00:02Z', 'finishedTime': '2025-01-26T15:25:02Z', 'chargedEnergy': 7510, },
+            {'startPeriod': 300, 'limit': 9724, 'startTime': '2025-01-26T15:00:02Z', 'finishedTime': '2025-01-26T15:20:02Z', 'chargedEnergy': 6958, },
+            {'startPeriod': 1200, 'limit': 8523, 'startTime': '2025-01-26T15:00:02Z', 'finishedTime': '2025-01-26T15:25:02Z', 'chargedEnergy': 7510, },
     ]
     img = DataGene.plan2figure(charge_plan)
