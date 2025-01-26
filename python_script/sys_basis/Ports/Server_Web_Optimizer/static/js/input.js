@@ -31,11 +31,11 @@ socket.on('update_data', (data) => {
     }
 
     if (data.web_console) {
-        updateConsole(opt_console, 'Web Info: ' + data.web_console);
+        updateConsole(opt_console, 'Web Info: \n' + data.web_console);
     }
 
     if (data.opt_console) {
-        updateConsole(opt_console, 'Console Info: ' + data.opt_console);
+        updateConsole(opt_console, 'OCPP Info: \n' + data.opt_console);
     }
 });
 
