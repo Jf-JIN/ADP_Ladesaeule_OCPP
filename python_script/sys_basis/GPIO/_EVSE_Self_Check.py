@@ -61,6 +61,9 @@ class EVSESelfCheck(Thread):
         self.__signal_test_finished.emit()
 
     def run(self):
+        if self.__timeout <= 30:
+            _error(f'EVSE {self.__id} timeout must be greater than 30s')
+            return
         if self.__class__.isChecking:
             _error(f'EVSE {self.__id} is self checking. Cannot start again.')
             return
@@ -73,7 +76,7 @@ class EVSESelfCheck(Thread):
                     self.__rw_error.add(EVSEErrorInfo.READ_ERROR)
                     self.__signal_self_test_error.emit(self.__rw_error)
                     self.__exit_self_test()
-                    return  # 读写错误，直接结束自检
+                    return  # 读写错误, 直接结束自检
 
                 time.sleep(self.__timeout)
 
@@ -82,20 +85,19 @@ class EVSESelfCheck(Thread):
                     self.__rw_error.add(EVSEErrorInfo.READ_ERROR)
                     self.__signal_self_test_error.emit(self.__rw_error)
                     self.__exit_self_test()
-                    return  # 读写错误，直接结束自检
+                    return  # 读写错误, 直接结束自检
 
                 if self.__doUseRCD:
                     if EVSEErrorInfo.RCD_CHECK_ERROR in response:
                         response.remove(EVSEErrorInfo.RCD_CHECK_ERROR)
                         success_clear = modbus.clear_RCD()
                         if not success_clear:
-                            # 这里应该反馈通讯错误？
                             self.__rw_error.add(EVSEErrorInfo.WRITE_ERROR)
                             self.__signal_self_test_error.emit(self.__rw_error)
                             self.__exit_self_test()
                             return
                     else:
-                        # 如果没有正常显示RCD错误，则认为RCD测试失败
+                        # 如果没有正常显示RCD错误, 则认为RCD测试失败
                         response.add(EVSEErrorInfo.RCD_CHECK_FAILED)
 
                 self.signal_self_test_error.emit(response)
