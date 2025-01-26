@@ -15,6 +15,7 @@ class GPIOParams(AnalogDefine):
     ]
     MAX_VOLTAGE = 220
     SELF_CHECK_TIMEOUT = 31
+    LETCH_MOTOR_RUNTIME = 2
 
 
 class ResultFlag(AnalogDefine):
