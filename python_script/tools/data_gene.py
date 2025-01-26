@@ -9,6 +9,7 @@ _info = Log.OPT.info
 _error = Log.OPT.error
 _warning = Log.OPT.warning
 
+
 class DataGene:
     """
     数据生成类, 用于生成电价, 时间, 家庭用电数据等数据
@@ -328,6 +329,18 @@ class DataGene:
             time_next += timedelta(minutes=interval)
 
         return [result_time, result_eprices, max_power_list]
+
+    @staticmethod
+    def snake_to_camel_string(snake_str) -> str:
+        if not isinstance(snake_str, str):
+            raise ValueError("Input must be a string")
+        snake_str = snake_str.replace("soc_limit_reached", "SOCLimitReached")
+        snake_str = snake_str.replace("ocpp_csms", "ocppCSMS")
+        snake_str = snake_str.replace("_v2x", "V2X").replace("_v2g", "V2G").replace("_url", "URL")
+        snake_str = snake_str.replace("soc", "SoC").replace("_socket", "Socket")
+        components = snake_str.split("_")
+        camel_case = components[0] + "".join(x.capitalize() for x in components[1:])
+        return camel_case
 
 
 if __name__ == "__main__":
