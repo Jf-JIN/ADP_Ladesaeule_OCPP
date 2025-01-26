@@ -1,4 +1,4 @@
-import copy
+
 from threading import Thread
 
 from const.GPIO_Parameter import *
