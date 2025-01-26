@@ -3,7 +3,7 @@
 import threading
 
 from gpiozero import LED
-from python_script.const.GPIO_Parameter import *
+from const.GPIO_Parameter import *
 
 if 0:
     from _Data_Collector import DataCollector
