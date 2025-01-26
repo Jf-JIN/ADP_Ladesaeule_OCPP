@@ -180,7 +180,7 @@ class Optimizer:
             scpr = GenSetChargingProfileRequest()
             charging_schedule_period_list = []
             for i in range(self._num_split):
-                start_period = sum(self._time_split[:i])
+                start_period = sum(self._time_split[:i]) * 60
                 charging_schedule_period_list.append(
                     scpr.get_charging_schedule_period(
                         start_period=start_period,
