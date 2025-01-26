@@ -7,6 +7,34 @@ os.chdir(os.path.dirname(os.path.dirname(__file__)))
 APP_WORKSPACE_PATH = os.getcwd()
 
 
+class FontSize(AnalogDefine):
+    """
+    tools/data_gene.py 中使用，用于决定画图字体大小
+    """
+    TITLE = 16
+    LABEL = 14
+    TEXT = 12
+    TICKS = 10
+
+
+class Color(AnalogDefine):
+    """
+tools/data_gene.py 中使用，用于决定画图颜色
+    """
+    RED = '#FF6347'
+    GREEN = '#2E8B57'
+    BLUE = '#1E90FF'
+    BLUE_BAR = '#98D8EF'
+
+
+class Style(AnalogDefine):
+    """
+    tools/data_gene.py 中使用，用于决定画图样式
+    """
+    BAR = 0
+    PLOT = 1
+
+
 class Log(AnalogDefine):
     __EXCLUDE_FUNCS = ['_send_signal_info', '__send_signal_recv', '__send_signal_info', '__send_signal', '_log', 'log', 'who_called_me']
     __EXCLUDE__CLASSES = []
