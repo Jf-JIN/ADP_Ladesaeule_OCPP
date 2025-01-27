@@ -222,42 +222,44 @@ class ChargePointBase(object):
         self._response_timeout = response_timeout_s
         return True
 
-    async def _wait_for_result(self, message_action: str | Action, default_message):  # TODO while 循环没有对是否已经发送了做出判断
-        """
-        等待响应消息
-        该函数的机制是, 当监听到响应请求时, 会先发送信号给主线程, 当前实例会停留在该函数进行监听消息, 如果主线程调用了当前类中的 `send_response_message`, 则 `self.__current_message_to_send[message_action]` 会增加一个消息, 该函数会读取消息, 检查其是否为对应请求消息类型的消息, 若是则返回消息, 此时当前实例会继续执行, 否则将继续等待.
+    async def _wait_for_result_func(self):
+        async def _wait_for_result(message_action: str | Action, default_message):  # TODO while 循环没有对是否已经发送了做出判断
+            """
+            等待响应消息
+            该函数的机制是, 当监听到响应请求时, 会先发送信号给主线程, 当前实例会停留在该函数进行监听消息, 如果主线程调用了当前类中的 `send_response_message`, 则 `self.__current_message_to_send[message_action]` 会增加一个消息, 该函数会读取消息, 检查其是否为对应请求消息类型的消息, 若是则返回消息, 此时当前实例会继续执行, 否则将继续等待.
 
-        当等待时长超过 self._response_timeout 时, 会返回 default_message, 并拒绝接受当次的系统响应消息.
+            当等待时长超过 self._response_timeout 时, 会返回 default_message, 并拒绝接受当次的系统响应消息.
 
-        - 参数:
-            - message_action(str): 消息类型, 请使用enums.Action枚举类
+            - 参数:
+                - message_action(str): 消息类型, 请使用enums.Action枚举类
 
-        - 返回值:
-            - message(dataclass): 响应消息, 该消息为OCPP数据类类型的消息
-        """
-        _info(f'调用 _wait_for_result, {message_action}')
-        response_timeout = self._response_timeout - self.__network_buffer_time  # 网络缓冲时间, 考虑到网络延迟, 提前结束等待
-        wait_until = time.time() + response_timeout
-        message_id = uuid.uuid4().hex
-        self._send_signal_info_and_ocpp_request(message_action, message_id)
-        while message_action not in self.__current_message_to_send or (message_action in self.__current_message_to_send and len(self.__current_message_to_send[message_action]) < 1):
-            await asyncio.sleep(0.1)
-            if time.time() > wait_until:
-                # self.__time_table_for_send_message[message_action][message_id]['receive_time'] = time.time()
-                self.__time_table_for_send_message[message_action].pop(message_id, None)
-                error_text = f'********************\n < Error - Timeout_for_Response > System has no response for {message_action} request in {response_timeout} seconds (required response time: {self._response_timeout} seconds), the default message will be returned\n\t{default_message}\n********************'
-                self._send_signal_info(error_text)
-                if not self.__doSendDefaultResponse:
-                    await asyncio.sleep(self.__network_buffer_time + CP_Params.RESPONSE_DELAY_TIME)  # 延迟到超时后发送, 此举为了结束该函数, 但实际上消息已无效
-                return default_message
-        _debug(f'Response消息队列完整 前  {self.__current_message_to_send}')
-        _debug(f'Response消息队列 前 {type(self.__current_message_to_send[message_action])}  {self.__current_message_to_send[message_action]}')
-        message = self.__current_message_to_send[message_action].pop(0)
-        _debug(f'Response消息队列 后 {type(self.__current_message_to_send[message_action])}  {self.__current_message_to_send[message_action]}')
-        if self.__current_message_to_send[message_action] == []:
-            del self.__current_message_to_send[message_action]
-        _debug(f'Response消息队列 删除后 {message_action in self.__current_message_to_send}  {self.__current_message_to_send}')
-        return message
+            - 返回值:
+                - message(dataclass): 响应消息, 该消息为OCPP数据类类型的消息
+            """
+            _info(f'调用 _wait_for_result, {message_action}')
+            response_timeout = self._response_timeout - self.__network_buffer_time  # 网络缓冲时间, 考虑到网络延迟, 提前结束等待
+            wait_until = time.time() + response_timeout
+            message_id = uuid.uuid4().hex
+            self._send_signal_info_and_ocpp_request(message_action, message_id)
+            while message_action not in self.__current_message_to_send or (message_action in self.__current_message_to_send and len(self.__current_message_to_send[message_action]) < 1):
+                await asyncio.sleep(0.1)
+                if time.time() > wait_until:
+                    # self.__time_table_for_send_message[message_action][message_id]['receive_time'] = time.time()
+                    self.__time_table_for_send_message[message_action].pop(message_id, None)
+                    error_text = f'********************\n < Error - Timeout_for_Response > System has no response for {message_action} request in {response_timeout} seconds (required response time: {self._response_timeout} seconds), the default message will be returned\n\t{default_message}\n********************'
+                    self._send_signal_info(error_text)
+                    if not self.__doSendDefaultResponse:
+                        await asyncio.sleep(self.__network_buffer_time + CP_Params.RESPONSE_DELAY_TIME)  # 延迟到超时后发送, 此举为了结束该函数, 但实际上消息已无效
+                    return default_message
+            _debug(f'Response消息队列完整 前  {self.__current_message_to_send}')
+            _debug(f'Response消息队列 前 {type(self.__current_message_to_send[message_action])}  {self.__current_message_to_send[message_action]}')
+            message = self.__current_message_to_send[message_action].pop(0)
+            _debug(f'Response消息队列 后 {type(self.__current_message_to_send[message_action])}  {self.__current_message_to_send[message_action]}')
+            if self.__current_message_to_send[message_action] == []:
+                del self.__current_message_to_send[message_action]
+            _debug(f'Response消息队列 删除后 {message_action in self.__current_message_to_send}  {self.__current_message_to_send}')
+            return message
+        return _wait_for_result
 
     def _send_signal_info_and_ocpp_request(self, message_action: str | Action, message_id: str,  info_action: str | None = None) -> None:
         """
