@@ -24,7 +24,7 @@ class ChargeUnit:
         self.__id: int = id
         self.__evse: Evse = Evse(id=id)
         self.__shelly: Shelly = Shelly(id=id, address=shelly_address)
-        self.__latch_motor: LatchMotor = LatchMotor(id=id)
+        self.__latch_motor: LatchMotor = LatchMotor(self, id=id)
         self.__data_collector: DataCollector = self.__parent.data_collector
         self.__start_time_str: str = ''
         """ 充电开始时间, 每次完整充电中只会被定义一次, 校正时不会更改 """
