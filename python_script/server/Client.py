@@ -1,18 +1,19 @@
 
-import traceback
+
 from sys_basis.Generator_Ocpp_Std.V2_0_1 import *
 from sys_basis.Ports import *
-from sys_basis.XSignal import XSignal
 from sys_basis.Manager_Coroutine import ManagerCoroutines
-from sys_basis.GPIO import *
+from sys_basis.GPIO import GPIOManager
 import datetime
-from sys_basis.Optimize.data_gene import DataGene
+from tools.data_gene import DataGene
 from const.Const_Parameter import *
 from const.Charge_Point_Parameters import *
 
 
 _info = Log.RAS.info
 _error = Log.RAS.error
+_debug = Log.RAS.debug
+_exception = Log.RAS.exception
 
 
 class Client:
@@ -24,25 +25,13 @@ class Client:
         self.thread_web_server.start()
         self.manager_coroutines.start()
 
-    def init_signal_connections(self):
-        self.coroutine_OCPP_client.signal_thread_ocpp_client_info.connect(self.send_info_web_message)
-        self.coroutine_OCPP_client.signal_thread_ocpp_client_recv.connect(self.send_info_opt_message)
-        self.coroutine_OCPP_client.signal_thread_ocpp_client_recv_request.connect(self.handle_request_message)
-        self.coroutine_OCPP_client.signal_thread_ocpp_client_recv_response.connect(self.handle_response_message)
-        self.thread_web_server.signal_thread_web_server_info.connect(self.send_info_web_message)
-        # self.thread_web_server.signal_thread_web_server_recv.connect(self.)
-        self.coroutine_gui_websocket_server.signal_thread_websocket_client_info.connect(self.send_info_gui_message)
-        pass
+    def init_parameters(self) -> None:
+        self.GPIO_Manager = GPIOManager()
 
-    def init_parameters(self):
-        self.charging_needs_request_interval = 3600  # seconds, per one hour a request is sent
-        self.gpio_manager = GPIOManager()
-
-    def init_threads(self):
+    def init_threads(self) -> None:
         self.thread_web_server = PortWebServerChargePoint()
 
-    def init_coroutines(self):
-
+    def init_coroutines(self) -> None:
         self.coroutine_OCPP_client = PortOCPPWebsocketClient(
             uri=f'{CP_Params.HOST}:{CP_Params.PORT}',
             charge_point_name='CP1',
@@ -55,15 +44,52 @@ class Client:
         self.coroutine_gui_websocket_server = PortWebSocketServer('localhost', 12346)
         self.manager_coroutines = ManagerCoroutines(self.coroutine_OCPP_client.run, self.coroutine_gui_websocket_server.run)
 
+    def init_signal_connections(self):
+        self.coroutine_OCPP_client.signal_thread_ocpp_client_info.connect(self.send_info_web_message)
+        self.coroutine_OCPP_client.signal_thread_ocpp_client_recv.connect(self.send_info_opt_message)
+        self.coroutine_OCPP_client.signal_thread_ocpp_client_recv_request.connect(self.rrr)
+
+        self.coroutine_OCPP_client.signal_thread_ocpp_client_normal_message.connect(self.handle_normal_message)
+        # self.coroutine_OCPP_client.signal_thread_ocpp_client_recv_request
+        # self.coroutine_OCPP_client.signal_thread_ocpp_client_recv_response.connect(self.rrr)
+        self.thread_web_server.signal_thread_web_server_info.connect(self.send_info_web_message)
+        self.thread_web_server.signal_thread_web_server_recv.connect(self.send_info_web_message)
+        # LoggerGroup.signal_group_public_html.connect(print)
+        LoggerGroup.signal_group_public_html.connect(self.send_info_web_message)
+        # self.thread_web_server.signal_thread_webs_server_finished
+        self.coroutine_gui_websocket_server.signal_thread_websocket_client_info.connect(self.send_info_gui_message)
+        # self.coroutine_gui_websocket_server.signal_thread_websocket_client_recv
+        pass
+
     def send_info_web_message(self, message):
+        if not message:
+            return
+        # print(message, type(message))
         temp_dict = {
             'client_console': message
         }
         self.thread_web_server.send_message(temp_dict)
-        if message == 'home':
-            self.send_test()
-        elif message == 'home1':
-            self.send_test1()
+        # if message == 'home':
+        #     self.send_test()
+        # elif message == 'home1':
+        #     self.send_test1()
+        if isinstance(message, dict):
+            cnrq = GenNotifyEVChargingNeedsRequest
+            request_message = cnrq.generate(
+                charging_needs=cnrq.get_charging_needs(
+                    requested_energy_transfer=EnergyTransferModeType.ac_three_phase,
+                    ac_charging_parameters=cnrq.get_ac_charging_parameters(
+                        energy_amount=int(message['charge_power']),
+                        ev_min_current=6,
+                        ev_max_current=40,
+                        ev_max_voltage=400
+                    ),
+                    departure_time=message['departure_time']
+                ),
+                evse_id=1,
+                custom_data=cnrq.get_custom_data(vendor_id='12123', mod=int(message['charge_mode']))
+            )
+            self.coroutine_OCPP_client.send_request_message(request_message)
 
     def send_info_opt_message(self, message):
         temp_dict = {
@@ -144,7 +170,7 @@ class Client:
                 )
                 _info(len(self.coroutine_OCPP_client.list_request_message), self.coroutine_OCPP_client.list_request_message)
             except:
-                _info(f'发送测试数据 - - - 失败\n{traceback.format_exc()}')
+                _exception()
                 pass
         # self._num += 1
         # if self._num <= 10:
@@ -158,35 +184,20 @@ class Client:
             )
         )
 
-    def handle_request_message(self, message: dict) -> None:
-        _info(f'收到消息: {message['data']}')
-        action = message['action']
-        send_time = message['send_time']
-        message_id = message['message_id']
-        data = message['data']
-        if isinstance(action, call.SetChargingProfile):
-            # 向GPIO发送信息, 得到回复后: 
-            response_message = GenSetChargingProfileResponse.generate(
-                status=ChargingProfileStatus.accepted
-            )
+    def rrr(self, message):
+        _info(f'收到消息: {message}')
+        if message['action'] == Action.SetChargingProfile:
             self.coroutine_OCPP_client.send_response_message(
-                message_action=action,
-                message=response_message,
-                send_time=send_time,
-                message_id=message_id
+                Action.SetChargingProfile,
+                GenSetChargingProfileResponse.generate(
+                    status=ChargingProfileStatus.accepted
+                ),
+                send_time=message['send_time'],
+                message_id=message['message_id']
             )
 
-    def handle_response_message(self, message: dict) -> None:
-        action = message['action']
-        status = message['result']
-        ori_data = message['ori_data']
-        data = message['data']
-        if status == CP_Params.RESPONSE_RESULT.SUCCESS:
-            pass
-        elif status == CP_Params.RESPONSE_RESULT.TIMEOUT:
-            self.coroutine_OCPP_client.send_request_message(ori_data)
-        else:
-            _error(f'收到错误消息: {message["data"]}\n原消息: {ori_data}\n状态: {status}')
+    def handle_normal_message(self, message: dict) -> None:
 
-    def response_charging_profile(self, message: dict) -> None:
-        pass
+        if 'opt_img' in message:
+            _info(f'收到消息: {message}')
+            self.send_info_web_message(message['opt_img'])
