@@ -15,11 +15,39 @@ if 0:
 
 class DataCollector:
     """ 
-    {
-        1: {
-            'evse': {
-                'vehicle_state': VehicleState.EVSE_IS_PRESENT,
-                'evse_error': EVSEErrorInfo.RELAY_ON
+
+    - 参数: 
+        - gpio_manager(GPIOManager): GPIOManager对象
+        - interval_send_data(int|float): 发送数据数据的间隔时间, 单位: 秒, 默认: 1秒
+        - interval_send_fig(int|float): 发送图像数据的间隔时间, 单位: 秒, 默认: 30秒
+
+    - 属性: 
+        - charging_units_id_set(set): 充电单元ID集合
+        - available_charge_units_id_set(set): 可用的充电单元ID集合
+        - parent_object(GPIOManager): 父对象
+
+    - 信号: 
+        - signal_DC_data_display(XSignal): DC数据显示信号
+        - signal_DC_figure_display(XSignal): DC图像显示信号
+
+    - 方法: 
+        - 硬件数据
+            - set_evse_data(id, data): 设置EVSE数据, 线程使用
+            - set_shelly_data(id, data): 设置Shelly数据, 线程使用
+        - 充电单元数据
+            - set_CU_charge_start_time(id, start_time, target_energy, depart_time): 设置充电单元开始充电时间
+            - set_CU_current_charge_action(id, plan): 设置充电单元当前充电动作
+            - set_CU_waiting_plan(id, plan, period_start_time): 设置充电单元等待计划
+            - append_CU_finished_plan(id, plan): 添加充电单元完成计划
+            - clear_CU_finished_plan(id): 清除充电单元完成计划
+            - set_CU_isLatched(id, flag): 设置充电单元是否锁存
+
+    - 数据总格式示例(self.__all_data): `请转到定义处查看`
+    {\
+        1: {\
+            'evse': {\
+                'vehicle_state': VehicleState.EVSE_IS_PRESENT,\
+                'evse_error': EVSEErrorInfo.RELAY_ON,
             },
             'shelly': {
                 0: {
@@ -86,7 +114,12 @@ class DataCollector:
     }
     """
 
-    def __init__(self, parent: GPIOManager, interval_send_data: int | float = 1, interval_send_fig: int | float = 30,) -> None:
+    def __init__(
+        self,
+        parent: GPIOManager,
+        interval_send_data: int | float = 1,
+        interval_send_fig: int | float = 30,
+    ) -> None:
         self.__parent: GPIOManager = parent
         self.__interval_send_data: int | float = interval_send_data
         self.__interval_send_fig: int | float = interval_send_fig
@@ -267,6 +300,7 @@ class DataCollector:
         if status in [VehicleState.READY]:
             # 充电单元就绪状态, 可以充电
             self.__remove_charging_unit(id)
+            self.clear_CU_finished_plan(id)
         elif status in [VehicleState.EV_IS_PRESENT, VehicleState.CHARGING, VehicleState.CHARGING_WITH_VENTILATION]:
             # 充电单元正在充电, 充电桩被占用
             self.__add_charging_unit(id)
