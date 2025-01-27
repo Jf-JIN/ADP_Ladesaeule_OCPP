@@ -31,6 +31,7 @@ class ChargeUnit:
         self.__time_depart_str: str = ''
         """ 离开时间, 每次完整充电中只会被定义一次, 校正时不会更改 """
         self.__info_title = 'ChargeUnit'
+        self.__custom_data: int = 0
         self.__isNoError: bool = True
         """ 用于记录是否有错误 """
         self.__isCharging: bool = False
@@ -164,7 +165,7 @@ class ChargeUnit:
             _error(f'The current vehicle status of ChargeUnit {self.id} is: {self.__evse.vehicle_state}. Unable to obtain current limit')
             return None
 
-    def set_charge_plan(self, charging_profile: dict, target_energy: int | None = None, depart_time: str | None = None) -> bool:
+    def set_charge_plan(self, charging_profile: dict, target_energy: int | None = None, depart_time: str | None = None, custom_data: int | None = None) -> bool:
         """
         处理堵塞的chargeing plan,处理矫正的charging plan
 
@@ -211,8 +212,9 @@ class ChargeUnit:
             if not target_energy and not depart_time:
                 raise ValueError('target_energy and depart_time must be set')
             # 参数重置
-            self.__target_energy = target_energy
-            self.__depart_time = depart_time
+            self.__target_energy: int = target_energy
+            self.__depart_time: str = depart_time
+            self.__custom_data: int = custom_data
             self.__finished_plan = []
             self.__current_charge_action = {}
             # 硬件初始化
@@ -235,7 +237,7 @@ class ChargeUnit:
         self.__data_collector.set_CU_current_charge_action(self.id, {})
         self.__data_collector.set_CU_waiting_plan(self.id, copy.deepcopy(self.__waiting_plan), self.__current_start_time_str)
         self.__data_collector.clear_CU_finished_plan(self.id)
-        self.__data_collector.set_CU_charge_start_time(self.id, self.__start_time_str, self.__target_energy, self.__depart_time)
+        self.__data_collector.set_CU_charge_start_time(self.id, self.__start_time_str, self.__target_energy, self.__depart_time, self.__custom_data)
         return self.__execute_start_charging()
 
     def start_charging(self) -> bool:
@@ -404,7 +406,8 @@ The charging unit is not executable (correct value)
                 'evMaxCurrent': self.__current_limit[1],
                 'evMaxVoltage': GPIOParams.MAX_VOLTAGE,
                 'energyAmount': remaining_energy,
-                'departureTime': self.__time_depart_str
+                'departureTime': self.__time_depart_str,
+                'custom_data': self.__custom_data,
             }
             self.signal_request_charge_plan_calibration.emit(calibration_dict)
 

@@ -107,6 +107,7 @@ class DataCollector:
             'charged_time': 00:43:01,
             'target_energy': 700000,
             'isLatched': True,
+            'custom_data': {'mode': 0, 'vendorId'='1234'},
         },
         2:{
             ...
@@ -212,7 +213,7 @@ class DataCollector:
         plan['chargedEnergy'] = self.__all_data[id]['shelly']['charged_energy']
         self.__all_data[id]['current_charge_action'] = plan
 
-    def set_CU_charge_start_time(self, id: int, start_time: str, target_energy: int, depart_time: str) -> None:
+    def set_CU_charge_start_time(self, id: int, start_time: str, target_energy: int, depart_time: str, custom_data: int) -> None:
         """
         设置充电单元开始充电时间.
 
@@ -222,6 +223,7 @@ class DataCollector:
         self.__all_data[id]['start_time'] = start_time
         self.__all_data[id]['target_energy'] = target_energy
         self.__all_data[id]['depart_time'] = depart_time
+        self.__all_data[id]['custom_data'] = custom_data
 
     def set_CU_waiting_plan(self, id: int, plan: list, period_start_time: str | None = None) -> None:
         """

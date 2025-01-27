@@ -43,10 +43,10 @@ class GPIOManager:
     def charge_units_dict(self) -> dict:
         return self.__charge_units_dict
 
-    def set_charge_plan(self, data: dict, target_energy: int | None = None, depart_time: int | None = None) -> bool:
+    def set_charge_plan(self, data: dict, target_energy: int | None = None, depart_time: int | None = None, custom_data: dict | None = None) -> bool:
         evse_id: int = data["evseId"]
         charge_unit: ChargeUnit = self.__charge_units_dict[evse_id]
-        return charge_unit.set_charge_plan(data, target_energy, depart_time)
+        return charge_unit.set_charge_plan(data, target_energy, depart_time, custom_data)
 
     def get_current_limit(self, id: int) -> list | None:
         charge_unit: ChargeUnit = self.__charge_units_dict[id]
