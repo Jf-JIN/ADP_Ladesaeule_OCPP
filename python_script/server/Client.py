@@ -92,7 +92,37 @@ class Client:
         pass
 
     def handle_gpio_requeset(self, gpio_request):
-        pass
+        """
+        请求(dict)的键名:
+            'evseId': (int),
+            'evMinCurrent': (int),
+            'evMaxCurrent': (int),
+            'evMaxVoltage': (int),
+            'energyAmount': (int),
+            'departureTime': (str),
+            'custom_data': (dict),
+            'vendorId': (str),
+        """
+        try:
+            g = GenNotifyEVChargingNeedsRequest
+            self.coroutine_OCPP_client.send_request_message(
+                g.generate(
+                    evseId=gpio_request['evseId'],
+                    charging_needs=g.get_charging_needs(
+                        requested_energy_transfer=EnergyTransferModeType.ac_three_phase,
+                        ac_charging_parameters=g.get_ac_charging_parameters(
+                            energy_amount=gpio_request['energyAmount'],
+                            ev_max_voltage=gpio_request['evMaxVoltage'],
+                            ev_max_current=gpio_request['evMaxCurrent'],
+                            ev_min_current=gpio_request['evMinCurrent'],
+                        ),
+                        departure_time=gpio_request['departureTime'],
+                    ),
+                    custom_data=g.get_custom_data(vendor_id=gpio_request['custom_data']['vendor_id'], mod=gpio_request['custom_data']['mode'])
+                )
+            )
+        except:
+            _exception()
 
     def handle_gpio_info(self, gpio_info):
         pass
