@@ -7,6 +7,7 @@ from const.Analog_Define import AnalogDefine
 
 
 class GPIOParams(AnalogDefine):
+    VENDOR_ID = '达姆'
     MESSAGE_SEND_INTERVAL = 60  # seconds
     CHARGE_UNITS = [
         # (EVSE_Id, Shelly_main_url)
