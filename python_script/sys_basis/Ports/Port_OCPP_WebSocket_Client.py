@@ -9,6 +9,7 @@ from sys_basis.Ports.Core_WebSocket.WebSocket_Client import WebSocketClient
 from const.Const_Parameter import *
 
 _info = Log.OCPP.info
+_debug = Log.OCPP.debug
 
 
 class PortOCPPWebsocketClient(object):
@@ -234,7 +235,7 @@ class PortOCPPWebsocketClient(object):
         """
         self.__list_request_message.append(message)
         self.__event_request_message.set()
-        _info('已解锁发送请求消息锁')
+        _debug('已解锁发送请求消息锁')
 
     def send_response_message(self,  message_action: str, message, send_time: float, message_id: str) -> int:
         """
@@ -342,7 +343,7 @@ class PortOCPPWebsocketClient(object):
         """
         message = ''
         while self.__isRunning:
-            _info('正在监听消息..............')
+            _debug('Listening for messages..............')
             try:
                 try:
                     message = await asyncio.wait_for(self.__websocket.recv(), timeout=self.__listen_timeout_s)
@@ -353,16 +354,17 @@ class PortOCPPWebsocketClient(object):
                     message = ''
                 except Exception as e:
                     message = ''
-                    _info(f'监听消息时发生异常: {repr(e)} 重连中............')
+                    _debug(f'监听消息时发生异常: {repr(e)} 重连中............')
                     self.__websocket.connect()
                     await asyncio.sleep(CP_Params.OCPP_LISTEN_INTERVAL)
-                _info(f'获得监听消息\n {repr(self.__websocket)}\n{type(message)}\n{repr(message)}')
+                _debug(f'获得监听消息\n {repr(self.__websocket)}\n{type(message)}\n{repr(message)}')
                 if (isinstance(message, str) and message.startswith('[')):  # 信息过滤
                     await self.__charge_point.route_message(message)
                 elif message:
+                    # _info(f'收到非OCPP消息: {repr(message)}')
                     self.__signal_thread_ocpp_client_normal_message.emit(message)
             except:
-                _info(f'<--报错--> 获得监听消息\n {traceback.format_exc()}\n\n{repr(message)}')
+                _debug(f'<--报错--> 获得监听消息\n {traceback.format_exc()}\n\n{repr(message)}')
                 pass
 
     async def __send_request_message(self) -> None:
@@ -375,18 +377,18 @@ class PortOCPPWebsocketClient(object):
         """
         while self.__isRunning:
             await self.__event_request_message.wait()
-            _info('正在发送请求消息..............')
+            _debug('Sending request message..............')
             if not self.__isRunning:  # 提前终止
                 break
             try:
                 # 此处结果将由 __charge_point.signal_charge_point_ocpp_response 传递, 无需手动处理
                 if len(self.__list_request_message) > 0:
-                    _info('消息已存储在队列中, 请求发送********************')
+                    _debug('消息已存入队列, 请求发送********************')
                     await self.__charge_point.send_request_message(self.__list_request_message.pop(0))
-                    _info('已执行请求')
+                    _debug('Request executed')
             except:
                 self.__send_signal_info(f'<Error - send_request_message>\n{traceback.format_exc()}')
-            _info(f'请求结束, 当前消息队列中内容\t{self.__list_request_message}')
+            _debug(f'The request ends, the contents of the current message queue\t{self.__list_request_message}')
             if not self.__list_request_message:
                 self.__event_request_message.clear()
 
@@ -399,7 +401,7 @@ class PortOCPPWebsocketClient(object):
         当信息列表 __list_normal_message 为空时, 将等待事件 __event_request_message 触发
         """
         while self.__isRunning:
-            _info(f'监听正常消息队列, 等待消息发送++++++++\n{self.__list_normal_message}')
+            _debug(f'Listen to the normal message queue and wait for messages to be sent++++++++\n{self.__list_normal_message}')
             await self.__event_normal_message.wait()
             if not self.__isRunning:  # 提前终止
                 break
@@ -407,6 +409,6 @@ class PortOCPPWebsocketClient(object):
                 await self.__websocket.send(self.__list_normal_message.pop(0))
             except:
                 self.__send_signal_info(f'<Error - send_normal_message>\n{traceback.format_exc()}')
-            _info(f'已执行正常消息, 列表为: \n{self.__list_normal_message}')
+            _debug(f'Normal messages have been executed, the list is: \n{self.__list_normal_message}')
             if not self.__list_normal_message:
                 self.__event_normal_message.clear()
