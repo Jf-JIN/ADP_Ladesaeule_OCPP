@@ -130,8 +130,8 @@ class DataCollector:
         self.__shelly_data: dict = {}
         self.__timer_data: Timer = Timer(self.__interval_send_data, self.__send_display_data)
         self.__timer_figure: Timer = Timer(self.__interval_send_fig, self.__send_figure_data)
-        self.__charging_units_id_set: set = None
-        self.__available_charge_units_id_set: set = None
+        self.__charging_units_id_set: set = set()
+        self.__available_charge_units_id_set: set = set()
         self.__signal_DC_data_display: XSignal = XSignal()
         self.__signal_DC_figure_display: XSignal = XSignal()
         self.__timer_data.start()
