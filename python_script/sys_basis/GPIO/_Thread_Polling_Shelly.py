@@ -32,8 +32,7 @@ class PollingShelly(Thread):
     def isRunning(self) -> bool:
         return self.__isRunning
 
-    def run(self) -> None:  # TODO 数据整合
-
+    def run(self) -> None:
         while self.__isRunning:
             shelly: Shelly = self.__shelly_list[self.__current_index]
             shelly_id = shelly.id
