@@ -36,6 +36,10 @@ class GPIOManager:
         return self.__signal_GPIO_info
 
     @property
+    def signal_request_charge_plan_calibration(self) -> XSignal:
+        return self.__signal_request_charge_plan_calibration
+
+    @property
     def charge_units_dict(self) -> dict:
         return self.__charge_units_dict
 
