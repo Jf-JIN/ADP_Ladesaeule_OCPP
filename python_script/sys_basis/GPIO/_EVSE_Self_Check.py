@@ -24,8 +24,9 @@ class EVSESelfCheck(Thread):
         self.__timeout: int | float = GPIOParams.SELF_CHECK_TIMEOUT
         self.__rw_error: set = set()
         self.__isRunning: bool = True
+        self.__isNoError: bool = False
         self.__signal_self_test_error: XSignal = XSignal()
-        self.__signal_test_finished: XSignal = XSignal()
+        self.__signal_test_finished_result: XSignal = XSignal()
 
     @property
     def id(self):
@@ -44,8 +45,8 @@ class EVSESelfCheck(Thread):
         return self.__signal_self_test_error
 
     @property
-    def signal_test_finished(self):
-        return self.__signal_test_finished
+    def signal_test_finished_result(self):
+        return self.__signal_test_finished_result
 
     def __set_RCD_test(self):
         if not self.__doUseRCD:
@@ -58,7 +59,7 @@ class EVSESelfCheck(Thread):
             self.__modbus.__class__.isSelfChecking.remove(self.__id)
         self.__isRunning = False
         self.__class__.isChecking = False
-        self.__signal_test_finished.emit()
+        self.__signal_test_finished_result.emit(self.__isNoError)
 
     def run(self):
         if self.__timeout <= 30:
@@ -96,9 +97,12 @@ class EVSESelfCheck(Thread):
                             self.__signal_self_test_error.emit(self.__rw_error)
                             self.__exit_self_test()
                             return
+                        self.__isNoError = True
                     else:
                         # 如果没有正常显示RCD错误, 则认为RCD测试失败
                         response.add(EVSEErrorInfo.RCD_CHECK_FAILED)
+                else:
+                    self.__isNoError = True
 
                 self.signal_self_test_error.emit(response)
                 self.__exit_self_test()
