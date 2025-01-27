@@ -166,6 +166,7 @@ class Client:
         处理 Web端 消息
         """
         def handle_web_charge_request(request_message):
+            _info(f"收到充电请求: {request_message}")
             evse_id = int(request_message['evse_id'])
             energy_amount = int(request_message['charge_power'])
             depart_time = request_message['depart_time']

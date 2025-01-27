@@ -1,5 +1,6 @@
 
 import asyncio
+import pprint
 import traceback
 import websockets
 from sys_basis.XSignal import XSignal
@@ -117,7 +118,7 @@ class WebSocketClient(object):
         """
         if self.__websocket is not None:
             try:
-                self.__send_signal_info(f'<<<- Send< {message}')
+                self.__send_signal_info(f'<<<- Send< {pprint.pformat(message)}')
                 await self.__websocket.send(message)
             except (ConnectionAbortedError, websockets.exceptions.ConnectionClosedError) as e:
                 self.__send_signal_info(f'--<Connection_Failed>: Connection closed, reconnecting... ({traceback.format_exc()})')

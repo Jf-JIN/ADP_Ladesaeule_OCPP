@@ -42,7 +42,8 @@ submit_btn.addEventListener('click', () => {
         if (!('charge_request' in data)) {
             return false;
         }
-        for (let [key, value] of Object.entries(data.charge_request)) {
+        data = data.charge_request
+        for (let [key, value] of Object.entries(data)) {
             let widget = document.getElementById(key);
             console.log(widget)
             if (widget) {
@@ -69,6 +70,7 @@ submit_btn.addEventListener('click', () => {
                         widget.style.backgroundColor = '';
                     }
                 } else if (key == 'depart_time') {
+                    console.log('8888888888888888888888888888888888888888888888888888888')
                     let currentTime = new Date();
                     let selectedTime = new Date(value);
                     console.log(currentTime, selectedTime);
