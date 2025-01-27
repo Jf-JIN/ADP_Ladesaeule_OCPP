@@ -49,8 +49,25 @@ class GPIOManager:
         return charge_unit.set_charge_plan(data, target_energy, depart_time, custom_data)
 
     def get_current_limit(self, id: int) -> list | None:
+        """ 
+        获取允许的最小、最大电流值
+
+        返回:
+            list: [最小电流值(int), 最大电流值(int)]
+            - 如果电流为负数则表示充电插口被占用
+            - 空列表表示无车辆插入
+            None: Evse故障
+        """
         charge_unit: ChargeUnit = self.__charge_units_dict[id]
         return charge_unit.get_current_limit()
+
+    def get_voltage_max(self, id: int) -> list | None:
+        """  获取允许的最大电压值 """
+        charge_unit: ChargeUnit = self.__charge_units_dict[id]
+        return charge_unit.get_voltage_max()
+
+    def get_charge_unit(self, id: int) -> ChargeUnit:
+        return self.__charge_units_dict[id]
 
     def stop_charging(self, id: int) -> None:
         charge_unit: ChargeUnit = self.__charge_units_dict[id]

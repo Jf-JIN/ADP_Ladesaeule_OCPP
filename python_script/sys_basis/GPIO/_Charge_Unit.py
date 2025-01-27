@@ -61,9 +61,10 @@ class ChargeUnit:
         """ 当前限流最小值, 单位为A, 调用方法 get_current_limit() 时更新 """
         self.__current_max: int = sys.maxsize
         """ 当前限流最大值, 单位为A, 调用方法 get_current_limit() 时更新 """
+        self.__voltage_max: int = GPIOParams.MAX_VOLTAGE
         #
         self.__timer: threading.Timer = threading.Timer(99, self.__charging)
-        """ 校正定时器, 用于在校正周期点发送校正请求 """
+        """ 充电计划定时器, 用于限制每个充电计划表项的执行时间, 确保不会超过计划表项的执行时间 """
         self.__finished_plan: list[dict] = []
         """ 已完成的充电计划项 """
         self.__waiting_plan: list[dict] = []
@@ -164,6 +165,9 @@ class ChargeUnit:
         else:
             _error(f'The current vehicle status of ChargeUnit {self.id} is: {self.__evse.vehicle_state}. Unable to obtain current limit')
             return None
+
+    def get_voltage_max(self) -> int:
+        return GPIOParams.MAX_VOLTAGE
 
     def set_charge_plan(self, charging_profile: dict, target_energy: int | None = None, depart_time: str | None = None, custom_data: int | None = None) -> bool:
         """
@@ -399,12 +403,13 @@ The charging unit is not executable (correct value)
                 self.stop_charging()
                 _error("Error getting current limit")
                 return False
+            voltage_max = self.get_voltage_max()
 
             calibration_dict = {
                 'evseId': self.__id,
                 'evMinCurrent': self.__current_limit[0],
                 'evMaxCurrent': self.__current_limit[1],
-                'evMaxVoltage': GPIOParams.MAX_VOLTAGE,
+                'evMaxVoltage': voltage_max,
                 'energyAmount': remaining_energy,
                 'departureTime': self.__time_depart_str,
                 'custom_data': self.__custom_data,
