@@ -1,6 +1,6 @@
 import pprint
 import scienceplots
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import numpy as np
 import pytz
 import matplotlib.pyplot as plt
@@ -80,7 +80,7 @@ class DataGene:
             - time_str(str): 格式化的时间字符串('%Y-%m-%dT%H:%M:%SZ')
 
         返回: 
-            - datetime: 转换后的 datetime 对象(无时区信息)
+            - datetime: 转换后的 datetime 对象
         """
         return datetime.strptime(time_str, '%Y-%m-%dT%H:%M:%SZ')
 
@@ -279,7 +279,7 @@ class DataGene:
         return base64_image
 
     @staticmethod
-    def plan2figure(charge_plan: list) -> str:
+    def plan2figure(charge_plan: list) -> str | None:
         """
         将充电计划转换为美化的图表
 
@@ -289,6 +289,8 @@ class DataGene:
         返回:
             - str: 图表的base64编码字符串
         """
+        if charge_plan is None:
+            return None
         plt.style.use(['science', 'no-latex'])
 
         charge_plan = [DataGene.convert_dict_keys(charge_item) for charge_item in charge_plan]
@@ -442,8 +444,10 @@ if __name__ == "__main__":
     # DataGene.plot_usage(eprices)
     # DataGene.plot_usage(his_usage)
     # print(DataGene.time2str())
-    # print(datetime.now())
+    # print(datetime.now(pytz.timezone('Europe/Berlin')))
+    # print(DataGene.time2str(datetime.now()))
     # print(DataGene.str2time('2024-07-25T10:00:00Z'))
+    # print(datetime.now(timezone.utc) - DataGene.str2time('2024-07-25T10:00:00Z'))
     # start = DataGene.str2time('2024-12-29T21:12:00Z')
     # [time_split, eprices_split, max_power_split] = DataGene.split_time(start, start+timedelta(hours=8), eprices, his_usage, 16000, 12800, 2400, 60)
     # print(time_split, eprices_split, max_power_split)
