@@ -560,7 +560,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.notify_display_messages, default_message)
 
-    @on(Action.NotifyEVChargingNeeds)
+    @on(Action.notify_ev_charging_needs)
     async def _on_notify_ev_charging_needs_request(
         self,
         charging_needs: dict,
@@ -773,7 +773,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.send_local_list, default_message)
 
-    @on(Action.SetChargingProfile)
+    @on(Action.set_charging_profile)
     async def _on_set_charging_profile_request(
         self,
         evse_id: int,
