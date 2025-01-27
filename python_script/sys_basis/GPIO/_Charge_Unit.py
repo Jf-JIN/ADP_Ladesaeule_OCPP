@@ -1,204 +1,487 @@
-import math
 import threading
-import time
+import sys
+import copy
 from datetime import datetime
 from const.GPIO_Parameter import *
 from const.Const_Parameter import *
 from sys_basis.XSignal import XSignal
+from tools.data_gene import DataGene
 from ._EVSE import Evse
 from ._Shelly import Shelly
-from tools.data_gene import DataGene
+from ._Latch_Motor import LatchMotor
 
 
 if 0:
     from sys_basis.GPIO import GPIOManager
+    from sys_basis.GPIO._Data_Collector import DataCollector
 
+_error = Log.GPIO.error
 
 
 class ChargeUnit:
-    def __init__(self, parent, id, shelly_address):
+    def __init__(self, parent: GPIOManager, id: int, shelly_address: str) -> None:
         self.__parent: GPIOManager = parent
-        self.__id:int = id
-        self.__evse: Evse = Evse(id = id)
-        self.__shelly: Shelly = Shelly(id = id,address= shelly_address)
-        self.__status: int = -1
-        self.__time_start:str = ''
-        self.__time_depart:str = ''
+        self.__id: int = id
+        self.__evse: Evse = Evse(id=id)
+        self.__shelly: Shelly = Shelly(id=id, address=shelly_address)
+        self.__latch_motor: LatchMotor = LatchMotor(id=id)
+        self.__data_collector: DataCollector = self.__parent.data_collector
+        self.__start_time_str: str = ''
+        """ 充电开始时间, 每次完整充电中只会被定义一次, 校正时不会更改 """
+        self.__time_depart_str: str = ''
+        """ 离开时间, 每次完整充电中只会被定义一次, 校正时不会更改 """
         self.__info_title = 'ChargeUnit'
+        self.__isNoError: bool = True
+        """ 用于记录是否有错误 """
+        self.__isCharging: bool = False
+        """ 用于标记是否在充电中, 供self.__execute_start_charging()判断使用, 若是, 则继续充电, 否则等待按钮或者网页指令 """
+        self.__isLatched: bool = False
+        """ 是否已经上锁 """
+        self.__isTmeSynchronized = False
+        """ 用于标记是否已经同步时间, 用于self.__charging() """
+        self.__isEVSESelfTested: bool = False
+        """ 用于标记是否已经进行过EVSE自检, 用于self.__prepare_charging() """
         #
         self.__charge_index: int = 0
-        self.__current_start_time: datetime| None = None
-        self.__unit: str = ''
-        self.__current_periode:list = [0, 0]
-        self.__request_periode:int = 4
+        """用于记录充电次数, 使用时间戳记录, 单位由self.__index_period_sec决定, 例如: self.__index_period_sec=3600, 则单位为小时"""
+        self.__index_period_sec: int = GPIOParams.CALIBRATION_PERIOD
+        """ 充电校正周期, 单位为秒 """
+        self.__current_start_time_str: str = ''
+        """ 当前充电计划表充电开始时间字符串, 校正时会被更改 """
+        self.__current_start_datetime: datetime | None = None
+        """ 当前充电计划表充电开始时间datetime, 校正时会被更改 """
+        self.__value_unit: str = ''
+        """ 充电计划表单位, 校正时会被更改 """
         self.__target_energy: int = 0
-        self.__current_limit:list = []
+        """ 目标电量, 单位为Wh, 校正时不会更改 """
+        self.__current_limit: list = []
+        """ 当前限流, 单位为A, 调用方法 get_current_limit() 时更新 """
+        self.__current_min: int = 0
+        """ 当前限流最小值, 单位为A, 调用方法 get_current_limit() 时更新 """
+        self.__current_max: int = sys.maxsize
+        """ 当前限流最大值, 单位为A, 调用方法 get_current_limit() 时更新 """
         #
         self.__timer: threading.Timer = threading.Timer(99, self.__charging)
-        self.__finished_plan:list[dict] = []
-        self.__waiting_plan:list[dict] = []
-        self.__current_charge_action:dict = {}
-        self.__isLatched:bool = False
-        self.__signal_request_charge_plan_calibration:XSignal = XSignal()
-        self.__signal_CU_info:XSignal = XSignal()
-        self.__signal_charging_finished:XSignal = XSignal()
+        """ 校正定时器, 用于在校正周期点发送校正请求 """
+        self.__finished_plan: list[dict] = []
+        """ 已完成的充电计划项 """
+        self.__waiting_plan: list[dict] = []
+        """ 等待中的充电计划项 """
+        self.__current_charge_action: dict = {}
+        """ 当前正在执行的充电计划项 """
+
+        self.__signal_request_charge_plan_calibration: XSignal = XSignal()
+        self.__signal_CU_info: XSignal = XSignal()
+        self.__signal_charging_finished: XSignal = XSignal()
+        self.__signal_connections()
+
+    def __signal_connections(self) -> None:
+        self.evse.signal_evse_status_error.connect(self.__handle_evse_errror)
+        self.evse.signal_selftest_finished_result.connect(self.__set_isEVSESelfTested)
 
     @property
     def id(self):
         return self.__id
 
     @property
-    def status(self)-> int:
+    def parent_obj(self) -> GPIOManager:
+        return self.__parent
+
+    @property
+    def vehicle_state(self) -> int:
         """
         可以反映是否在充电vehicle status
         """
-        return self.__status
+        return self.evse.vehicle_state
 
     @property
-    def evse(self):
+    def isAvailabel(self) -> bool:
+        """
+        当前充电单元是否可用
+        """
+        if self.evse.vehicle_state == 0 and self.__isNoError:
+            return True
+        else:
+            return False
+
+    @property
+    def evse(self) -> Evse:
         return self.__evse
 
     @property
-    def shelly(self):
+    def shelly(self) -> Shelly:
         return self.__shelly
 
     @property
-    def waiting_plan(self):
+    def waiting_plan(self) -> list:
         return self.__waiting_plan
 
     @property
-    def finished_plan(self):
+    def finished_plan(self) -> list:
         return self.__finished_plan
 
     @property
-    def current_charge_action(self):
+    def current_charge_action(self) -> dict:
         return self.__current_charge_action
 
     @property
-    def isLatched(self):
+    def isLatched(self) -> bool:
         return self.__isLatched
 
     @property
-    def signal_request_charge_plan_calibration(self):
+    def signal_request_charge_plan_calibration(self) -> XSignal:
         return self.__signal_request_charge_plan_calibration
 
     @property
-    def signal_CU_info(self):
+    def signal_CU_info(self) -> XSignal:
         return self.__signal_CU_info
 
     @property
-    def signal_charging_finished(self):
+    def signal_charging_finished(self) -> XSignal:
         return self.__signal_charging_finished
 
-    def get_current_limit(self) -> list:
-        return self.__evse.get_current_limit()
+    def get_current_limit(self) -> list | None:
+        """
+        返回: 
+            list: [最小电流值(int), 最大电流值(int)]
+                - 如果电流为负数则表示充电插口被占用
+                - 空列表表示无车辆插入
+            None: Evse故障
+        """
+        if self.__evse.vehicle_state == VehicleState.READY:
+            return []
+        elif (
+            self.__evse.vehicle_state == VehicleState.CHARGING
+            or self.__evse.vehicle_state == VehicleState.CHARGING_WITH_VENTILATION
+        ):
+            return [-1, -1]
+        elif self.__evse.vehicle_state == VehicleState.EV_IS_PRESENT:
+            self.__current_limit = self.__evse.get_current_limit()
+            self.__current_min = self.__current_limit[0]
+            self.__current_max = self.__current_limit[1]
+            return self.__current_limit
+        else:
+            _error(f'The current vehicle status of ChargeUnit {self.id} is: {self.__evse.vehicle_state}. Unable to obtain current limit')
+            return None
 
-    def set_charge_plan(self, message:dict, target_energy: int | None = None, depart_time: str | None = None) -> bool:
+    def set_charge_plan(self, charging_profile: dict, target_energy: int | None = None, depart_time: str | None = None) -> bool:
         """
         处理堵塞的chargeing plan,处理矫正的charging plan
+
+        charging_profile 字典结构
+        'chargingProfile': {
+            'id': 1,
+            'stackLevel': 1,
+            'chargingProfilePurpose': 'TxProfile',
+            'chargingProfileKind': 'Absolute',
+            'chargingSchedule': [
+                {
+                    'id': 1,
+                    'chargingRateUnit': 'W',
+                    'chargingSchedulePeriod': [
+                        {'startPeriod': 0, 'limit': 9852},
+                        ...
+                    ],
+                    'startSchedule': '2025-01-26T14:40:29Z'
+                }
+            ]
+        }
+
+        返回值: 
+        True: 成功
+        False:
+            - 充电列表长度为0
+            - 新计划比当前计划早, 放弃执行
+            - 新计划滞后时间超过新计划结束时间, 放弃执行
+            - EVSE
         """
-        #判断计划的时效，将失效计划排除
-        new_start_time = DataGene.str2time(message['chargingProfile']['chargingSchedule'][0]['startSchedule'])
-        if not self.__current_start_time:
-            self.__current_start_time = new_start_time
+        charging_schedule_list = charging_profile['chargingSchedule']
+        if len(charging_schedule_list) == 0:
+            return False
+        # TODO:判断执行计划优先顺序
+        exec_index = 0
 
-        else:
-            if new_start_time < self.__current_start_time:
-                #新计划的时间比正在执行的计划的时间早，当前计划更新，放弃计划
-                self.__signal_CU_info.emit('充电计划时间早于当前计划，充电计划更新失败')
-                return False
-            else:
-                self.__current_start_time = new_start_time
+        current_exec_dict = charging_schedule_list[exec_index]
+        period_start_time: str = current_exec_dict['startSchedule']
+        period_start_datetime: datetime = DataGene.str2time(period_start_time)
 
-
-        #判断是不是给新车充电，如果是，重置shelly已充能量，evse开始自检,并设定target_energy和depart_time
-        if target_energy and depart_time:
+        if not self.__start_time_str:
+            # 首次充电计划
+            self.__start_time_str = period_start_time
+            if not target_energy and not depart_time:
+                raise ValueError('target_energy and depart_time must be set')
+            # 参数重置
+            self.__target_energy = target_energy
+            self.__depart_time = depart_time
+            self.__finished_plan = []
+            self.__current_charge_action = {}
+            # 硬件初始化
             self.__shelly.reset()
             self.__evse.start_self_check()
-            self.__target_energy = target_energy
-            self.__time_start =  message['chargingProfile']['chargingSchedule'][0]['startSchedule']
-            self.__time_depart = depart_time
-            self.__finished_plan = []
+        elif period_start_datetime < self.__current_start_datetime:
+            # 非首次充电计划
+            # 新计划的时间比正在执行的计划的时间早, 放弃执行新计划
+            self.__signal_CU_info.emit('The charging plan is earlier than the current plan, and the update of the charging plan failed')
+            return False
 
+        # (非)首次充电计划
+        # 新计划晚于或等于当前计划, 则正常执行计划
+        self.__value_unit = current_exec_dict['chargingRateUnit']
+        self.__current_start_time_str = period_start_time
+        self.__current_start_datetime = period_start_datetime
+        self.__waiting_plan = current_exec_dict['chargingSchedulePeriod']
+        self.__isTmeSynchronized = False  # 强制对齐时间
+        # 数据类重置
+        self.__data_collector.set_CU_current_charge_action(self.id, {})
+        self.__data_collector.set_CU_waiting_plan(self.id, copy.deepcopy(self.__waiting_plan), self.__current_start_time_str)
+        self.__data_collector.clear_CU_finished_plan(self.id)
+        self.__data_collector.set_CU_charge_start_time(self.id, self.__start_time_str, self.__target_energy, self.__depart_time)
+        return self.__execute_start_charging()
 
-        #等待计划开始或修改滞后的计划
-        current_timestamp = time.time()
-        plan_timestamp = self.__current_start_time.timestamp()
-        if current_timestamp < plan_timestamp:
-            # 当前时间早于计划时间，需要等待
-            lag_s = plan_timestamp - current_timestamp
-            self.__timer = threading.Timer(lag_s, self.__charging,message)
-            self.__timer.start()
-            return True
+    def start_charging(self) -> bool:
+        """
+        主要是用于外部调用启动, 区别于接受充电计划表自动执行, 校正表时直接使用self.__execute_start_charging()
+        """
+        if (
+            self.__evse.vehicle_state == VehicleState.EV_IS_PRESENT
+            and (len(self.__evse.evse_status_error) == 1 and self.__evse.evse_status_error[0] == EVSEErrorInfo.RELAY_ON)
+            and self.__isNoError
+            and self.__shelly.isAvailable
+        ):
+            self.__isCharging = True
         else:
-            # 当前时间晚于计划时间，需要扣除迟滞时间
-            lag_s = current_timestamp - plan_timestamp
-            lag_m = math.ceil(lag_s / 60)
-            message['chargingProfile']['chargingSchedule'][0]['chargingSchedulePeriod'] = self.__trim_charge_plan(lag_m = lag_m,plan_list = message['chargingProfile']['chargingSchedule'][0]['chargingSchedulePeriod'])
-            if not message['chargingProfile']['chargingSchedule'][0]['chargingSchedulePeriod']:
-                self.__signal_CU_info.emit('此计划滞后时间超过计划长度')
+            _error(f"""\
+EVSE State abnormal, Unable to start charging (correct value)
+- vehicle_state (=2): {self.__evse.vehicle_state}
+- evse_status_error (ONLY 'Relay On'): {self.__evse.evse_status_error}
+- Shelly isAvailable: {self.__shelly.isAvailable}
+- isNoError (True): {self.__isNoError}
+""")
+        return self.__execute_start_charging()
+
+    def __execute_start_charging(self) -> bool:
+        """
+        充电前期准备, 此部分主要是处理充电计划表, 将充电计划表与当前时间对齐
+        """
+        if not self.__isCharging:
+            # 如果当前没有充电计划, 则直接返回.
+            # 保证新充电启动只会从外部触发, 内部函数不能启动.
+            return False
+        motor_runtime = GPIOParams.LETCH_MOTOR_RUNTIME if GPIOParams.LETCH_MOTOR_RUNTIME > 0 else 0
+        evse_selfcheck_runtime = GPIOParams.SELF_CHECK_TIMEOUT if GPIOParams.SELF_CHECK_TIMEOUT >= 30 else 0
+        current_timestamp: float = datetime.now().timestamp() + motor_runtime + evse_selfcheck_runtime
+        plan_timestamp: float = self.__current_start_datetime.timestamp()
+        if current_timestamp < plan_timestamp:
+            # 当前时间早于计划时间, 需要等待
+            lag_sec = plan_timestamp - current_timestamp
+            self.__timer = threading.Timer(lag_sec, self.__prepare_charging)
+            self.__timer.start()
+        else:
+            # 当前时间晚于计划时间, 需要扣除迟滞时间
+            lag_sec: float = current_timestamp - plan_timestamp
+
+            self.__waiting_plan = self.__trim_charge_plan(
+                lag_sec=lag_sec,
+                plan_list=self.__waiting_plan
+            )
+            if not self.__waiting_plan:
+                _error('This plan is lagging behind the plan lengt')
                 return False
             else:
-                self.__charging(message= message)
-                return True
+                self.__data_collector.set_CU_waiting_plan(self.id, copy.deepcopy(self.__waiting_plan), self.__current_start_time_str)
+                self.__prepare_charging()
+        return True
 
-
-
-    def stop_charging(self, ):
-        self.__evse.stop_charging()
-        self.__status = VehicleState.CRITICAL
-
-
-    def __start_charging(self, ):
-        """主要是用于供按钮启动"""
-        pass
-
-    def __charging(self,message: dict):
-        """实际运行的周期函数"""
-        current_periode:list = self.__current_periode
-        self.__set_unit(message)
-        self.__waiting_plan = message
-        if len(self.__waiting_plan['chargingProfile']['chargingSchedule'][0]['chargingSchedulePeriod']) <= 0:
-            self.__evse.stop_charging()
-            self.__signal_charging_finished.emit()
+    def __prepare_charging(self) -> None:
+        if not self.__isLatched and GPIOParams.LETCH_MOTOR_RUNTIME > 0:
+            # 执行上锁操作, 执行条件: 1.当前未上锁 2.电机运行时间大于0
+            self.__latch_motor.lock()
+            threading.Timer(GPIOParams.LETCH_MOTOR_RUNTIME+0.5, self.__prepare_charging).start()
             return
-        self.__current_charge_action = self.__waiting_plan['chargingProfile']['chargingSchedule'][0]['chargingSchedulePeriod'].pop(0)
-        interval = (self.__waiting_plan['chargingProfile']['chargingSchedule'][0]['chargingSchedulePeriod'][0]['startPeriod'] - self.__current_charge_action['startPeriod']) * 60
-        #将换算的电流向下取整# TODO 具体的判断
-        current = math.floor(self.__get_current_unit(self.__current_charge_action))
-        self.__evse.set_current(current)
-        current_periode[0] = self.__current_charge_action['startPeriod']  # current_periode += interval
-        if current_periode[0] // self.__request_periode >= current_periode[1]:
-            if current_periode[1] != 0:
-                charged_emergy= self.__shelly.charged_energy()
-                remaining_energy = self.__target_energy - charged_emergy
-                self.__current_limit = self.__evse.get_current_limit()
-                calibration_dict = {
-                    'evMinCurrent': self.__current_limit[0],
-                    'evMaxCurrent': self.__current_limit[1],
-                    'evMaxVoltage': GPIOParams.MAX_VOLTAGE,
-                    'energyAmount':remaining_energy,
-                    'departureTime': self.__time_depart
-                }
+        if not self.__isEVSESelfTested and GPIOParams.SELF_CHECK_TIMEOUT >= 30:
+            # 执行自检操作, 执行条件: 1.当前未自检 2.自检超时时间大于等于30s
+            self.__evse.start_self_check()
+            threading.Timer(GPIOParams.SELF_CHECK_TIMEOUT+0.5, self.__prepare_charging).start()
+            return
+        self.__charging()
 
-                self.signal_request_charge_plan_calibration.emit(calibration_dict)
-            current_periode[1] = current_periode[0] // self.__request_periode
-        threading.Timer(interval, self.__charging, [current_periode]).start()
-        self.__finished_plan.append(self.__current_charge_action)
-
-
-
-    def set_status(self, status):
-        self.__status = status
-
-    def __set_unit(self,data:dict):
-        self.__unit = data['chargingProfile']['chargingSchedule'][0]['chargingRateUnit']
-
-    def __get_current_unit(self,charging_plan: dict):
-        if self.__unit == 'W':
-            return charging_plan['limit'] / GPIOParams.MAX_VOLTAGE
+    def __isExecutable(self) -> bool:
+        """ 
+        返回值: 
+            - True: 可以执行
+            - False: 不能执行
+                - 当前未在充电状态
+                - 车辆状态为故障或严重故障
+                - EVSE状态错误, 除了`EVSEErrorInfo.RELAY_ON`以外, 还有其他内容
+                - 当前充电单元故障
+                - 当前已无充电计划 / 充电计划全部完成
+                - Shelly设备不可用
+        """
+        if (
+            not self.__isCharging
+            or not self.__shelly.isAvailable
+            or self.__evse.vehicle_state == VehicleState.FAILURE
+            or self.__evse.vehicle_state == VehicleState.CRITICAL
+            or not (len(self.__evse.evse_status_error) == 1 and self.__evse.evse_status_error[0] == EVSEErrorInfo.RELAY_ON)
+            or not self.__isNoError
+            or len(self.__waiting_plan) == 0
+        ):
+            _error(f"""\
+The charging unit is not executable (correct value)
+- isCharging (True): {self.__isCharging}
+- vehicle_state (<=4): {self.__evse.vehicle_state}
+- evse_status_error (ONLY 'Relay On'): {self.__evse.evse_status_error}
+- isNoError (True): {self.__isNoError}
+- waiting_plan_list (>0): {len(self.__waiting_plan)}
+- Shelly isAvailable(True): {self.__shelly.isAvailable}
+""")
+            return False
         else:
-            return charging_plan['limit']
+            return True
+
+    def __charging(self) -> bool:
+        """
+        实际运行的周期函数
+        """
+        def set_charging_current() -> bool:
+            """ 
+            设置电流, 开始充电
+            """
+            current = self.__convert_value_in_amps(self.__current_charge_action)
+            return self.__evse.set_current(current)
+
+        # 1. 先存入上次的计划
+        if self.__current_charge_action:
+            self.__finished_plan.append(copy(self.__current_charge_action))
+            self.__data_collector.append_CU_finished_plan(self.id, copy(self.__current_charge_action))
+        # 2. 检查是否可以执行, 不能则停止充电, 并发出信号
+        if not self.__isExecutable():
+            self.stop_charging()
+            self.__signal_charging_finished.emit()
+            return False
+        # 3. 取出充电动作, 计算单次充电时间
+        self.__current_charge_action = self.__waiting_plan.pop(0)
+        self.__data_collector.set_CU_waiting_plan(self.id, copy.deepcopy(self.__waiting_plan), self.__current_start_time_str)
+        self.__data_collector.set_CU_current_charge_action(self.id, copy(self.__current_charge_action))
+        charge_duration_sec: int | float = self.__waiting_plan[0]['startPeriod']-self.__current_charge_action['startPeriod']
+        current_time: float = datetime.now().timestamp()
+        current_index = current_time // self.__index_period_sec
+        # 4. 如果时间未同步, 则同步时间, 每个计划表的第一个充电周期都要进行时间同步/对齐
+        if not self.__isTmeSynchronized:
+            if current_index != self.__charge_index:
+                """ 
+                跳过单充电计划中首个充电周期时的校正, 如果第一个周期就在校正触发时间上, 则跳过校正
+                整个校正周期将被跳过, 确保临近周期点的充电计划不会再次请求校正, 当前周期被记录
+                """
+                self.__charge_index = current_index
+            phase1_fill_time: int | float = self.__current_start_datetime.timestamp() + charge_duration_sec - current_time
+            self.__isTmeSynchronized = True
+            # 4.1 执行充电操作, 同时检查是否成功设置电流, 若否则停止充电
+            result: bool = set_charging_current()
+            if not result:
+                self.stop_charging()
+                self.__signal_charging_finished.emit()
+                _error("Error setting charging current")
+                return False
+            self.__timer = threading.Timer(phase1_fill_time, self.__charging)
+            self.__timer.start()
+            return True
+
+        # 5. 跳过单充电计划中首个充电周期时的校正, 如果第一个周期就在校正触发时间上, 则跳过校正
+        if current_index != self.__charge_index and self.__index_period_sec > 0:
+            self.__charge_index = current_index
+            charged_emergy = self.__shelly.charged_energy()
+            remaining_energy = self.__target_energy - charged_emergy
+            current_limit_list = self.get_current_limit()
+            if current_limit_list is None or len(current_limit_list) == 0 or not all(x >= 0 for x in current_limit_list):
+                self.stop_charging()
+                _error("Error getting current limit")
+                return False
+
+            calibration_dict = {
+                'evMinCurrent': self.__current_limit[0],
+                'evMaxCurrent': self.__current_limit[1],
+                'evMaxVoltage': GPIOParams.MAX_VOLTAGE,
+                'energyAmount': remaining_energy,
+                'departureTime': self.__time_depart_str
+            }
+            self.signal_request_charge_plan_calibration.emit(calibration_dict)
+
+        # 6. 执行充电操作, 同时检查是否成功设置电流, 若否则停止充电
+        result: bool = set_charging_current()
+        if not result:
+            self.stop_charging()
+            _error("Error setting charging current")
+            return False
+        self.__timer = threading.Timer(charge_duration_sec, self.__charging)
+        self.__timer.start()
+        return True
+
+        """ 
+                current_periode: list = self.__current_periode
+                current = self.__convert_value_in_amps(self.__current_charge_action)
+                self.__evse.set_current(current)
+                current_periode[0] = self.__current_charge_action['startPeriod']  # current_periode += interval
+                if current_periode[0] // self.__request_periode >= current_periode[1]:
+                    if current_periode[1] != 0:
+                        charged_emergy = self.__shelly.charged_energy()
+                        remaining_energy = self.__target_energy - charged_emergy
+                        self.__current_limit = self.__evse.get_current_limit()
+                        calibration_dict = {
+                            'evMinCurrent': self.__current_limit[0],
+                            'evMaxCurrent': self.__current_limit[1],
+                            'evMaxVoltage': GPIOParams.MAX_VOLTAGE,
+                            'energyAmount': remaining_energy,
+                            'departureTime': self.__time_depart_str
+                        }
+
+                        self.signal_request_charge_plan_calibration.emit(calibration_dict)
+                    current_periode[1] = current_periode[0] // self.__request_periode
+                threading.Timer(interval, self.__charging, [current_periode]).start()
+                self.__finished_plan.append(self.__current_charge_action)
+        """
+
+    def stop_charging(self, error_code: str = '') -> None:
+        """ 
+        停止充电
+        添加结束动作
+        关闭定时器
+        发送充电结束信号
+        解锁
+        重置参数
+        """
+        self.__evse.stop_charging()
+        if self.__current_charge_action:
+            self.__finished_plan.append(copy(self.__current_charge_action))
+            self.__data_collector.append_CU_finished_plan(self.id, copy(self.__current_charge_action))
+        if self.__timer.is_alive():
+            self.__timer.cancel()
+        self.__signal_charging_finished.emit()
+        self.__latch_motor.unlock()
+        # 进行初始化参数
+        if error_code:
+            self.__isNoError = False
+            _error(f'charge unit {self.id} has Errors, error code: {error_code}')
+        self.__isCharging = False
+        self.__isTmeSynchronized = False
+        self.__isEVSESelfTested = False
+
+    def clear_error(self) -> None:
+        """ 慎用, 前端应做提示 """
+        self.__isNoError = True
+
+    def __convert_value_in_amps(self, charging_limit: int) -> int:
+        """
+        将充电限制值转换为安培值, 并限制在最小和最大电流之间
+        """
+        if self.__value_unit == 'W':
+            charging_limit = charging_limit / GPIOParams.MAX_VOLTAGE
+        round_amps = round(charging_limit)
+        return max(min(round_amps, self.__current_max), self.__current_min)
+
+    def __set_isEVSESelfTested(self, flag: bool) -> None:
+        """ 设置是否已经进行过EVSE自检, 给信号使用的 """
+        self.__isEVSESelfTested = flag
 
     def __send_signal_info(self, *args) -> None:
         """
@@ -237,7 +520,7 @@ class ChargeUnit:
             if log:
                 log(temp)
         except Exception as e:
-            error_text = f'********************\n<Error - {error_hint}> {e}\n********************'
+            error_text: str = f'********************\n<Error - {error_hint}> {e}\n********************'
             if self.__info_title and doShowTitle:
                 error_text = f'< {self.__info_title} >\n' + error_text
             signal.emit(error_text)
@@ -246,8 +529,8 @@ class ChargeUnit:
             if log:
                 log(error_text)
 
-    def __handle_evse_errror(self, error_message):
-        handle_dict= {
+    def __handle_evse_errror(self, error_message: set) -> None:
+        handle_dict = {
             EVSEErrorInfo.RCD_CHECK_ERROR: self.stop_charging,
             EVSEErrorInfo.RELAY_OFF: self.stop_charging,
             EVSEErrorInfo.VENT_REQUIRED_FAIL: self.stop_charging,
@@ -257,29 +540,27 @@ class ChargeUnit:
         }
         for error_item in error_message:
             if error_item in handle_dict:
-                handle_dict[error_item]()
+                handle_dict[error_item](error_item)
 
-
-    def __trim_charge_plan(self,lag_m: int,plan_list: list):
-        if lag_m > plan_list[-1]['startPeriod']:
+    def __trim_charge_plan(self, lag_sec: int | float, plan_list: list) -> list:
+        if lag_sec > plan_list[-1]['startPeriod']:
             return []
-        diff = lag_m - plan_list[0]['startPeriod']
+        diff: int | float = lag_sec - plan_list[0]['startPeriod']
         flag_new = True
         last_item = {}
         while len(plan_list) > 1:
             second_plan: dict = plan_list[1]
             first_plan: dict = plan_list[0]
-            start_time = second_plan['startPeriod']
-            if diff > 0:  # 当前时间大于执行时间，继续寻找
-                last_item = plan_list.pop(0)
+            start_time: int = second_plan['startPeriod']
+            if diff > 0:  # 当前时间大于执行时间, 继续寻找
+                last_item: dict = plan_list.pop(0)
             else:
                 if diff != 0:
-                    current_time = first_plan['startPeriod'] - abs(diff)
+                    current_time: int | float = first_plan['startPeriod'] - abs(diff)
                     last_item['startPeriod'] = current_time
                     if not flag_new:
                         plan_list.insert(0, last_item)
                 break
-            diff = lag_m - start_time
+            diff: int | float = lag_sec - start_time
             flag_new = False
         return plan_list
-
