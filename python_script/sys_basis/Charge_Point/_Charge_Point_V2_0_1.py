@@ -572,7 +572,7 @@ class ChargePointV201(cpv201, ChargePointBase):
             status=NotifyEVChargingNeedsStatusType.rejected
         )
         wait_for_result = await self._wait_for_result_func()
-        return await wait_for_result(Action.NotifyEVChargingNeeds, default_message)
+        return await wait_for_result(Action.notify_ev_charging_needs, default_message)
 
     @on(Action.notify_ev_charging_schedule)
     async def _on_notify_ev_charging_schedule_request(
@@ -784,7 +784,7 @@ class ChargePointV201(cpv201, ChargePointBase):
             status=ChargingProfileStatus.rejected
         )
         wait_for_result = await self._wait_for_result_func()
-        return await wait_for_result(Action.SetChargingProfile, default_message)
+        return await wait_for_result(Action.set_charging_profile, default_message)
 
     @on(Action.set_display_message)
     async def _on_set_display_message_request(
