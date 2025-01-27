@@ -534,7 +534,7 @@ The charging unit is not executable (correct value)
                 log(error_text)
 
     def __handle_evse_errror(self, error_message: set) -> None:
-        handle_set: str = {
+        handle_set: set = {
             EVSEErrorInfo.RCD_CHECK_ERROR,
             EVSEErrorInfo.RELAY_OFF,
             EVSEErrorInfo.VENT_REQUIRED_FAIL,
