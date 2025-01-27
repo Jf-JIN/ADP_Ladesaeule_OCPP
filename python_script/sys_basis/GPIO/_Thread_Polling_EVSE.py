@@ -20,7 +20,7 @@ _exception = Log.EVSE.exception
 
 
 class PollingEVSE(Thread):
-    def __init__(self, parent: GPIOManager, *, charge_unit_dict: dict, intervall: int | float) -> None:
+    def __init__(self, parent: GPIOManager, charge_unit_dict: dict, intervall: int | float) -> None:
         super().__init__()
         self.__parent: GPIOManager = parent
         self.__evse_list: list = []

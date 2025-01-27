@@ -15,7 +15,7 @@ _exception = Log.SHELLY.exception
 
 
 class PollingShelly(Thread):
-    def __init__(self, parent: GPIOManager, *, charge_unit_dict: dict, intervall: int | float, timeout: int | float) -> None:
+    def __init__(self, parent: GPIOManager, charge_unit_dict: dict, intervall: int | float, timeout: int | float) -> None:
         super().__init__()
         self.__parent: GPIOManager = parent
         self.__shelly_list: list = []

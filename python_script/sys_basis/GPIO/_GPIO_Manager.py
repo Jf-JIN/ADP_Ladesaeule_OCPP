@@ -18,8 +18,8 @@ class GPIOManager:
 
         self.__charge_unit_init_param_list = None
         self.__thread_polling_evse: PollingEVSE = PollingEVSE(self, self.__charge_units_dict, GPIOParams.POLLING_EVSE_INTERVAL)
-        self.__thread_polling_shelly: PollingShelly = PollingShelly(self, self.__charge_units_dict, GPIOParams.POLLING_SHELLY_INTERVAL)
-        self.__data_collector: DataCollector = DataCollector(self, self.__charge_units_dict, GPIOParams.DATACOLLECTOR_DATA_INTERVAL, GPIOParams.DATACOLLECTOR_FIG_INTERVAL)
+        self.__thread_polling_shelly: PollingShelly = PollingShelly(self, self.__charge_units_dict, GPIOParams.POLLING_SHELLY_INTERVAL, GPIOParams.POLLING_SHELLY_TIMEOUT)
+        self.__data_collector: DataCollector = DataCollector(self, GPIOParams.DATACOLLECTOR_DATA_INTERVAL, GPIOParams.DATACOLLECTOR_FIG_INTERVAL)
         self.__timer_send_requeset_calibration: threading.Timer = threading.Timer(GPIOParams.REQUEST_INTERVAL, self.__execute_on_send_request_calibration_timer)
         self.__signal_GPIO_info: XSignal = XSignal()
         self.__signal_request_charge_plan_calibration: XSignal = XSignal()
