@@ -448,6 +448,8 @@ class Logger(object, metaclass=_LogMeta):
         self.__current_day = datetime.today().date()
         self.__isNewFile = True
         self.__signal_log_instance = _LogSignal()
+        self.__signal_log_instance_color = _LogSignal()
+        self.__signal_log_instance_html = _LogSignal()
         self.__level_color_dict = {
             LogLevel.DEBUG: (_ColorMap.LIGHTGREEN, '', False, False),
             LogLevel.INFO: (_ColorMap.BLUE, '', False, False),
@@ -488,6 +490,14 @@ class Logger(object, metaclass=_LogMeta):
     @property
     def signal_log_instance(self) -> _LogSignal:
         return self.__signal_log_instance
+
+    @property
+    def signal_log_instance_color(self) -> _LogSignal:
+        return self.__signal_log_instance_color
+
+    @property
+    def signal_log_instance_html(self) -> _LogSignal:
+        return self.__signal_log_instance_html
 
     def __set_log_file_path(self) -> None:
         """ 设置日志文件路径 """
@@ -764,6 +774,8 @@ class Logger(object, metaclass=_LogMeta):
         self.__write(tx)
         self.__printf(txs)
         self.__signal_log_instance.emit(tx)
+        self.__signal_log_instance_color.emit(txs)
+        self.__signal_log_instance_html.emit(thtml)
         Logger.signal_log_public.emit(tx)
         Logger.signal_log_public_color.emit(txs)
         Logger.signal_log_public_html.emit(thtml)
