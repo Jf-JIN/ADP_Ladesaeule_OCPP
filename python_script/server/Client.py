@@ -98,7 +98,7 @@ class Client:
         # TODO 可以增加判断逻辑
         # TODO 该函数可以优化, 并拆分小模组/模块
         response_message_dict: dict = {
-            Action.SetChargingProfile: GenSetChargingProfileResponse.generate(
+            Action.set_charging_profile: GenSetChargingProfileResponse.generate(
                 status=ChargingProfileStatus.accepted
             ),
         }
@@ -106,7 +106,7 @@ class Client:
         action: str = response_message_dict.get(request_message['action'], None)
         if action:
             send_response_message(response_message_dict[action], request_message)
-            if action == Action.SetChargingProfile:
+            if action == Action.set_charging_profile:
                 res: bool = self.GPIO_Manager.set_charge_plan(
                     data=request_message['data'],
                     target_energy=self.__cp_info_dict['target_energy'],
