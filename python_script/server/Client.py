@@ -44,21 +44,60 @@ class Client:
         self.coroutine_gui_websocket_server = PortWebSocketServer('localhost', 12346)
         self.manager_coroutines = ManagerCoroutines(self.coroutine_OCPP_client.run, self.coroutine_gui_websocket_server.run)
 
-    def init_signal_connections(self):
-        self.coroutine_OCPP_client.signal_thread_ocpp_client_info.connect(self.send_info_web_message)
-        self.coroutine_OCPP_client.signal_thread_ocpp_client_recv.connect(self.send_info_opt_message)
-        self.coroutine_OCPP_client.signal_thread_ocpp_client_recv_request.connect(self.rrr)
+    def init_signal_connections(self) -> None:
+        """ 信号连接 """
+        # 显示信息处理
+        # self.coroutine_gui_websocket_server.signal_thread_websocket_client_info.connect(self.send_info_gui_message)
+        # self.coroutine_OCPP_client.signal_thread_ocpp_client_info.connect(self.send_info_web_message)
+        # self.thread_web_server.signal_thread_web_server_info.connect(self.send_info_web_message)
+        Log.RAS.signal_log_public_html.connect(self.send_message_to_web)
 
+        # # 接收原始 ocpp 数据
+        # self.coroutine_OCPP_client.signal_thread_ocpp_client_recv.connect(self.send_message_to_web)
+
+        # 处理 优化器的 OCPP 的请求, 响应，响应结果
+        self.coroutine_OCPP_client.signal_thread_ocpp_client_recv_request.connect(self.handle_request)
+        self.coroutine_OCPP_client.signal_thread_ocpp_client_recv_response.connect(self.handle_response)
+        self.coroutine_OCPP_client.signal_thread_ocpp_client_recv_response_result.connect(self.handle_response_result)
+
+        # 处理优化器的 普通消息
         self.coroutine_OCPP_client.signal_thread_ocpp_client_normal_message.connect(self.handle_normal_message)
-        # self.coroutine_OCPP_client.signal_thread_ocpp_client_recv_request
-        # self.coroutine_OCPP_client.signal_thread_ocpp_client_recv_response.connect(self.rrr)
-        self.thread_web_server.signal_thread_web_server_info.connect(self.send_info_web_message)
-        self.thread_web_server.signal_thread_web_server_recv.connect(self.send_info_web_message)
-        # LoggerGroup.signal_group_public_html.connect(print)
-        LoggerGroup.signal_group_public_html.connect(self.send_info_web_message)
-        # self.thread_web_server.signal_thread_webs_server_finished
-        self.coroutine_gui_websocket_server.signal_thread_websocket_client_info.connect(self.send_info_gui_message)
-        # self.coroutine_gui_websocket_server.signal_thread_websocket_client_recv
+
+        # 处理网页端的消息
+        self.thread_web_server.signal_thread_web_server_recv.connect(self.handle_web_message)
+
+        # 处理电脑端的消息
+        self.coroutine_gui_websocket_server.signal_thread_websocket_client_recv.connect(self.handle_computer_message)
+
+        # 处理 GPIO 的消息
+        self.GPIO_Manager.signal_request_charge_plan_calibration.connect(self.handle_gpio_requeset)
+        self.GPIO_Manager.signal_GPIO_info.connect(self.handle_gpio_info)
+
+    def handle_request(self, request_message):
+        pass
+
+    def handle_response(self, response_message):
+        pass
+
+    def handle_response_result(self, response_result_message):
+        pass
+
+    def handle_normal_message(self, normal_message):
+        pass
+
+    def handle_web_message(self, web_message):
+        pass
+
+    def handle_computer_message(self, computer_message):
+        pass
+
+    def handle_gpio_requeset(self, gpio_request):
+        pass
+
+    def handle_gpio_info(self, gpio_info):
+        pass
+
+    def send_message_to_web(self, message):
         pass
 
     def send_info_web_message(self, message):
