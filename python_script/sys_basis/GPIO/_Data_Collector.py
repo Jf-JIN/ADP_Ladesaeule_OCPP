@@ -135,6 +135,8 @@ class DataCollector:
         self.__signal_DC_figure_display: XSignal = XSignal()
         self.__timer_data.start()
         self.__timer_figure.start()
+        self.__isRunning = True
+        """ 表示是否存在充电桩在充电中/准备充电 """
 
     def __str__(self) -> str:
         return f"""Data Collector:\
@@ -211,6 +213,7 @@ class DataCollector:
         plan['finishedTime'] = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
         plan['chargedEnergy'] = self.__all_data[id]['shelly']['charged_energy']
         self.__all_data[id]['current_charge_action'] = plan
+        self.__isRunning = True
 
     def set_CU_charge_start_time(self, id: int, start_time: str, target_energy: int, depart_time: str, custom_data: int) -> None:
         """
@@ -261,7 +264,6 @@ class DataCollector:
         minutes, seconds = divmod(minites_seconds, 60)
         charged_time_str = f"{hours:02}:{minutes:02}:{seconds:02}"
         self.__all_data[id]['charged_time'] = charged_time_str
-
         self.__send_figure_data()
 
     def clear_CU_finished_plan(self, id: int) -> None:
@@ -284,6 +286,7 @@ class DataCollector:
         """
         self.__charging_units_id_set.add(id)
         self.__available_charge_units_id_set.discard(id)
+        self.__isRunning = True
 
     def __remove_charging_unit(self, id: int) -> None:
         """
@@ -291,6 +294,8 @@ class DataCollector:
         """
         self.__charging_units_id_set.discard(id)
         self.__available_charge_units_id_set.add(id)
+        if len(self.__charging_units_id_set) == 0:
+            self.__isRunning = False
 
     def __set_CU_status(self, id: int, status: int) -> None:
         """
