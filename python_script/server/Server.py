@@ -130,9 +130,11 @@ class Server:
             "img_comparison": opt.get_img_comparison()})
         self.__coroutine_OCPP_server.send_normal_message(str({
             "opt_img": {
-                "results": 1 if self._isopt else 0,
-                "img_charging": opt.get_img_charging(),
-                "img_comparison": opt.get_img_comparison()
+                message['data']['evseId']: {
+                    "results": 1 if self._isopt else 0,
+                    "img_charging": opt.get_img_charging(),
+                    "img_comparison": opt.get_img_comparison(),
+                }
             }
         }))
         _debug(self._isopt)
