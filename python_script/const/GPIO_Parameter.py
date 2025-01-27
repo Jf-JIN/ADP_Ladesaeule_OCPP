@@ -13,6 +13,7 @@ class GPIOParams(AnalogDefine):
         (0, '192.168.1.100'),
         # (1, 'url1'),
     ]
+    DO_USE_RCD: bool = False
     MAX_VOLTAGE = 220
     SELF_CHECK_TIMEOUT = 31
     """ EVSE 自检时间, 单位: 秒. 该值必须 >=30 秒, 否则自检将不会启动 """
@@ -20,6 +21,16 @@ class GPIOParams(AnalogDefine):
     """ 栓电机运行时间, 单位: 秒. 该值必须大于0秒, 否则电机将不会启动 """
     CALIBRATION_PERIOD = 3600
     """ 校准周期, 单位: 秒. 该值必须大于0秒, 否则校准将不会启动 """
+    POLLING_EVSE_INTERVAL = 1
+    """ 轮询 EVSE 间隔, 单位: 秒. 该值必须大于0秒 """
+    POLLING_SHELLY_INTERVAL = 1
+    """ 轮询 Shelly 间隔, 单位: 秒. 该值必须大于0秒 """
+    DATACOLLECTOR_DATA_INTERVAL = 1
+    """ 文字数据发送间隔, 单位: 秒. 该值必须大于0秒 """
+    DATACOLLECTOR_FIG_INTERVAL = 1
+    """ 图像数据发送间隔, 单位: 秒. 该值必须大于0秒 """
+    REQUEST_INTERVAL = 1
+    """ 请求间隔, 单位: 秒. 该值必须大于0秒 """
 
 
 class ResultFlag(AnalogDefine):
