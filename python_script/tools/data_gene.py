@@ -289,7 +289,7 @@ class DataGene:
         返回:
             - str: 图表的base64编码字符串
         """
-        if charge_plan is None:
+        if charge_plan is [{}]:
             return None
         plt.style.use(['science', 'no-latex'])
 
