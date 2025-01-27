@@ -81,13 +81,14 @@
         <div id="charging_settings">
             <div><label for="charge_mode" id="charge_mode_label">Charge_Mode: </label>
                 <select id="charge_mode">
-                    <option value="option1" id="select_dynamic">Dynamic Adjusting</option>
-                    <option value="option2" id="select_shortest_time">Shortest Charge Time</option>
-                    <option value="option3" id="select_least_cost">Least Charge Cost</option>
+                    <option value="0" id="select_dynamic">Dynamic Adjusting</option>
+                    <option value="1" id="select_shortest_time">Shortest Charge Time</option>
+                    <option value="2" id="select_least_cost">Least Charge Cost</option>
                 </select>
             </div>
             <div><label for="charge_power" id="charge_power_label">Charge Power: </label><input type="text" id="charge_power"> Wh</div>
-            <div><label for="departure_time" id="departure_time_label">Departure Time:</label><input type="time" id="departure_time"></div>
+            <label for="departure_time" id="departure_time_label">Departure Time:</label>
+            <input type="datetime-local" id="departure_time">
             <div>
                 <div id="charging_settings_blank"></div>
                 <input type="button" text="save" value="save" id="save_settings">

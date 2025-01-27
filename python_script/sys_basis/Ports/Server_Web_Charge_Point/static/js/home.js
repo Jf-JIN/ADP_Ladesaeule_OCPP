@@ -11,13 +11,26 @@ const page_de = document.getElementById("svg_de");
 socket.on('update_data', (data) => {
     console.log(data);
     console.log(data.main_console);
+    function isHTML (content) {
+        // 使用正则表达式判断内容是否是HTML
+        const htmlRegex = /<\/?[a-z][\s\S]*>/i;
+        return htmlRegex.test(content);
+    }
 
     function updateConsole (consoleElement, content) {
         console.log(consoleElement.scrollHeight - consoleElement.scrollTop);
         console.log(consoleElement.clientHeight);
         console.log(Math.abs(consoleElement.scrollHeight - consoleElement.scrollTop - consoleElement.clientHeight) < 1)
         const wasAtBottom = Math.abs(consoleElement.scrollHeight - consoleElement.scrollTop - consoleElement.clientHeight) < 1;
-        consoleElement.textContent += `\n${content}\n`;
+        content = content.replace(/--<([^>]+)>/g, '--< $1 >');
+        console.log(content);
+        
+        if (isHTML(content)) {
+            consoleElement.innerHTML += content + '<br>';
+        } else {
+            // consoleElement.textContent += `\n${content}\n`;
+            consoleElement.innerHTML += `<span>${content.replace('\\n', '<br>')}</span><br>`;
+        }
         if (wasAtBottom) {
             consoleElement.scrollTop = consoleElement.scrollHeight;
         }
@@ -65,12 +78,12 @@ function handleTitleClick (selectedElement) {
 
 title_home.addEventListener('click', () => {
     handleTitleClick(title_home);
-    socket.emit('input_data', 'home1');
+    // socket.emit('input_data', 'home1');
 });
 
 title_console.addEventListener('click', () => {
     handleTitleClick(title_console);
-    socket.emit('input_data', 'home');
+    // socket.emit('input_data', 'home');
 });
 
 title_image.addEventListener('click', () => {

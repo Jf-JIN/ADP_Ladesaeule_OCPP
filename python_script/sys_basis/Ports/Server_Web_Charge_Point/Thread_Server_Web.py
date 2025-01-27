@@ -12,8 +12,8 @@ from tools.Inner_Decorators import *
 class ServerWeb(Thread):
     def __init__(self, host='0.0.0.0', port=2311, info_title='Web_Server'):
         super().__init__()
-        self.__host = host
-        self.__port = port
+        self.__host: str = host
+        self.__port: int = port
         self.__app = Flask(__name__, static_folder='static', template_folder='templates')
         self.__app.config['SECRET_KEY'] = 'secret!'
         self.__socketio = SocketIO(self.__app)
