@@ -16,9 +16,8 @@ class Evse(object):
         self.__doUseRCD: bool = doUseRCD
         self.__isEnableCharging: bool = True
         self.__modbus: ModbusIO = ModbusIO(id)
-        self.__signal_selftest_finished: XSignal = XSignal()
+        self.__signal_selftest_finished_result: XSignal = XSignal()
         self.__signal_evse_status_error: XSignal = XSignal()
-        self.__signal_selftest_finished.connect(self.__handle_selftest_finished)
 
     @property
     def id(self) -> int:
@@ -41,8 +40,8 @@ class Evse(object):
         return self.__doUseRCD
 
     @property
-    def signal_selftest_finished(self) -> XSignal:
-        return self.__signal_selftest_finished
+    def signal_selftest_finished_result(self) -> XSignal:
+        return self.__signal_selftest_finished_result
 
     @property
     def signal_evse_status_error(self):
@@ -66,7 +65,7 @@ class Evse(object):
                 or EVSEErrorInfo.VENT_REQUIRED_FAIL in data
         ):
             self.__isEnableCharging = False
-            self.__signal_evse_status_error.emit( self.__evse_status_error)
+            self.__signal_evse_status_error.emit(self.__evse_status_error)
 
     def set_current(self, value) -> bool:
         """
@@ -98,8 +97,8 @@ class Evse(object):
     def start_self_check(self) -> None:
         selftest = EVSESelfCheck(self.__id, self.__doUseRCD)
         selftest.signal_self_test_error.connect(self.set_evse_status_error)
-        selftest.signal_test_finished.connect(self.signal_selftest_finished.emit)
-        selftest.signal_test_finished.connect(self.__handle_selftest_finished)
+        selftest.signal_test_finished_result.connect(self.signal_selftest_finished_result.emit)
+        selftest.signal_test_finished_result.connect(self.__handle_selftest_finished)
         selftest.start()
 
     def get_current_limit(self) -> list:
