@@ -30,9 +30,10 @@ class ChargePointBase(object):
             - `message_id`: 消息ID, 用于匹配请求与响应
         - signal_charge_point_ocpp_response(dict): OCPP响应消息信号(向系统传递外部响应), 内容为字典, 结构如下
             - `action`(str): 消息类型, 实际是数据类的名称, 例如: `call.Authorize` 中的 `'Authorize'`, 在1.6版本中可能存在数据类名称与消息类型不一致的情况
-            - `data`(dict): OCPP消息的字典形式
-            - `send_time`(float): 请求发送时间,  这里send 含义是从 OCPP端口 向外部发送的动作
-            - `result`(int): 响应结果, 表示响应是否成功收到.
+            - `ori_data`: 原始数据, 发送的Request数据
+            - `data`(dict): 解包后的数据
+            - `send_time`(float): 请求发送时间
+            - `result`(int): 响应结果,
                 - 枚举类 `CP_Params.RESPONSE`
                 - 枚举项: `SUCCESS`, `TIMEOUT`, `ERROR`
         - signal_charge_point_ocpp_response_result(dict): OCPP响应消息结果信号. 向系统反馈消息是否在响应时间内发送出去了, 包含具体发送信息的内容, 与函数返回值不同的一点在于其记录了详细的消息信息, 可以用于后续对发送失败的消息进行处理, 内容为字典, 结构如下
