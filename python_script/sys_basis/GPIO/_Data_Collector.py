@@ -14,23 +14,23 @@ if 0:
 
 
 class DataCollector:
-    """ 
+    """
 
-    - 参数: 
+    - 参数:
         - gpio_manager(GPIOManager): GPIOManager对象
         - interval_send_data(int|float): 发送数据数据的间隔时间, 单位: 秒, 默认: 1秒
         - interval_send_fig(int|float): 发送图像数据的间隔时间, 单位: 秒, 默认: 30秒
 
-    - 属性: 
+    - 属性:
         - charging_units_id_set(set): 充电单元ID集合
         - available_charge_units_id_set(set): 可用的充电单元ID集合
         - parent_object(GPIOManager): 父对象
 
-    - 信号: 
+    - 信号:
         - signal_DC_data_display(XSignal): DC数据显示信号
         - signal_DC_figure_display(XSignal): DC图像显示信号
 
-    - 方法: 
+    - 方法:
         - 硬件数据
             - set_evse_data(id, data): 设置EVSE数据, 线程使用
             - set_shelly_data(id, data): 设置Shelly数据, 线程使用
@@ -83,28 +83,29 @@ class DataCollector:
             },
             'status': VehicleState.EV_IS_PRESENT,
             'waiting_plan': [
-                {'startPeriod': 35, 'limit': 9855}, 
-                {'startPeriod': 50, 'limit': 8863}, 
+                {'startPeriod': 35, 'limit': 9855},
+                {'startPeriod': 50, 'limit': 8863},
                 ...
             ],
             'current_charge_action': {
-                'startPeriod': 20, 
+                'startPeriod': 20,
                 'limit': 8523,
-                'startTime': '2025-01-26T14:40:29Z',
-                'finishedTime': '2025-01-26T15:09:02Z', 
+                'startTime': '2025-01-26T15:00:02Z',
+                'finishedTime': '2025-01-26T15:23:30Z',
                 'chargedEnergy': 3600,
                 },
             'finished_plan': [
-                {'startPeriod': 0, 'limit': 9852, 'startTime':'2025-01-26T14:40:29Z','finishedTime': '2025-01-26T14:45:21Z', 'chargedEnergy':780,}, 
+                {'startPeriod': 0, 'limit': 9852, 'startTime':'2025-01-26T14:40:29Z','finishedTime': '2025-01-26T14:45:21Z', 'chargedEnergy':780,},
                 {'startPeriod': 5, 'limit': 9724, 'startTime':'2025-01-26T14:40:29Z','finishedTime': '2025-01-26T15:00:02Z', 'chargedEnergy':3500,},
-                {'startPeriod': 0, 'limit': 9852, 'startTime':'2025-01-26T15:00:02Z','finishedTime': '2025-01-26T15:05:02Z', 'chargedEnergy':4108,}, 
+                {'startPeriod': 0, 'limit': 9852, 'startTime':'2025-01-26T15:00:02Z','finishedTime': '2025-01-26T15:05:02Z', 'chargedEnergy':4108,},
                 {'startPeriod': 5, 'limit': 9724, 'startTime':'2025-01-26T15:00:02Z','finishedTime': '2025-01-26T15:20:02Z', 'chargedEnergy':6958,},
             ],
             'finished_plan_figure_base64': <base64_string>,
             'start_time': '2025-01-26T14:40:29Z', # 此开始时间指的是整个充电过程, 校正的计划表中的开始一时间不会记录
-            'period_start_time': '2025-01-26T14:40:29Z', # 此开始时间指一个充电表的开始时间, 校正的计划表中的开始时间会被记录
-            'target_energy': 700000,
+            'period_start_time': '2025-01-26T15:00:02Z', # 此开始时间指一个充电表的开始时间, 校正的计划表中的开始时间会被记录
             'depart_time': '2025-01-30T13:39:00Z',
+            'charged_time': 00:43:01,
+            'target_energy': 700000,
             'isLatched': True,
         },
         2:{
@@ -146,14 +147,14 @@ class DataCollector:
 
     @property
     def charging_units_id_set(self) -> set:
-        """ 
+        """
         返回一个集合, 包含所有正在充电的充电单元的 id.
         """
         return self.__charging_units_id_set
 
     @property
     def available_charge_units_id_set(self) -> set:
-        """ 
+        """
         返回一个集合, 包含所有可用的充电单元的 id.
         """
         return self.__available_charge_units_id_set
@@ -177,7 +178,7 @@ class DataCollector:
         return self.__parent
 
     def set_evse_data(self, id: int, data: dict) -> None:
-        """ 
+        """
         写入 EVSE 数据.
         """
         self.__evse_data[id] = data
@@ -186,7 +187,7 @@ class DataCollector:
         self.__set_CU_status(id, data['vehicle_state'])
 
     def set_shelly_data(self, id: int, data: dict) -> None:
-        """ 
+        """
         写入 Shelly 数据.
         """
         self.__shelly_data[id] = data
@@ -197,7 +198,7 @@ class DataCollector:
         self.__all_data[id]['current_charge_action']['chargedEnergy'] = data.get('charged_energy', 0)
 
     def set_CU_current_charge_action(self, id: int, plan: dict) -> None:
-        """ 
+        """
         设置充电单元当前充电计划.
 
         应输入的格式为字典, 键值对为:
@@ -212,7 +213,7 @@ class DataCollector:
         self.__all_data[id]['current_charge_action'] = plan
 
     def set_CU_charge_start_time(self, id: int, start_time: str, target_energy: int, depart_time: str) -> None:
-        """ 
+        """
         设置充电单元开始充电时间.
 
         应输入的格式为字符串, 格式为"%Y-%m-%dT%H:%M:%SZ"
@@ -242,7 +243,7 @@ class DataCollector:
             self.__all_data[id]['period_start_time'] = self.__all_data[id]['start_time']
 
     def append_CU_finished_plan(self, id: int, plan: dict) -> None:
-        """ 
+        """
         追加充电单元已完成的充电计划.
         """
         plan = copy.deepcopy(plan)
@@ -253,6 +254,13 @@ class DataCollector:
         if 'finished_plan' not in self.__all_data[id]:
             self.__all_data[id]['finished_plan'] = []
         self.__all_data[id]['finished_plan'].append(plan)
+        # 计算已充电时间
+        diff_seconds = (DataGene.str2time(plan['finishedTime']) - DataGene.str2time(plan['startTime'])).total_seconds()
+        hours, minites_seconds = divmod(diff_seconds, 3600)
+        minutes, seconds = divmod(minites_seconds, 60)
+        charged_time_str = f"{hours:02}:{minutes:02}:{seconds:02}"
+        self.__all_data[id]['charged_time'] = charged_time_str
+
         self.__send_figure_data()
 
     def clear_CU_finished_plan(self, id: int) -> None:
@@ -263,31 +271,31 @@ class DataCollector:
         self.__all_data[id]['finished_plan'] = []
 
     def set_CU_isLatched(self, id: int, flag: bool) -> None:
-        """ 
+        """
         设置充电单元是否上锁.
         """
         self.__check_id(id)
         self.__all_data[id]['isLatched'] = flag
 
     def __add_charging_unit(self, id: int) -> None:
-        """ 
+        """
         加入一个充电单元, 该方法会在线程检查时被 set_CU_status 自动调用.
         """
         self.__charging_units_id_set.add(id)
         self.__available_charge_units_id_set.discard(id)
 
     def __remove_charging_unit(self, id: int) -> None:
-        """ 
+        """
         移除一个充电单元, 该方法会在线程检查时被 set_CU_status 自动调用.
         """
         self.__charging_units_id_set.discard(id)
         self.__available_charge_units_id_set.add(id)
 
     def __set_CU_status(self, id: int, status: int) -> None:
-        """ 
+        """
         写入充电单元状态.
 
-        当状态为: 
+        当状态为:
         - `VehicleState.READY`: 充电单元就绪状态, 可以充电
         - `VehicleState.EV_IS_PRESENT`: 充电单元就绪状态, 可以充电
         - `VehicleState.CHARGING`: 充电单元正在充电, 充电桩被占用
@@ -309,31 +317,33 @@ class DataCollector:
             self.__add_charging_unit(id)
 
     def __check_id(self, id: int) -> None:
-        """ 
+        """
         确保 id 一定在 __all_data 中存在.
         """
         if id not in self.__all_data:
             self.__all_data[id] = {}
 
     def __send_display_data(self) -> None:
-        """ 
+        """
         发送文字数据
         """
-        data: dict = {}
+        data: dict = {
+
+        }
         self.__signal_DC_data_display.emit(data)
         self.__timer_data = Timer(self.__interval_send_data, self.__send_display_data)
         self.__timer_data.start()
 
     def __send_figure_data(self) -> None:
-        """ 
+        """
         发送图片数据
         """
         data: dict = {}
         for cu_id in self.__all_data:
             self.__check_id(cu_id)
-            finished_plan = self.__all_data[cu_id].get('finished_plan', [])
-            current_charge_action = self.__all_data[cu_id].get('current_charge_action', {})
-            fig: str = DataGene.plan2figure(finished_plan + current_charge_action)
+            finished_plan: list = self.__all_data[cu_id].get('finished_plan', [])
+            current_charge_action: dict = self.__all_data[cu_id].get('current_charge_action', {})
+            fig: str = DataGene.plan2figure(finished_plan + [current_charge_action])
             self.__all_data[cu_id]['finished_plan_figure_base64'] = fig
             data[cu_id] = fig
         self.__signal_DC_figure_display.emit(data)
