@@ -25,6 +25,8 @@ class GPIOParams(AnalogDefine):
     """ 轮询 EVSE 间隔, 单位: 秒. 该值必须大于0秒 """
     POLLING_SHELLY_INTERVAL = 1
     """ 轮询 Shelly 间隔, 单位: 秒. 该值必须大于0秒 """
+    POLLING_SHELLY_TIMEOUT = 10
+    """ Shelly 超时时间, 单位: 秒. 该值必须大于0秒 """
     DATACOLLECTOR_DATA_INTERVAL = 1
     """ 文字数据发送间隔, 单位: 秒. 该值必须大于0秒 """
     DATACOLLECTOR_FIG_INTERVAL = 1
