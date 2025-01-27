@@ -5,11 +5,15 @@ import datetime
 
 from sys_basis.XSignal import XSignal
 from const.GPIO_Parameter import *
+from const.Const_Parameter import *
+
 from tools.data_gene import *
 
 
 if 0:
     from ._GPIO_Manager import GPIOManager
+
+_critical = Log.GPIO.critical
 
 
 class DataCollector:

@@ -166,12 +166,22 @@ class Client:
         处理 Web端 消息
         """
         def handle_web_charge_request(request_message):
-            evse_id = request_message['evse_id']
-            energy_amount = request_message['charge_power']
+            evse_id = int(request_message['evse_id'])
+            energy_amount = int(request_message['charge_power'])
             depart_time = request_message['depart_time']
-            mode = request_message['mode']
+            mode = int(request_message['charge_mode'])
             current_limit_list = self.GPIO_Manager.get_current_limit(evse_id)
             voltage_max = self.GPIO_Manager.get_voltage_max(evse_id)
+            _info(f""" \
+已获取
+evse_id:{evse_id},
+energy_amount: {energy_amount},
+depart_time:{depart_time},
+mode:{mode},
+current_limit_list:{current_limit_list},
+voltage_max:{voltage_max}
+"""
+                  )
             if current_limit_list is None or len(current_limit_list) == 0 or not all(x >= 0 for x in current_limit_list):
                 self.send_web_error_message('get current_limit error')
                 return
@@ -200,7 +210,7 @@ class Client:
             except:
                 _exception()
                 self.send_web_error_message('充电请求失败')
-
+        _info(f'接收消息: {web_message}')
         handle_dict = {
             # 接收的消息标签: (给Web发送消息的标签, 处理函数)
             'charge_request': handle_web_charge_request,

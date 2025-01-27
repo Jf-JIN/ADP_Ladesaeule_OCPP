@@ -7,11 +7,12 @@ from const.Analog_Define import AnalogDefine
 
 
 class GPIOParams(AnalogDefine):
-    VENDOR_ID = '达姆'
+    VENDOR_ID = 'Darmstadt'
     MESSAGE_SEND_INTERVAL = 60  # seconds
     CHARGE_UNITS = [
         # (EVSE_Id, Shelly_main_url)
-        (0, '192.168.1.100'),
+        (0, '192.168.124.4:6666'),
+        # (0, '192.168.1.100'),
         # (1, 'url1'),
     ]
     DO_USE_RCD: bool = False

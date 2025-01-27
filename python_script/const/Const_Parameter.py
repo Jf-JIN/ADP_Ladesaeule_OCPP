@@ -36,7 +36,7 @@ class Style(AnalogDefine):
 
 
 class Log(AnalogDefine):
-    __EXCLUDE_FUNCS = ['_send_signal_info', '__send_signal_recv', '__send_signal_info', '__send_signal', '_log', 'log', 'who_called_me']
+    __EXCLUDE_FUNCS = ['_send_signal_info', '__send_signal_recv', '__send_signal_info', '__send_signal', '_log', 'log', 'who_called_me', 'send_web_error_message']
     __EXCLUDE__CLASSES = []
     __EXCLUDE_MODULES = ['server', 'serving', ]
     __COUNT_LIMIT = 30

@@ -16,6 +16,7 @@ if 0:
     from sys_basis.GPIO import GPIOManager
     from sys_basis.GPIO._Data_Collector import DataCollector
 
+_info = Log.GPIO.info
 _error = Log.GPIO.error
 
 
@@ -102,7 +103,7 @@ class ChargeUnit:
         """
         当前充电单元是否可用
         """
-        if self.evse.vehicle_state == 0 and self.__isNoError:
+        if self.evse.vehicle_state < 3 and self.__isNoError:
             return True
         else:
             return False
@@ -151,6 +152,7 @@ class ChargeUnit:
                 - 空列表表示无车辆插入
             None: Evse故障
         """
+        _info(self.__evse.vehicle_state)
         if self.__evse.vehicle_state == VehicleState.READY:
             return []
         elif (

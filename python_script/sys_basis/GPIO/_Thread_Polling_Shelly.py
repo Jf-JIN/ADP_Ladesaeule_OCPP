@@ -11,7 +11,7 @@ if 0:
     from ._Data_Collector import DataCollector
     from ._Shelly import Shelly
 
-
+_info = Log.SHELLY.info
 _exception = Log.SHELLY.exception
 
 

@@ -1,11 +1,14 @@
 
 import threading
 from const.GPIO_Parameter import GPIOParams
+from const.Const_Parameter import *
 from sys_basis.XSignal import XSignal
 from ._Charge_Unit import ChargeUnit
 from ._Thread_Polling_EVSE import PollingEVSE
 from ._Thread_Polling_Shelly import PollingShelly
 from ._Data_Collector import DataCollector
+
+_info = Log.GPIO.info
 
 
 class GPIOManager:
@@ -16,6 +19,7 @@ class GPIOManager:
             charge_unit = ChargeUnit(self, *item)
             self.__charge_units_dict[item[0]] = charge_unit
             charge_unit.signal_request_charge_plan_calibration.connect(self.__send_request_charge_plan_calibration)
+        _info(self.__charge_units_dict)
 
         self.__charge_unit_init_param_list = None
         self.__thread_polling_evse: PollingEVSE = PollingEVSE(self, self.__charge_units_dict, GPIOParams.POLLING_EVSE_INTERVAL)
@@ -58,6 +62,8 @@ class GPIOManager:
             - 空列表表示无车辆插入
             None: Evse故障
         """
+        if isinstance(id, str):
+            id = int(id)
         charge_unit: ChargeUnit = self.__charge_units_dict[id]
         return charge_unit.get_current_limit()
 

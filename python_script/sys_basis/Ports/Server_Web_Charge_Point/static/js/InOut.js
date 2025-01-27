@@ -28,15 +28,21 @@ const submit_btn = document.getElementById('save_settings');
 submit_btn.addEventListener('click', () => {
     function collect_data () {
         let res = {
-            'charge_mode': document.getElementById('charge_mode').value,
-            'charge_power': document.getElementById('charge_power').value,
-            'departure_time': document.getElementById('departure_time').value,
+            'charge_request': {
+                'evse_id': document.getElementById('evse_id').value,
+                'charge_mode': document.getElementById('charge_mode').value,
+                'charge_power': document.getElementById('charge_power').value,
+                'depart_time': document.getElementById('depart_time').value,
+            }
         }
         return res
     }
     function check_data (data) {
         let check_res = true;
-        for (let [key, value] of Object.entries(data)) {
+        if (!('charge_request' in data)) {
+            return false;
+        }
+        for (let [key, value] of Object.entries(data.charge_request)) {
             let widget = document.getElementById(key);
             console.log(widget)
             if (widget) {
@@ -62,7 +68,7 @@ submit_btn.addEventListener('click', () => {
                     } else {
                         widget.style.backgroundColor = '';
                     }
-                } else if (key == 'departure_time') {
+                } else if (key == 'depart_time') {
                     let currentTime = new Date();
                     let selectedTime = new Date(value);
                     console.log(currentTime, selectedTime);

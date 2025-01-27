@@ -289,8 +289,8 @@ class DataGene:
         返回:
             - str: 图表的base64编码字符串
         """
-        if charge_plan is None:
-            return None
+        if len(charge_plan) == 0 or len(charge_plan[0]) == 0 or 'startPeriod' not in charge_plan[0] or 'startTime' not in charge_plan[0]:
+            return ''
         plt.style.use(['science', 'no-latex'])
 
         charge_plan = [DataGene.convert_dict_keys(charge_item) for charge_item in charge_plan]
@@ -452,7 +452,6 @@ if __name__ == "__main__":
     # [time_split, eprices_split, max_power_split] = DataGene.split_time(start, start+timedelta(hours=8), eprices, his_usage, 16000, 12800, 2400, 60)
     # print(time_split, eprices_split, max_power_split)
 
-
     # message = {
     #     'chargingProfile': {
     #         'charging_schedule': [
@@ -479,12 +478,11 @@ if __name__ == "__main__":
     # limit = [charge_item['limit'] for charge_item in charge_plan]
     # img = DataGene.plot_charging_curve(datetime.now(), time_split, limit, Style.BAR)
 
-
     charge_plan = [
-            {'startPeriod': 0, 'limit': 9852, 'startTime': '2025-01-26T14:40:29Z', 'finishedTime': '2025-01-26T14:45:21Z', 'chargedEnergy': 780, },
-            {'startPeriod': 300, 'limit': 9724, 'startTime': '2025-01-26T14:40:29Z', 'finishedTime': '2025-01-26T15:00:02Z', 'chargedEnergy': 3500, },
-            {'startPeriod': 0, 'limit': 9852, 'startTime': '2025-01-26T15:00:02Z', 'finishedTime': '2025-01-26T15:05:02Z', 'chargedEnergy': 4108, },
-            {'startPeriod': 300, 'limit': 9724, 'startTime': '2025-01-26T15:00:02Z', 'finishedTime': '2025-01-26T15:20:02Z', 'chargedEnergy': 6958, },
-            {'startPeriod': 1200, 'limit': 8523, 'startTime': '2025-01-26T15:00:02Z', 'finishedTime': '2025-01-26T15:25:02Z', 'chargedEnergy': 7510, },
+        {'startPeriod': 0, 'limit': 9852, 'startTime': '2025-01-26T14:40:29Z', 'finishedTime': '2025-01-26T14:45:21Z', 'chargedEnergy': 780, },
+        {'startPeriod': 300, 'limit': 9724, 'startTime': '2025-01-26T14:40:29Z', 'finishedTime': '2025-01-26T15:00:02Z', 'chargedEnergy': 3500, },
+        {'startPeriod': 0, 'limit': 9852, 'startTime': '2025-01-26T15:00:02Z', 'finishedTime': '2025-01-26T15:05:02Z', 'chargedEnergy': 4108, },
+        {'startPeriod': 300, 'limit': 9724, 'startTime': '2025-01-26T15:00:02Z', 'finishedTime': '2025-01-26T15:20:02Z', 'chargedEnergy': 6958, },
+        {'startPeriod': 1200, 'limit': 8523, 'startTime': '2025-01-26T15:00:02Z', 'finishedTime': '2025-01-26T15:25:02Z', 'chargedEnergy': 7510, },
     ]
     img = DataGene.plan2figure(charge_plan)

@@ -122,7 +122,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: Authorize = GenAuthorizeResponse.generate(
             id_token_info=GenAuthorizeResponse.get_id_token_info('Unknown')
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.authorize, default_message)
 
     @on(Action.boot_notification)
@@ -137,7 +137,7 @@ class ChargePointV201(cpv201, ChargePointBase):
             interval=10,
             status=RegistrationStatusType.rejected
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.boot_notification, default_message)
 
     @on(Action.cancel_reservation)
@@ -149,7 +149,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: CancelReservation = GenCancelReservationResponse.generate(
             status=CancelReservationStatusType.rejected
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.cancel_reservation, default_message)
 
     @on(Action.certificate_signed)
@@ -162,7 +162,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: CertificateSigned = GenCertificateSignedResponse.generate(
             status=CertificateSignedStatusType.rejected
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.certificate_signed, default_message)
 
     @on(Action.change_availability)
@@ -175,7 +175,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: CertificateSigned = GenCertificateSignedResponse.generate(
             status=ChangeAvailabilityStatusType.rejected
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.change_availability, default_message)
 
     @on(Action.clear_cache)
@@ -186,7 +186,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: ClearCache = GenClearCacheResponse.generate(
             status=ClearCacheStatusType.rejected
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.clear_cache, default_message)
 
     @on(Action.clear_charging_profile)
@@ -199,7 +199,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: ClearChargingProfile = GenClearChargingProfileResponse.generate(
             status=ClearChargingProfileStatusType.unknown
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.clear_charging_profile, default_message)
 
     @on(Action.clear_display_message)
@@ -211,7 +211,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: ClearDisplayMessage = GenClearDisplayMessageResponse.generate(
             status=ClearMessageStatusType.unknown
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.clear_display_message, default_message)
 
     @on(Action.cleared_charging_limit)
@@ -223,7 +223,7 @@ class ChargePointV201(cpv201, ChargePointBase):
     ) -> call_result.ClearedChargingLimit:
         default_message: ClearedChargingLimit = GenClearedChargingLimitResponse.generate(
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.cleared_charging_limit, default_message)
 
     @on(Action.clear_variable_monitoring)
@@ -240,7 +240,7 @@ class ChargePointV201(cpv201, ChargePointBase):
                 )
             ]
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.clear_variable_monitoring, default_message)
 
     @on(Action.cost_updated)
@@ -252,7 +252,7 @@ class ChargePointV201(cpv201, ChargePointBase):
     ) -> call_result.CostUpdated:
         default_message: CostUpdated = GenCostUpdatedResponse.generate(
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.cost_updated, default_message)
 
     @on(Action.customer_information)
@@ -269,7 +269,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: CustomerInformation = GenCustomerInformationResponse.generate(
             status=CustomerInformationStatusType.rejected
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.customer_information, default_message)
 
     @on(Action.data_transfer)
@@ -283,7 +283,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: DataTransfer = GenDataTransferResponse.generate(
             status=DataTransferStatusType.rejected
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.data_transfer, default_message)
 
     @on(Action.delete_certificate)
@@ -295,7 +295,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: DeleteCertificate = GenDeleteCertificateResponse.generate(
             status=DeleteCertificateStatusType.failed
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.delete_certificate, default_message)
 
     @on(Action.firmware_status_notification)
@@ -307,7 +307,7 @@ class ChargePointV201(cpv201, ChargePointBase):
     ) -> call_result.FirmwareStatusNotification:
         default_message: FirmwareStatusNotification = GenFirmwareStatusNotificationResponse.generate(
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.firmware_status_notification, default_message)
 
     @on(Action.get_base_report)
@@ -320,7 +320,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: GetBaseReport = GenGetBaseReportResponse.generate(
             status=GenericDeviceModelStatusType.rejected
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.get_base_report, default_message)
 
     @on(Action.get_certificate_status)
@@ -332,7 +332,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: GetCertificateStatus = GenGetCertificateStatusResponse.generate(
             status=GetCertificateStatusType.failed
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.get_certificate_status, default_message)
 
     @on(Action.get_charging_profiles)
@@ -346,7 +346,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: GetChargingProfiles = GenGetChargingProfilesResponse.generate(
             status=GetChargingProfileStatusType.no_profiles
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.get_charging_profiles, default_message)
 
     @on(Action.get_composite_schedule)
@@ -360,7 +360,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: GetCompositeSchedule = GenGetCompositeScheduleResponse.generate(
             status=GenericStatusType.rejected
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.get_composite_schedule, default_message)
 
     @on(Action.get_display_messages)
@@ -375,7 +375,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: GetDisplayMessages = GenGetDisplayMessagesResponse.generate(
             status=GetDisplayMessagesStatusType.unknown
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.get_display_messages, default_message)
 
     @on(Action.get_installed_certificate_ids)
@@ -387,7 +387,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: GetInstalledCertificateIds = GenGetInstalledCertificateIdsResponse.generate(
             status=GetInstalledCertificateStatusType.notFound
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.get_installed_certificate_ids, default_message)
 
     @on(Action.get_local_list_version)
@@ -398,7 +398,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: GetLocalListVersion = GenGetLocalListVersionResponse.generate(
             version_number=201
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.get_local_list_version, default_message)
 
     @on(Action.get_log)
@@ -414,7 +414,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: GetLog = GenGetLogResponse.generate(
             status=LogStatusType.rejected
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.get_log, default_message)
 
     @on(Action.get_monitoring_report)
@@ -428,7 +428,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: GetMonitoringReport = GenGetMonitoringReportResponse.generate(
             status=GenericDeviceModelStatusType.rejected
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.get_monitoring_report, default_message)
 
     @on(Action.get_report)
@@ -442,7 +442,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: GetReport = GenGetReportResponse.generate(
             status=GenericDeviceModelStatusType.rejected
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.get_report, default_message)
 
     @on(Action.get_transaction_status)
@@ -454,7 +454,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: GetTransactionStatus = GenGetTransactionStatusResponse.generate(
             messages_in_queue=True
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.get_transaction_status, default_message)
 
     @on(Action.get_variables)
@@ -468,7 +468,7 @@ class ChargePointV201(cpv201, ChargePointBase):
                 GenGetVariablesResponse.get_get_variable_result(attribute_status=GetVariableStatusType.rejected)
             ]
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.get_variables, default_message)
 
     @on(Action.heartbeat)
@@ -479,7 +479,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: Heartbeat = GenHeartbeatResponse.generate(
             current_time=datetime.now()  # check format, there is a function in tools.data_gene.DataGene.
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.heartbeat, default_message)
 
     @on(Action.install_certificate)
@@ -492,7 +492,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: InstallCertificate = GenInstallCertificateResponse.generate(
             status=InstallCertificateStatusType.rejected
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.install_certificate, default_message)
 
     @on(Action.log_status_notification)
@@ -504,7 +504,7 @@ class ChargePointV201(cpv201, ChargePointBase):
     ) -> call_result.LogStatusNotification:
         default_message: LogStatusNotification = GenLogStatusNotificationResponse.generate(
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.log_status_notification, default_message)
 
     @on(Action.meter_values)
@@ -516,7 +516,7 @@ class ChargePointV201(cpv201, ChargePointBase):
     ) -> call_result.MeterValues:
         default_message: MeterValues = GenMeterValuesResponse.generate(
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.meter_values, default_message)
 
     @on(Action.notify_charging_limit)
@@ -529,7 +529,7 @@ class ChargePointV201(cpv201, ChargePointBase):
     ) -> call_result.NotifyChargingLimit:
         default_message: NotifyChargingLimit = GenNotifyChargingLimitResponse.generate(
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.notify_charging_limit, default_message)
 
     @on(Action.notify_customer_information)
@@ -544,7 +544,7 @@ class ChargePointV201(cpv201, ChargePointBase):
     ) -> call_result.NotifyCustomerInformation:
         default_message: NotifyCustomerInformation = GenNotifyCustomerInformationResponse.generate(
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.notify_customer_information, default_message)
 
     @on(Action.notify_display_messages)
@@ -557,7 +557,7 @@ class ChargePointV201(cpv201, ChargePointBase):
     ) -> call_result.NotifyDisplayMessages:
         default_message: NotifyDisplayMessages = GenNotifyDisplayMessagesResponse.generate(
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.notify_display_messages, default_message)
 
     @on(Action.NotifyEVChargingNeeds)
@@ -571,7 +571,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: NotifyEVChargingNeeds = GenNotifyEVChargingNeedsResponse.generate(
             status=NotifyEVChargingNeedsStatusType.rejected
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.NotifyEVChargingNeeds, default_message)
 
     @on(Action.notify_ev_charging_schedule)
@@ -585,7 +585,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: NotifyEVChargingSchedule = GenNotifyEVChargingScheduleResponse.generate(
             status=GenericStatusType.rejected
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.notify_ev_charging_schedule, default_message)
 
     @on(Action.notify_event)
@@ -599,7 +599,7 @@ class ChargePointV201(cpv201, ChargePointBase):
     ) -> call_result.NotifyEvent:
         default_message: NotifyEvent = GenNotifyEventResponse.generate(
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.notify_event, default_message)
 
     @on(Action.notify_monitoring_report)
@@ -614,7 +614,7 @@ class ChargePointV201(cpv201, ChargePointBase):
     ) -> call_result.NotifyMonitoringReport:
         default_message: NotifyMonitoringReport = GenNotifyMonitoringReportResponse.generate(
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.notify_monitoring_report, default_message)
 
     @on(Action.notify_report)
@@ -629,7 +629,7 @@ class ChargePointV201(cpv201, ChargePointBase):
     ) -> call_result.NotifyReport:
         default_message: NotifyReport = GenNotifyReportResponse.generate(
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.notify_report, default_message)
 
     @on(Action.publish_firmware)
@@ -645,7 +645,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: PublishFirmware = GenPublishFirmwareResponse.generate(
             status=GenericStatusType.rejected
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.publish_firmware, default_message)
 
     @on(Action.publish_firmware_status_notification)
@@ -658,7 +658,7 @@ class ChargePointV201(cpv201, ChargePointBase):
     ) -> call_result.PublishFirmwareStatusNotification:
         default_message: PublishFirmwareStatusNotification = GenPublishFirmwareStatusNotificationResponse.generate(
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.publish_firmware_status_notification, default_message)
 
     @on(Action.report_charging_profiles)
@@ -673,7 +673,7 @@ class ChargePointV201(cpv201, ChargePointBase):
     ) -> call_result.ReportChargingProfiles:
         default_message: ReportChargingProfiles = GenReportChargingProfilesResponse.generate(
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.report_charging_profiles, default_message)
 
     @on(Action.request_start_transaction)
@@ -689,7 +689,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: RequestStartTransaction = GenRequestStartTransactionResponse.generate(
             status=RequestStartStopStatusType.rejected
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.request_start_transaction, default_message)
 
     @on(Action.request_stop_transaction)
@@ -701,7 +701,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: RequestStopTransaction = GenRequestStopTransactionResponse.generate(
             status=RequestStartStopStatusType.rejected
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.request_stop_transaction, default_message)
 
     @on(Action.reservation_status_update)
@@ -713,7 +713,7 @@ class ChargePointV201(cpv201, ChargePointBase):
     ) -> call_result.ReservationStatusUpdate:
         default_message: ReservationStatusUpdate = GenReservationStatusUpdateResponse.generate(
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.reservation_status_update, default_message)
 
     @on(Action.reserve_now)
@@ -730,7 +730,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: ReserveNow = GenReserveNowResponse.generate(
             status=ReserveNowStatusType.rejected
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.reserve_now, default_message)
 
     @on(Action.reset)
@@ -743,7 +743,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: Reset = GenResetResponse.generate(
             status=ResetStatusType.rejected
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.reset, default_message)
 
     @on(Action.security_event_notification)
@@ -756,7 +756,7 @@ class ChargePointV201(cpv201, ChargePointBase):
     ) -> call_result.SecurityEventNotification:
         default_message: SecurityEventNotification = GenSecurityEventNotificationResponse.generate(
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.security_event_notification, default_message)
 
     @on(Action.send_local_list)
@@ -770,7 +770,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: SendLocalList = GenSendLocalListResponse.generate(
             status=SendLocalListStatusType.failed
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.send_local_list, default_message)
 
     @on(Action.SetChargingProfile)
@@ -783,7 +783,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: SetChargingProfile = GenSetChargingProfileResponse.generate(
             status=ChargingProfileStatus.rejected
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.SetChargingProfile, default_message)
 
     @on(Action.set_display_message)
@@ -795,7 +795,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: SetDisplayMessage = GenSetDisplayMessageResponse.generate(
             status=DisplayMessageStatusType.rejected
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.set_display_message, default_message)
 
     @on(Action.set_monitoring_base)
@@ -807,7 +807,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: SetMonitoringBase = GenSetMonitoringBaseResponse.generate(
             status=GenericDeviceModelStatusType.rejected
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.set_monitoring_base, default_message)
 
     @on(Action.set_monitoring_level)
@@ -819,7 +819,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: SetMonitoringLevel = GenSetMonitoringLevelResponse.generate(
             status=GenericStatusType.rejected
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.set_monitoring_level, default_message)
 
     @on(Action.set_network_profile)
@@ -832,7 +832,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: SetNetworkProfile = GenSetNetworkProfileResponse.generate(
             status=SetNetworkProfileStatusType.rejected
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.set_network_profile, default_message)
 
     @on(Action.set_variable_monitoring)
@@ -844,7 +844,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: SetVariableMonitoring = GenSetVariableMonitoringResponse.generate(
             set_monitoring_result=[]
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.set_variable_monitoring, default_message)
 
     @on(Action.set_variables)
@@ -856,7 +856,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: SetVariables = GenSetVariablesResponse.generate(
             set_variable_result=[]
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.set_variables, default_message)
 
     @on(Action.sign_certificate)
@@ -869,7 +869,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: SignCertificate = GenSignCertificateResponse.generate(
             status=GenericStatusType.rejected
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.sign_certificate, default_message)
 
     @on(Action.status_notification)
@@ -883,7 +883,7 @@ class ChargePointV201(cpv201, ChargePointBase):
     ) -> call_result.StatusNotification:
         default_message: StatusNotification = GenStatusNotificationResponse.generate(
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.status_notification, default_message)
 
     @on(Action.transaction_event)
@@ -905,7 +905,7 @@ class ChargePointV201(cpv201, ChargePointBase):
     ) -> call_result.TransactionEvent:
         default_message: TransactionEvent = GenTransactionEventResponse.generate(
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.transaction_event, default_message)
 
     @on(Action.trigger_message)
@@ -918,7 +918,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: TriggerMessage = GenTriggerMessageResponse.generate(
             status=TriggerMessageStatusType.rejected
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.trigger_message, default_message)
 
     @on(Action.unlock_connector)
@@ -931,7 +931,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: UnlockConnector = GenUnlockConnectorResponse.generate(
             status=UnlockStatusType.unlock_failed
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.unlock_connector, default_message)
 
     @on(Action.unpublish_firmware)
@@ -943,7 +943,7 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: UnpublishFirmware = GenUnpublishFirmwareResponse.generate(
             status=UnpublishFirmwareStatusType.no_firmware
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.unpublish_firmware, default_message)
 
     @on(Action.update_firmware)
@@ -958,5 +958,5 @@ class ChargePointV201(cpv201, ChargePointBase):
         default_message: UpdateFirmware = GenUpdateFirmwareResponse.generate(
             status=UpdateFirmwareStatusType.rejected
         )
-        wait_for_result = self._wait_for_result_func()
+        wait_for_result = await self._wait_for_result_func()
         return await wait_for_result(Action.update_firmware, default_message)

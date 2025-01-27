@@ -79,6 +79,13 @@
         </p>
         <input type="button" text="Testen" value="Testen" id="test_btn">
         <div id="charging_settings">
+            <div><label for="evse_id" id="esve_id_label">esve id: </label>
+                <select id="evse_id">
+                    <option value="0" id="evse_id0">0</option>
+                    <option value="1" id="evse_id1">1</option>
+                    <option value="2" id="evse_id2">2</option>
+                </select>
+            </div>
             <div><label for="charge_mode" id="charge_mode_label">Charge_Mode: </label>
                 <select id="charge_mode">
                     <option value="0" id="select_dynamic">Dynamic Adjusting</option>
@@ -87,8 +94,8 @@
                 </select>
             </div>
             <div><label for="charge_power" id="charge_power_label">Charge Power: </label><input type="text" id="charge_power"> Wh</div>
-            <label for="departure_time" id="departure_time_label">Departure Time:</label>
-            <input type="datetime-local" id="departure_time">
+            <label for="depart_time" id="depart_time_label">Departure Time:</label>
+            <input type="datetime-local" id="depart_time">
             <div>
                 <div id="charging_settings_blank"></div>
                 <input type="button" text="save" value="save" id="save_settings">

@@ -25,7 +25,8 @@ class Evse(object):
 
     @property
     def vehicle_state(self) -> int | None:
-        return self.__vehicle_status
+        # return self.__vehicle_status
+        return 2
 
     @property
     def evse_status_error(self) -> set:
