@@ -1,4 +1,4 @@
-
+from __future__ import annotations
 from threading import Thread
 import time
 import requests
@@ -7,6 +7,7 @@ from const.Const_Parameter import *
 
 if 0:
     from ._GPIO_Manager import GPIOManager
+    from ._Charge_Unit import ChargeUnit
     from ._Data_Collector import DataCollector
     from ._Shelly import Shelly
 
@@ -20,7 +21,8 @@ class PollingShelly(Thread):
         self.__parent: GPIOManager = parent
         self.__shelly_list: list = []
         for item in charge_unit_dict.values():
-            self.__shelly_list.append(item['shelly'])
+            item: ChargeUnit
+            self.__shelly_list.append(item.shelly)
         self.__shelly_quantity: int = len(self.__shelly_list)
         self.__interval: int | float = intervall
         self.__timeout: int | float = timeout

@@ -1,23 +1,22 @@
 
 import copy
-# from const.GPIO_Parameter import GPIOParams
 from const.Const_Parameter import *
 import requests
-from sys_basis.XSignal  import XSignal
+from sys_basis.XSignal import XSignal
 
 _info = Log.GPIO
 
+
 class Shelly:
-    def __init__(self,id:int,address:str):
-        self.__id:int = id
-        self.__main_address:str = address
-        self.__data:dict = {}
-        self.__isAvailable:bool = True
-        self.__charged_energy:int = 0
+    def __init__(self, id: int, address: str):
+        self.__id: int = id
+        self.__main_address: str = address
+        self.__data: dict = {}
+        self.__isAvailable: bool = True
+        self.__charged_energy: int = 0
         self.__signal_current_no = XSignal()
         self.__signal_current_overload = XSignal()
         self.__signal_shelly_error_occurred = XSignal()
-
 
     @property
     def id(self):
@@ -71,7 +70,7 @@ class Shelly:
     def signal_shelly_error_occurred(self):
         return self.__signal_shelly_error_occurred
 
-    def set_data(self, data:dict):
+    def set_data(self, data: dict):
         self.__data = data
         self.__charged_energy = self.__data['charged_energy']
         self.__isAvailable = self.__data['is_valid']
@@ -91,5 +90,3 @@ class Shelly:
             _info("复位成功! ")
         except requests.exceptions.RequestException as e:
             _info(f"复位失败: {e}")
-
-

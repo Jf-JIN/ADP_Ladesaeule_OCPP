@@ -2,14 +2,15 @@
 import threading
 from const.GPIO_Parameter import GPIOParams
 from sys_basis.XSignal import XSignal
-from _Charge_Unit import ChargeUnit
-from _Thread_Polling_EVSE import PollingEVSE
-from _Thread_Polling_Shelly import PollingShelly
-from _Data_Collector import DataCollector
+from ._Charge_Unit import ChargeUnit
+from ._Thread_Polling_EVSE import PollingEVSE
+from ._Thread_Polling_Shelly import PollingShelly
+from ._Data_Collector import DataCollector
 
 
 class GPIOManager:
     def __init__(self):
+        self.__data_collector: DataCollector = DataCollector(self, GPIOParams.DATACOLLECTOR_DATA_INTERVAL, GPIOParams.DATACOLLECTOR_FIG_INTERVAL)
         self.__charge_units_dict = {}
         for item in GPIOParams.CHARGE_UNITS:
             charge_unit = ChargeUnit(self, *item)
@@ -19,7 +20,6 @@ class GPIOManager:
         self.__charge_unit_init_param_list = None
         self.__thread_polling_evse: PollingEVSE = PollingEVSE(self, self.__charge_units_dict, GPIOParams.POLLING_EVSE_INTERVAL)
         self.__thread_polling_shelly: PollingShelly = PollingShelly(self, self.__charge_units_dict, GPIOParams.POLLING_SHELLY_INTERVAL, GPIOParams.POLLING_SHELLY_TIMEOUT)
-        self.__data_collector: DataCollector = DataCollector(self, GPIOParams.DATACOLLECTOR_DATA_INTERVAL, GPIOParams.DATACOLLECTOR_FIG_INTERVAL)
         self.__timer_send_requeset_calibration: threading.Timer = threading.Timer(GPIOParams.REQUEST_INTERVAL, self.__execute_on_send_request_calibration_timer)
         self.__signal_GPIO_info: XSignal = XSignal()
         self.__signal_request_charge_plan_calibration: XSignal = XSignal()
@@ -61,7 +61,7 @@ class GPIOManager:
         charge_unit: ChargeUnit = self.__charge_units_dict[id]
         return charge_unit.get_current_limit()
 
-    def get_voltage_max(self, id: int) -> list | None:
+    def get_voltage_max(self, id: int) -> int:
         """  获取允许的最大电压值 """
         charge_unit: ChargeUnit = self.__charge_units_dict[id]
         return charge_unit.get_voltage_max()

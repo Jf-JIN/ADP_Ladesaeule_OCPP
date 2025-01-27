@@ -1,7 +1,5 @@
-
+from __future__ import annotations
 from threading import Thread
-
-from sys_basis.GPIO._GPIO_Manager import GPIOManager
 from ._Modbus_IO import ModbusIO
 from const.GPIO_Parameter import *
 from const.Const_Parameter import *
@@ -10,6 +8,7 @@ import time
 
 if 0:
     from ._GPIO_Manager import GPIOManager
+    from ._Charge_Unit import ChargeUnit
     from ._Data_Collector import DataCollector
     from ._EVSE import Evse
 
@@ -25,7 +24,8 @@ class PollingEVSE(Thread):
         self.__parent: GPIOManager = parent
         self.__evse_list: list = []
         for item in charge_unit_dict.values():
-            self.__evse_list.append(item['evse'])
+            item: ChargeUnit
+            self.__evse_list.append(item.evse)
         self.__evse_quantity: int = len(self.__evse_list)
         self.__interval: int | float = intervall
         self.__data_collector: DataCollector = self.__parent.data_collector

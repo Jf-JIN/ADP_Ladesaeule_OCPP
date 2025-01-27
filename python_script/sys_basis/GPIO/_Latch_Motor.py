@@ -1,13 +1,13 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
+
+from __future__ import annotations
 import threading
 
 from gpiozero import LED
 from const.GPIO_Parameter import *
 
 if 0:
-    from _Data_Collector import DataCollector
-    from _Charge_Unit import ChargeUnit
+    from ._Data_Collector import DataCollector
+    from ._Charge_Unit import ChargeUnit
 
 
 class LatchMotor:

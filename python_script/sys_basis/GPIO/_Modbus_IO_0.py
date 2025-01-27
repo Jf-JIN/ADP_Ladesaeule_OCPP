@@ -1,9 +1,8 @@
 
+from pymodbus.pdu.pdu import ModbusPDU
 from pymodbus.client import ModbusSerialClient
 from const.Const_Parameter import *
 from const.GPIO_Parameter import BitsFlag, EVSEErrorInfo, EVSERegAddress, ModbusParams
-import random
-import time
 
 _debug = Log.MODBUS.debug
 _error = Log.MODBUS.error
@@ -18,23 +17,31 @@ class ModbusIO(object):
             raise TypeError('Id of ModbusIO must be int')
         self.__id: int = id
         self.__context_action_error: str = 'exit'
-        # self.__client = ModbusSerialClient(
-        #     port=ModbusParams.PORT,
-        #     baudrate=ModbusParams.BAUDRATE,
-        #     parity=ModbusParams.PARITY,
-        #     stopbits=ModbusParams.STOPBITS,
-        #     bytesize=ModbusParams.BYTESIZE,
-        #     timeout=ModbusParams.TIMEOUT,
-        #     retries=ModbusParams.RETRIES,
-        #     name=self.__class__.__name__,
-        # )
+        self.__client = ModbusSerialClient(
+            port=ModbusParams.PORT,
+            baudrate=ModbusParams.BAUDRATE,
+            parity=ModbusParams.PARITY,
+            stopbits=ModbusParams.STOPBITS,
+            bytesize=ModbusParams.BYTESIZE,
+            timeout=ModbusParams.TIMEOUT,
+            retries=ModbusParams.RETRIES,
+            name=self.__class__.__name__,
+        )
 
     def __enter__(self):
+        if self.__id in self.__class__.isSelfChecking:
+            self.__exit__(None, None, None)
+        try:
+            self.__client.connect()
+        except Exception as e:
+            self.__context_action_error = 'enter'
+            self.__exit__(e.__class__, e, e.__traceback__)
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb) -> bool:
         if exc_type is not None:
             _exception(f'ModbusIO {self.__context_action_error} with error: {exc_val}')
+        self.__client.close()
         return True
 
     def read(self, address: int) -> None | int:
@@ -51,20 +58,17 @@ class ModbusIO(object):
         - 异常:
             - 当读取过程中发生任何异常时, 会被捕获并返回 None.
         """
-        address_dict = {
-            # 0 (0b00000 relay on),
-            # 1 (0b00001 relay off),
-            # 2 (0b00010 diode check fail),
-            # 4 (0b00100 vent required fail),
-            # 8 (0b01000waiting for pilot release),
-            # 16 (0b10000 RCD check error)
-            EVSERegAddress.EVSE_STATUS_FAILS: 0,
-            EVSERegAddress.VEHICLE_STATE:  int((time.time() // 10) % 5 + 1),
-            EVSERegAddress.CURRENT_MIN: random.randint(0, 13),
-            EVSERegAddress.CURRENT_MAX: random.choice([6, 13, 20, 32, 63, 80]),
-            EVSERegAddress.TURN_OFF_SELFTEST_OPERATION: 0,  # 可选值： 0 (0b000, TurnOn), 1 (0b001, TurnOff), 2 (0b010, selftest), 3 (0b011, ), 4 (0b100, clear RCD), 5 (0b101, )
-        }
-        return address_dict.get(address)
+        result_data = None
+        try:
+            result: ModbusPDU = self.__client.read_holding_registers(address=address, slave=self.__id)
+            if not result.isError():
+                result_data: int = result.registers[0]
+            else:
+                _error(f'ModbusIO read error.\naddress: {address}')
+        except Exception as e:
+            _exception(f'ModbusIO read error: {e}\naddress: {address}')
+        finally:
+            return result_data
 
     def write(self, address: int, value: int, bit_operation: int | None = None) -> None | bool:
         """
@@ -85,7 +89,27 @@ class ModbusIO(object):
         - 异常:
             - 当写入过程中发生任何异常时, 会被捕获并返回 False.
         """
-        return True
+        if bit_operation is not None:  # 按位操作
+            ori_value = self.read(address=address)
+            if ori_value is None:
+                _error(f'ModbusIO read error by writing.\naddress: {address}')
+                return False
+            if bit_operation == 0:  # 置0
+                ori_value &= ~value
+                value = ori_value
+            else:  # 置1
+                ori_value |= value
+                value = ori_value
+        try:
+            result: ModbusPDU = self.__client.write_registers(address=address, values=[value], slave=self.__id)
+            _debug(result, result.registers[0])
+            if result.isError():
+                _exception(f'ModbusIO write error.\naddress: {address}\nvalue: {value}')
+                return False
+            return True
+        except Exception as e:
+            _exception(f'ModbusIO write error: {e}\naddress: {address}\nvalue: {value}')
+            return False
 
     def read_evse_status_fails(self) -> None | set:
         """

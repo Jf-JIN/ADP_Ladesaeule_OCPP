@@ -1,7 +1,7 @@
 
 
-from python_script.const.GPIO_Parameter import GPIOParams
-from python_script.sys_basis.GPIO._Charge_Unit import ChargeUnit
+from const.GPIO_Parameter import GPIOParams
+from sys_basis.GPIO._Charge_Unit import ChargeUnit
 from sys_basis.Generator_Ocpp_Std.V2_0_1 import *
 from sys_basis.Ports import *
 from sys_basis.Manager_Coroutine import ManagerCoroutines
@@ -54,7 +54,7 @@ class Client:
         # self.coroutine_gui_websocket_server.signal_thread_websocket_client_info.connect(self.send_info_gui_message)
         # self.coroutine_OCPP_client.signal_thread_ocpp_client_info.connect(self.send_info_web_message)
         # self.thread_web_server.signal_thread_web_server_info.connect(self.send_info_web_message)
-        Log.RAS.signal_log_public_html.connect(self.send_message_to_web)
+        Log.RAS.signal_log_public_html.connect(self.send_web_txt_message)
 
         # # 接收原始 ocpp 数据
         # self.coroutine_OCPP_client.signal_thread_ocpp_client_recv.connect(self.send_message_to_web)
@@ -183,7 +183,7 @@ class Client:
                 g = GenNotifyEVChargingNeedsRequest
                 self.coroutine_OCPP_client.send_request_message(
                     g.generate(
-                        evseId=evse_id,
+                        evse_id=evse_id,
                         charging_needs=g.get_charging_needs(
                             requested_energy_transfer=EnergyTransferModeType.ac_three_phase,
                             ac_charging_parameters=g.get_ac_charging_parameters(
@@ -234,7 +234,7 @@ class Client:
             g = GenNotifyEVChargingNeedsRequest
             self.coroutine_OCPP_client.send_request_message(
                 g.generate(
-                    evseId=gpio_request['evseId'],
+                    evse_id=gpio_request['evseId'],
                     charging_needs=g.get_charging_needs(
                         requested_energy_transfer=EnergyTransferModeType.ac_three_phase,
                         ac_charging_parameters=g.get_ac_charging_parameters(
