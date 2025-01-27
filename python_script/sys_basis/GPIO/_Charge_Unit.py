@@ -399,6 +399,7 @@ The charging unit is not executable (correct value)
                 return False
 
             calibration_dict = {
+                'evseId': self.__id,
                 'evMinCurrent': self.__current_limit[0],
                 'evMaxCurrent': self.__current_limit[1],
                 'evMaxVoltage': GPIOParams.MAX_VOLTAGE,
