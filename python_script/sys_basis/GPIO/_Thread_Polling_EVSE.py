@@ -15,6 +15,7 @@ if 0:
 
 _debug = Log.EVSE.debug
 _info = Log.EVSE.info
+_error = Log.EVSE.error
 _exception = Log.EVSE.exception
 
 
@@ -46,10 +47,12 @@ class PollingEVSE(Thread):
                     evse_data['vehicle_state'] = vehicle_state
                     evse.set_vehicle_state(vehicle_state)
 
-                evse_error = io.read_evse_status_fails()
+                evse_error: None | set = io.read_evse_status_fails()
                 if evse_error is not None:
                     evse_data['evse_error'] = evse_error
                     evse.set_evse_status_error(evse_error)
+                else:
+                    _error(f'EVSE {evse_id} read error')
 
                 if len(evse_data):
                     self.__data_collector.set_evse_data(evse_id, evse_data)
