@@ -246,7 +246,7 @@ class ChargeUnit:
         """
         if (
             self.__evse.vehicle_state == VehicleState.EV_IS_PRESENT
-            and (len(self.__evse.evse_status_error) == 1 and self.__evse.evse_status_error[0] == EVSEErrorInfo.RELAY_ON)
+            and self.__evse.evse_status_error == {EVSEErrorInfo.RELAY_ON}
             and self.__isNoError
             and self.__shelly.isAvailable
         ):
@@ -324,7 +324,7 @@ EVSE State abnormal, Unable to start charging (correct value)
             or not self.__shelly.isAvailable
             or self.__evse.vehicle_state == VehicleState.FAILURE
             or self.__evse.vehicle_state == VehicleState.CRITICAL
-            or not (len(self.__evse.evse_status_error) == 1 and self.__evse.evse_status_error[0] == EVSEErrorInfo.RELAY_ON)
+            or self.__evse.evse_status_error != {EVSEErrorInfo.RELAY_ON}
             or not self.__isNoError
             or len(self.__waiting_plan) == 0
         ):
@@ -349,13 +349,13 @@ The charging unit is not executable (correct value)
             """ 
             设置电流, 开始充电
             """
-            current = self.__convert_value_in_amps(self.__current_charge_action)
+            current = self.__convert_value_in_amps(self.__current_charge_action['limit'])
             return self.__evse.set_current(current)
 
         # 1. 先存入上次的计划
         if self.__current_charge_action:
-            self.__finished_plan.append(copy(self.__current_charge_action))
-            self.__data_collector.append_CU_finished_plan(self.id, copy(self.__current_charge_action))
+            self.__finished_plan.append(copy.copy(self.__current_charge_action))
+            self.__data_collector.append_CU_finished_plan(self.id, copy.copy(self.__current_charge_action))
         # 2. 检查是否可以执行, 不能则停止充电, 并发出信号
         if not self.__isExecutable():
             self.stop_charging()
@@ -364,7 +364,7 @@ The charging unit is not executable (correct value)
         # 3. 取出充电动作, 计算单次充电时间
         self.__current_charge_action = self.__waiting_plan.pop(0)
         self.__data_collector.set_CU_waiting_plan(self.id, copy.deepcopy(self.__waiting_plan), self.__current_start_time_str)
-        self.__data_collector.set_CU_current_charge_action(self.id, copy(self.__current_charge_action))
+        self.__data_collector.set_CU_current_charge_action(self.id, copy.copy(self.__current_charge_action))
         charge_duration_sec: int | float = self.__waiting_plan[0]['startPeriod']-self.__current_charge_action['startPeriod']
         current_time: float = datetime.now().timestamp()
         current_index = current_time // self.__index_period_sec
@@ -456,8 +456,8 @@ The charging unit is not executable (correct value)
         """
         self.__evse.stop_charging()
         if self.__current_charge_action:
-            self.__finished_plan.append(copy(self.__current_charge_action))
-            self.__data_collector.append_CU_finished_plan(self.id, copy(self.__current_charge_action))
+            self.__finished_plan.append(copy.copy(self.__current_charge_action))
+            self.__data_collector.append_CU_finished_plan(self.id, copy.copy(self.__current_charge_action))
         if self.__timer.is_alive():
             self.__timer.cancel()
         self.__signal_charging_finished.emit()
@@ -534,17 +534,17 @@ The charging unit is not executable (correct value)
                 log(error_text)
 
     def __handle_evse_errror(self, error_message: set) -> None:
-        handle_dict = {
-            EVSEErrorInfo.RCD_CHECK_ERROR: self.stop_charging,
-            EVSEErrorInfo.RELAY_OFF: self.stop_charging,
-            EVSEErrorInfo.VENT_REQUIRED_FAIL: self.stop_charging,
-            EVSEErrorInfo.WAITING_FOR_PILOT_RELEASE: self.stop_charging,
-            EVSEErrorInfo.DIODE_CHECK_FAIL: self.stop_charging,
-            EVSEErrorInfo.RCD_CHECK_FAILED: self.stop_charging,
+        handle_set: str = {
+            EVSEErrorInfo.RCD_CHECK_ERROR,
+            EVSEErrorInfo.RELAY_OFF,
+            EVSEErrorInfo.VENT_REQUIRED_FAIL,
+            EVSEErrorInfo.WAITING_FOR_PILOT_RELEASE,
+            EVSEErrorInfo.DIODE_CHECK_FAIL,
+            EVSEErrorInfo.RCD_CHECK_FAILED,
         }
         for error_item in error_message:
-            if error_item in handle_dict:
-                handle_dict[error_item](error_item)
+            if error_item in handle_set:
+                self.stop_charging(error_item)
 
     def __trim_charge_plan(self, lag_sec: int | float, plan_list: list) -> list:
         if lag_sec > plan_list[-1]['startPeriod']:
