@@ -4,9 +4,11 @@ from const.Const_Parameter import *
 from const.GPIO_Parameter import BitsFlag, EVSEErrorInfo, EVSERegAddress, ModbusParams
 import random
 import time
+import json
 
 _debug = Log.MODBUS.debug
 _error = Log.MODBUS.error
+_critical = Log.MODBUS.critical
 _exception = Log.MODBUS.exception
 
 
@@ -51,20 +53,9 @@ class ModbusIO(object):
         - 异常:
             - 当读取过程中发生任何异常时, 会被捕获并返回 None.
         """
-        address_dict = {
-            # 0 (0b00000 relay on),
-            # 1 (0b00001 relay off),
-            # 2 (0b00010 diode check fail),
-            # 4 (0b00100 vent required fail),
-            # 8 (0b01000waiting for pilot release),
-            # 16 (0b10000 RCD check error)
-            EVSERegAddress.EVSE_STATUS_FAILS: 0,
-            EVSERegAddress.VEHICLE_STATE:  int((time.time() // 10) % 5 + 1),
-            EVSERegAddress.CURRENT_MIN: random.randint(0, 13),
-            EVSERegAddress.CURRENT_MAX: random.choice([6, 13, 20, 32, 63, 80]),
-            EVSERegAddress.TURN_OFF_SELFTEST_OPERATION: 0,  # 可选值： 0 (0b000, TurnOn), 1 (0b001, TurnOff), 2 (0b010, selftest), 3 (0b011, ), 4 (0b100, clear RCD), 5 (0b101, )
-        }
-        return address_dict.get(address)
+        with open(os.path.join(os.getcwd(), 'test', 'Modbus_Sim', 'Modbus_Sim.json'), 'r') as f:
+            json_dict = json.load(f)
+            return json_dict[str(address)]
 
     def write(self, address: int, value: int, bit_operation: int | None = None) -> None | bool:
         """

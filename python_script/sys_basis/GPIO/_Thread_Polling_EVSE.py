@@ -15,6 +15,7 @@ if 0:
 _debug = Log.EVSE.debug
 _info = Log.EVSE.info
 _error = Log.EVSE.error
+_critical = Log.EVSE.critical
 _exception = Log.EVSE.exception
 
 
