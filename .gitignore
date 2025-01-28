@@ -167,3 +167,4 @@ cython_debug/
 .idea/
 python_script/test/Modbus_Sim/Modbus_Sim.json
 python_script/test/Modbus_Sim.json
+python_script/test/原神启动.bat
