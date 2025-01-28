@@ -53,7 +53,7 @@ class ModbusIO(object):
         - 异常:
             - 当读取过程中发生任何异常时, 会被捕获并返回 None.
         """
-        with open(os.path.join(os.getcwd(), 'test', 'Modbus_Sim', 'Modbus_Sim.json'), 'r') as f:
+        with open(os.path.join(os.getcwd(), 'test', 'Modbus_Sim.json'), 'r') as f:
             json_dict = json.load(f)
             return json_dict[str(address)]
 
