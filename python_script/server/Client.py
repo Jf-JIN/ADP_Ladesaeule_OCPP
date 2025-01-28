@@ -15,6 +15,7 @@ from const.Charge_Point_Parameters import *
 _info = Log.RAS.info
 _error = Log.RAS.error
 _debug = Log.RAS.debug
+_critical = Log.RAS.critical
 _exception = Log.RAS.exception
 
 
@@ -88,13 +89,6 @@ class Client:
         - `data`(dict): OCPP消息的字典形式
         - `send_time`(float): 请求收到时间 / 向系统发送时间, 这里的 send 含义是从 OCPP端口 向系统发送的动作
         """
-        def send_response_message(response_message, request_message):
-            self.coroutine_OCPP_client.send_response_message(
-                request_message['action'],
-                response_message,
-                send_time=request_message['send_time'],
-                message_id=request_message['message_id']
-            )
         # TODO 可以增加判断逻辑
         # TODO 该函数可以优化, 并拆分小模组/模块
         response_message_dict: dict = {
@@ -102,16 +96,16 @@ class Client:
                 status=ChargingProfileStatus.accepted
             ),
         }
-
-        action: str = response_message_dict.get(request_message['action'], None)
-        if action:
-            send_response_message(response_message_dict[action], request_message)
-            if action == Action.set_charging_profile:
+        response_message: str = response_message_dict.get(request_message['action'], None)
+        if response_message:
+            self.__send_response_message(response_message, request_message)
+            if request_message['action'] == Action.set_charging_profile:
+                evse_id = request_message['data']['evseId']
                 res: bool = self.GPIO_Manager.set_charge_plan(
                     data=request_message['data'],
-                    target_energy=self.__cp_info_dict['target_energy'],
-                    depart_time=self.__cp_info_dict['depart_time'],
-                    custom_data=self.__cp_info_dict['custom_data']
+                    target_energy=self.__cp_info_dict[evse_id]['target_energy'],
+                    depart_time=self.__cp_info_dict[evse_id]['depart_time'],
+                    custom_data=self.__cp_info_dict[evse_id]['custom_data']
                 )
                 if not res:
                     self.send_web_error_message('设置充电计划失败')
@@ -190,6 +184,11 @@ voltage_max:{voltage_max}
             if not charge_unit.isAvailabel:
                 self.send_web_error_message('charge_unit is not available')
                 return
+            self.__cp_info_dict[evse_id] = {
+                'target_energy': energy_amount,
+                'depart_time': depart_time,
+                'custom_data': {"vendorId": GPIOParams.VENDOR_ID, "mod": mode},
+            }
             try:
                 g = GenNotifyEVChargingNeedsRequest
                 self.coroutine_OCPP_client.send_request_message(
@@ -211,13 +210,22 @@ voltage_max:{voltage_max}
             except:
                 _exception()
                 self.send_web_error_message('充电请求失败')
+
+        def handle_charge_now(charge_now_dict: dict):
+            _info(f'收到立即充电请求: {charge_now_dict}')
+            evse_id = int(charge_now_dict['evse_id'])
+            res = self.GPIO_Manager.get_charge_unit(evse_id).start_charging()
+            if not res:
+                _error('立即充电失败')
         _info(f'接收消息: {web_message}')
         handle_dict = {
             # 接收的消息标签: (给Web发送消息的标签, 处理函数)
             'charge_request': handle_web_charge_request,
+            'charge_now': handle_charge_now,
         }
         for key, value in handle_dict.items():
             if key in web_message:
+                _info(key)
                 value(web_message[key])
 
     def handle_computer_message(self, computer_message) -> None:
@@ -286,3 +294,11 @@ voltage_max:{voltage_max}
     def send_web_error_message(self, message) -> None:
         self.send_message_to_web('error', message)
         _error(message)
+
+    def __send_response_message(self, response_message, request_message) -> None:
+        self.coroutine_OCPP_client.send_response_message(
+            request_message['action'],
+            response_message,
+            send_time=request_message['send_time'],
+            message_id=request_message['message_id']
+        )

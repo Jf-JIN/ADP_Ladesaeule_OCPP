@@ -26,6 +26,7 @@ const lang_pkg_zh = {
     "charge_power_label": "充电能量",
     "departure_time_label": "预计离开时间",
     "save_settings": "提交并保存",
+    "charge_now": "立即充电",
     "home_current_current": "当前电流",
     "home_current_voltage": "当前电压",
     "home_charged_energy": "已充电量",

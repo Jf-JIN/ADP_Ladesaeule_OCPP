@@ -26,6 +26,7 @@ const lang_pkg_en = {
     "charge_power_label": "Charging Energy",
     "departure_time_label": "Estimated Departure Time",
     "save_settings": "Submit and save",
+    "charge_now": "Charge Now",
     "home_current_current": "Current Current",
     "home_current_voltage": "Current Voltage",
     "home_charged_energy": "Charged Amount",

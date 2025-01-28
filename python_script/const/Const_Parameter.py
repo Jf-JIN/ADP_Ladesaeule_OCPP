@@ -36,11 +36,11 @@ class Style(AnalogDefine):
 
 
 class Log(AnalogDefine):
-    __EXCLUDE_FUNCS = ['_send_signal_info', '__send_signal_recv', '__send_signal_info', '__send_signal', '_log', 'log', 'who_called_me', 'send_web_error_message']
+    __EXCLUDE_FUNCS = ['_send_signal_info', '__send_signal_recv', '__send_signal_info', '__send_signal', '_log', 'log', 'who_called_me', 'send_web_error_message', '_send']
     __EXCLUDE__CLASSES = []
     __EXCLUDE_MODULES = ['server', 'serving', ]
     __COUNT_LIMIT = 30
-    __LOG_LEVEL = LogLevel.DEBUG
+    __LOG_LEVEL = LogLevel.INFO
     RAS = Logger(
         log_name='client_rasberryPi', log_folder_path=APP_WORKSPACE_PATH, log_sub_folder_name='client_rasberryPi',
         count_limit=10, exclude_funcs=__EXCLUDE_FUNCS, exclude_classes=__EXCLUDE__CLASSES, exclude_modules=__EXCLUDE_MODULES, log_level=__LOG_LEVEL,

@@ -18,6 +18,8 @@ if 0:
 
 _info = Log.GPIO.info
 _error = Log.GPIO.error
+_warning = Log.GPIO.warning
+_critical = Log.GPIO.critical
 
 
 class ChargeUnit:
@@ -204,7 +206,9 @@ class ChargeUnit:
             - EVSE
         """
         charging_schedule_list = charging_profile['chargingSchedule']
+        _critical(charging_schedule_list)
         if len(charging_schedule_list) == 0:
+            _critical('充电时间表清单为空')
             return False
         # TODO:判断执行计划优先顺序
         exec_index = 0
@@ -231,6 +235,7 @@ class ChargeUnit:
             # 非首次充电计划
             # 新计划的时间比正在执行的计划的时间早, 放弃执行新计划
             self.__signal_CU_info.emit('The charging plan is earlier than the current plan, and the update of the charging plan failed')
+            _critical('充电计划比当前计划早，并且收费计划的更新失败')
             return False
 
         # (非)首次充电计划
@@ -241,11 +246,12 @@ class ChargeUnit:
         self.__waiting_plan = current_exec_dict['chargingSchedulePeriod']
         self.__isTmeSynchronized = False  # 强制对齐时间
         # 数据类重置
-        self.__data_collector.set_CU_current_charge_action(self.id, {})
         self.__data_collector.set_CU_waiting_plan(self.id, copy.deepcopy(self.__waiting_plan), self.__current_start_time_str)
+        self.__data_collector.set_CU_current_charge_action(self.id, {})
         self.__data_collector.clear_CU_finished_plan(self.id)
         self.__data_collector.set_CU_charge_start_time(self.id, self.__start_time_str, self.__target_energy, self.__depart_time, self.__custom_data)
-        return self.__execute_start_charging()
+        self.__execute_start_charging()
+        return True
 
     def start_charging(self) -> bool:
         """
@@ -275,7 +281,9 @@ EVSE State abnormal, Unable to start charging (correct value)
         if not self.__isCharging:
             # 如果当前没有充电计划, 则直接返回.
             # 保证新充电启动只会从外部触发, 内部函数不能启动.
+            _critical(f'self.__isCharging is {self.__isCharging}')
             return False
+        _info('开始处理计划表')
         motor_runtime = GPIOParams.LETCH_MOTOR_RUNTIME if GPIOParams.LETCH_MOTOR_RUNTIME > 0 else 0
         evse_selfcheck_runtime = GPIOParams.SELF_CHECK_TIMEOUT if GPIOParams.SELF_CHECK_TIMEOUT >= 30 else 0
         current_timestamp: float = datetime.now().timestamp() + motor_runtime + evse_selfcheck_runtime
@@ -283,12 +291,13 @@ EVSE State abnormal, Unable to start charging (correct value)
         if current_timestamp < plan_timestamp:
             # 当前时间早于计划时间, 需要等待
             lag_sec = plan_timestamp - current_timestamp
+            _info(f'当前时间早于计划时间, 需要等待 {lag_sec} 秒')
             self.__timer = threading.Timer(lag_sec, self.__prepare_charging)
             self.__timer.start()
         else:
             # 当前时间晚于计划时间, 需要扣除迟滞时间
             lag_sec: float = current_timestamp - plan_timestamp
-
+            _info(f'当前时间晚于计划时间, 需要扣除迟滞时间 {lag_sec} 秒')
             self.__waiting_plan = self.__trim_charge_plan(
                 lag_sec=lag_sec,
                 plan_list=self.__waiting_plan
@@ -305,13 +314,16 @@ EVSE State abnormal, Unable to start charging (correct value)
         if not self.__isLatched and GPIOParams.LETCH_MOTOR_RUNTIME > 0:
             # 执行上锁操作, 执行条件: 1.当前未上锁 2.电机运行时间大于0
             # self.__latch_motor.lock()
+            _info('执行上锁')
             threading.Timer(GPIOParams.LETCH_MOTOR_RUNTIME+0.5, self.__prepare_charging).start()
             return
         if not self.__isEVSESelfTested and GPIOParams.SELF_CHECK_TIMEOUT >= 30:
             # 执行自检操作, 执行条件: 1.当前未自检 2.自检超时时间大于等于30s
+            _info('执行evse自检')
             self.__evse.start_self_check()
             threading.Timer(GPIOParams.SELF_CHECK_TIMEOUT+0.5, self.__prepare_charging).start()
             return
+        _info('已完成前置工作')
         self.__charging()
 
     def __isExecutable(self) -> bool:
@@ -359,14 +371,17 @@ The charging unit is not executable (correct value)
             current = self.__convert_value_in_amps(self.__current_charge_action['limit'])
             return self.__evse.set_current(current)
 
+        _info(f'开始充电，当前执行\t{self.__current_charge_action}')
         # 1. 先存入上次的计划
         if self.__current_charge_action:
             self.__finished_plan.append(copy.copy(self.__current_charge_action))
             self.__data_collector.append_CU_finished_plan(self.id, copy.copy(self.__current_charge_action))
+            _info(f'充电计划\t{self.__current_charge_action}\t已存入历史计划')
         # 2. 检查是否可以执行, 不能则停止充电, 并发出信号
         if not self.__isExecutable():
             self.stop_charging()
             self.__signal_charging_finished.emit()
+            _warning('充电计划无法执行')
             return False
         # 3. 取出充电动作, 计算单次充电时间
         self.__current_charge_action = self.__waiting_plan.pop(0)
@@ -375,14 +390,21 @@ The charging unit is not executable (correct value)
         charge_duration_sec: int | float = self.__waiting_plan[0]['startPeriod']-self.__current_charge_action['startPeriod']
         current_time: float = datetime.now().timestamp()
         current_index = current_time // self.__index_period_sec
+        _info(f'当前时间\t{current_time}\t当前充电周期戳\t{current_index}\t充电单位充电周期戳\t{self.__charge_index}')
         # 4. 如果时间未同步, 则同步时间, 每个计划表的第一个充电周期都要进行时间同步/对齐
+        """ 
+        这里逻辑有问题，如果当前充电时间滞后于计划时间，则应该立即执行，当前会跳过
+        """
         if not self.__isTmeSynchronized:
+            _info('时间未同步, 进行时间同步')
             if current_index != self.__charge_index:
                 """ 
+                TODO
                 跳过单充电计划中首个充电周期时的校正, 如果第一个周期就在校正触发时间上, 则跳过校正
                 整个校正周期将被跳过, 确保临近周期点的充电计划不会再次请求校正, 当前周期被记录
                 """
                 self.__charge_index = current_index
+                _info('首次充电周期, 跳过校正, 更新充电周期戳')
             phase1_fill_time: int | float = self.__current_start_datetime.timestamp() + charge_duration_sec - current_time
             self.__isTmeSynchronized = True
             # 4.1 执行充电操作, 同时检查是否成功设置电流, 若否则停止充电
@@ -394,6 +416,7 @@ The charging unit is not executable (correct value)
                 return False
             self.__timer = threading.Timer(phase1_fill_time, self.__charging)
             self.__timer.start()
+            _info('充电时间同步完成, 开始等待至第一个周期开始')
             return True
 
         # 5. 跳过单充电计划中首个充电周期时的校正, 如果第一个周期就在校正触发时间上, 则跳过校正
@@ -418,6 +441,7 @@ The charging unit is not executable (correct value)
                 'custom_data': self.__custom_data,
             }
             self.signal_request_charge_plan_calibration.emit(calibration_dict)
+            _info('充电计划校正请求发送')
 
         # 6. 执行充电操作, 同时检查是否成功设置电流, 若否则停止充电
         result: bool = set_charging_current()

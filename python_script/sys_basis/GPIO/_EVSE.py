@@ -113,5 +113,5 @@ class Evse(object):
             limit[1] = modbus.read_current_max()
         return limit
 
-    def __handle_selftest_finished(self) -> None:
+    def __handle_selftest_finished(self, flag) -> None:
         self.__modbus.finish_selftest_and_RCD_test_procedure()  # 不能使用with, isSelfChecking是True的状态, 不能进入with

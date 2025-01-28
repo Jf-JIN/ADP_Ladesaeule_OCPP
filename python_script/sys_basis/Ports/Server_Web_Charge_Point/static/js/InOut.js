@@ -98,3 +98,8 @@ submit_btn.addEventListener('click', () => {
         socket.emit('input_data', data); // If the key name 'input data' is changed, please also change the corresponding listener part in 'Thread_Server_Web.py'
     }
 })
+
+const btn_charge_now = document.getElementById('charge_now');
+btn_charge_now.addEventListener('click', () => {
+    socket.emit('input_data', { "charge_now": { "evse_id": document.getElementById('evse_id').value }}); 
+})

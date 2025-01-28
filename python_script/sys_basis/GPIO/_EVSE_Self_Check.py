@@ -8,6 +8,7 @@ from ._Modbus_IO import ModbusIO
 import time
 
 _info = Log.EVSE.info
+_warning = Log.EVSE.warning
 _error = Log.EVSE.error
 
 
@@ -63,7 +64,7 @@ class EVSESelfCheck(Thread):
 
     def run(self):
         if self.__timeout <= 30:
-            _error(f'EVSE {self.__id} timeout must be greater than 30s')
+            _warning(f'EVSE {self.__id} timeout must be greater than 30s, self test will be skipped.')
             return
         if self.__class__.isChecking:
             _error(f'EVSE {self.__id} is self checking. Cannot start again.')

@@ -314,7 +314,7 @@ class DataGene:
         plt.title('Charged Energy Over Time', fontsize=FontSize.TITLE)
         plt.ylim(bottom=0)
         plt.legend()
-        plt.show()
+        # plt.show()
 
         # 保存为base64
         buf = io.BytesIO()

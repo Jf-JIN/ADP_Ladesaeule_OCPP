@@ -15,6 +15,7 @@ import uuid
 
 _info = Log.CP.info
 _debug = Log.CP.debug
+_critical = Log.CP.critical
 
 
 class ChargePointBase(object):

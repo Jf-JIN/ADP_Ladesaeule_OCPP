@@ -61,7 +61,6 @@ class ServerWeb:
         """返回第二个设备的数据"""
         amps, voltage, factor = self.__get_value()
         self.__power1 = amps*voltage*factor
-        print('ddddddddddd', self.__power1)
         temp_dict = {
             'power': self.__power1,
             'pf': factor,

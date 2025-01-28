@@ -4,10 +4,13 @@ import threading
 
 from gpiozero import LED
 from const.GPIO_Parameter import *
+from const.Const_Parameter import *
 
 if 0:
     from ._Data_Collector import DataCollector
     from ._Charge_Unit import ChargeUnit
+
+_info = Log.GPIO.info
 
 
 class LatchMotor:
@@ -103,6 +106,7 @@ class LatchMotor:
         处理动作完成信号, 检查是否有后续连续操作
         """
         self.__data_collector.set_CU_isLatched(id=self.id, flag=self.__isLocked)
+        _info(f'Action finished, isLatched: {self.__isLocked}')
         setattr(self.__parent, f'_{self.__parent.__class__.__name__}__isLatched', self.__isLocked)
         if len(self.__command_list) == 0:
             return

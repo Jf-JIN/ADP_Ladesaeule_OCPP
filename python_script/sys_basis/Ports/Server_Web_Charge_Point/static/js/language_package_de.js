@@ -27,6 +27,7 @@ const lang_pkg_de = {
     "charge_power_label": "Ladeenergie:",
     "departure_time_label": "Geschätzte Abfahrtszeit",
     "save_settings": "Abgeben und speichern",
+    "charge_now": "Jetzt laden",
     "home_current_current": "Aktueller Strom",
     "home_current_voltage": "Aktuelle Spannung",
     "home_charged_energy": "Geladene Menge",
