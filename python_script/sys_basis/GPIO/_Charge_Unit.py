@@ -29,7 +29,7 @@ class ChargeUnit:
         self.__evse: Evse = Evse(id=id)
         self.__shelly: Shelly = Shelly(id=id, address=shelly_address)
         self.__data_collector: DataCollector = self.__parent.data_collector
-        # self.__latch_motor: LatchMotor = LatchMotor(self, id=id)
+        self.__latch_motor: LatchMotor = LatchMotor(self, id=id)
         self.__start_time_str: str = ''
         """ 充电开始时间, 每次完整充电中只会被定义一次, 校正时不会更改 """
         self.__time_depart_str: str = ''
@@ -313,7 +313,7 @@ EVSE State abnormal, Unable to start charging (correct value)
     def __prepare_charging(self) -> None:
         if not self.__isLatched and GPIOParams.LETCH_MOTOR_RUNTIME > 0:
             # 执行上锁操作, 执行条件: 1.当前未上锁 2.电机运行时间大于0
-            # self.__latch_motor.lock()
+            self.__latch_motor.lock()
             _info('执行上锁')
             threading.Timer(GPIOParams.LETCH_MOTOR_RUNTIME+0.5, self.__prepare_charging).start()
             return
@@ -493,7 +493,7 @@ The charging unit is not executable (correct value)
         if self.__timer.is_alive():
             self.__timer.cancel()
         self.__signal_charging_finished.emit()
-        # self.__latch_motor.unlock()
+        self.__latch_motor.unlock()
         # 进行初始化参数
         if error_code:
             self.__isNoError = False
