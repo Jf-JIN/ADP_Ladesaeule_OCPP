@@ -166,3 +166,4 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 .idea/
 python_script/test/Modbus_Sim/Modbus_Sim.json
+python_script/test/Modbus_Sim.json
