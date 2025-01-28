@@ -217,7 +217,7 @@ class DataGene:
         plt.title('Cumulative Charging Energy Over Time', fontsize=FontSize.TITLE)
         plt.ylim(bottom=0)
         plt.legend()
-        plt.show()
+        # plt.show()
 
         # save to base64
         buf = io.BytesIO()
