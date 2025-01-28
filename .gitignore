@@ -4,6 +4,8 @@
 /python_script/中文标点转英文(含子目录).exe
 # Byte-compiled / optimized / DLL files
 /python_script/test/原神启动.bat
+/python_script/test/Modbus_Sim/Modbus_Sim.json
+/python_script/test/Modbus_Sim.json
 __pycache__/
 *.py[cod]
 *$py.class
@@ -165,6 +167,4 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 .idea/
-python_script/test/Modbus_Sim/Modbus_Sim.json
-python_script/test/Modbus_Sim.json
-python_script/test/原神启动.bat
+
