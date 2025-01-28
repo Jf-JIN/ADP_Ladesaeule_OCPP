@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox
-from PyQt5.QtCore import Qt, QSettings
-from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import Qt, QSettings, QByteArray
+from PyQt5.QtGui import QIcon, QPixmap, QIcon
 from Modbus_Sim_ui import Ui_MainWindow
 import sys
 import os
@@ -44,6 +44,9 @@ class MainWindow(Ui_MainWindow, QMainWindow):
                     "1003": 6,
                 }
                 json.dump(temp_dict, f, indent=4, ensure_ascii=False)
+
+        self.__svg = """<svg t="1738041248852" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4191" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M874.71 67.21L111.22 301.54c-34.39 10.55-53.73 46.98-43.18 81.37a65.168 65.168 0 0 0 27.21 35.8l225.57 144.01c24.08 15.37 55.36 13.31 77.22-5.1l281.53-237.11c6.78-5.9 17.07-5.19 22.97 1.6 5.32 6.12 5.33 15.22 0.02 21.35L465 624.73c-18.43 21.79-20.49 53.05-5.1 77.08l144.19 225.25c19.46 30.35 59.83 39.18 90.18 19.72a65.266 65.266 0 0 0 27.12-35.65l235.05-762.51c10.57-34.41-8.77-70.88-43.18-81.44a65.126 65.126 0 0 0-38.33 0.02h-0.22z" fill="#00C657" p-id="4192"></path></svg>"""
+
         if os.path.exists(fp):
             json_dict = {}
             try:
@@ -71,6 +74,8 @@ QSpinBox {
     background-color: #A7D477;
 }
 """)
+        self.setWindowIcon(QIcon(self.pixmap_from_svg(self.__svg)))
+        self.setWindowTitle("Modbus Simulator")
         self.sb_currnt_min.setMaximum(13)
         self.sb_currnt_min.setMinimum(0)
         self.cb_relay_onoff.setChecked(self.evse_state1007 & (1 << 0))
@@ -109,6 +114,17 @@ QSpinBox {
         self.rb_current_max_32.clicked.connect(self.current_max_32)
         self.rb_current_max_63.clicked.connect(self.current_max_63)
         self.rb_current_max_80.clicked.connect(self.current_max_80)
+
+    def pixmap_from_svg(self, icon_code: str) -> QIcon:
+        '''
+        svg转pixmap
+
+        参数:
+            Icon_code: SVG 的源码(str)
+        '''
+        pixmap = QPixmap()
+        pixmap.loadFromData(QByteArray(icon_code.encode()))
+        return pixmap
 
     def write(self):
         with open(fp, 'w', encoding='utf-8') as f:
