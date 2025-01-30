@@ -251,7 +251,7 @@ QLabel {
         self.lb_latch_unlock_pin_value.setText(self.latch_unlock_pin if self.latch_lock_pin is not None else 'UnDef')
         self.sb_set_current.setValue(max(self.current_min_2002, min(self.configured_amps_1000, self.current_max_1003)))
 
-        self.lb_turnonoff.setStyleSheet('background-color: #F93827') if self.onoff_selftest_1004 & (1 << 0) else self.lb_turnonoff.setStyleSheet('background-color: #73EC8B')
+        self.lb_turnonoff.setStyleSheet('background-color: #F93827') if not self.onoff_selftest_1004 & (1 << 0) else self.lb_turnonoff.setStyleSheet('background-color: #73EC8B')
         self.lb_selftest.setStyleSheet('background-color: #F93827') if self.onoff_selftest_1004 & 1 << 1 else self.lb_selftest.setStyleSheet('background-color: #73EC8B')
         self.lb_clearRCD.setStyleSheet('background-color: #F93827') if self.onoff_selftest_1004 & 1 << 2 else self.lb_clearRCD.setStyleSheet('background-color: #73EC8B')
         self.lb_2005_0.setStyleSheet('background-color: #F93827') if self.charge_operation_2005 & 1 << 0 else self.lb_2005_0.setStyleSheet('background-color: #73EC8B')

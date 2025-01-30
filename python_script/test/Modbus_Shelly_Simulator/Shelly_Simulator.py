@@ -78,30 +78,30 @@ class ShellySimulator_Thread(QThread):
 
     def __set_value(self):
         if self.__isTurnedOn and self.__isVaild and self.__current_target_value > 0 and self.__isPresent:
-            self.__current_p0 = min(self.__current_max_value, max(self.__current_min_value, random.uniform(
-                self.__current_target_value-self.__current_tolerance,
-                self.__current_target_value+self.__current_tolerance
-            )))
-            self.__current_p1 = min(self.__current_max_value, max(self.__current_min_value, random.uniform(
-                self.__current_target_value-self.__current_tolerance,
-                self.__current_target_value+self.__current_tolerance
-            )))
-            self.__current_p2 = min(self.__current_max_value, max(self.__current_min_value, random.uniform(
-                self.__current_target_value-self.__current_tolerance,
-                self.__current_target_value+self.__current_tolerance
-            )))
-            # self.__current_p0 = random.uniform(
+            # self.__current_p0 = min(self.__current_max_value, max(self.__current_min_value, random.uniform(
             #     self.__current_target_value-self.__current_tolerance,
             #     self.__current_target_value+self.__current_tolerance
-            # )
-            # self.__current_p1 = random.uniform(
+            # )))
+            # self.__current_p1 = min(self.__current_max_value, max(self.__current_min_value, random.uniform(
             #     self.__current_target_value-self.__current_tolerance,
             #     self.__current_target_value+self.__current_tolerance
-            # )
-            # self.__current_p2 = random.uniform(
+            # )))
+            # self.__current_p2 = min(self.__current_max_value, max(self.__current_min_value, random.uniform(
             #     self.__current_target_value-self.__current_tolerance,
             #     self.__current_target_value+self.__current_tolerance
-            # )
+            # )))
+            self.__current_p0 = random.uniform(
+                self.__current_target_value-self.__current_tolerance,
+                self.__current_target_value+self.__current_tolerance
+            )
+            self.__current_p1 = random.uniform(
+                self.__current_target_value-self.__current_tolerance,
+                self.__current_target_value+self.__current_tolerance
+            )
+            self.__current_p2 = random.uniform(
+                self.__current_target_value-self.__current_tolerance,
+                self.__current_target_value+self.__current_tolerance
+            )
             self.__voltage_p0 = max(0, random.uniform(
                 self.__voltage_target_value-self.__voltage_tolerance,
                 self.__voltage_target_value+self.__voltage_tolerance
@@ -183,7 +183,7 @@ class ShellySimulator_Thread(QThread):
         self.__current_max_value = data_dict['1003']
         self.__current_min_value = data_dict['2002']
         self.__isPresent = 1 < data_dict['1002'] < 5
-        self.__isTurnedOn = data_dict['1004'] & 1 << 0
+        self.__isTurnedOn = not data_dict['1004'] & 1 << 0
 
     def set_current_target_value(self, target):
         self.__current_target_value = target
