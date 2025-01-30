@@ -262,8 +262,8 @@ QLabel {
         set_read_text(self.lb_onoff_selftest_value, self.onoff_selftest_1004, True)
         set_read_text(self.lb_charge_operation_value, self.charge_operation_2005, True)
 
-        self.lb_latch_lock_pin_value.setText(self.latch_lock_pin if self.latch_lock_pin is not None else 'UnDef')
-        self.lb_latch_unlock_pin_value.setText(self.latch_unlock_pin if self.latch_lock_pin is not None else 'UnDef')
+        self.lb_latch_lock_pin_value.setText(str(self.latch_lock_pin) if self.latch_lock_pin is not None else 'UnDef')
+        self.lb_latch_unlock_pin_value.setText(str(self.latch_unlock_pin) if self.latch_lock_pin is not None else 'UnDef')
         if self.__isCurrentValueChanged:
             self.sb_set_current.setValue(max(self.current_min_2002, min(self.configured_amps_1000, self.current_max_1003)))
             self.__isCurrentValueChanged = False
@@ -310,6 +310,8 @@ QLabel {
         self.configured_amps_1000 = data['1000']
         self.onoff_selftest_1004 = data['1004']
         self.charge_operation_2005 = data['2005']
+        self.latch_lock_pin = data['latch_lock_pin']
+        self.latch_unlock_pin = data['latch_unlock_pin']
         self.update_display_read()
 
     def handle_ph0_signal(self, data_dict: dict):
