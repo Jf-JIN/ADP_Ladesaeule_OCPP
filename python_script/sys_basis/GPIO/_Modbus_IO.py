@@ -15,7 +15,7 @@ _exception = Log.MODBUS.exception
 class ModbusIO(object):
     isSelfChecking: set = set()
 
-    def __init__(self, id: int):
+    def __init__(self, id: int) -> None:
         if not isinstance(id, int):
             raise TypeError('Id of ModbusIO must be int')
         self.__id: int = id

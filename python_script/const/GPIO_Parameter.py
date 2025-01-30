@@ -17,12 +17,12 @@ class GPIOParams(AnalogDefine):
         # (1, 'url1'),
     ]
     DO_USE_RCD: bool = False
-    MAX_VOLTAGE = 220
+    MAX_VOLTAGE = 230
     SELF_CHECK_TIMEOUT = -31
     """ EVSE 自检时间, 单位: 秒. 该值必须 >=30 秒, 否则自检将不会启动 """
     LETCH_MOTOR_RUNTIME = -2
     """ 栓电机运行时间, 单位: 秒. 该值必须大于0秒, 否则电机将不会启动 """
-    CALIBRATION_PERIOD = 3600
+    CALIBRATION_PERIOD = 60
     """ 校准周期, 单位: 秒. 该值必须大于0秒, 否则校准将不会启动 """
     POLLING_EVSE_INTERVAL = 1
     """ 轮询 EVSE 间隔, 单位: 秒. 该值必须大于0秒 """

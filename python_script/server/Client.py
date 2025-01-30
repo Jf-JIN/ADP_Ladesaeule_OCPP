@@ -165,6 +165,10 @@ class Client:
             energy_amount = int(request_message['charge_power'])
             depart_time = request_message['depart_time']
             mode = int(request_message['charge_mode'])
+            charge_unit: ChargeUnit = self.GPIO_Manager.get_charge_unit(evse_id)
+            if not charge_unit.isAvailabel:
+                self.send_web_error_message('charge_unit is not available')
+                return
             current_limit_list = self.GPIO_Manager.get_current_limit(evse_id)
             voltage_max = self.GPIO_Manager.get_voltage_max(evse_id)
             _info(f""" \
@@ -177,17 +181,13 @@ current_limit_list:{current_limit_list},
 voltage_max:{voltage_max}
 """
                   )
-            if current_limit_list is None or len(current_limit_list) == 0 or not all(x >= 0 for x in current_limit_list):
+            if current_limit_list is None or len(current_limit_list) == 0:
                 self.send_web_error_message('get current_limit error')
-                return
-            charge_unit: ChargeUnit = self.GPIO_Manager.get_charge_unit(evse_id)
-            if not charge_unit.isAvailabel:
-                self.send_web_error_message('charge_unit is not available')
                 return
             self.__cp_info_dict[evse_id] = {
                 'target_energy': energy_amount,
                 'depart_time': depart_time,
-                'custom_data': {"vendorId": GPIOParams.VENDOR_ID, "mod": mode},
+                'custom_data': {"vendor_id": GPIOParams.VENDOR_ID, "mode": mode},
             }
             try:
                 g = GenNotifyEVChargingNeedsRequest
@@ -204,7 +204,7 @@ voltage_max:{voltage_max}
                             ),
                             departure_time=depart_time,
                         ),
-                        custom_data=g.get_custom_data(vendor_id=GPIOParams.VENDOR_ID, mod=mode)
+                        custom_data=g.get_custom_data(vendor_id=GPIOParams.VENDOR_ID, mode=mode)
                     )
                 )
             except:
@@ -264,7 +264,7 @@ voltage_max:{voltage_max}
                         ),
                         departure_time=gpio_request['departureTime'],
                     ),
-                    custom_data=g.get_custom_data(vendor_id=gpio_request['custom_data']['vendor_id'], mod=gpio_request['custom_data']['mode'])
+                    custom_data=g.get_custom_data(vendor_id=gpio_request['custom_data']['vendor_id'], mode=gpio_request['custom_data']['mode'])
                 )
             )
         except:

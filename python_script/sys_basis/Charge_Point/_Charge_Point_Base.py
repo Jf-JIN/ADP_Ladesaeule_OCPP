@@ -237,7 +237,6 @@ class ChargePointBase(object):
         - 返回值:
             - message(dataclass): 响应消息, 该消息为OCPP数据类类型的消息
         """
-        _info(f'调用 _wait_for_result, {message_action}')
         response_timeout = self._response_timeout - self.__network_buffer_time  # 网络缓冲时间, 考虑到网络延迟, 提前结束等待
         wait_until = time.time() + response_timeout
         message_id = uuid.uuid4().hex

@@ -58,7 +58,6 @@ class GPIOManager:
 
         返回:
             list: [最小电流值(int), 最大电流值(int)]
-            - 如果电流为负数则表示充电插口被占用
             - 空列表表示无车辆插入
             None: Evse故障
         """

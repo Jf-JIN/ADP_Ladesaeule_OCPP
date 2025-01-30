@@ -8,7 +8,7 @@ _info = Log.GPIO
 
 
 class Shelly:
-    def __init__(self, id: int, address: str):
+    def __init__(self, id: int, address: str) -> None:
         self.__id: int = id
         self.__main_address: str = address
         self.__data: dict = {}
@@ -19,65 +19,74 @@ class Shelly:
         self.__signal_shelly_error_occurred = XSignal()
 
     @property
-    def id(self):
+    def id(self) -> int:
         return self.__id
 
     @property
-    def main_address(self):
+    def main_address(self) -> str:
         return self.__main_address
 
     @property
-    def sub_address_0(self):
+    def sub_address_0(self) -> str:
         return f"http://{self.__main_address}/emeter/0"
 
     @property
-    def sub_address_1(self):
+    def sub_address_1(self) -> str:
         return f"http://{self.__main_address}/emeter/1"
 
     @property
-    def sub_address_2(self):
+    def sub_address_2(self) -> str:
         return f"http://{self.__main_address}/emeter/2"
 
     @property
-    def address_list(self):
+    def address_list(self) -> list:
         return copy.deepcopy([self.sub_address_0, self.sub_address_1, self.sub_address_2])
 
     @property
-    def isAvailable(self):
+    def isAvailable(self) -> bool:
         return self.__isAvailable
 
     @property
-    def charged_energy(self):
+    def charged_energy(self) -> int | float:
         return self.__charged_energy
 
     @property
-    def data(self):
+    def data(self) -> dict:
         return copy.deepcopy(self.__data)
 
     @property
-    def data_ph0(self):
+    def data_ph0(self) -> dict:
         return copy.deepcopy(self.__data[0])
 
     @property
-    def data_ph1(self):
+    def data_ph1(self) -> dict:
         return copy.deepcopy(self.__data[1])
 
     @property
-    def data_ph2(self):
+    def data_ph2(self) -> dict:
         return copy.deepcopy(self.__data[2])
 
     @property
-    def signal_shelly_error_occurred(self):
+    def signal_shelly_error_occurred(self) -> XSignal:
         return self.__signal_shelly_error_occurred
 
-    def set_data(self, data: dict):
+    @property
+    def signal_current_no(self) -> XSignal:
+        return self.__signal_current_no
+
+    @property
+    def signal_current_overload(self) -> XSignal:
+        return self.__signal_current_overload
+
+    def set_data(self, data: dict) -> None:
         self.__data = data
         self.__charged_energy = self.__data['charged_energy']
         self.__isAvailable = self.__data['is_valid']
         if not self.__isAvailable:
             self.signal_shelly_error_occurred.emit()
 
-    def reset(self):
+    def reset(self) -> None:
+        _info('Shelly reset')
         try:
             # 发送 POST 请求
             reset_token = 'reset_totals'
