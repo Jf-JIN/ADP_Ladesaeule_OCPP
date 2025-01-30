@@ -84,8 +84,10 @@ class ChargeUnit:
         self.__signal_connections()
 
     def __signal_connections(self) -> None:
-        self.evse.signal_evse_status_error.connect(self.__handle_evse_errror)
+        self.evse.signal_vehicle_status_failed_error.connect(self.__handle_evse_error)
+        self.evse.signal_evse_status_error.connect(self.__handle_evse_error)
         self.evse.signal_selftest_finished_result.connect(self.__set_isEVSESelfTested)
+        self.shelly.signal_shelly_error_occurred.connect(self.__handle_shelly_error)
 
     @property
     def id(self):
@@ -227,9 +229,6 @@ class ChargeUnit:
             self.__finished_plan = []
             self.__current_charge_action = {}
             self.__data_collector.clear_CU_finished_plan(self.id)
-            # 硬件初始化
-            self.__shelly.reset()
-            self.__evse.start_self_check()
         elif period_start_datetime < self.__current_start_datetime:
             # 非首次充电计划
             # 新计划的时间比正在执行的计划的时间早, 放弃执行新计划
@@ -316,6 +315,8 @@ EVSE State abnormal, Unable to start charging (correct value)
         return True
 
     def __prepare_charging(self) -> None:
+        # 硬件初始化
+        self.__shelly.reset()
         if not self.__isLatched and self.__isFistTimeChanging and GPIOParams.LETCH_MOTOR_RUNTIME > 0:
             # 执行上锁操作, 执行条件: 1.当前未上锁 2. 首次执行充电 3.电机运行时间大于0
             self.__latch_motor.lock()
@@ -493,6 +494,8 @@ The charging unit is not executable (correct value)
         解锁
         重置参数
         """
+        if not self.__isCharging:
+            return
         _info('停止充电')
         self.__evse.stop_charging()
         if self.__current_charge_action:
@@ -527,6 +530,9 @@ The charging unit is not executable (correct value)
     def __set_isEVSESelfTested(self, flag: bool) -> None:
         """ 设置是否已经进行过EVSE自检, 给信号使用的 """
         self.__isEVSESelfTested = flag
+        if not flag:
+            self.stop_charging('EVSE SelfTest Failed')
+            return
 
     def __send_signal_info(self, *args) -> None:
         """
@@ -574,7 +580,11 @@ The charging unit is not executable (correct value)
             if log:
                 log(error_text)
 
-    def __handle_evse_errror(self, error_message: set) -> None:
+    def __handle_evse_error(self, error_message: set | int) -> None:
+        if isinstance(error_message, int):
+            if error_message > 4:
+                self.stop_charging(str(error_message))
+                return
         handle_set: set = {
             EVSEErrorInfo.RCD_CHECK_ERROR,
             EVSEErrorInfo.RELAY_OFF,
@@ -583,9 +593,14 @@ The charging unit is not executable (correct value)
             EVSEErrorInfo.DIODE_CHECK_FAIL,
             EVSEErrorInfo.RCD_CHECK_FAILED,
         }
+        _info('error_message: ', error_message)
         for error_item in error_message:
             if error_item in handle_set:
                 self.stop_charging(error_item)
+
+    def __handle_shelly_error(self, error_flag: bool) -> None:
+        if error_flag:  # True 存在错误
+            self.stop_charging('shelly_error')
 
     def __trim_charge_plan(self, lag_sec: int | float, plan_list: list) -> list:
         if lag_sec > plan_list[-1]['startPeriod']:

@@ -9,6 +9,7 @@ from ._Thread_Polling_Shelly import PollingShelly
 from ._Data_Collector import DataCollector
 
 _info = Log.GPIO.info
+_error = Log.GPIO.error
 
 
 class GPIOManager:
@@ -18,10 +19,11 @@ class GPIOManager:
         for item in GPIOParams.CHARGE_UNITS:
             charge_unit = ChargeUnit(self, *item)
             self.__charge_units_dict[item[0]] = charge_unit
+            self.__data_collector.init_add_charge_units_id(item[0])
+            _error(self.__data_collector.available_charge_units_id_set)
             charge_unit.signal_request_charge_plan_calibration.connect(self.__send_request_charge_plan_calibration)
         _info(self.__charge_units_dict)
 
-        self.__charge_unit_init_param_list = None
         self.__thread_polling_evse: PollingEVSE = PollingEVSE(self, self.__charge_units_dict, GPIOParams.POLLING_EVSE_INTERVAL)
         self.__thread_polling_shelly: PollingShelly = PollingShelly(self, self.__charge_units_dict, GPIOParams.POLLING_SHELLY_INTERVAL, GPIOParams.POLLING_SHELLY_TIMEOUT)
         self.__timer_send_requeset_calibration: threading.Timer = threading.Timer(GPIOParams.REQUEST_INTERVAL, self.__execute_on_send_request_calibration_timer)
@@ -72,6 +74,8 @@ class GPIOManager:
         return charge_unit.get_voltage_max()
 
     def get_charge_unit(self, id: int) -> ChargeUnit:
+        if id not in self.__charge_units_dict:
+            _error(f'未找到id为{id}的充电单元')
         return self.__charge_units_dict[id]
 
     def stop_charging(self, id: int) -> None:

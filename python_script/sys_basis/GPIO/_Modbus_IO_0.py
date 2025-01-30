@@ -180,8 +180,14 @@ class ModbusIO(object):
         """
         结束自检和RCD测试程序
         """
-        if self.__id in self.__class__.isSelfChecking:
-            self.__class__.isSelfChecking.remove(self.__id)
+        self.write(address=EVSERegAddress.TURN_OFF_SELFTEST_OPERATION, value=BitsFlag.REG1004.SELFTEST_RCDTEST, bit_operation=0)
+
+    def finish_selftest_and_RCD_test_procedure_with_RCD(self) -> None:
+        """
+        结束自检和RCD测试程序
+        """
+        self.write(address=EVSERegAddress.TURN_OFF_SELFTEST_OPERATION, value=BitsFlag.REG1004.SELFTEST_RCDTEST, bit_operation=0)
+        self.write(address=EVSERegAddress.TURN_OFF_SELFTEST_OPERATION, value=BitsFlag.REG1004.CLEAR_RCD_ERROR, bit_operation=0)
 
     def set_current(self, value: int) -> None | bool:
         return self.write(address=EVSERegAddress.CONFIGURED_AMPS, value=value)

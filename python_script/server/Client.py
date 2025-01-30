@@ -165,6 +165,9 @@ class Client:
             energy_amount = int(request_message['charge_power'])
             depart_time = request_message['depart_time']
             mode = int(request_message['charge_mode'])
+            if evse_id not in self.GPIO_Manager.data_collector.available_charge_units_id_set:
+                self.send_web_error_message('evse_id is not available')
+                return
             charge_unit: ChargeUnit = self.GPIO_Manager.get_charge_unit(evse_id)
             if not charge_unit.isAvailabel:
                 self.send_web_error_message('charge_unit is not available')

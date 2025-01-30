@@ -183,6 +183,12 @@ class DataCollector:
     def parent_obj(self) -> GPIOManager:
         return self.__parent
 
+    def init_add_charge_units_id(self, id: int) -> None:
+        """
+        加入一个充电单元, 该方法会在线程检查时被 set_CU_status 自动调用.
+        """
+        self.__available_charge_units_id_set.add(id)
+
     def set_evse_data(self, id: int, data: dict) -> None:
         """
         写入 EVSE 数据.
@@ -315,11 +321,11 @@ class DataCollector:
         """
         self.__check_id(id)
         self.__all_data[id]['status'] = status
-        if status in [VehicleState.READY]:
+        if status in [VehicleState.READY, VehicleState.EV_IS_PRESENT]:
             # 充电单元就绪状态, 可以充电
             self.__remove_charging_unit(id)
             self.clear_CU_finished_plan(id)
-        elif status in [VehicleState.EV_IS_PRESENT, VehicleState.CHARGING, VehicleState.CHARGING_WITH_VENTILATION]:
+        elif status in [VehicleState.CHARGING, VehicleState.CHARGING_WITH_VENTILATION]:
             # 充电单元正在充电, 充电桩被占用
             self.__add_charging_unit(id)
         elif status in [VehicleState.FAILURE, VehicleState.CRITICAL]:

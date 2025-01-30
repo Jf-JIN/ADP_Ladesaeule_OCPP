@@ -21,6 +21,7 @@ class ModbusIO(object):
         self.__id: int = id
         self.__context_action_error: str = 'exit'
         self.__json_file_path = os.path.join(os.getcwd(), 'test', 'Modbus_Shelly_Simulator.json')
+        # self.__json_file_path = os.path.join(os.getcwd(), 'test', 'Modbus_Shelly_Simulator', 'Modbus_Shelly_Simulator.json')
         # self.__client = ModbusSerialClient(
         #     port=ModbusParams.PORT,
         #     baudrate=ModbusParams.BAUDRATE,
@@ -158,14 +159,20 @@ class ModbusIO(object):
         注意: 在EVSE类中, 必须在自检结束时调用`finish_selftest_and_RCD_test_procedure`来关闭自检和RCD测试程序, 否则对应id下的Modbus无法进行读取
         """
         self.__class__.isSelfChecking.add(self.__id)
-        return self.write(address=EVSERegAddress.TURN_OFF_SELFTEST_OPERATION, value=BitsFlag.REG1004.SELFTEST_RCDTEST)
+        return self.write(address=EVSERegAddress.TURN_OFF_SELFTEST_OPERATION, value=BitsFlag.REG1004.SELFTEST_RCDTEST, bit_operation=1)
 
     def finish_selftest_and_RCD_test_procedure(self) -> None:
         """
         结束自检和RCD测试程序
         """
-        if self.__id in self.__class__.isSelfChecking:
-            self.__class__.isSelfChecking.remove(self.__id)
+        self.write(address=EVSERegAddress.TURN_OFF_SELFTEST_OPERATION, value=BitsFlag.REG1004.SELFTEST_RCDTEST, bit_operation=0)
+
+    def finish_selftest_and_RCD_test_procedure_with_RCD(self) -> None:
+        """
+        结束自检和RCD测试程序
+        """
+        self.write(address=EVSERegAddress.TURN_OFF_SELFTEST_OPERATION, value=BitsFlag.REG1004.SELFTEST_RCDTEST, bit_operation=0)
+        self.write(address=EVSERegAddress.TURN_OFF_SELFTEST_OPERATION, value=BitsFlag.REG1004.CLEAR_RCD_ERROR, bit_operation=0)
 
     def set_current(self, value: int) -> None | bool:
         return self.write(address=EVSERegAddress.CONFIGURED_AMPS, value=value)

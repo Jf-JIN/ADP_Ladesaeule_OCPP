@@ -83,7 +83,7 @@ class Shelly:
         self.__charged_energy = self.__data['charged_energy']
         self.__isAvailable = self.__data['is_valid']
         if not self.__isAvailable:
-            self.signal_shelly_error_occurred.emit()
+            self.signal_shelly_error_occurred.emit(not self.__isAvailable)
 
     def reset(self) -> None:
         _info('Shelly reset')
@@ -96,6 +96,6 @@ class Shelly:
             response1.raise_for_status()
             response2 = requests.post(f"{self.sub_address_2}/{reset_token}", timeout=5)
             response2.raise_for_status()
-            _info("复位成功! ")
+            _info("Shelly 复位成功! ")
         except requests.exceptions.RequestException as e:
-            _info(f"复位失败: {e}")
+            _info(f"Shelly 复位失败: {e}")
