@@ -169,3 +169,4 @@ cython_debug/
 .idea/
 
 python_script/test/Modbus_Shelly_Simulator.json
+python_script/test/Modbus_Shelly_Simulator/Modbus_Shelly_Simulator.json
