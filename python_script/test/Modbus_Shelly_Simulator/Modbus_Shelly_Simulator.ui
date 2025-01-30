@@ -645,6 +645,9 @@ ventilation</string>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
             <property name="text">
              <string>turn on / off</string>
             </property>
@@ -661,6 +664,9 @@ ventilation</string>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
             <property name="text">
              <string>self test</string>
             </property>
@@ -676,6 +682,9 @@ ventilation</string>
               <horstretch>50</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="text">
              <string>clear RCD</string>
@@ -727,6 +736,9 @@ ventilation</string>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
             <property name="text">
              <string>允钮改流</string>
             </property>
@@ -742,6 +754,9 @@ ventilation</string>
               <horstretch>50</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="text">
              <string>按钮停充</string>
@@ -759,6 +774,9 @@ ventilation</string>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
             <property name="text">
              <string>引绪示灯</string>
             </property>
@@ -774,6 +792,9 @@ ventilation</string>
               <horstretch>50</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="text">
              <string>D态允充</string>
@@ -791,6 +812,9 @@ ventilation</string>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
             <property name="text">
              <string>允RCD反馈</string>
             </property>
@@ -806,6 +830,9 @@ ventilation</string>
               <horstretch>50</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="text">
              <string>自RCD清零</string>
@@ -846,9 +873,12 @@ ventilation</string>
            <widget class="QSpinBox" name="sb_set_current">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-              <horstretch>30</horstretch>
+              <horstretch>20</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="cursor">
+             <cursorShape>IBeamCursor</cursorShape>
             </property>
            </widget>
           </item>
@@ -869,6 +899,9 @@ ventilation</string>
               <horstretch>100</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="text">
              <string>reset default file</string>
@@ -1761,8 +1794,20 @@ ventilation</string>
           </item>
           <item>
            <widget class="QLabel" name="lb_clear">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
             <property name="text">
              <string>clear data</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
