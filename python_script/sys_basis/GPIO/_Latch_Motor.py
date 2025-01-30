@@ -3,7 +3,7 @@ from __future__ import annotations
 import threading
 
 # from gpiozero import LED # 用于正常使用
-from _LED import LED # 用于测试
+from ._LED import LED  # 用于测试
 from const.GPIO_Parameter import *
 from const.Const_Parameter import *
 

@@ -20,6 +20,7 @@ class ModbusIO(object):
             raise TypeError('Id of ModbusIO must be int')
         self.__id: int = id
         self.__context_action_error: str = 'exit'
+        self.__json_file_path = os.path.join(os.getcwd(), 'test', 'Modbus_Shelly_Simulator.json')
         # self.__client = ModbusSerialClient(
         #     port=ModbusParams.PORT,
         #     baudrate=ModbusParams.BAUDRATE,
@@ -53,7 +54,7 @@ class ModbusIO(object):
         - 异常:
             - 当读取过程中发生任何异常时, 会被捕获并返回 None.
         """
-        with open(os.path.join(os.getcwd(), 'test', 'Modbus_Sim.json'), 'r') as f:
+        with open(self.__json_file_path, 'r', encoding='utf-8') as f:
             json_dict = json.load(f)
             return json_dict[str(address)]
 
@@ -76,13 +77,29 @@ class ModbusIO(object):
         - 异常:
             - 当写入过程中发生任何异常时, 会被捕获并返回 False.
         """
+        with open(self.__json_file_path, 'r', encoding='utf-8') as f:
+            json_dict = json.load(f)
+        if bit_operation is not None:  # 按位操作
+            ori_value = json_dict[str(address)]
+            if ori_value is None:
+                _error(f'ModbusIO read error by writing.\naddress: {address}')
+                return False
+            if bit_operation == 0:  # 置0
+                ori_value &= ~value
+                value = ori_value
+            else:  # 置1
+                ori_value |= value
+                value = ori_value
+        json_dict[str(address)] = value
+        with open(self.__json_file_path, 'w', encoding='utf-8') as f:
+            json.dump(json_dict, f, indent=4, ensure_ascii=False)
         return True
 
     def read_evse_status_fails(self) -> None | set:
         """
         读取EVSE状态和故障
 
-        - 返回值: 
+        - 返回值:
             - None: 读取失败
             - set: EVSE状态和故障集合
         """
@@ -167,7 +184,7 @@ class ModbusIO(object):
             return self.write(address=EVSERegAddress.TURN_OFF_SELFTEST_OPERATION, value=BitsFlag.REG1004.TURN_OFF_CHARGING_NOW, bit_operation=1)
 
     def enable_RCD(self, flag: bool) -> None | bool:
-        """ 
+        """
         开启/关闭RCD检查
         """
         if flag:
@@ -176,7 +193,7 @@ class ModbusIO(object):
             return self.write(address=EVSERegAddress.CHARGE_OPERATION, value=BitsFlag.REG2005.ENABLE_RCD_FEEDBACK, bit_operation=0)
 
     def clear_RCD(self) -> None | bool:
-        """ 
+        """
         清除RCD错误
         """
         return self.write(address=EVSERegAddress.TURN_OFF_SELFTEST_OPERATION, value=BitsFlag.REG1004.CLEAR_RCD_ERROR, bit_operation=0)

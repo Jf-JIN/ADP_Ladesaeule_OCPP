@@ -1,0 +1,95 @@
+
+import json
+from PyQt5.QtCore import pyqtSignal, QThread, QTimer
+
+
+class ReaderThread(QThread):
+    """ 
+    读取文件线程
+    """
+
+    signal_reader = pyqtSignal(dict)
+
+    def __init__(self, file_path) -> None:
+        super().__init__()
+        self.__file_path = file_path
+        self.__evse_state_1007 = 0
+        self.__vehicle_state_1002 = 1
+        self.__current_max_1003 = 6
+        self.__current_min_2002 = 5
+        self.__onoff_selftest_1004 = 0
+        self.__configured_amps_1000 = 0
+        self.__charge_operation_2005 = 0b001001
+        self.__latch_lock_pin = ''
+        self.__latch_unlock_pin = ''
+        self.__timer = QTimer()
+        self.__timer.timeout.connect(self.read_json)
+        self.__timer.start(100)
+        self.running = True
+
+    def read_json(self):
+        try:
+            with open(self.__file_path, 'r', encoding='utf-8') as f:
+                data: dict = json.load(f)
+                evse_state_1007 = data.get('1007', 0)
+                vehicle_state_1002 = data.get('1002', 1)
+                current_max_1003 = data.get('1003', 6)
+                current_min_2002 = data.get('2002', 5)
+                onoff_selftest_1004 = data.get('1004', None)
+                configured_amps_1000 = data.get('1000', None)
+                charge_operation_2005 = data.get('2005', None)
+                latch_lock_pin = data.get('latch_lock_pin', None)
+                latch_unlock_pin = data.get('latch_unlock_pin', None)
+                if isinstance(latch_lock_pin, (int, float)):
+                    if latch_lock_pin > 0:
+                        latch_lock_pin = 1
+                    else:
+                        latch_lock_pin = 0
+                if isinstance(latch_unlock_pin, (int, float)):
+                    if latch_unlock_pin > 0:
+                        latch_unlock_pin = 1
+                    else:
+                        latch_unlock_pin = 0
+
+        except:
+            evse_state_1007 = self.__evse_state_1007
+            vehicle_state_1002 = self.__vehicle_state_1002
+            current_max_1003 = self.__current_max_1003
+            current_min_2002 = self.__current_min_2002
+            onoff_selftest_1004 = 'Error'
+            configured_amps_1000 = 'Error'
+            charge_operation_2005 = 'Error'
+            latch_lock_pin = 'Error'
+            latch_unlock_pin = 'Error'
+        if (
+            evse_state_1007 != self.__evse_state_1007
+            or vehicle_state_1002 != self.__vehicle_state_1002
+            or current_max_1003 != self.__current_max_1003
+            or current_min_2002 != self.__current_min_2002
+            or onoff_selftest_1004 != self.__onoff_selftest_1004
+            or configured_amps_1000 != self.__configured_amps_1000
+            or charge_operation_2005 != self.__charge_operation_2005
+            or latch_lock_pin != self.__latch_lock_pin
+            or latch_unlock_pin != self.__latch_unlock_pin
+        ):
+            temp: dict = {
+                '1007': evse_state_1007,
+                '1002': vehicle_state_1002,
+                '1003': current_max_1003,
+                '2002': current_min_2002,
+                '1004': onoff_selftest_1004,
+                '1000': configured_amps_1000,
+                '2005': charge_operation_2005,
+                'latch_lock_pin': latch_lock_pin,
+                'latch_unlock_pin': latch_unlock_pin
+            }
+            self.__evse_state_1007 = evse_state_1007
+            self.__vehicle_state_1002 = vehicle_state_1002
+            self.__current_max_1003 = current_max_1003
+            self.__current_min_2002 = current_min_2002
+            self.__onoff_selftest_1004 = onoff_selftest_1004
+            self.__configured_amps_1000 = configured_amps_1000
+            self.__charge_operation_2005 = charge_operation_2005
+            self.__latch_lock_pin = latch_lock_pin
+            self.__latch_unlock_pin = latch_unlock_pin
+            self.signal_reader.emit(temp)
