@@ -22,6 +22,7 @@ class ReaderThread(QThread):
         self.__charge_operation_2005 = 0b001001
         self.__latch_lock_pin = ''
         self.__latch_unlock_pin = ''
+        self.__max_voltage = 230
         self.__timer = QTimer()
         self.__timer.timeout.connect(self.read_json)
         self.__timer.start(100)
@@ -40,6 +41,7 @@ class ReaderThread(QThread):
                 charge_operation_2005 = data.get('2005', None)
                 latch_lock_pin = data.get('latch_lock_pin', None)
                 latch_unlock_pin = data.get('latch_unlock_pin', None)
+                max_voltage = data.get('max_voltage', 230)
                 if isinstance(latch_lock_pin, (int, float)):
                     if latch_lock_pin > 0:
                         latch_lock_pin = 1
@@ -61,6 +63,7 @@ class ReaderThread(QThread):
             charge_operation_2005 = 'Error'
             latch_lock_pin = 'Error'
             latch_unlock_pin = 'Error'
+            max_voltage = self.__max_voltage
         if (
             evse_state_1007 != self.__evse_state_1007
             or vehicle_state_1002 != self.__vehicle_state_1002
@@ -71,6 +74,7 @@ class ReaderThread(QThread):
             or charge_operation_2005 != self.__charge_operation_2005
             or latch_lock_pin != self.__latch_lock_pin
             or latch_unlock_pin != self.__latch_unlock_pin
+            or max_voltage != self.__max_voltage
         ):
             temp: dict = {
                 '1007': evse_state_1007,
@@ -81,7 +85,9 @@ class ReaderThread(QThread):
                 '1000': configured_amps_1000,
                 '2005': charge_operation_2005,
                 'latch_lock_pin': latch_lock_pin,
-                'latch_unlock_pin': latch_unlock_pin
+                'latch_unlock_pin': latch_unlock_pin,
+                'max_voltage': max_voltage,
+
             }
             self.__evse_state_1007 = evse_state_1007
             self.__vehicle_state_1002 = vehicle_state_1002

@@ -25,7 +25,7 @@ class ShellySimulator_Thread(QThread):
         self.__app.config['SECRET_KEY'] = 'secret!'
         self.__socketio = SocketIO(self.__app, async_mode='threading')
         self.__current_target_value = 0
-        self.__voltage_target_value = 220
+        self.__voltage_target_value = 230
         self.__factor_target_value = 0.90
         self.__current_tolerance = 1
         self.__voltage_tolerance = 10
@@ -179,11 +179,12 @@ class ShellySimulator_Thread(QThread):
         self.__isVaild = not self.__isVaild
 
     def handle_thread_data(self, data_dict: dict):
-        self.__current_target_value = data_dict['1000']
-        self.__current_max_value = data_dict['1003']
-        self.__current_min_value = data_dict['2002']
-        self.__isPresent = 1 < data_dict['1002'] < 5
-        self.__isTurnedOn = not data_dict['1004'] & 1 << 0
+        self.__current_target_value = data_dict.get('1000', 0)
+        self.__current_max_value = data_dict.get('1003', 6)
+        self.__current_min_value = data_dict.get('2002', 5)
+        self.__isPresent = 1 < data_dict.get('1002', 1) < 5
+        self.__isTurnedOn = not data_dict.get('1004', 0) & 1 << 0
+        self.__voltage_target_value = data_dict.get('max_voltage', 230)
 
     def set_current_target_value(self, target):
         self.__current_target_value = target
@@ -193,12 +194,6 @@ class ShellySimulator_Thread(QThread):
 
     def set_current_min_value(self, min_value):
         self.__current_min_value = min_value
-
-    def set_isPresent(self, flag=None):
-        if flag:
-            self.__isPresent = True
-        else:
-            self.__isPresent = False
 
     def __phase0(self):
         return jsonify(self.__ph0_dict)

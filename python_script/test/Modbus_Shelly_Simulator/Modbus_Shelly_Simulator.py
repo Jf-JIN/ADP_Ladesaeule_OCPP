@@ -53,6 +53,8 @@ class Simulator(Ui_MainWindow, QMainWindow):
         self.isFileNeededToReset = False
         self.json_ori_data = {}
         self.copy_board = QApplication.clipboard()
+        self.__isCurrentValueChanged = False
+        self.__isMaxVoltageChanged = False
         self.check_json_file()
         self.__init_threads()
 
@@ -73,7 +75,7 @@ QWidget#centralwidget {
 QSpinBox {
     background-color: #A7D477;
 }
-QSpinBox#sb_set_current{
+QSpinBox#sb_set_current, #sb_set_max_voltage{
     background-color: transparent;
     border: none;
 }
@@ -85,8 +87,6 @@ QLabel {
 """)
         self.setWindowIcon(QIcon(self.pixmap_from_svg(ICON_SVG)))
         self.setWindowTitle('Modbus / Shelly Simulator')
-        self.sb_currnt_min.setMaximum(13)
-        self.sb_currnt_min.setMinimum(0)
         self.lb_ip_local.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
         self.lb_ip_remote.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
         lb_default_listener = LabelRightDoubleFilter(self, self.lb_default, self.write_default_update_display)
@@ -117,6 +117,12 @@ QLabel {
         self.sb_set_current.wheelEvent = lambda event: None
         self.sb_set_current.setMinimum(self.current_min_2002)
         self.sb_set_current.setMaximum(self.current_max_1003)
+        self.sb_currnt_min.setMinimum(0)
+        self.sb_currnt_min.setMaximum(self.current_max_1003)
+        self.sb_set_max_voltage.setMinimum(0)
+        self.sb_set_max_voltage.setMaximum(2147483647)
+        self.sb_set_max_voltage.setButtonSymbols(QSpinBox.NoButtons)
+        self.sb_set_max_voltage.wheelEvent = lambda event: None
         self.update_display()
 
     def __init_signal_connections(self) -> None:
@@ -132,6 +138,7 @@ QLabel {
         self.rb_failure.clicked.connect(self.failure)
         self.sb_currnt_min.valueChanged.connect(self.current_min)
         self.sb_set_current.editingFinished.connect(self.set_current)
+        self.sb_set_max_voltage.editingFinished.connect(self.set_max_voltage)
         self.rb_current_max_6.clicked.connect(self.current_max_6)
         self.rb_current_max_13.clicked.connect(self.current_max_13)
         self.rb_current_max_20.clicked.connect(self.current_max_20)
@@ -146,6 +153,7 @@ QLabel {
         self.shelly.signal_ph0.connect(self.handle_ph0_signal)
         self.shelly.signal_ph1.connect(self.handle_ph1_signal)
         self.shelly.signal_ph2.connect(self.handle_ph2_signal)
+        self.shelly.signal_start.connect(self.handle_shelly_start_signal)
 
     def pixmap_from_svg(self, icon_code: str) -> QIcon:
         '''
@@ -169,7 +177,8 @@ QLabel {
                 '1000': self.configured_amps_1000,
                 '2005': self.charge_operation_2005,
                 'latch_lock_pin': self.latch_lock_pin,
-                'latch_unlock_pin': self.latch_unlock_pin
+                'latch_unlock_pin': self.latch_unlock_pin,
+                'max_voltage': self.max_voltage,
             }
             json.dump(temp_dict, f, indent=4, ensure_ascii=False)
 
@@ -183,6 +192,9 @@ QLabel {
         self.charge_operation_2005 = 0b001001
         self.latch_lock_pin = ''
         self.latch_unlock_pin = ''
+        self.max_voltage = 230
+        self.__isCurrentValueChanged = True
+        self.__isMaxVoltageChanged = True
         self.write()
 
     def check_json_file(self):
@@ -200,9 +212,12 @@ QLabel {
                 self.charge_operation_2005 = json_dict.get('2005', None)
                 self.latch_lock_pin = json_dict.get('latch_lock_pin', None)
                 self.latch_unlock_pin = json_dict.get('latch_unlock_pin', None)
+                self.max_voltage = json_dict.get('max_voltage', 230)
                 self.current_max_1003 = max(0, min(80, self.current_max_1003))
                 self.current_min_2002 = max(0, min(13, self.current_min_2002))
                 self.configured_amps_1000 = min(max(self.current_min_2002, self.configured_amps_1000), self.current_max_1003)
+                self.__isCurrentValueChanged = True
+                self.__isMaxVoltageChanged = True
             except:
                 self.isFileNeededToReset = True
         else:
@@ -249,7 +264,12 @@ QLabel {
 
         self.lb_latch_lock_pin_value.setText(self.latch_lock_pin if self.latch_lock_pin is not None else 'UnDef')
         self.lb_latch_unlock_pin_value.setText(self.latch_unlock_pin if self.latch_lock_pin is not None else 'UnDef')
-        self.sb_set_current.setValue(max(self.current_min_2002, min(self.configured_amps_1000, self.current_max_1003)))
+        if self.__isCurrentValueChanged:
+            self.sb_set_current.setValue(max(self.current_min_2002, min(self.configured_amps_1000, self.current_max_1003)))
+            self.__isCurrentValueChanged = False
+        if self.__isMaxVoltageChanged:
+            self.sb_set_max_voltage.setValue(self.max_voltage)
+            self.__isMaxVoltageChanged = False
 
         self.lb_turnonoff.setStyleSheet('background-color: #F93827') if not self.onoff_selftest_1004 & (1 << 0) else self.lb_turnonoff.setStyleSheet('background-color: #73EC8B')
         self.lb_selftest.setStyleSheet('background-color: #F93827') if self.onoff_selftest_1004 & 1 << 1 else self.lb_selftest.setStyleSheet('background-color: #73EC8B')
@@ -283,6 +303,10 @@ QLabel {
         self.lb_ip_remote.setText(ip_list[1])
 
     def handle_reader_signal(self, data: dict):
+        if data['1000'] != self.configured_amps_1000:
+            self.__isCurrentValueChanged = True
+        if data['max_voltage'] != self.max_voltage:
+            self.__isMaxVoltageChanged = True
         self.configured_amps_1000 = data['1000']
         self.onoff_selftest_1004 = data['1004']
         self.charge_operation_2005 = data['2005']
@@ -312,6 +336,18 @@ QLabel {
         self.lb_total_ph2.setText('{:.2f}'.format(data_dict['total']))
         self.lb_isValid_ph2.setText(str(data_dict['is_valid']))
 
+    def handle_shelly_start_signal(self, flag):
+        if flag:
+            if self.vehicle_state_1002 == 2:
+                self.vehicle_state_1002 = 3
+            elif self.vehicle_state_1002 == 4:
+                return
+            self.write_update_display()
+        else:
+            if 2 < self.vehicle_state_1002 < 5:
+                self.vehicle_state_1002 = 2
+                self.write_update_display()
+
     def copy_ip_address(self) -> None:
         sender = self.sender()
         if sender == self.pb_copy_local:
@@ -331,6 +367,11 @@ QLabel {
         current = self.sb_set_current.value()
         current = max(self.current_min_2002, min(current, self.current_max_1003))
         self.configured_amps_1000 = current
+        self.write()
+
+    def set_max_voltage(self) -> None:
+        voltage = self.sb_set_max_voltage.value()
+        self.max_voltage = voltage
         self.write()
 
     def relay_onoff(self) -> None:
@@ -391,42 +432,60 @@ QLabel {
     def current_min(self) -> None:
         self.current_min_2002 = self.sb_currnt_min.value()
         self.sb_set_current.setMinimum(self.current_min_2002)
-        self.configured_amps_1000 = max(self.configured_amps_1000, self.current_min_2002)
+        lim = max(self.configured_amps_1000, self.current_min_2002)
+        if self.configured_amps_1000 != lim:
+            self.configured_amps_1000 = lim
+            self.__isCurrentValueChanged = True
         self.write()
 
     def current_max_6(self) -> None:
         self.current_max_1003 = 6
         self.sb_currnt_min.setMaximum(self.current_max_1003)
         self.sb_set_current.setMaximum(self.current_max_1003)
-        self.configured_amps_1000 = min(self.configured_amps_1000, self.current_max_1003)
+        lim = min(self.configured_amps_1000, self.current_max_1003)
+        if self.configured_amps_1000 != lim:
+            self.configured_amps_1000 = lim
+            self.__isCurrentValueChanged = True
         self.write()
 
     def current_max_13(self) -> None:
         self.current_max_1003 = 13
         self.sb_currnt_min.setMaximum(self.current_max_1003)
         self.sb_set_current.setMaximum(self.current_max_1003)
-        self.configured_amps_1000 = min(self.configured_amps_1000, self.current_max_1003)
+        lim = min(self.configured_amps_1000, self.current_max_1003)
+        if self.configured_amps_1000 != lim:
+            self.configured_amps_1000 = lim
+            self.__isCurrentValueChanged = True
         self.write()
 
     def current_max_20(self) -> None:
         self.current_max_1003 = 20
         self.sb_currnt_min.setMaximum(self.current_max_1003)
         self.sb_set_current.setMaximum(self.current_max_1003)
-        self.configured_amps_1000 = min(self.configured_amps_1000, self.current_max_1003)
+        lim = min(self.configured_amps_1000, self.current_max_1003)
+        if self.configured_amps_1000 != lim:
+            self.configured_amps_1000 = lim
+            self.__isCurrentValueChanged = True
         self.write()
 
     def current_max_32(self) -> None:
         self.current_max_1003 = 32
         self.sb_currnt_min.setMaximum(self.current_max_1003)
         self.sb_set_current.setMaximum(self.current_max_1003)
-        self.configured_amps_1000 = min(self.configured_amps_1000, self.current_max_1003)
+        lim = min(self.configured_amps_1000, self.current_max_1003)
+        if self.configured_amps_1000 != lim:
+            self.configured_amps_1000 = lim
+            self.__isCurrentValueChanged = True
         self.write()
 
     def current_max_63(self) -> None:
         self.current_max_1003 = 63
         self.sb_currnt_min.setMaximum(self.current_max_1003)
         self.sb_set_current.setMaximum(self.current_max_1003)
-        self.configured_amps_1000 = min(self.configured_amps_1000, self.current_max_1003)
+        lim = min(self.configured_amps_1000, self.current_max_1003)
+        if self.configured_amps_1000 != lim:
+            self.configured_amps_1000 = lim
+            self.__isCurrentValueChanged = True
         self.write()
 
     def current_max_80(self) -> None:

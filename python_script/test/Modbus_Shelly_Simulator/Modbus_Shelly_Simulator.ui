@@ -880,6 +880,12 @@ ventilation</string>
             <property name="cursor">
              <cursorShape>IBeamCursor</cursorShape>
             </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="buttonSymbols">
+             <enum>QAbstractSpinBox::NoButtons</enum>
+            </property>
            </widget>
           </item>
           <item>
@@ -915,6 +921,25 @@ ventilation</string>
               <horstretch>100</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="sb_set_max_voltage">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>20</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="readOnly">
+             <bool>false</bool>
+            </property>
+            <property name="buttonSymbols">
+             <enum>QAbstractSpinBox::NoButtons</enum>
             </property>
            </widget>
           </item>
