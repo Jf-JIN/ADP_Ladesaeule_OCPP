@@ -32,96 +32,82 @@ class EnumBaseMeta(type):
         super().__setattr__(key, value)
 
     def __contains__(self, item) -> bool:
-        return item in self._members_.values()
+        return item in self._members_.keys()
 
 
 class EnumBase(metaclass=EnumBaseMeta):
     pass
 
 
+class _ColorMapItem(object):
+    def __init__(self, name, ansi_txt, ansi_bg, hex):
+        self.name = name
+        self.ANSI_TXT = ansi_txt
+        self.ANSI_BG = ansi_bg
+        self.HEX = hex
+
+    def __setattr__(self, name, value):
+        if name in self.__dict__:
+            raise AttributeError(f'Disable external modification of enumeration items\t< {name} > = {self.__dict__[name]}')
+        super().__setattr__(name, value)
+
+
 class _ColorMap(EnumBase):
     """ 颜色枚举类 """
-    BLACK = '#010101'
-    RED = '#DE382B'
-    GREEN = '#39B54A'
-    YELLOW = '#FFC706'
-    BLUE = '#006FB8'
-    PINK = '#762671'
-    CYAN = '#2CB5E9'
-    WHITE = '#CCCCCC'
-    GRAY = '#808080'
-    LIGHTRED = '#FF0000'
-    LIGHTGREEN = '#00FF00'
-    LIGHTYELLOW = '#FFFF00'
-    LIGHTBLUE = '#0000FF'
-    LIGHTPINK = '#FF00FF'
-    LIGHTCYAN = '#00FFFF'
-    LIGHTWHITE = '#FFFFFF'
-    MAP_RGB_ANSI_TXT: dict = {
-        '#010101': '30',  # BLACK
-        '#DE382B': '31',  # RED
-        '#39B54A': '32',  # GREEN
-        '#FFC706': '33',  # YELLOW
-        '#006FB8': '34',  # BLUE
-        '#762671': '35',  # PINK
-        '#2CB5E9': '36',  # CYAN
-        '#CCCCCC': '37',  # WHITE
-        '#808080': '90',  # GRAY
-        '#FF0000': '91',  # LIGHTRED
-        '#00FF00': '92',  # LIGHTGREEN
-        '#FFFF00': '93',  # LIGHTYELLOW
-        '#0000FF': '94',  # LIGHTBLUE
-        '#FF00FF': '95',  # LIGHTPINK
-        '#00FFFF': '96',  # LIGHTCYAN
-        '#FFFFFF': '97',  # LIGHTWHITE
-    }
-    MAP_RGB_ANSI_BG: dict = {
-        '#010101': '40',  # BLACK
-        '#DE382B': '41',  # RED
-        '#39B54A': '42',  # GREEN
-        '#FFC706': '43',  # YELLOW
-        '#006FB8': '44',  # BLUE
-        '#762671': '45',  # PINK
-        '#2CB5E9': '46',  # CYAN
-        '#CCCCCC': '47',  # WHITE
-        '#808080': '100',  # GRAY
-        '#FF0000': '101',  # LIGHTRED
-        '#00FF00': '102',  # LIGHTGREEN
-        '#FFFF00': '103',  # LIGHTYELLOW
-        '#0000FF': '104',  # LIGHTBLUE
-        '#FF00FF': '105',  # LIGHTPINK
-        '#00FFFF': '106',  # LIGHTCYAN
-        '#FFFFFF': '107',  # LIGHTWHITE
-    }
-    MAP_RGB_HTML: dict = {
-        '#010101': '#010101',
-        '#DE382B': '#DE382B',
-        '#39B54A': '#39B54A',
-        '#FFC706': '#FFC706',
-        '#006FB8': '#006FB8',
-        '#762671': '#762671',
-        '#2CB5E9': '#2CB5E9',
-        '#CCCCCC': '#CCCCCC',
-        '#808080': '#808080',
-        '#FF0000': '#FF0000',
-        '#00FF00': '#00FF00',
-        '#FFFF00': '#FFFF00',
-        '#0000FF': '#0000FF',
-        '#FF00FF': '#FF00FF',
-        '#00FFFF': '#00FFFF',
-        '#FFFFFF': '#FFFFFF',
-    }
+    BLACK = _ColorMapItem('BLACK', '30', '40', '#010101')
+    RED = _ColorMapItem('RED', '31', '41', '#DE382B')
+    GREEN = _ColorMapItem('GREEN', '32', '42', '#39B54A')
+    YELLOW = _ColorMapItem('YELLOW', '33', '43', '#FFC706')
+    BLUE = _ColorMapItem('BLUE', '34', '44', '#006FB8')
+    PINK = _ColorMapItem('PINK', '35', '45', '#762671')
+    CYAN = _ColorMapItem('CYAN', '36', '46', '#2CB5E9')
+    WHITE = _ColorMapItem('WHITE', '37', '47', '#CCCCCC')
+    GRAY = _ColorMapItem('GRAY', '90', '100', '#808080')
+    LIGHTRED = _ColorMapItem('LIGHTRED', '91', '101', '#FF0000')
+    LIGHTGREEN = _ColorMapItem('LIGHTGREEN', '92', '102', '#00FF00')
+    LIGHTYELLOW = _ColorMapItem('LIGHTYELLOW', '93', '103', '#FFFF00')
+    LIGHTBLUE = _ColorMapItem('LIGHTBLUE', '94', '104', '#0000FF')
+    LIGHTPINK = _ColorMapItem('LIGHTPINK', '95', '105', '#FF00FF')
+    LIGHTCYAN = _ColorMapItem('LIGHTCYAN', '96', '106', '#00FFFF')
+    LIGHTWHITE = _ColorMapItem('LIGHTWHITE', '97', '107', '#FFFFFF')
 
 
 class LogLevel(EnumBase):
     """ 日志级别枚举类 """
-    NOTSET = 'NOTSET'
-    DEBUG = 'DEBUG'
-    INFO = 'INFO'
-    WARNING = 'WARNING'
-    ERROR = 'ERROR'
-    CRITICAL = 'CRITICAL'
-    NOOUT = 'NOOUT'
+    NOTSET = 0
+    TRACE = 10
+    DEBUG = 20
+    INFO = 30
+    WARNING = 40
+    ERROR = 50
+    CRITICAL = 60
+    NOOUT = 70
+
+
+_dct_log_level_int2str: dict = {
+    LogLevel.NOTSET: 'NOTSET',
+    LogLevel.TRACE: 'TRACE',
+    LogLevel.DEBUG: 'DEBUG',
+    LogLevel.INFO: 'INFO',
+    LogLevel.WARNING: 'WARNING',
+    LogLevel.ERROR: 'ERROR',
+    LogLevel.CRITICAL: 'CRITICAL',
+    LogLevel.NOOUT: 'NOOUT',
+}
+
+
+def _normalize_log_level(log_level: str | int | LogLevel) -> LogLevel:
+    normalized_log_level = 0
+    if isinstance(log_level, str):
+        if log_level.upper() in LogLevel:
+            normalized_log_level = getattr(LogLevel, log_level.upper())
+        else:
+            raise ValueError(f'<ERROR> Log level "{log_level}" is not a valid log level.')
+    elif isinstance(log_level, int | float):
+        normalized_log_level = abs(log_level // 10 * 10)
+    else:
+        raise ValueError(f'<ERROR> Log level "{log_level}" is not a valid log level. It should be a string or a number.')
+    return normalized_log_level
 
 
 class _HighlightType(EnumBase):
@@ -164,8 +150,8 @@ def asni_ct(
     style_list.append('3') if italic else ''  # 斜体
     style_list.append('4') if underline else ''  # 下划线
     style_list.append('5') if blink else ''  # 闪烁
-    style_list.append(_ColorMap.MAP_RGB_ANSI_TXT[txt_color]) if txt_color in _ColorMap else ''  # 字体颜色
-    style_list.append(_ColorMap.MAP_RGB_ANSI_BG[bg_color]) if bg_color in _ColorMap else ''  # 背景颜色
+    style_list.append(getattr(getattr(_ColorMap, txt_color), 'ANSI_TXT')) if txt_color in _ColorMap else ''  # 字体颜色
+    style_list.append(getattr(getattr(_ColorMap, bg_color), 'ANSI_BG')) if bg_color in _ColorMap else ''  # 背景颜色
     style_str = ';'.join(item for item in style_list if item)
     return f'\x1B[{style_str}m{text}\x1B[0m'
 
@@ -199,8 +185,8 @@ def html_ct(
     """
 
     style_list = []
-    style_list.append(f'color: {_ColorMap.MAP_RGB_HTML[txt_color]}') if txt_color in _ColorMap else ''
-    style_list.append(f'background-color: {_ColorMap.MAP_RGB_HTML[bg_color]}') if bg_color in _ColorMap else ''
+    style_list.append(getattr(getattr(_ColorMap, txt_color), 'HEX')) if txt_color in _ColorMap else ''
+    style_list.append(getattr(getattr(_ColorMap, txt_color), 'HEX')) if bg_color in _ColorMap else ''
     style_list.append('font-weight: bold') if bold else ''
     style_list.append('font-style: italic') if italic else ''
     style_list.append('text-decoration: underline') if underline else ''
@@ -232,11 +218,16 @@ class _LogSignal(object):
 class _LoggingListener(logging.Handler):
     def __init__(self, level) -> None:
         super().__init__(level=level)
+        self.__signal_trace = _LogSignal()
         self.__signal_debug = _LogSignal()
         self.__signal_info = _LogSignal()
         self.__signal_warning = _LogSignal()
         self.__signal_error = _LogSignal()
         self.__signal_critical = _LogSignal()
+
+    @property
+    def signal_trace(self) -> _LogSignal:
+        return self.__signal_trace
 
     @property
     def signal_debug(self) -> _LogSignal:
@@ -259,9 +250,11 @@ class _LoggingListener(logging.Handler):
         return self.__signal_critical
 
     def emit(self, record) -> None:
-        level = record.levelname
+        level = record.levelno
         # message = self.format(record)
         message = record.getMessage()
+        if level == LogLevel.TRACE:
+            self.__signal_trace.emit(message)
         if level == LogLevel.DEBUG:
             self.__signal_debug.emit(message)
         elif level == LogLevel.INFO:
@@ -290,7 +283,7 @@ class Logger(object, metaclass=_LogMeta):
     - log_path(str): 日志路径, 默认为无路径
     - log_sub_folder_name(str): 日志子文件夹名称, 默认无子文件夹
     - log_level(str): 日志级别, 默认为 `INFO`
-        - `DEBUG` | `INFO` | `WARNING` | `ERROR` | `CRITICAL`
+        - `TRACE` | `DEBUG` | `INFO` | `WARNING` | `ERROR` | `CRITICAL`
     - default_level(str): 默认日志级别, 是直接调用类时执行的日志级别, 默认为`INFO`
     - console_output(bool): 是否输出到控制台, 默认输出
     - file_output(bool): 是否输出到文件, 默认输出
@@ -310,6 +303,7 @@ class Logger(object, metaclass=_LogMeta):
     - signal_log_instance: 日志消息信号对象, 用于在类外部接收当前日志实例的日志消息
 
     方法:
+    - trace(*message) # 输出追踪信息, 支持多参数
     - debug(*message) # 输出调试信息, 支持多参数
     - info(*message)  # 输出普通信息, 支持多参数
     - warning(*message)  # 输出警告信息, 支持多参数
@@ -364,8 +358,8 @@ class Logger(object, metaclass=_LogMeta):
         log_name: str,
         log_folder_path: str = '',
         log_sub_folder_name: str = '',
-        log_level: str = LogLevel.INFO,
-        default_level: str = LogLevel.INFO,
+        log_level: str | int = LogLevel.INFO,
+        default_level: str | int = LogLevel.INFO,
         console_output: bool = True,
         file_output: bool = True,
         size_limit: int = -1,  # KB
@@ -392,10 +386,10 @@ class Logger(object, metaclass=_LogMeta):
             raise FileNotFoundError(f'Log folder path "{log_folder_path}" does not exist, create it.')
         else:
             self.__printf(
-                f'No File Output from <{self.__log_name}>\n   - No log file will be recorded because the log folder path is not specified. The current file path input is {self.__log_path}{type(self.__log_path)}\n')
+                f'\x1B[93m < WARNING > No File Output from <{self.__log_name}>\x1B[0m\n   \x1B[33m- No log file will be recorded because the log folder path is not specified. The current file path input is {self.__log_path}. Type: {type(self.__log_path)}\x1B[0m\n')
         self.__log_sub_folder_name = log_sub_folder_name if isinstance(log_sub_folder_name, str) else ''
-        self.__log_level = log_level if log_level in LogLevel else LogLevel.INFO
-        self.__default_level = default_level if default_level in LogLevel else LogLevel.INFO
+        self.__log_level = _normalize_log_level(log_level)
+        self.__default_level = _normalize_log_level(default_level)
         self.__size_limit = size_limit * 1000 if isinstance(size_limit, int) else -1
         self.__count_limit = count_limit if isinstance(count_limit, int) else -1
         self.__days_limit = days_limit if isinstance(days_limit, int) else -1
@@ -448,56 +442,42 @@ class Logger(object, metaclass=_LogMeta):
         self.__current_day = datetime.today().date()
         self.__isNewFile = True
         self.__signal_log_instance = _LogSignal()
-        self.__signal_log_instance_color = _LogSignal()
-        self.__signal_log_instance_html = _LogSignal()
         self.__level_color_dict = {
-            LogLevel.DEBUG: (_ColorMap.LIGHTGREEN, '', False, False),
-            LogLevel.INFO: (_ColorMap.BLUE, '', False, False),
-            LogLevel.WARNING: (_ColorMap.LIGHTYELLOW, '', True, False),
-            LogLevel.ERROR: (_ColorMap.WHITE, _ColorMap.LIGHTRED, True, False),
-            LogLevel.CRITICAL: (_ColorMap.LIGHTYELLOW, _ColorMap.RED, True, True),
-        }
-        self.__log_level_int_dict = {
-            LogLevel.NOTSET: 10,
-            LogLevel.DEBUG: 10,
-            LogLevel.INFO: 20,
-            LogLevel.WARNING: 30,
-            LogLevel.ERROR: 40,
-            LogLevel.CRITICAL: 50,
-            LogLevel.NOOUT: 60,
+            LogLevel.NOTSET: (_ColorMap.LIGHTBLUE.name, '', False, False),
+            LogLevel.TRACE: (_ColorMap.LIGHTGREEN.name, '', False, False),
+            LogLevel.DEBUG: (_ColorMap.BLACK.name, _ColorMap.LIGHTGREEN.name, False, False),
+            LogLevel.INFO: (_ColorMap.BLUE.name, '', False, False),
+            LogLevel.WARNING: (_ColorMap.LIGHTYELLOW.name, '', True, False),
+            LogLevel.ERROR: (_ColorMap.WHITE.name, _ColorMap.LIGHTRED.name, True, False),
+            LogLevel.CRITICAL: (_ColorMap.LIGHTYELLOW.name, _ColorMap.RED.name, True, True),
         }
         listen_level_dict = {
+            LogLevel.NOTSET: LogLevel.NOTSET,
+            LogLevel.TRACE: LogLevel.NOTSET,
             LogLevel.DEBUG: LogLevel.NOTSET,
-            LogLevel.INFO: LogLevel.DEBUG,
-            LogLevel.WARNING: LogLevel.INFO,
-            LogLevel.ERROR: LogLevel.WARNING,
-            LogLevel.CRITICAL: LogLevel.ERROR,
-            LogLevel.NOOUT: LogLevel.CRITICAL
+            LogLevel.INFO: LogLevel.TRACE,
+            LogLevel.WARNING: LogLevel.DEBUG,
+            LogLevel.ERROR: LogLevel.INFO,
+            LogLevel.CRITICAL: LogLevel.WARNING,
+            LogLevel.NOOUT: LogLevel.ERROR
         }
         name_logging_listening_level = f'_{self.__class__.__name__}__logging_listening_level_int'
         attr_logging_listening_level = getattr(self.__class__, name_logging_listening_level, 100)
         if attr_logging_listening_level >= 100:
+            self.__logging_listener_handler.signal_trace.connect(self.trace)
             self.__logging_listener_handler.signal_debug.connect(self.debug)
             self.__logging_listener_handler.signal_info.connect(self.info)
             self.__logging_listener_handler.signal_warning.connect(self.warning)
             self.__logging_listener_handler.signal_error.connect(self.error)
             self.__logging_listener_handler.signal_critical.connect(self.critical)
             self.__logging_listener.addHandler(self.__logging_listener_handler)
-        if self.__log_level_int_dict[self.__log_level] <= attr_logging_listening_level:
+        if self.__log_level <= attr_logging_listening_level:
             self.__logging_listener.setLevel(listen_level_dict[self.__log_level])
-            setattr(self.__class__, name_logging_listening_level, self.__log_level_int_dict[self.__log_level])
+            setattr(self.__class__, name_logging_listening_level, self.__log_level)
 
     @property
     def signal_log_instance(self) -> _LogSignal:
         return self.__signal_log_instance
-
-    @property
-    def signal_log_instance_color(self) -> _LogSignal:
-        return self.__signal_log_instance_color
-
-    @property
-    def signal_log_instance_html(self) -> _LogSignal:
-        return self.__signal_log_instance_html
 
     def __set_log_file_path(self) -> None:
         """ 设置日志文件路径 """
@@ -526,7 +506,7 @@ class Logger(object, metaclass=_LogMeta):
         if self.__default_level in call_dict:
             call_dict[self.__default_level](*args, **kwargs)
         else:
-            raise TypeError("'module' object is not callable. Please use Logger.debug/info/warning/error/critical to log.")
+            raise TypeError("'module' object is not callable. Please use Logger.trace/debug/info/warning/error/critical to log.")
 
     def __setattr__(self, name: str, value) -> None:
         if hasattr(self, '_Logger__kwargs') and name == 'signal_log_public' and name in self.__dict__['_Logger__exclude_funcs']:
@@ -635,7 +615,7 @@ class Logger(object, metaclass=_LogMeta):
         self.__var_dict['scriptPath'] = caller_info['script_path']
         self.__var_dict['functionName'] = caller_info['caller_name']
         self.__var_dict['className'] = caller_info['class_name']
-        self.__var_dict['levelName'] = log_level
+        self.__var_dict['levelName'] = _dct_log_level_int2str[log_level]
         self.__var_dict['lineNum'] = caller_info['line_num']
         self.__var_dict['message'] = msg
         script_path = caller_info['script_path']
@@ -649,7 +629,7 @@ class Logger(object, metaclass=_LogMeta):
         # 高亮消息
         html_dict = {
             'levelName': self.__color(
-                log_level,
+                _dct_log_level_int2str[log_level],
                 txt_color=self.__level_color_dict[log_level][0],
                 bg_color=self.__level_color_dict[log_level][1],
                 bold=self.__level_color_dict[log_level][2],
@@ -657,72 +637,72 @@ class Logger(object, metaclass=_LogMeta):
                 highlight_type='HTML'),
             'logName': self.__color(
                 self.__var_dict['logName'],
-                txt_color=_ColorMap.CYAN,
+                txt_color=_ColorMap.CYAN.name,
                 highlight_type='HTML'),
             'asctime': self.__color(
                 self.__var_dict['asctime'],
-                txt_color=_ColorMap.GREEN,
+                txt_color=_ColorMap.GREEN.name,
                 bold=True,
                 highlight_type='HTML'),
             'moduleName': self.__color(
                 self.__var_dict['moduleName'],
-                txt_color=_ColorMap.CYAN,
+                txt_color=_ColorMap.CYAN.name,
                 highlight_type='HTML'),
             'functionName': self.__color(
                 self.__var_dict['functionName'],
-                txt_color=_ColorMap.CYAN,
+                txt_color=_ColorMap.CYAN.name,
                 highlight_type='HTML'),
             'className': self.__color(
                 self.__var_dict['className'],
-                txt_color=_ColorMap.CYAN,
+                txt_color=_ColorMap.CYAN.name,
                 highlight_type='HTML'),
             'lineNum': self.__color(
                 self.__var_dict['lineNum'],
-                txt_color=_ColorMap.CYAN,
+                txt_color=_ColorMap.CYAN.name,
                 highlight_type='HTML'),
             'scriptPath': self.__color(
                 self.__var_dict['scriptPath'],
-                txt_color=_ColorMap.CYAN,
+                txt_color=_ColorMap.CYAN.name,
                 highlight_type='HTML'),
             'consoleLine': self.__color(
                 self.__var_dict['consoleLine'],
-                txt_color=_ColorMap.RED,
+                txt_color=_ColorMap.RED.name,
                 italic=True,
                 highlight_type='HTML'),
             'message': msg,
         }
         if log_level in self.__level_color_dict:
             self.__var_dict['levelName'] = self.__color(
-                log_level,
+                _dct_log_level_int2str[log_level],
                 txt_color=self.__level_color_dict[log_level][0],
                 bg_color=self.__level_color_dict[log_level][1],
                 bold=self.__level_color_dict[log_level][2],
                 blink=self.__level_color_dict[log_level][3])
         self.__var_dict['logName'] = self.__color(
             self.__var_dict['logName'],
-            txt_color=_ColorMap.CYAN)
+            txt_color=_ColorMap.CYAN.name)
         self.__var_dict['asctime'] = self.__color(
             self.__var_dict['asctime'],
-            txt_color=_ColorMap.GREEN,
+            txt_color=_ColorMap.GREEN.name,
             bold=True)
         self.__var_dict['moduleName'] = self.__color(
             self.__var_dict['moduleName'],
-            txt_color=_ColorMap.CYAN)
+            txt_color=_ColorMap.CYAN.name)
         self.__var_dict['functionName'] = self.__color(
             self.__var_dict['functionName'],
-            txt_color=_ColorMap.CYAN)
+            txt_color=_ColorMap.CYAN.name)
         self.__var_dict['className'] = self.__color(
             self.__var_dict['className'],
-            txt_color=_ColorMap.CYAN)
+            txt_color=_ColorMap.CYAN.name)
         self.__var_dict['lineNum'] = self.__color(
             self.__var_dict['lineNum'],
-            txt_color=_ColorMap.CYAN)
+            txt_color=_ColorMap.CYAN.name)
         self.__var_dict['scriptPath'] = self.__color(
             self.__var_dict['scriptPath'],
-            txt_color=_ColorMap.CYAN)
+            txt_color=_ColorMap.CYAN.name)
         self.__var_dict['consoleLine'] = self.__color(
             self.__var_dict['consoleLine'],
-            txt_color=_ColorMap.RED,
+            txt_color=_ColorMap.RED.name,
             italic=True)
         used_vars = {name[0]: self.__var_dict[name[0]] for name in used_var_names if name[0] in self.__var_dict}
         text_with_color = self.__message_format % used_vars + '\n'
@@ -774,33 +754,37 @@ class Logger(object, metaclass=_LogMeta):
         self.__write(tx)
         self.__printf(txs)
         self.__signal_log_instance.emit(tx)
-        self.__signal_log_instance_color.emit(txs)
-        self.__signal_log_instance_html.emit(thtml)
         Logger.signal_log_public.emit(tx)
         Logger.signal_log_public_color.emit(txs)
         Logger.signal_log_public_html.emit(thtml)
 
+    def trace(self, *args, **kwargs) -> None:
+        """ 打印追踪信息 """
+        if self.__log_level > LogLevel.TRACE:
+            return
+        self.__output(LogLevel.TRACE, *args, **kwargs)
+
     def debug(self, *args, **kwargs) -> None:
         """ 打印调试信息 """
-        if self.__log_level_int_dict[self.__log_level] > self.__log_level_int_dict[LogLevel.DEBUG]:
+        if self.__log_level > LogLevel.DEBUG:
             return
         self.__output(LogLevel.DEBUG, *args, **kwargs)
 
     def info(self, *args, **kwargs) -> None:
         """ 打印信息 """
-        if self.__log_level_int_dict[self.__log_level] > self.__log_level_int_dict[LogLevel.INFO]:
+        if self.__log_level > LogLevel.INFO:
             return
         self.__output(LogLevel.INFO, *args, **kwargs)
 
     def warning(self, *args, **kwargs) -> None:
         """ 打印警告信息 """
-        if self.__log_level_int_dict[self.__log_level] > self.__log_level_int_dict[LogLevel.WARNING]:
+        if self.__log_level > LogLevel.WARNING:
             return
         self.__output(LogLevel.WARNING, *args, **kwargs)
 
     def error(self, *args, **kwargs) -> None:
         """ 打印错误信息 """
-        if self.__log_level_int_dict[self.__log_level] > self.__log_level_int_dict[LogLevel.ERROR]:
+        if self.__log_level > LogLevel.ERROR:
             return
         self.__output(LogLevel.ERROR, *args, **kwargs)
 
@@ -814,7 +798,7 @@ class Logger(object, metaclass=_LogMeta):
 
     def critical(self, *args, **kwargs) -> None:
         """ 打印严重错误信息 """
-        if self.__log_level_int_dict[self.__log_level] > self.__log_level_int_dict[LogLevel.CRITICAL]:
+        if self.__log_level > LogLevel.CRITICAL:
             return
         self.__output(LogLevel.CRITICAL, *args, **kwargs)
 
@@ -1035,3 +1019,15 @@ class LoggerGroup(object, metaclass=_LogMeta):
             self.__current_size = len(message.encode('utf-8'))
         with open(self.__log_file_path, 'a', encoding='utf-8') as f:
             f.write(message)
+
+
+if __name__ == '__main__':
+    Log = Logger('test', log_level='InfO', size_limit=1024, doSplitByDay=True)
+    logging.info('hello world')
+    logging.error("This is a WARNING message.")
+    Log.trace('This is a test message.')
+    Log.debug('This is a test message.')
+    Log.info('This is a test message.')
+    Log.warning('This is a test message.')
+    Log.error('This is a test message.')
+    Log.critical('This is a test message.')
