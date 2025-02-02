@@ -12,7 +12,7 @@ class Shelly:
         self.__id: int = id
         self.__main_address: str = address
         self.__data: dict = {}
-        self.__isAvailable: bool = True
+        self.__isAvailable: bool = False
         self.__charged_energy: int = 0
         self.__signal_current_no = XSignal()
         self.__signal_current_overload = XSignal()
