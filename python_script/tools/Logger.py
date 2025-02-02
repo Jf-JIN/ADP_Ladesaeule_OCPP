@@ -186,7 +186,7 @@ def html_ct(
 
     style_list = []
     style_list.append('color: ' + getattr(getattr(_ColorMap, txt_color), 'HEX')) if txt_color in _ColorMap else ''
-    style_list.append('background-color: ' + getattr(getattr(_ColorMap, txt_color), 'HEX')) if bg_color in _ColorMap else ''
+    style_list.append('background-color: ' + getattr(getattr(_ColorMap, bg_color), 'HEX')) if bg_color in _ColorMap else ''
     style_list.append('font-weight: bold') if bold else ''
     style_list.append('font-style: italic') if italic else ''
     style_list.append('text-decoration: underline') if underline else ''
