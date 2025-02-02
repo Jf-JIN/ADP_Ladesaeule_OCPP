@@ -75,6 +75,7 @@ class PollingShelly(Thread):
                 self.__data_collector.set_shelly_data(shelly_id, shelly_data)
             except Exception as e:
                 _exception(f'Shelly read exception: {e}')
+                time.sleep(2)
             self.__current_index = (self.__current_index + 1) % self.__shelly_quantity
             time.sleep(self.__interval)
 

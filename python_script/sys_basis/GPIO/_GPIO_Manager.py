@@ -20,9 +20,7 @@ class GPIOManager:
             charge_unit = ChargeUnit(self, *item)
             self.__charge_units_dict[item[0]] = charge_unit
             self.__data_collector.init_add_charge_units_id(item[0])
-            _error(self.__data_collector.available_charge_units_id_set)
             charge_unit.signal_request_charge_plan_calibration.connect(self.__send_request_charge_plan_calibration)
-        _info(self.__charge_units_dict)
 
         self.__thread_polling_evse: PollingEVSE = PollingEVSE(self, self.__charge_units_dict, GPIOParams.POLLING_EVSE_INTERVAL)
         self.__thread_polling_shelly: PollingShelly = PollingShelly(self, self.__charge_units_dict, GPIOParams.POLLING_SHELLY_INTERVAL, GPIOParams.POLLING_SHELLY_TIMEOUT)
@@ -30,8 +28,6 @@ class GPIOManager:
         self.__signal_GPIO_info: XSignal = XSignal()
         self.__signal_request_charge_plan_calibration: XSignal = XSignal()
         self.__request_waiting_list: list = []
-        self.__thread_polling_evse.start()
-        self.__thread_polling_shelly.start()
 
     @property
     def data_collector(self) -> DataCollector:
@@ -85,6 +81,10 @@ class GPIOManager:
     def clear_error(self, id: int) -> None:
         charge_unit: ChargeUnit = self.__charge_units_dict[id]
         charge_unit.clear_error()
+
+    def listening_start(self) -> None:
+        self.__thread_polling_evse.start()
+        self.__thread_polling_shelly.start()
 
     def __send_request_charge_plan_calibration(self, request_dict: dict) -> None:
         if self.__timer_send_requeset_calibration.is_alive():

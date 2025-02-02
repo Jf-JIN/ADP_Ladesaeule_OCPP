@@ -1,5 +1,6 @@
 
 
+import time
 from const.GPIO_Parameter import GPIOParams
 from sys_basis.GPIO._Charge_Unit import ChargeUnit
 from sys_basis.Generator_Ocpp_Std.V2_0_1 import *
@@ -26,6 +27,8 @@ class Client:
         self.init_coroutines()
         self.init_signal_connections()
         self.thread_web_server.start()
+        time.sleep(1)
+        self.GPIO_Manager.listening_start()
         self.manager_coroutines.start()
 
     def init_parameters(self) -> None:
@@ -220,15 +223,27 @@ voltage_max:{voltage_max}
             res = self.GPIO_Manager.get_charge_unit(evse_id).start_charging()
             if not res:
                 _error('立即充电失败')
+
+        def handle_charge_stop(charge_stop_dict: dict):
+            _info(f'收到停止充电请求: {charge_stop_dict}')
+            evse_id = int(charge_stop_dict['evse_id'])
+            self.GPIO_Manager.get_charge_unit(evse_id).stop_charging()
+
+        def handle_reset_no_error(charge_stop_dict: dict):
+            _info(f'收到重置请求: {charge_stop_dict}')
+            evse_id = int(charge_stop_dict['evse_id'])
+            self.GPIO_Manager.get_charge_unit(evse_id).clear_error()
+
         _info(f'接收消息: {web_message}')
         handle_dict = {
             # 接收的消息标签: (给Web发送消息的标签, 处理函数)
             'charge_request': handle_web_charge_request,
             'charge_now': handle_charge_now,
+            'stop': handle_charge_stop,
+            'reset_raspberry_pi_no_error': handle_reset_no_error,
         }
         for key, value in handle_dict.items():
             if key in web_message:
-                _info(key)
                 value(web_message[key])
 
     def handle_computer_message(self, computer_message) -> None:

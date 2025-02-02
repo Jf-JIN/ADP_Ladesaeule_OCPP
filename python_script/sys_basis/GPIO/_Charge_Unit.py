@@ -208,6 +208,9 @@ class ChargeUnit:
         """
         _info(f'已收到充电计划，开始处理充电计划表')
         _info(f'充电计划表: {charging_profile}')
+        if not self.isAvailabel and not self.__isNoError:
+            _warning('当前充电桩不可用,放弃执行充电')
+            return False
         charging_schedule_list = charging_profile['chargingSchedule']
         if len(charging_schedule_list) == 0:
             _warning('充电时间表清单为空,放弃执行充电')
@@ -495,6 +498,7 @@ The charging unit is not executable (correct value)
         重置参数
         """
         if not self.__isCharging:
+            _info('未开始充电')
             return
         _info('停止充电')
         self.__evse.stop_charging()
@@ -516,7 +520,11 @@ The charging unit is not executable (correct value)
 
     def clear_error(self) -> None:
         """ 慎用, 前端应做提示 """
+        if self.__isNoError:
+            _info('当前状态无错误, 无需清除')
+            return
         self.__isNoError = True
+        _info('已清除错误')
 
     def __convert_value_in_amps(self, charging_limit: int) -> int:
         """
