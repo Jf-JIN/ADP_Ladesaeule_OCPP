@@ -2,7 +2,7 @@ from const.Const_Parameter import *
 import base64
 import io
 import matplotlib
-matplotlib.use('Agg')
+matplotlib.use('Agg')  # 使用非交互式后端
 import matplotlib.pyplot as plt
 import pytz
 import numpy as np

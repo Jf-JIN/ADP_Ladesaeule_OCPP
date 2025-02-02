@@ -5,28 +5,67 @@ submit_button = document.getElementById("submit_Button");
 submit_success = document.getElementById("successMessage");
 
 submit_button.addEventListener('click', () => {
-    const max_grid_power = document.getElementById("MaxGridPower").value;
-    const interval = document.getElementById("chargeInterval").value;
+    submit_success.style.display = 'none'; // 隐藏成功提示
+
+    const max_grid_power = document.getElementById("MaxGridPower").value.trim();
+    const interval = document.getElementById("chargeInterval").value.trim();
     const file_eprices = document.getElementById("eprices").files[0];
+
+    const errors = [];
+
+    // 验证最大电网功率
+    if (!max_grid_power) {
+        errors.push("■ The maximum power grid power cannot be empty");
+    } else {
+        const maxPower = parseInt(max_grid_power, 10);
+        if (isNaN(maxPower)) {
+            errors.push("■ The maximum power grid power must be effective figures");
+        } else if (maxPower <= 0) {
+            errors.push("■ The maximum power grid power must be greater than 0");
+        }
+    }
+
+    // 验证充电间隔
+    if (!interval) {
+        errors.push("■ The charging interval cannot be empty");
+    }
+
+    // 验证文件类型
+    if (file_eprices) {
+        const fileName = file_eprices.name.toLowerCase();
+        if (!fileName.endsWith('.csv')) {
+            errors.push("■ Only support uploading CSV format files");
+        }
+    }
+
+    // 如果有错误则弹窗提示
+    if (errors.length > 0) {
+        alert("Error：\n\n" + errors.join('\n'));
+        return; // 阻止继续执行
+    }
+
+    // 类型转换
+    const maxPower = parseInt(max_grid_power, 10);
+    const intervalNum = parseInt(interval, 10);
+
+    // 文件处理逻辑
     if (file_eprices) {
         const reader = new FileReader();
-
         reader.onload = function(event) {
             const csvData = event.target.result;
-            const dataToSubmit = {
-                'max_grid_power': max_grid_power,
-                'charging_interval': interval,
-                'eprices': csvData,
-            };
-            socket.emit('submit', dataToSubmit);
+            socket.emit('submit', {
+                'max_grid_power': maxPower,
+                'charging_interval': intervalNum,
+                'eprices': csvData
+            });
+            submit_success.style.display = 'block';
         };
-
         reader.readAsText(file_eprices);
     } else {
         socket.emit('submit', {
-            'max_grid_power': max_grid_power,
-            'charging_interval': interval,
+            'max_grid_power': maxPower,
+            'charging_interval': intervalNum
         });
+        submit_success.style.display = 'block';
     }
-    submit_success.style.display = 'block';
-})
+});

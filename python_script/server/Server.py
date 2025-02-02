@@ -1,4 +1,3 @@
-import json
 import time
 
 from sys_basis.Ports import *
@@ -34,15 +33,15 @@ class Server:
         pass
 
     def __init_signal_connections(self):
-        self.__coroutine_OCPP_server.signal_thread_ocpp_server_info.connect(self.__send_info_ocpp_message)
-        self.__coroutine_OCPP_server.signal_thread_ocpp_server_recv.connect(self.__send_info_ocpp_message)
+        self.__coroutine_OCPP_server.signal_thread_ocpp_server_info.connect(self.__send_web_ocpp_message)
+        self.__coroutine_OCPP_server.signal_thread_ocpp_server_recv.connect(self.__send_web_ocpp_message)
         # self.__coroutine_OCPP_server.signal_thread_ocpp_server_normal_message.connect(self.__send_info_ocpp_message)
         self.__coroutine_OCPP_server.signal_thread_ocpp_server_recv_request.connect(self.__handle_request_message)
         self.__coroutine_OCPP_server.signal_thread_ocpp_server_recv_response.connect(self.__handle_response_message)
         self.__coroutine_OCPP_server.signal_thread_ocpp_server_recv_response_result.connect(self.__handle_response_result_message)
         # self.__thread_web_server.signal_thread_web_server_info.connect(self.__send_info_web_message)
-        # self.__thread_web_server.signal_thread_web_server_recv.connect(self.__send_info_web_message)
-        LoggerGroup.signal_group_public_html.connect(self.__send_info_web_message)
+        self.__thread_web_server.signal_thread_web_server_recv.connect(self.__receive_web_paraments)
+        LoggerGroup.signal_group_public_html.connect(self.__send_web_console_message)
 
     def __init_parameters(self):
         pass
@@ -62,14 +61,10 @@ class Server:
         )
         self.__manager_coroutines = ManagerCoroutines(self.__coroutine_OCPP_server.run)
 
-    def __send_info_web_message(self, message):
+    def __receive_web_paraments(self, message):
         """
         处理网页数据
         """
-        temp_dict = {
-            'web_console': message
-        }
-        # _info(message)
         if 'max_grid_power' in message:
             self._max_grid_power = int(message['max_grid_power'])
             self.__thread_web_server.send_console_message({'web_console': 'max_grid_power updated to ' + str(self._max_grid_power)})
@@ -79,10 +74,17 @@ class Server:
         if 'eprices' in message:
             self._eprices = message['eprices']
             self.__thread_web_server.send_console_message({'web_console': 'eprices updated'})
-        if not ('max_grid_power' in message or 'charging_interval' in message or 'eprices' in message):
-            self.__thread_web_server.send_console_message(temp_dict)
 
-    def __send_info_ocpp_message(self, message):
+    def __send_web_console_message(self, message):
+        """
+        处理网页数据
+        """
+        temp_dict = {
+            'web_console': message
+        }
+        self.__thread_web_server.send_console_message(temp_dict)
+
+    def __send_web_ocpp_message(self, message):
         """
         处理OCPP消息数据
         """
@@ -113,7 +115,7 @@ class Server:
             "evMaxVoltage": message['data']['chargingNeeds']['acChargingParameters']['evMaxVoltage'],
             "evMaxCurrent": message['data']['chargingNeeds']['acChargingParameters']['evMaxCurrent'],
             "evMinCurrent": message['data']['chargingNeeds']['acChargingParameters']['evMinCurrent'],
-            "mod": message['data']['customData']['mod']
+            "mod": message['data']['customData']['mode']
         })
         opt = Optimizer(
             message['data']['chargingNeeds'],
@@ -121,22 +123,22 @@ class Server:
             OptParams.HIS_USAGE,
             self._max_grid_power,
             self._charging_interval,
-            message['data']['customData']['mod']
+            message['data']['customData']['mode']
         )
         self._isopt = opt.IsOpt()
         self.__thread_web_server.send_results({
             "results": 1 if self._isopt else 0,
             "img_charging": opt.get_img_charging(),
             "img_comparison": opt.get_img_comparison()})
-        self.__coroutine_OCPP_server.send_normal_message(str({
-            "opt_img": {
-                message['data']['evseId']: {
-                    "results": 1 if self._isopt else 0,
-                    "img_charging": opt.get_img_charging(),
-                    "img_comparison": opt.get_img_comparison(),
-                }
-            }
-        }))
+        # self.__coroutine_OCPP_server.send_normal_message(str({
+        #     "opt_img": {
+        #         message['data']['evseId']: {
+        #             "results": 1 if self._isopt else 0,
+        #             "img_charging": opt.get_img_charging(),
+        #             "img_comparison": opt.get_img_comparison(),
+        #         }
+        #     }
+        # }))
         _debug(self._isopt)
         if self._isopt:
             temp_request = GenSetChargingProfileRequest.generate(
@@ -164,6 +166,7 @@ class Server:
             # self.__coroutine_OCPP_server.send_request_message(temp_request)
         else:
             _info("---------------send rejection message---------------")
+            self.__coroutine_OCPP_server.send_normal_message('Optimization failed')
             self.__coroutine_OCPP_server.send_response_message(
                 Action.NotifyEVChargingNeeds,
                 GenNotifyEVChargingNeedsResponse.generate(status='Rejected'),
