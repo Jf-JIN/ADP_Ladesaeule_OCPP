@@ -66,6 +66,10 @@ socket.on('update_charging_needs', (data) => {
 // update connection status
 const connectionStatus = document.getElementById('connectionStatus');
 
+const optimizationResults = document.getElementById('optimizationResults');
+const chargingImg = document.getElementById('chargingImg');
+const comparisonImg = document.getElementById('comparisonImg');
+
 socket.on('update_connection_status', (data) => {
     if (data.connection_status) {
         connectionStatus.innerText = '✅ Connected to ip: ' + data.ip;
@@ -75,13 +79,15 @@ socket.on('update_connection_status', (data) => {
         connectionStatus.innerText = '❌ No Connection ';
         connectionStatus.classList.remove('connected');
         connectionStatus.classList.add('disconnected');
+        optimizationResults.innerText = '❌ No Results ';
+        optimizationResults.classList.remove('success');
+        optimizationResults.classList.add('failed');
+        chargingImg.src = `https://via.placeholder.com/500x200?text=充电随时间变化图`;
+        comparisonImg.src = `https://via.placeholder.com/500x200?text=充电随时间变化图`;
     }
 });
 
 // update results
-const optimizationResults = document.getElementById('optimizationResults');
-const chargingImg = document.getElementById('chargingImg');
-const comparisonImg = document.getElementById('comparisonImg');
 
 socket.on('update_results', (data) => {
     if (data.results) {

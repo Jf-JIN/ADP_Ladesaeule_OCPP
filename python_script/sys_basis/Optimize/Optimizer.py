@@ -19,7 +19,7 @@ class Optimizer:
         - his_usage(list): 历史的一天用电量(间隔为15分钟)
         - max_grid_power(int): 允许的最大电网功率
         - interval(int): 时间间隔(默认为15分钟)
-        - mod(int): 模式(默认为0, 0表示动态调整, 1表示最小充电时间, 2表示最少电费花销)
+        - mode(int): 模式(默认为0, 0表示动态调整, 1表示最小充电时间, 2表示最少电费花销)
 
     方法:
         - get_charging_needs(): 获取充电需求
@@ -30,7 +30,7 @@ class Optimizer:
     """
 
     def __init__(self, charging_needs: dict, eprices: list, his_usage: list, max_grid_power: int = 3000,
-                 interval: int = 15, mod: int = 0):
+                 interval: int = 15, mode: int = 0):
         _info("--------------------Optimizer init--------------------")
         self._charging_needs = charging_needs
         self._energy_amount = self._charging_needs['acChargingParameters']['energyAmount']
@@ -42,9 +42,9 @@ class Optimizer:
         self._his_usage = his_usage
         self._max_grid_power = max_grid_power
         self._interval = interval
-        self._mod = mod
+        self._mode = mode
         self._weight = self._get_weight()
-        self._start_time = datetime.now() + timedelta(minutes=2)  # 2分钟计算和传输时间
+        self._start_time = datetime.now() + timedelta(minutes=0)  # 2分钟计算和传输时间
         self._max_power = self._max_voltage * self._max_current
         self._min_power = self._max_voltage * self._min_current
         [self._time_split, self._eprices_split, self._max_power_split] = DataGene.split_time(
@@ -104,11 +104,11 @@ class Optimizer:
         """
         根据模式返回权重(默认为0, 0表示动态调整, 1表示最小充电时间, 2表示最少电费花销)
         """
-        if self._mod == 0:
+        if self._mode == 0:
             return [0.5, 0.5]
-        elif self._mod == 1:
+        elif self._mode == 1:
             return [1, 0]
-        elif self._mod == 2:
+        elif self._mode == 2:
             return [0, 1]
 
     def _calculate_charging_list(self):
@@ -180,7 +180,7 @@ class Optimizer:
             scpr = GenSetChargingProfileRequest()
             charging_schedule_period_list = []
             for i in range(self._num_split):
-                start_period = sum(self._time_split[:i]) * 60
+                start_period = int(sum(self._time_split[:i]) * 60 / 30)
                 charging_schedule_period_list.append(
                     scpr.get_charging_schedule_period(
                         start_period=start_period,
@@ -210,7 +210,7 @@ if __name__ == "__main__":
     #     },
     #     "customData": {
     #         "vendorId": 123,
-    #         "mod": 0
+    #         "mode": 0
     #     }
     # }
     charging_needs = {
