@@ -88,6 +88,7 @@ class ChargeUnit:
         self.evse.signal_evse_status_error.connect(self.__handle_evse_error)
         self.evse.signal_selftest_finished_result.connect(self.__set_isEVSESelfTested)
         self.shelly.signal_shelly_error_occurred.connect(self.__handle_shelly_error)
+        self.shelly.signal_charged_energy.connect(self.__handle_shelly_charged_energy)
 
     @property
     def id(self):
@@ -319,7 +320,8 @@ EVSE State abnormal, Unable to start charging (correct value)
 
     def __prepare_charging(self) -> None:
         # 硬件初始化
-        self.__shelly.reset()
+        if self.__isFistTimeChanging:
+            self.__shelly.reset()
         if not self.__isLatched and self.__isFistTimeChanging and GPIOParams.LETCH_MOTOR_RUNTIME > 0:
             # 执行上锁操作, 执行条件: 1.当前未上锁 2. 首次执行充电 3.电机运行时间大于0
             self.__latch_motor.lock()
@@ -347,6 +349,7 @@ EVSE State abnormal, Unable to start charging (correct value)
                 - 当前已无充电计划 / 充电计划全部完成
                 - Shelly设备不可用
         """
+        _info(f'warte_list:\n{self.waiting_plan}')
         if (
             not self.__isCharging
             or not self.__shelly.isAvailable
@@ -380,23 +383,31 @@ The charging unit is not executable (correct value)
             current = self.__convert_value_in_amps(self.__current_charge_action['limit'])
             return self.__evse.set_current(current)
 
-        _info(f'开始充电，当前执行计划为：\t{self.__current_charge_action}')
-        # 1. 先存入上次的计划
-        if self.__current_charge_action:
-            self.__finished_plan.append(copy.copy(self.__current_charge_action))
-            self.__data_collector.append_CU_finished_plan(self.id, copy.copy(self.__current_charge_action))
-            _info(f'充电计划\t{self.__current_charge_action}\t已存入历史计划')
-        # 2. 检查是否可以执行, 不能则停止充电, 并发出信号
+        # 1. 检查是否可以执行, 不能则停止充电, 并发出信号
+        _info('开始检查充电可行性')
         if not self.__isExecutable():
             self.stop_charging()
             self.__signal_charging_finished.emit()
             _warning('充电计划无法执行')
             return False
+        # 2. 先存入上次的计划
+        _info(f'开始充电，当前执行计划为：\t{self.__current_charge_action}')
+        if self.__current_charge_action:
+            self.__finished_plan.append(copy.copy(self.__current_charge_action))
+            self.__data_collector.append_CU_finished_plan(self.id, copy.copy(self.__current_charge_action))
+            _info(f'充电计划\t{self.__current_charge_action}\t已存入历史计划')
+
         # 3. 取出充电动作, 计算单次充电时间
         self.__current_charge_action = self.__waiting_plan.pop(0)
+        _info(f'剩余计划表:\n{self.__waiting_plan}')
         self.__data_collector.set_CU_waiting_plan(self.id, copy.deepcopy(self.__waiting_plan), self.__current_start_time_str)
         self.__data_collector.set_CU_current_charge_action(self.id, copy.copy(self.__current_charge_action))
-        charge_duration_sec: int | float = self.__waiting_plan[0]['startPeriod']-self.__current_charge_action['startPeriod']
+        if len(self.__waiting_plan) != 0:
+            charge_duration_sec: int | float = self.__waiting_plan[0]['startPeriod']-self.__current_charge_action['startPeriod']
+        else:
+            # charge_duration_sec: int | float = DataGene.str2time(self.__depart_time).timestamp() - self.__current_start_datetime.timestamp() - self.__current_charge_action['startPeriod']
+            charge_duration_sec: int | float = (DataGene.str2time(self.__depart_time).timestamp() - self.__current_start_datetime.timestamp()) / \
+                30 - self.__current_charge_action['startPeriod']  # 该段代码仅用于测试，为了缩短时长而设置的，可通过修改 / 后的数字
         current_time: float = datetime.now().timestamp()
         current_index = current_time // self.__index_period_sec
         _info(f'当前时间\t{current_time}\t当前充电周期戳\t{current_index}\t充电单位充电周期戳\t{self.__charge_index}')
@@ -464,30 +475,6 @@ The charging unit is not executable (correct value)
         self.__timer.start()
         return True
 
-        """ 
-                current_periode: list = self.__current_periode
-                current = self.__convert_value_in_amps(self.__current_charge_action)
-                self.__evse.set_current(current)
-                current_periode[0] = self.__current_charge_action['startPeriod']  # current_periode += interval
-                if current_periode[0] // self.__request_periode >= current_periode[1]:
-                    if current_periode[1] != 0:
-                        charged_emergy = self.__shelly.charged_energy()
-                        remaining_energy = self.__target_energy - charged_emergy
-                        self.__current_limit = self.__evse.get_current_limit()
-                        calibration_dict = {
-                            'evMinCurrent': self.__current_limit[0],
-                            'evMaxCurrent': self.__current_limit[1],
-                            'evMaxVoltage': GPIOParams.MAX_VOLTAGE,
-                            'energyAmount': remaining_energy,
-                            'departureTime': self.__time_depart_str
-                        }
-
-                        self.signal_request_charge_plan_calibration.emit(calibration_dict)
-                    current_periode[1] = current_periode[0] // self.__request_periode
-                threading.Timer(interval, self.__charging, [current_periode]).start()
-                self.__finished_plan.append(self.__current_charge_action)
-        """
-
     def stop_charging(self, error_code: str = '') -> None:
         """ 
         停止充电
@@ -497,8 +484,8 @@ The charging unit is not executable (correct value)
         解锁
         重置参数
         """
+        _info(f'停止充电{self.__isCharging}')
         if not self.__isCharging:
-            _info('未开始充电')
             return
         _info('停止充电')
         self.__evse.stop_charging()
@@ -609,6 +596,11 @@ The charging unit is not executable (correct value)
     def __handle_shelly_error(self, error_flag: bool) -> None:
         if error_flag:  # True 存在错误
             self.stop_charging('shelly_error')
+
+    def __handle_shelly_charged_energy(self, charged_energy: int | float) -> None:
+        if charged_energy >= self.__target_energy and self.__target_energy > 0 and self.__isCharging:
+            _info('已完成充电\ncharged_energy: ', charged_energy)
+            self.stop_charging()
 
     def __trim_charge_plan(self, lag_sec: int | float, plan_list: list) -> list:
         if lag_sec > plan_list[-1]['startPeriod']:

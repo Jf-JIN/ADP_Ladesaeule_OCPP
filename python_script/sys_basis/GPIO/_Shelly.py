@@ -17,6 +17,7 @@ class Shelly:
         self.__signal_current_no = XSignal()
         self.__signal_current_overload = XSignal()
         self.__signal_shelly_error_occurred = XSignal()
+        self.__signal_charged_energy = XSignal()
 
     @property
     def id(self) -> int:
@@ -78,12 +79,19 @@ class Shelly:
     def signal_current_overload(self) -> XSignal:
         return self.__signal_current_overload
 
+    @property
+    def signal_charged_energy(self) -> XSignal:
+        return self.__signal_charged_energy
+
     def set_data(self, data: dict) -> None:
         self.__data = data
         self.__charged_energy = self.__data['charged_energy']
         self.__isAvailable = self.__data['is_valid']
+        charged_energy = self.__data['charged_energy']
         if not self.__isAvailable:
             self.signal_shelly_error_occurred.emit(not self.__isAvailable)
+            return
+        self.signal_charged_energy.emit(charged_energy)
 
     def reset(self) -> None:
         _info('Shelly reset')

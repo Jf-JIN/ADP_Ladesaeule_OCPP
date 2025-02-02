@@ -57,7 +57,7 @@ class PollingShelly(Thread):
                 response_2.raise_for_status()
                 data_2: dict = response_2.json()
                 shelly_data[2] = data_2
-                """ 
+                """
                 {
                 "power": 0,
                 "pf": 0,
@@ -71,11 +71,42 @@ class PollingShelly(Thread):
                 shelly_data['charged_energy'] = data_0['total'] + data_1['total'] + data_2['total']
                 shelly_data['return_energy'] = data_0['total_returned'] + data_1['total_returned'] + data_2['total_returned']
                 shelly_data['is_valid'] = data_0['is_valid'] and data_1['is_valid'] and data_2['is_valid']
-                shelly.set_data(shelly_data)
-                self.__data_collector.set_shelly_data(shelly_id, shelly_data)
             except Exception as e:
+                shelly_data = {
+                    0: {
+                        'power': 0,
+                        'pf': 0,
+                        'current': 0,
+                        'voltage': 0,
+                        'is_valid': False,
+                        'total': 0,
+                        'total_returned': 0
+                    },
+                    1: {
+                        'power': 0,
+                        'pf': 0,
+                        'current': 0,
+                        'voltage': 0,
+                        'is_valid': False,
+                        'total': 0,
+                        'total_returned': 0
+                    },
+                    2: {
+                        'power': 0,
+                        'pf': 0,
+                        'current': 0,
+                        'voltage': 0,
+                        'is_valid': False,
+                        'total': 0,
+                        'total_returned': 0
+                    },
+                    'charged_energy': 0,
+                    'return_energy': 0,
+                    'is_valid': False,
+                }
                 _exception(f'Shelly read exception: {e}')
-                time.sleep(2)
+            shelly.set_data(shelly_data)
+            self.__data_collector.set_shelly_data(shelly_id, shelly_data)
             self.__current_index = (self.__current_index + 1) % self.__shelly_quantity
             time.sleep(self.__interval)
 
