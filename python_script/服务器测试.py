@@ -46,7 +46,7 @@ def out(message):  # 槽函数
     print(f'out\t{message}')
 
 
-asyncio.run(start_server())
+# asyncio.run(start_server())
 
 a = ServerWeb()
 a.start()

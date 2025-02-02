@@ -19,10 +19,10 @@ logout_button.addEventListener('click', () => {
     socket.emit('logout');
 })
 
-const test_btn = document.getElementById('test_btn');
-test_btn.addEventListener('click', () => {
-    socket.emit('input_data', 'home');
-})
+// const test_btn = document.getElementById('test_btn');
+// test_btn.addEventListener('click', () => {
+//     socket.emit('input_data', 'home');
+// })
 
 const submit_btn = document.getElementById('save_settings');
 submit_btn.addEventListener('click', () => {
@@ -102,4 +102,9 @@ submit_btn.addEventListener('click', () => {
 const btn_charge_now = document.getElementById('charge_now');
 btn_charge_now.addEventListener('click', () => {
     socket.emit('input_data', { "charge_now": { "evse_id": document.getElementById('evse_id').value }}); 
+})
+
+const btn_stop = document.getElementById('stop');
+btn_stop.addEventListener('click', () => {
+    socket.emit('input_data', { "stop": { "evse_id": document.getElementById('evse_id').value }});
 })

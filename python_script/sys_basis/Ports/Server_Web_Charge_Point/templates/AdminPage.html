@@ -77,13 +77,14 @@
         <p id="welcome_text">
             欢迎使用 OCPP-Ladensaeule 充电桩，这是一个基于 OCPP 协议的充电桩软件。
         </p>
-        <input type="button" text="Testen" value="Testen" id="test_btn">
+        <!-- <input type="button" text="Testen" value="Testen" id="test_btn"> -->
         <div id="charging_settings">
             <div><label for="evse_id" id="esve_id_label">esve id: </label>
                 <select id="evse_id">
-                    <option value="0" id="evse_id0">0</option>
-                    <option value="1" id="evse_id1">1</option>
-                    <option value="2" id="evse_id2">2</option>
+                    <option value="1" id="evse_id0">1</option>
+                    <option value="2" id="evse_id1">2</option>
+                    <option value="3" id="evse_id2">3</option>
+                    <option value="4" id="evse_id2">4</option>
                 </select>
             </div>
             <div><label for="charge_mode" id="charge_mode_label">Charge_Mode: </label>
@@ -96,15 +97,14 @@
             <div><label for="charge_power" id="charge_power_label">Charge Power: </label><input type="text" id="charge_power"> Wh</div>
             <label for="depart_time" id="depart_time_label">Departure Time:</label>
             <input type="datetime-local" id="depart_time">
-            <div>
-                <div id="charging_settings_blank"></div>
+            <div class ='button-container'>
+                <div id="charging_settings_blank" ></div>
                 <input type="button" text="save" value="save" id="save_settings">
                 <input type="button" text="charge_now" value="charge_now" id="charge_now">
+                <input type="button" text="STOP" value="STOP" id="stop">
             </div>
         </div>
         <div id="charging_display">
-            <div><span id="home_current_current">Current Current</span><span id="home_current_current_value"></span></div>
-            <div><span id="home_current_voltage">Current Voltage</span><span id="home_current_voltage_value"></span></div>
             <div><span id="home_charged_energy">Charged Energy</span><span id="home_charged_energy_value"></span></div>
             <div><span id="home_left_time">Left Time</span><span id="home_left_time_value"></span></div>
             <div><span id="home_charging_status">Charging Status</span><span id="home_charging_status_value"></span></div>
@@ -117,6 +117,13 @@
                 <span id="text_rasberry_pi_system">Rasberry Pi System</span>
                 <div id="client_console_contain" class="console_contain"></div>
                 <div id="main_display" class="display_base">
+                    <select id="reset_no_error_evse_id">
+                        <option value="1" id="reset_no_error_evse_id0">1</option>
+                        <option value="2" id="reset_no_error_evse_id1">2</option>
+                        <option value="3" id="reset_no_error_evse_id2">3</option>
+                        <option value="4" id="reset_no_error_evse_id2">4</option>
+                    </select>
+                    <input type="button" text="reset_raspberry_pi_no_error" value="reset_raspberry_pi_no_error" id="reset_raspberry_pi_no_error">
                 </div>
             </div>
         </div>

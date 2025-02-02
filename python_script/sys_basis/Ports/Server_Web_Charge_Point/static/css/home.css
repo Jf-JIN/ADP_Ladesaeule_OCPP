@@ -7,22 +7,13 @@
     --time_font_size: 26px;
 }
 
-
 body {
-    margin: 1vw 1vw;
-
+    margin: 1vw;
 }
 
-/* #page_home {
-    display: none;
-} */
 #page_console {
     display: none;
 }
-
-/* #page_image {
-    display: none;
-} */
 
 #sub_area {
     width: 100%;
@@ -43,7 +34,8 @@ body {
     margin-left: 30px;
 }
 
-#logout {
+#logout,
+#language_selection {
     margin-left: 60px;
     width: var(--time_font_size);
     height: var(--time_font_size);
@@ -51,9 +43,7 @@ body {
 }
 
 #language_selection {
-    width: calc((var(--time_font_size)+20) * 3);
-    height: var(--time_font_size);
-    display: inline-block;
+    width: calc((var(--time_font_size) + 20) * 3);
 }
 
 .svg_icon {
@@ -61,16 +51,13 @@ body {
     height: var(--time_font_size);
     margin: 0 10px;
     cursor: pointer;
-    /* display: inline-block; */
 }
 
 #language_selection svg {
-    width: calc(2*var(--time_font_size));
+    width: calc(2 * var(--time_font_size));
     height: var(--time_font_size);
     cursor: pointer;
 }
-
-
 
 #title_selection_blank {
     height: 5vh;
@@ -107,7 +94,7 @@ body {
 .title_item {
     width: 20vw;
     height: 4vh;
-    margin: 0px;
+    margin: 0;
     cursor: pointer;
     color: #333;
     font-family: Arial, Helvetica, sans-serif;
@@ -119,13 +106,11 @@ body {
 
 .title_item:hover {
     background-color: var(--primary_hover_color);
-    border: None;
     border-radius: 2vh;
 }
 
 .title_selected {
     background-color: var(--primary_hover_color);
-    border: None;
     border-radius: 2vh;
 }
 
@@ -134,11 +119,9 @@ body {
     flex: 1;
 }
 
-
 .console_contain {
     height: 40vh;
     padding: 10px;
-    /* margin: 10px; */
     background-color: var(--console_bg_color);
     border: 5px solid var(--console_border_color);
     border-radius: 10px;
@@ -169,10 +152,6 @@ body {
     border-radius: 0.25vw;
 }
 
-/* .display_base{
-    margin: 20px;
-} */
-
 .top_area .display_base {
     height: 10vh;
 }
@@ -180,7 +159,6 @@ body {
 .sub_area .display_base {
     height: 30vh;
 }
-
 
 .console_block {
     display: flex;
@@ -192,7 +170,6 @@ body {
     border-radius: 10px;
 }
 
-
 #page_home {
     background-color: #ffffff;
     border: 1px solid #ddd;
@@ -200,81 +177,6 @@ body {
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-
-/* h1#welcome_title {
-    font-size: 24px;
-    color: #333;
-    text-align: center;
-} */
-
-/* p#welcome_text {
-    font-size: 16px;
-    color: #666;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-input[type="button"] {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 10px 2px;
-    cursor: pointer;
-    border-radius: 5px;
-} */
-
-/* input[type="button"]:hover {
-    background-color: #45a049;
-}
-
-#charging_settings {
-    margin-top: 20px;
-}
-
-#charging_settings div {
-    margin-bottom: 15px;
-}
-
-label {
-    font-size: 14px;
-    color: #333;
-    margin-right: 10px;
-} */
-
-/* input[type="text"],
-select {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
-} */
-
-/* #charging_settings_blank {
-    height: 20px;
-} */
-
-/* #save_settings {
-    background-color: #008CBA;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-#save_settings:hover {
-    background-color: #007bb5;
-} */
 
 h1#welcome_title {
     text-align: center;
@@ -288,54 +190,131 @@ h1#welcome_title {
     margin-bottom: 20px;
 }
 
+/* 按钮容器样式 */
+.button-container {
+    display: flex;
+    flex-direction: column;
+    /* 纵向排列 */
+    gap: 10px;
+    /* 按钮之间的间距 */
+    align-items: center;
+    /* 按钮居中对齐 */
+    margin: 20px 0;
+    /* 容器外边距 */
+}
+
+/* 通用按钮样式 */
 input[type="button"] {
     background-color: #4CAF50;
     color: white;
     border: none;
     padding: 10px 20px;
-    margin: 10px 0;
     font-size: 1em;
     cursor: pointer;
     border-radius: 5px;
+    width: 200px;
+    /* 按钮宽度 */
+    text-align: center;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 input[type="button"]:hover {
     background-color: #45a049;
+    transform: scale(1.05);
 }
 
+input[type="button"]:active {
+    transform: scale(0.98);
+}
+
+#save_settings {
+    background-color: #2196F3;
+}
+
+#save_settings:hover {
+    background-color: #0b7dda;
+}
+
+#STOP {
+    background-color: red;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#STOP:hover {
+    background-color: darkred;
+}
+
+#STOP:active {
+    background-color: #8b0000;
+}
+
+/* 充电设置区块 */
 #charging_settings {
-    margin-top: 20px;
-    padding: 15px;
-    background-color: #e9f7e9;
-    border-radius: 8px;
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
 }
 
 #charging_settings div {
+    display: flex;
+    align-items: center;
     margin-bottom: 15px;
 }
 
 label {
     font-size: 1.1em;
-    margin-right: 10px;
+    font-weight: bold;
+    margin-right: 15px;
+    width: 200px;
+    text-align: right;
+    color: #333;
 }
 
 input[type="text"],
 input[type="time"],
 select {
-    padding: 8px;
+    padding: 10px;
     font-size: 1em;
     width: 100%;
-    margin-top: 5px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 8px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
 input[type="text"]:focus,
 input[type="time"]:focus,
 select:focus {
     border-color: #4CAF50;
+    background-color: #f1fdf0;
 }
 
+
+
+select {
+    background-color: #fafafa;
+}
+
+#charging_settings_blank {
+    height: 20px;
+}
+
+#charging_settings div:last-child {
+    display: flex;
+    justify-content: center;
+}
+
+#charging_settings div label {
+    width: 200px;
+    text-align: left;
+    margin-right: 20px;
+}
+
+/* 充电显示区块 */
 #charging_display {
     margin-top: 30px;
 }
@@ -361,229 +340,15 @@ select:focus {
     color: #555;
 }
 
-#charging_settings_blank {
-    height: 20px;
-}
-
-#save_settings {
-    background-color: #2196F3;
-}
-
-#save_settings:hover {
-    background-color: #0b7dda;
-}
-
-#charging_settings {
-    margin-top: 30px;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border: 1px solid #ddd;
-}
-
-/* 每个设置项的容器 */
-#charging_settings div {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-}
-
-/* 标签样式 */
-label {
-    font-size: 1.1em;
+#reset_raspberry_pi_no_error {
+    background-color: #8b0000;
+    min-width: 20vw;
     font-weight: bold;
-    margin-right: 15px;
-    width: 200px;
-    text-align: right;
-    color: #333;
 }
 
-/* 输入框和选择框的样式 */
-input[type="text"],
-input[type="time"],
-select {
-    padding: 10px;
-    font-size: 1em;
-    width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-sizing: border-box;
-    /* 确保输入框宽度适应容器 */
-    transition: border-color 0.3s ease, background-color 0.3s ease;
-}
-
-input[type="text"]:focus,
-input[type="time"]:focus,
-select:focus {
-    border-color: #4CAF50;
-    background-color: #f1fdf0;
-    /* 聚焦时改变背景色 */
-}
-
-/* 输入框和选择框的外边距 */
-input[type="text"],
-input[type="time"],
-select {
-    margin-top: 5px;
-}
-
-/* 保存按钮样式 */
-#save_settings {
-    display: inline-block;
-    background-color: #4CAF50;
-    color: white;
-    font-size: 1.1em;
-    padding: 12px 25px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-#save_settings:hover {
-    background-color: #45a049;
-    transform: scale(1.05);
-    /* 悬停时放大效果 */
-}
-
-#save_settings:active {
-    transform: scale(0.98);
-    /* 按下时缩小效果 */
-}
-
-/* 空白区域样式 */
-#charging_settings_blank {
-    height: 20px;
-}
-
-/* 选择框项样式 */
-select {
-    background-color: #fafafa;
-    font-size: 1em;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-}
-
-select:focus {
-    background-color: #f1fdf0;
-}
-
-/* 样式改进 */
-#charging_settings div:last-child {
-    display: flex;
-    justify-content: center;
-}
-
-/* 标签对齐 */
-#charging_settings div label {
-    width: 200px;
-    text-align: left;
-    margin-right: 20px;
-}
-
-
-/* 充电设置区块 */
-#charging_settings {
-    margin-top: 30px;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border: 1px solid #ddd;
-}
-
-/* 每个设置项的容器 */
-#charging_settings div {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-}
-
-/* 标签样式 */
-label {
-    font-size: 1.1em;
-    font-weight: bold;
-    margin-right: 15px;
-    width: 200px;
-    text-align: right;
-    color: #333;
-}
-
-/* 输入框和选择框的样式 */
-input[type="text"],
-input[type="time"],
-select {
-    padding: 10px;
-    font-size: 1em;
-    width: 100%;
-    /* 确保宽度适配容器 */
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-sizing: border-box;
-    /* 使宽度包含边框和内边距 */
-    transition: border-color 0.3s ease, background-color 0.3s ease;
-}
-
-/* 确保选择框和输入框对齐 */
-select {
-    background-color: #fafafa;
-}
-
-input[type="text"]:focus,
-input[type="time"]:focus,
-select:focus {
-    border-color: #4CAF50;
-    background-color: #f1fdf0;
-    /* 聚焦时改变背景色 */
-}
-
-/* 输入框和选择框的外边距 */
-input[type="text"],
-input[type="time"],
-select {
-    margin-top: 5px;
-}
-
-/* 保存按钮样式 */
-#save_settings {
-    display: inline-block;
-    background-color: #4CAF50;
-    color: white;
-    font-size: 1.1em;
-    padding: 12px 25px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-#save_settings:hover {
-    background-color: #45a049;
-    transform: scale(1.05);
-    /* 悬停时放大效果 */
-}
-
-#save_settings:active {
-    transform: scale(0.98);
-    /* 按下时缩小效果 */
-}
-
-/* 空白区域样式 */
-#charging_settings_blank {
-    height: 20px;
-}
-
-/* 样式改进 */
-#charging_settings div:last-child {
-    display: flex;
-    justify-content: center;
-}
-
-/* 标签对齐 */
-#charging_settings div label {
-    width: 200px;
-    text-align: left;
-    margin-right: 20px;
+/* 确保图片不会溢出容器 */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
 }

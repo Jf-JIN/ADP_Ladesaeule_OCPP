@@ -2,6 +2,8 @@
 
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_socketio import SocketIO
+from werkzeug import serving
+from socket import AddressFamily
 from threading import Thread, Timer
 from sys_basis.XSignal import XSignal
 from const.Const_Parameter import *
@@ -30,9 +32,13 @@ class ServerWeb(Thread):
         self.__app.add_url_rule('/', 'login', self.__login, methods=['GET', 'POST'])
         self.__app.add_url_rule('/user', 'user', self.__user_route, methods=['GET', 'POST'])
         self.__start_timer()
-        # self.__setup_socketio_listeners()
         self.__listening_input_data()
         self.__logout()
+        self.__ip_local: str = '127.0.0.1' if host == '0.0.0.0' else '[::1]'
+        self.__ip_remote: str = serving.get_interface_ip(AddressFamily.AF_INET)
+        self.__ip_local_address: str = f'http://{self.__ip_local}:{port}'
+        self.__ip_remote_address: str = f'http://{self.__ip_remote}:{port}'
+        self.__send_signal_info(f'Web Server started on \n\t- local : {self.__ip_local_address}\n\t- remote: {self.__ip_remote_address}')
 
     @property
     def signal_web_server_info(self):

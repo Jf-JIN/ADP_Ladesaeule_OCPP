@@ -1,7 +1,7 @@
 
 
 const client_console = document.getElementById('client_console_contain');
-const opt_console= document.getElementById('opt_console_contain');
+const opt_console = document.getElementById('opt_console_contain');
 const gui_websocket_console = document.getElementById('gui_websocket_console_contain');
 
 const page_zh = document.getElementById("svg_zh");
@@ -24,7 +24,7 @@ socket.on('update_data', (data) => {
         const wasAtBottom = Math.abs(consoleElement.scrollHeight - consoleElement.scrollTop - consoleElement.clientHeight) < 1;
         content = content.replace(/--<([^>]+)>/g, '--< $1 >');
         console.log(content);
-        
+
         if (isHTML(content)) {
             consoleElement.innerHTML += content + '<br>';
         } else {
@@ -104,3 +104,85 @@ page_de.addEventListener("click", () => {
     localStorage.setItem("display_language", "de");
     update_language();
 });
+
+const btn_reset_raspberry_pi_no_error = document.getElementById('reset_raspberry_pi_no_error');
+btn_reset_raspberry_pi_no_error.addEventListener('click', () => {
+    socket.emit('input_data', { "reset_raspberry_pi_no_error": { "evse_id": document.getElementById('reset_no_error_evse_id').value } });
+})
+
+
+function renderImages (data) {
+    const parent = document.getElementById("page_image");
+
+    parent.innerHTML = "";
+
+    data.forEach(item => {
+        const container = document.createElement("div");
+        container.id = item.id; 
+        container.className = "image-box";
+        parent.appendChild(container);
+        displayBase64Image(container, item.base64);
+    });
+}
+
+function displayBase64Image (container, base64Data) {
+    container.innerHTML = ""; // 清空
+
+    const img = document.createElement("img");
+    img.src = base64Data.startsWith("data:image/png;base64,")
+        ? base64Data
+        : `data:image/png;base64,${base64Data}`;
+
+    img.style.width = "100%";
+    img.style.height = "100%";
+    img.style.objectFit = "cover";
+    img.alt = "Image";
+
+    img.onerror = () => {
+        container.innerHTML = "<p>图片加载失败</p>";
+    };
+    container.appendChild(img);
+}
+
+// 获取父容器
+const pageImageContainer = document.getElementById("page_image");
+
+// 核心渲染函数
+function renderImageGroups (groups) {
+    // 清空旧内容
+    pageImageContainer.innerHTML = "";
+
+    // 遍历每组数据
+    groups.forEach(group => {
+        // 1. 创建组容器
+        const groupDiv = document.createElement("div");
+        groupDiv.className = "image-group";
+
+        // 2. 创建左侧客户图片容器
+        const clientBox = document.createElement("div");
+        clientBox.className = "client-image-box";
+        displayBase64Image(clientBox, group.clientImage); // 调用你的现有函数
+
+        // 3. 创建右侧优化器图片容器
+        const optimizerBox = document.createElement("div");
+        optimizerBox.className = "optimizer-image-box";
+        displayBase64Image(optimizerBox, group.optimizerImage);
+
+        // 4. 组装并插入
+        groupDiv.appendChild(clientBox);
+        groupDiv.appendChild(optimizerBox);
+        pageImageContainer.appendChild(groupDiv);
+    });
+}
+
+// 调用示例
+renderImageGroups(imageGroups);
+
+const imagesData = [
+    { id: "image_1", base64: "iVBORw0KGgoAAAANSUhEUgAAADkAAAA9CAYAAAAXicGTAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABiSURBVGhD7c8hAQAgEMBA2hCT6I8nwjFxZm5rzh7deoOoSUWTiiYVTSqaVDSpaFLRpKJJRZOKJhVNKppUNKloUtGkoklFk4omFU0qmlQ0qWhS0aSiSUWTiiYVTSqaVHwxeQFYuN+CDEEX7AAAAABJRU5ErkJggg==" },
+    { id: "image_2", base64: "iVBORw0KGgoAAAANSUhEUgAAADkAAAA9CAYAAAAXicGTAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABjSURBVGhD7c8hAQAgAMAwspCHsiQET4RxMXP3Mfc6uvEGUZOKJhVNKppUNKloUtGkoklFk4omFU0qmlQ0qWhS0aSiSUWTiiYVTSqaVDSpaFLRpKJJRZOKJhVNKppUNKn4YvICg/TDG4elRY8AAAAASUVORK5CYII=" },
+    { id: "image_3", base64: "iVBORw0KGgoAAAANSUhEUgAAADkAAAA9CAYAAAAXicGTAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABiSURBVGhD7c8hAQAgEMBA2hCT6I8nwjFxZm5rzh7deoOoSUWTiiYVTSqaVDSpaFLRpKJJRZOKJhVNKppUNKloUtGkoklFk4omFU0qmlQ0qWhS0aSiSUWTiiYVTSqaVHwxeQFYuN+CDEEX7AAAAABJRU5ErkJggg==" },
+    { id: "image_4", base64: "iVBORw0KGgoAAAANSUhEUgAAADkAAAA9CAYAAAAXicGTAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABjSURBVGhD7c8hAQAgAMAwspCHsiQET4RxMXP3Mfc6uvEGUZOKJhVNKppUNKloUtGkoklFk4omFU0qmlQ0qWhS0aSiSUWTiiYVTSqaVDSpaFLRpKJJRZOKJhVNKppUNKn4YvICg/TDG4elRY8AAAAASUVORK5CYII=" }
+];
+
+renderImages(imagesData)
