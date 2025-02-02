@@ -452,14 +452,14 @@ class Logger(object, metaclass=_LogMeta):
             LogLevel.CRITICAL: (_ColorMap.LIGHTYELLOW.name, _ColorMap.RED.name, True, True),
         }
         listen_level_dict = {
-            LogLevel.NOTSET: LogLevel.NOTSET,
-            LogLevel.TRACE: LogLevel.NOTSET,
-            LogLevel.DEBUG: LogLevel.NOTSET,
-            LogLevel.INFO: LogLevel.TRACE,
-            LogLevel.WARNING: LogLevel.DEBUG,
-            LogLevel.ERROR: LogLevel.INFO,
-            LogLevel.CRITICAL: LogLevel.WARNING,
-            LogLevel.NOOUT: LogLevel.ERROR
+            LogLevel.NOTSET: LogLevel.NOTSET,  # logging 中的级别和值 NOTSET = 0
+            LogLevel.TRACE: LogLevel.NOTSET,  # logging 中的级别和值 NOTSET = 0
+            LogLevel.DEBUG: LogLevel.NOTSET,  # logging 中的级别和值 NOTSET = 0
+            LogLevel.INFO: LogLevel.TRACE,  # logging 中的级别和值 DEBUG = 10
+            LogLevel.WARNING: LogLevel.DEBUG,  # logging 中的级别和值 INFO = 20
+            LogLevel.ERROR: LogLevel.INFO,  # logging 中的级别和值 WARNING = 30
+            LogLevel.CRITICAL: LogLevel.WARNING,  # logging 中的级别和值 ERROR = 40
+            LogLevel.NOOUT: LogLevel.ERROR  # logging 中的级别和值 CRITICAL = 50
         }
         name_logging_listening_level = f'_{self.__class__.__name__}__logging_listening_level_int'
         attr_logging_listening_level = getattr(self.__class__, name_logging_listening_level, 100)
@@ -598,7 +598,7 @@ class Logger(object, metaclass=_LogMeta):
             return html_ct(text=message, *args, **kwargs)
         return message
 
-    def __format(self, log_level: str, *args) -> tuple:
+    def __format(self, log_level: int, *args) -> tuple:
         """ 格式化日志信息 """
         msg_list = []
         for arg in args:
@@ -708,7 +708,7 @@ class Logger(object, metaclass=_LogMeta):
         text_with_color = self.__message_format % used_vars + '\n'
         used_vars_html = {name[0]: html_dict[name[0]] for name in used_var_names if name[0] in html_dict}
         html_text = self.__message_format % used_vars_html + '\n'
-        pre_blick_text = '<style > @keyframes blink{50% {opacity: 50;}}</style>'
+        pre_blick_text = '<style> @keyframes blink{50% {opacity: 50;}}</style>'
         text_with_color_HTML = (pre_blick_text + html_text).replace('\n', '<br>')
         if self.__highlight_type == _HighlightType.HTML:
             text_with_color = text_with_color_HTML
