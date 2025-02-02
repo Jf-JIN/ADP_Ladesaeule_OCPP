@@ -77,6 +77,8 @@ class Evse(object):
             _warning(f'EVSE Error: {data}')
             self.__isEnableCharging = False
             self.__signal_evse_status_error.emit(self.__evse_status_error)
+            return
+        self.__isEnableCharging = True
 
     def set_current(self, value) -> bool:
         """
