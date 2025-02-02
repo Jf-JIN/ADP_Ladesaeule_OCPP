@@ -5,6 +5,8 @@ from flask_socketio import SocketIO
 from threading import Thread, Timer
 from sys_basis.XSignal import XSignal
 from datetime import datetime
+from werkzeug import serving
+from socket import AddressFamily
 from tools.Inner_Decorators import *
 from const.Const_Parameter import *
 
@@ -30,6 +32,11 @@ class ServerWeb(Thread):
             self.__info_title = None
         self.__app.add_url_rule('/', 'home', self.__home_route, methods=['GET', 'POST'])
         self.__listening_submit()
+        self.__ip_local: str = '127.0.0.1' if host == '0.0.0.0' else '[::1]'
+        self.__ip_remote: str = serving.get_interface_ip(AddressFamily.AF_INET)
+        self.__ip_local_address: str = f'http://{self.__ip_local}:{port}'
+        self.__ip_remote_address: str = f'http://{self.__ip_remote}:{port}'
+        self.__send_signal_info(f'Web Server started on \n\t- local : {self.__ip_local_address}\n\t- remote: {self.__ip_remote_address}')
 
     @property
     def signal_web_server_info(self):
@@ -68,7 +75,7 @@ class ServerWeb(Thread):
 
     def __listening_submit(self):
         @self.__socketio.on('submit')
-        def handle_test(message):
+        def handle_submit(message):
             self.__send_signal_info(f'->>> Web Received> {message}')
             self.signal_web_server_recv.emit(message)
 
