@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QSpinBox
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QSpinBox, QDoubleSpinBox
 from PyQt5.QtCore import Qt, QByteArray
 from PyQt5.QtGui import QIcon, QPixmap, QIcon
 from Modbus_Shelly_Simulator_ui import Ui_MainWindow
@@ -84,6 +84,9 @@ QLabel {
     background-color: transparent;
     border-radius:10px;
 }
+QDoubleSpinBox {
+    max-width: 60px;
+}
 """)
         self.setWindowIcon(QIcon(self.pixmap_from_svg(ICON_SVG)))
         self.setWindowTitle('Modbus / Shelly Simulator')
@@ -123,6 +126,11 @@ QLabel {
         self.sb_set_max_voltage.setMaximum(2147483647)
         self.sb_set_max_voltage.setButtonSymbols(QSpinBox.NoButtons)
         self.sb_set_max_voltage.wheelEvent = lambda event: None
+        self.dsb_energy_rate.setValue(1)
+        self.dsb_energy_rate.setMaximum(2147483647)
+        self.dsb_energy_rate.setMinimum(0)
+        self.dsb_energy_rate.wheelEvent = lambda event: None
+        self.dsb_energy_rate.setButtonSymbols(QDoubleSpinBox.NoButtons)
         self.update_display()
 
     def __init_signal_connections(self) -> None:
@@ -139,6 +147,7 @@ QLabel {
         self.sb_currnt_min.valueChanged.connect(self.current_min)
         self.sb_set_current.editingFinished.connect(self.set_current)
         self.sb_set_max_voltage.editingFinished.connect(self.set_max_voltage)
+        self.dsb_energy_rate.editingFinished.connect(self.set_energy_rate)
         self.rb_current_max_6.clicked.connect(self.current_max_6)
         self.rb_current_max_13.clicked.connect(self.current_max_13)
         self.rb_current_max_20.clicked.connect(self.current_max_20)
@@ -167,20 +176,36 @@ QLabel {
         return pixmap
 
     def write(self):
+        with open(JSON_FILE_PATH, 'r', encoding='utf-8')as f:
+            read_data: dict = json.load(f)
         with open(JSON_FILE_PATH, 'w', encoding='utf-8') as f:
-            temp_dict: dict = {
+            temp_dict = {
                 '1007': self.evse_state_1007,
                 '1002': self.vehicle_state_1002,
                 '2002': self.current_min_2002,
                 '1003': self.current_max_1003,
-                '1004': self.onoff_selftest_1004,
-                '1000': self.configured_amps_1000,
-                '2005': self.charge_operation_2005,
-                'latch_lock_pin': self.latch_lock_pin,
-                'latch_unlock_pin': self.latch_unlock_pin,
-                'max_voltage': self.max_voltage,
             }
-            json.dump(temp_dict, f, indent=4, ensure_ascii=False)
+            read_data.update(temp_dict)
+            json.dump(read_data, f, indent=4, ensure_ascii=False)
+
+    def write_data_by_evse(self, key, value):
+        temp_dict: dict = {
+            '1007': self.evse_state_1007,
+            '1002': self.vehicle_state_1002,
+            '2002': self.current_min_2002,
+            '1003': self.current_max_1003,
+            '1004': self.onoff_selftest_1004,
+            '1000': self.configured_amps_1000,
+            '2005': self.charge_operation_2005,
+            'latch_lock_pin': self.latch_lock_pin,
+            'latch_unlock_pin': self.latch_unlock_pin,
+            'max_voltage': self.max_voltage,
+        }
+        with open(JSON_FILE_PATH, 'r', encoding='utf-8')as f:
+            read_data: dict = json.load(f)
+        with open(JSON_FILE_PATH, 'w', encoding='utf-8') as f:
+            read_data[key] = value
+            json.dump(read_data, f, indent=4, ensure_ascii=False)
 
     def write_default_file(self):
         self.evse_state_1007 = 0
@@ -190,12 +215,25 @@ QLabel {
         self.onoff_selftest_1004 = 0
         self.configured_amps_1000 = 0
         self.charge_operation_2005 = 0b001001
-        self.latch_lock_pin = ''
-        self.latch_unlock_pin = ''
+        self.latch_lock_pin = 0
+        self.latch_unlock_pin = 0
         self.max_voltage = 230
         self.__isCurrentValueChanged = True
         self.__isMaxVoltageChanged = True
-        self.write()
+        temp_dict: dict = {
+            '1007': self.evse_state_1007,
+            '1002': self.vehicle_state_1002,
+            '2002': self.current_min_2002,
+            '1003': self.current_max_1003,
+            '1004': self.onoff_selftest_1004,
+            '1000': self.configured_amps_1000,
+            '2005': self.charge_operation_2005,
+            'latch_lock_pin': self.latch_lock_pin,
+            'latch_unlock_pin': self.latch_unlock_pin,
+            'max_voltage': self.max_voltage,
+        }
+        with open(JSON_FILE_PATH, 'w', encoding='utf-8') as f:
+            json.dump(temp_dict, f, indent=4, ensure_ascii=False)
 
     def check_json_file(self):
         if os.path.exists(JSON_FILE_PATH):
@@ -319,7 +357,7 @@ QLabel {
         self.lb_pf_ph0.setText('{:.2f}'.format(data_dict['pf'])) if isinstance(data_dict['pf'], float) else self.lb_pf_ph0.clear()
         self.lb_power_ph0.setText('{:.4f}'.format(data_dict['power']/1000))
         self.lb_voltage_ph0.setText('{:.2f}'.format(data_dict['voltage']))
-        self.lb_total_ph0.setText('{:.2f}'.format(data_dict['total']))
+        self.lb_total_ph0.setText('{:.3f}'.format(data_dict['total']/1000))
         self.lb_isValid_ph0.setText(str(data_dict['is_valid']))
 
     def handle_ph1_signal(self, data_dict: dict):
@@ -327,7 +365,7 @@ QLabel {
         self.lb_pf_ph1.setText('{:.2f}'.format(data_dict['pf'])) if isinstance(data_dict['pf'], float) else self.lb_pf_ph1.clear()
         self.lb_power_ph1.setText('{:.4f}'.format(data_dict['power']/1000))
         self.lb_voltage_ph1.setText('{:.2f}'.format(data_dict['voltage']))
-        self.lb_total_ph1.setText('{:.2f}'.format(data_dict['total']))
+        self.lb_total_ph1.setText('{:.3f}'.format(data_dict['total']/1000))
         self.lb_isValid_ph1.setText(str(data_dict['is_valid']))
 
     def handle_ph2_signal(self, data_dict: dict):
@@ -335,7 +373,7 @@ QLabel {
         self.lb_pf_ph2.setText('{:.2f}'.format(data_dict['pf'])) if isinstance(data_dict['pf'], float) else self.lb_pf_ph2.clear()
         self.lb_power_ph2.setText('{:.4f}'.format(data_dict['power']/1000))
         self.lb_voltage_ph2.setText('{:.2f}'.format(data_dict['voltage']))
-        self.lb_total_ph2.setText('{:.2f}'.format(data_dict['total']))
+        self.lb_total_ph2.setText('{:.3f}'.format(data_dict['total']/1000))
         self.lb_isValid_ph2.setText(str(data_dict['is_valid']))
 
     def handle_shelly_start_signal(self, flag):
@@ -344,11 +382,17 @@ QLabel {
                 self.vehicle_state_1002 = 3
             elif self.vehicle_state_1002 == 4:
                 return
-            self.write_update_display()
+            self.write()
+            self.update_display()
         else:
             if 2 < self.vehicle_state_1002 < 5:
                 self.vehicle_state_1002 = 2
-                self.write_update_display()
+                self.write()
+                self.update_display()
+
+    def set_energy_rate(self) -> None:
+        rate = self.dsb_energy_rate.value()
+        self.shelly.set_energy_rate(rate)
 
     def copy_ip_address(self) -> None:
         sender = self.sender()
@@ -357,8 +401,8 @@ QLabel {
         elif sender == self.pb_copy_remote:
             self.copy_board.setText(self.lb_ip_remote.text())
 
-    def write_update_display(self) -> None:
-        self.write()
+    def write_update_display(self, key, value) -> None:
+        self.write_data_by_evse(key, value)
         self.update_display()
 
     def write_default_update_display(self) -> None:
@@ -501,63 +545,63 @@ QLabel {
             self.onoff_selftest_1004 &= ~(1 << 0)
         else:
             self.onoff_selftest_1004 |= 1 << 0
-        self.write_update_display()
+        self.write_update_display('1004', self.onoff_selftest_1004)
 
     def set_selftest_1004(self):
         if self.onoff_selftest_1004 & 1 << 1:
             self.onoff_selftest_1004 &= ~(1 << 1)
         else:
             self.onoff_selftest_1004 |= 1 << 1
-        self.write_update_display()
+        self.write_update_display('1004', self.onoff_selftest_1004)
 
     def set_clear_RCD_1004(self):
         if self.onoff_selftest_1004 & 1 << 2:
             self.onoff_selftest_1004 &= ~(1 << 2)
         else:
             self.onoff_selftest_1004 |= 1 << 2
-        self.write_update_display()
+        self.write_update_display('1004', self.onoff_selftest_1004)
 
     def set_2005_0(self):
         if self.charge_operation_2005 & 1 << 0:
             self.charge_operation_2005 &= ~(1 << 0)
         else:
             self.charge_operation_2005 |= (1 << 0)
-        self.write_update_display()
+        self.write_update_display('2005', self.charge_operation_2005)
 
     def set_2005_1(self):
         if self.charge_operation_2005 & 1 << 1:
             self.charge_operation_2005 &= ~(1 << 1)
         else:
             self.charge_operation_2005 |= (1 << 1)
-        self.write_update_display()
+        self.write_update_display('2005', self.charge_operation_2005)
 
     def set_2005_2(self):
         if self.charge_operation_2005 & 1 << 2:
             self.charge_operation_2005 &= ~(1 << 2)
         else:
             self.charge_operation_2005 |= (1 << 2)
-        self.write_update_display()
+        self.write_update_display('2005', self.charge_operation_2005)
 
     def set_2005_3(self):
         if self.charge_operation_2005 & 1 << 3:
             self.charge_operation_2005 &= ~(1 << 3)
         else:
             self.charge_operation_2005 |= (1 << 3)
-        self.write_update_display()
+        self.write_update_display('2005', self.charge_operation_2005)
 
     def set_2005_4(self):
         if self.charge_operation_2005 & 1 << 4:
             self.charge_operation_2005 &= ~(1 << 4)
         else:
             self.charge_operation_2005 |= (1 << 4)
-        self.write_update_display()
+        self.write_update_display('2005', self.charge_operation_2005)
 
     def set_2005_5(self):
         if self.charge_operation_2005 & 1 << 5:
             self.charge_operation_2005 &= ~(1 << 5)
         else:
             self.charge_operation_2005 |= (1 << 5)
-        self.write_update_display()
+        self.write_update_display('2005', self.charge_operation_2005)
 
     def closeEvent(self, a0):
         self.shelly.stop()

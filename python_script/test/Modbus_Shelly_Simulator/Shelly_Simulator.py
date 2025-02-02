@@ -36,6 +36,7 @@ class ShellySimulator_Thread(QThread):
         self.__isVaild = True
         self.__isTurnedOn = False
         self.__isPresent = False
+        self.__energy_rate = 1
         self.__init_parameters()
         self.__set_value()
         self.__timer = QTimer()
@@ -78,30 +79,30 @@ class ShellySimulator_Thread(QThread):
 
     def __set_value(self):
         if self.__isTurnedOn and self.__isVaild and self.__current_target_value > 0 and self.__isPresent:
-            self.__current_p0 = min(self.__current_max_value, max(self.__current_min_value, random.uniform(
-                self.__current_target_value-self.__current_tolerance,
-                self.__current_target_value+self.__current_tolerance
-            )))
-            self.__current_p1 = min(self.__current_max_value, max(self.__current_min_value, random.uniform(
-                self.__current_target_value-self.__current_tolerance,
-                self.__current_target_value+self.__current_tolerance
-            )))
-            self.__current_p2 = min(self.__current_max_value, max(self.__current_min_value, random.uniform(
-                self.__current_target_value-self.__current_tolerance,
-                self.__current_target_value+self.__current_tolerance
-            )))
-            # self.__current_p0 = random.uniform(
+            # self.__current_p0 = min(self.__current_max_value, max(self.__current_min_value, random.uniform(
             #     self.__current_target_value-self.__current_tolerance,
             #     self.__current_target_value+self.__current_tolerance
-            # )
-            # self.__current_p1 = random.uniform(
+            # )))
+            # self.__current_p1 = min(self.__current_max_value, max(self.__current_min_value, random.uniform(
             #     self.__current_target_value-self.__current_tolerance,
             #     self.__current_target_value+self.__current_tolerance
-            # )
-            # self.__current_p2 = random.uniform(
+            # )))
+            # self.__current_p2 = min(self.__current_max_value, max(self.__current_min_value, random.uniform(
             #     self.__current_target_value-self.__current_tolerance,
             #     self.__current_target_value+self.__current_tolerance
-            # )
+            # )))
+            self.__current_p0 = random.uniform(
+                self.__current_target_value-self.__current_tolerance,
+                self.__current_target_value+self.__current_tolerance
+            )
+            self.__current_p1 = random.uniform(
+                self.__current_target_value-self.__current_tolerance,
+                self.__current_target_value+self.__current_tolerance
+            )
+            self.__current_p2 = random.uniform(
+                self.__current_target_value-self.__current_tolerance,
+                self.__current_target_value+self.__current_tolerance
+            )
             self.__voltage_p0 = max(0, random.uniform(
                 self.__voltage_target_value-self.__voltage_tolerance,
                 self.__voltage_target_value+self.__voltage_tolerance
@@ -141,9 +142,9 @@ class ShellySimulator_Thread(QThread):
         self.__power_p0 = self.__current_p0 * self.__voltage_p0 * self.__factor_p0
         self.__power_p1 = self.__current_p1 * self.__voltage_p1 * self.__factor_p1
         self.__power_p2 = self.__current_p2 * self.__voltage_p2 * self.__factor_p2
-        self.__total_power_p0 += (self.__period_ms / 1000) * self.__power_p0 / 3600
-        self.__total_power_p1 += (self.__period_ms / 1000) * self.__power_p1 / 3600
-        self.__total_power_p2 += (self.__period_ms / 1000) * self.__power_p2 / 3600
+        self.__total_power_p0 += (self.__period_ms / 1000) / 3600 * self.__power_p0 * self.__energy_rate
+        self.__total_power_p1 += (self.__period_ms / 1000) / 3600 * self.__power_p1 * self.__energy_rate
+        self.__total_power_p2 += (self.__period_ms / 1000) / 3600 * self.__power_p2 * self.__energy_rate
         self.__ph0_dict = {
             'power': self.__power_p0,
             'pf': self.__factor_p0,
@@ -194,6 +195,9 @@ class ShellySimulator_Thread(QThread):
 
     def set_current_min_value(self, min_value):
         self.__current_min_value = min_value
+
+    def set_energy_rate(self, energy_rate):
+        self.__energy_rate = energy_rate
 
     def __phase0(self):
         return jsonify(self.__ph0_dict)

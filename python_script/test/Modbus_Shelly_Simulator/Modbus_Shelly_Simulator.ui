@@ -1811,7 +1811,7 @@ ventilation</string>
            <widget class="QWidget" name="widget_10" native="true">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-              <horstretch>0</horstretch>
+              <horstretch>100</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
@@ -1821,7 +1821,7 @@ ventilation</string>
            <widget class="QLabel" name="lb_clear">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-              <horstretch>0</horstretch>
+              <horstretch>100</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
@@ -1840,7 +1840,17 @@ ventilation</string>
            <widget class="QWidget" name="widget_11" native="true">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-              <horstretch>0</horstretch>
+              <horstretch>100</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QDoubleSpinBox" name="dsb_energy_rate">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>1</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>

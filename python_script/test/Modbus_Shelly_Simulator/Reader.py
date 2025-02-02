@@ -26,10 +26,15 @@ class ReaderThread(QThread):
         self.__timer = QTimer()
         self.__timer.timeout.connect(self.read_json)
         self.__timer.start(100)
+        self.__file_lock = True
         self.running = True
+
+    def file_lock(self):
+        return self.__file_lock
 
     def read_json(self):
         try:
+            self.__file_lock = True
             with open(self.__file_path, 'r', encoding='utf-8') as f:
                 data: dict = json.load(f)
                 evse_state_1007 = data.get('1007', 0)
@@ -52,8 +57,9 @@ class ReaderThread(QThread):
                         latch_unlock_pin = 1
                     else:
                         latch_unlock_pin = 0
-
+            self.__file_lock = False
         except:
+            self.__file_lock = False
             evse_state_1007 = self.__evse_state_1007
             vehicle_state_1002 = self.__vehicle_state_1002
             current_max_1003 = self.__current_max_1003

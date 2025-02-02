@@ -1,12 +1,16 @@
-import pprint
-import scienceplots
-from datetime import datetime, timedelta, timezone
-import numpy as np
-import pytz
-import matplotlib.pyplot as plt
-import io
-import base64
 from const.Const_Parameter import *
+import base64
+import io
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import pytz
+import numpy as np
+from datetime import datetime, timedelta, timezone
+import scienceplots
+import pprint
+
+
 _info = Log.OPT.info
 _error = Log.OPT.error
 _warning = Log.OPT.warning
