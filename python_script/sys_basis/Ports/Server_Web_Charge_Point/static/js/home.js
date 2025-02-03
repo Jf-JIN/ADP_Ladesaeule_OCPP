@@ -21,8 +21,17 @@ socket.on('update_data', (data) => {
         console.log(consoleElement.scrollHeight - consoleElement.scrollTop);
         console.log(consoleElement.clientHeight);
         console.log(Math.abs(consoleElement.scrollHeight - consoleElement.scrollTop - consoleElement.clientHeight) < 1)
+        console.log(content);
         const wasAtBottom = Math.abs(consoleElement.scrollHeight - consoleElement.scrollTop - consoleElement.clientHeight) < 1;
-        content = content.replace(/--<([^>]+)>/g, '--< $1 >');
+        if (content) {
+            try { 
+                content = content.replace(/--<([^>]+)>/g, '--< $1 >');
+            }
+            catch (e) {
+                console.log(e);
+            }
+        }
+        
         console.log(content);
 
         if (isHTML(content)) {
@@ -35,15 +44,15 @@ socket.on('update_data', (data) => {
             consoleElement.scrollTop = consoleElement.scrollHeight;
         }
     }
-    if (data.client_console) {
-        updateConsole(client_console, data.client_console);
+    if (data.console) {
+        updateConsole(client_console, data.console);
     }
-    if (data.opt_console) {
-        updateConsole(opt_console, data.opt_console);
-    }
-    if (data.gui_websocket_console) {
-        updateConsole(gui_websocket_console, data.gui_websocket_console);
-    }
+    // if (data.txt) {
+    //     updateConsole(opt_console, data.opt_console);
+    // }
+    // if (data.txt) {
+    //     updateConsole(gui_websocket_console, data.gui_websocket_console);
+    // }
 });
 
 const title_home = document.getElementById('title_home');
