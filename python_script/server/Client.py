@@ -58,7 +58,7 @@ class Client:
         # self.coroutine_gui_websocket_server.signal_thread_websocket_client_info.connect(self.send_info_gui_message)
         # self.coroutine_OCPP_client.signal_thread_ocpp_client_info.connect(self.send_info_web_message)
         # self.thread_web_server.signal_thread_web_server_info.connect(self.send_info_web_message)
-        Log.RAS.signal_log_public_html.connect(self.send_web_txt_message)
+        Log.RAS.signal_log_public_html.connect(self.send_web_console_message)
 
         # # 接收原始 ocpp 数据
         # self.coroutine_OCPP_client.signal_thread_ocpp_client_recv.connect(self.send_message_to_web)
@@ -84,7 +84,7 @@ class Client:
         self.GPIO_Manager.data_collector.signal_DC_figure_display.connect(self.send_web_fig_message)
 
     def handle_request(self, request_message) -> None:
-        """ 
+        """
         处理 OCPP 请求消息
 
         request_message 内容格式
@@ -111,10 +111,10 @@ class Client:
                     custom_data=self.__cp_info_dict[evse_id]['custom_data']
                 )
                 if not res:
-                    self.send_web_error_message('设置充电计划失败')
+                    self.send_web_error_message('设置充电计划失败\nSet up the charging plan failed')
 
     def handle_response(self, response_message: dict) -> None:
-        """ 
+        """
         处理 OCPP 响应消息
 
         response_message 内容格式
@@ -130,7 +130,7 @@ class Client:
             self.coroutine_OCPP_client.send_request_message(response_message['ori_data'])
 
     def handle_response_result(self, response_result_message):
-        """ 
+        """
         处理 OCPP 响应结果消息, 此方法可以在 顺序敏感 的情况下使用
 
         response_result_message 内容格式
@@ -144,7 +144,7 @@ class Client:
         pass
 
     def handle_normal_message(self, normal_message):
-        """ 
+        """
         处理 OCPP端口 普通消息
         """
         handle_dict = {
@@ -159,26 +159,26 @@ class Client:
                 func(temp_dict)
 
     def handle_web_message(self, web_message):
-        """ 
+        """
         处理 Web端 消息
         """
         def handle_web_charge_request(request_message):
-            _info(f"收到充电请求: {request_message}")
+            _info(f"收到充电请求 Receive charging request:\n{request_message}")
             evse_id = int(request_message['evse_id'])
             energy_amount = int(request_message['charge_power'])
             depart_time = request_message['depart_time']
             mode = int(request_message['charge_mode'])
             if evse_id not in self.GPIO_Manager.data_collector.available_charge_units_id_set:
-                self.send_web_error_message('evse_id is not available')
+                self.send_web_error_message('EVSE_ID不可用\nevse_id is not available')
                 return
             charge_unit: ChargeUnit = self.GPIO_Manager.get_charge_unit(evse_id)
             if not charge_unit.isAvailabel:
-                self.send_web_error_message('charge_unit is not available')
+                self.send_web_error_message('充电单元不可用\ncharge_unit is not available')
                 return
             current_limit_list = self.GPIO_Manager.get_current_limit(evse_id)
             voltage_max = self.GPIO_Manager.get_voltage_max(evse_id)
             _info(f""" \
-已获取
+已获取 Obtain
 evse_id:{evse_id},
 energy_amount: {energy_amount},
 depart_time:{depart_time},
@@ -188,7 +188,7 @@ voltage_max:{voltage_max}
 """
                   )
             if current_limit_list is None or len(current_limit_list) == 0:
-                self.send_web_error_message('get current_limit error')
+                self.send_web_error_message('获取电流限制错误\nget current_limit error')
                 return
             self.__cp_info_dict[evse_id] = {
                 'target_energy': energy_amount,
@@ -215,26 +215,26 @@ voltage_max:{voltage_max}
                 )
             except:
                 _exception()
-                self.send_web_error_message('充电请求失败')
+                self.send_web_error_message('充电请求失败\nCharging request failed')
 
         def handle_charge_now(charge_now_dict: dict):
-            _info(f'收到立即充电请求: {charge_now_dict}')
+            _info(f'收到立即充电请求:\nReceive the immediately charging request\n{charge_now_dict}')
             evse_id = int(charge_now_dict['evse_id'])
             res = self.GPIO_Manager.get_charge_unit(evse_id).start_charging()
             if not res:
-                _error('立即充电失败')
+                _error('立即充电失败\nimmediately charging failed')
 
         def handle_charge_stop(charge_stop_dict: dict):
-            _info(f'收到停止充电请求: {charge_stop_dict}')
+            _info(f'收到停止充电请求:\nReceive the stop charging request\n{charge_stop_dict}')
             evse_id = int(charge_stop_dict['evse_id'])
             self.GPIO_Manager.get_charge_unit(evse_id).stop_charging()
 
         def handle_reset_no_error(charge_stop_dict: dict):
-            _info(f'收到重置请求: {charge_stop_dict}')
+            _info(f'收到重置请求:\nReceive the reset request\n{charge_stop_dict}')
             evse_id = int(charge_stop_dict['evse_id'])
             self.GPIO_Manager.get_charge_unit(evse_id).clear_error()
 
-        _info(f'接收消息: {web_message}')
+        _debug(f'接收消息\nReceiving message\n{web_message}')
         handle_dict = {
             # 接收的消息标签: (给Web发送消息的标签, 处理函数)
             'charge_request': handle_web_charge_request,
@@ -250,7 +250,7 @@ voltage_max:{voltage_max}
         """ 
         处理 电脑端 消息
         """
-        _info(f'收到电脑端信息: \t{computer_message}')
+        _info(f'收到电脑端信息\nReceive the computer information\n{computer_message}')
 
     def handle_gpio_requeset(self, gpio_request) -> None:
         """
@@ -296,6 +296,9 @@ voltage_max:{voltage_max}
             category: message
         }
         self.thread_web_server.send_message(temp_dict)
+
+    def send_web_console_message(self, message) -> None:
+        self.send_message_to_web('console', message)
 
     def send_web_opt_message(self, message) -> None:
         self.send_message_to_web('opt_console', message)

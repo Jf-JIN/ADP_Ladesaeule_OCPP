@@ -8,6 +8,7 @@ from sys_basis.XSignal import XSignal
 from sys_basis.Ports.Core_WebSocket.WebSocket_Client import WebSocketClient
 from const.Const_Parameter import *
 
+_trace = Log.OCPP.trace
 _info = Log.OCPP.info
 _debug = Log.OCPP.debug
 
@@ -236,7 +237,7 @@ class PortOCPPWebsocketClient(object):
         """
         self.__list_request_message.append(message)
         self.__event_request_message.set()
-        _debug('已解锁发送请求消息锁')
+        _debug('已解锁发送请求消息锁\nUnlocked sending request message lock')
 
     def send_response_message(self,  message_action: str, message, send_time: float, message_id: str) -> int:
         """
@@ -344,7 +345,7 @@ class PortOCPPWebsocketClient(object):
         """
         message = ''
         while self.__isRunning:
-            _debug('Listening for messages..............')
+            _trace('Listening for messages..............')
             try:
                 try:
                     message = await asyncio.wait_for(self.__websocket.recv(), timeout=self.__listen_timeout_s)
@@ -358,7 +359,7 @@ class PortOCPPWebsocketClient(object):
                     _debug(f'监听消息时发生异常: {repr(e)} 重连中............')
                     self.__websocket.connect()
                     await asyncio.sleep(CP_Params.OCPP_LISTEN_INTERVAL)
-                _debug(f'获得监听消息\n {repr(self.__websocket)}\n{type(message)}\n{repr(message)}')
+                _trace(f'获得监听消息\n {repr(self.__websocket)}\n{type(message)}\n{repr(message)}')
                 if (isinstance(message, str) and message.startswith('[')):  # 信息过滤
                     await self.__charge_point.route_message(message)
                 elif message:
@@ -384,7 +385,7 @@ class PortOCPPWebsocketClient(object):
             try:
                 # 此处结果将由 __charge_point.signal_charge_point_ocpp_response 传递, 无需手动处理
                 if len(self.__list_request_message) > 0:
-                    _debug('消息已存入队列, 请求发送********************')
+                    _trace('消息已存入队列, 请求发送 The message has been stored in the queue, and the request will send it ********************')
                     await self.__charge_point.send_request_message(self.__list_request_message.pop(0))
                     _debug('Request executed')
             except:

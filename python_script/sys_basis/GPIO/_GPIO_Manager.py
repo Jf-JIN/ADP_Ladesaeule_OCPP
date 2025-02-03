@@ -9,6 +9,7 @@ from ._Thread_Polling_Shelly import PollingShelly
 from ._Data_Collector import DataCollector
 
 _info = Log.GPIO.info
+_warning = Log.GPIO.warning
 _error = Log.GPIO.error
 
 
@@ -71,7 +72,7 @@ class GPIOManager:
 
     def get_charge_unit(self, id: int) -> ChargeUnit:
         if id not in self.__charge_units_dict:
-            _error(f'未找到id为{id}的充电单元')
+            _warning(f'未找到id为{id}的充电单元\nNo charging unit with ID {id} was not found')
         return self.__charge_units_dict[id]
 
     def stop_charging(self, id: int) -> None:
