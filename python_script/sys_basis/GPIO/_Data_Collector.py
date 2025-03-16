@@ -2,7 +2,9 @@ from __future__ import annotations
 from threading import Timer
 import copy
 import datetime
+import time
 
+# from tools.Inner_Decorators import who_called_me
 from sys_basis.XSignal import XSignal
 from const.GPIO_Parameter import *
 from const.Const_Parameter import *
@@ -13,7 +15,7 @@ from tools.data_gene import *
 if 0:
     from ._GPIO_Manager import GPIOManager
 
-_critical = Log.GPIO.critical
+_log = Log.GPIO
 
 
 class DataCollector:
@@ -103,7 +105,7 @@ class DataCollector:
                 {'startPeriod': 0, 'limit': 9852, 'startTime':'2025-01-26T15:00:02Z','finishedTime': '2025-01-26T15:05:02Z', 'chargedEnergy':4108,},
                 {'startPeriod': 5, 'limit': 9724, 'startTime':'2025-01-26T15:00:02Z','finishedTime': '2025-01-26T15:20:02Z', 'chargedEnergy':6958,},
             ],
-            'finished_plan_figure_base64': <base64_string>,
+            # 'finished_plan_figure_base64': <base64_string>,
             'start_time': '2025-01-26T14:40:29Z', # 此开始时间指的是整个充电过程, 校正的计划表中的开始一时间不会记录
             'period_start_time': '2025-01-26T15:00:02Z', # 此开始时间指一个充电表的开始时间, 校正的计划表中的开始时间会被记录
             'depart_time': '2025-01-30T13:39:00Z',
@@ -141,6 +143,11 @@ class DataCollector:
         self.__timer_figure.start()
         self.__isRunning = True
         """ 表示是否存在充电桩在充电中/准备充电 """
+
+    def stop(self) -> None:
+        self.__timer_data.cancel()
+        self.__timer_figure.cancel()
+        self.__isRunning = False
 
     def __str__(self) -> str:
         return f"""Data Collector:\
@@ -274,6 +281,7 @@ class DataCollector:
         minutes, seconds = divmod(minites_seconds, 60)
         charged_time_str = f"{hours:02}:{minutes:02}:{seconds:02}"
         self.__all_data[id]['charged_time'] = charged_time_str
+        self.__all_data[id]['current_charge_action'] = {}
         self.__send_figure_data()
 
     def clear_CU_finished_plan(self, id: int) -> None:
@@ -324,7 +332,7 @@ class DataCollector:
         if status in [VehicleState.READY, VehicleState.EV_IS_PRESENT]:
             # 充电单元就绪状态, 可以充电
             self.__remove_charging_unit(id)
-            self.clear_CU_finished_plan(id)
+            # self.clear_CU_finished_plan(id) # [Attention] 暂时注释掉, 如果想在充电结束后不保留图像的话, 可以取消注释
         elif status in [VehicleState.CHARGING, VehicleState.CHARGING_WITH_VENTILATION]:
             # 充电单元正在充电, 充电桩被占用
             self.__add_charging_unit(id)
@@ -346,7 +354,8 @@ class DataCollector:
         data: dict = {
 
         }
-        self.__signal_DC_data_display.emit(data)
+        if data:
+            self.__signal_DC_data_display.emit(data)
         self.__timer_data = Timer(self.__interval_send_data, self.__send_display_data)
         self.__timer_data.start()
 
@@ -359,9 +368,18 @@ class DataCollector:
             self.__check_id(cu_id)
             finished_plan: list = self.__all_data[cu_id].get('finished_plan', [])
             current_charge_action: dict = self.__all_data[cu_id].get('current_charge_action', {})
-            fig: str = DataGene.plan2figure(finished_plan + [current_charge_action])
-            self.__all_data[cu_id]['finished_plan_figure_base64'] = fig
-            data[cu_id] = fig
-        self.__signal_DC_figure_display.emit(data)
+            if current_charge_action and 'startTime' in current_charge_action:
+                current_charge_action['finishedTime'] = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
+                img_list = finished_plan + [current_charge_action]
+            else:
+                img_list = finished_plan
+            fig: str = DataGene.plan2figure(img_list)
+            # self.__all_data[cu_id]['finished_plan_figure_base64'] = fig
+            # if fig:
+            data['cp_fig'] = fig  # TODO 可以添加ID
+        if data:
+            self.__signal_DC_figure_display.emit(data)
+        if self.__timer_figure.is_alive():
+            self.__timer_figure.cancel()
         self.__timer_figure = Timer(self.__interval_send_fig, self.__send_figure_data)
         self.__timer_figure.start()
