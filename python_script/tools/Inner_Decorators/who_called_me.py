@@ -1,5 +1,8 @@
 import inspect
 import wrapt
+from const.Const_Parameter import *
+
+_log = Log.GPIO
 
 
 @wrapt.decorator
@@ -19,5 +22,5 @@ def who_called_me(wrapped, instance, args, kwargs):
         parent_str += f"""  ->  <'{caller_name}'>"""
         caller_frame = caller_frame.f_back
         indentence += '\t'
-    print('\n'.join(output_list))
+    _log.info('\n'.join(output_list))
     return wrapped(*args, **kwargs)

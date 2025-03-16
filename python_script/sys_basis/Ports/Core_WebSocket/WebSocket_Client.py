@@ -134,7 +134,7 @@ class WebSocketClient(object):
             try:
                 response = await asyncio.wait_for(self.__websocket.recv(), timeout=self.__recv_timeout_s)
                 self.__send_signal_recv(response)
-                self.__send_signal_info(f'->>> Received> {response}')
+                # self.__send_signal_info(f'->>> Received> {response}')
                 return response
             except asyncio.TimeoutError as e:
                 await self.__websocket.ping()
