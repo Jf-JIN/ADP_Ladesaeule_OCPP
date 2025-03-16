@@ -7,3 +7,6 @@ requests
 serial
 pymodbus
 pyserial
+matplotlib
+scienceplots
+DToolslib
