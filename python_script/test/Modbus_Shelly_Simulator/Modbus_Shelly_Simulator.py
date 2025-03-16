@@ -1,15 +1,17 @@
-from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QSpinBox, QDoubleSpinBox
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QSpinBox, QDoubleSpinBox, QMessageBox
 from PyQt5.QtCore import Qt, QByteArray
 from PyQt5.QtGui import QIcon, QPixmap, QIcon
 from Modbus_Shelly_Simulator_ui import Ui_MainWindow
 import sys
 import os
 import json
+import traceback
+
 
 from Event_Filter import LabelRightDoubleFilter
 from Shelly_Simulator import ShellySimulator_Thread
 from Reader import *
-
+from DToolslib import *
 
 """
 to write
@@ -34,6 +36,17 @@ to read
 APP_PATH = os.getcwd()
 JSON_FILE_PATH = os.path.join(APP_PATH, 'Modbus_Shelly_Simulator.json')
 ICON_SVG = """<svg t="1738041248852" class="icon" viewBox="0 0 1024 1024" version="1.1" p-id="4191" width="200" height="200" id="svg1" sodipodi:docname="Modbus_Shelly_Simulator.svg" inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)" inkscape:export-filename="Modbus_Shelly_Simulator.png" inkscape:export-xdpi="96" inkscape:export-ydpi="96" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"><defs id="defs1"><linearGradient id="linearGradient5" inkscape:collect="always"><stop style="stop-color:#fe6244;stop-opacity:1;" offset="0" id="stop5" /><stop style="stop-color:#feb532;stop-opacity:1;" offset="0.22555411" id="stop8" /><stop style="stop-color:#fe0000;stop-opacity:1;" offset="0.36114731" id="stop9" /><stop style="stop-color:#f0b900;stop-opacity:1;" offset="0.56975228" id="stop10" /><stop style="stop-color:#fe6244;stop-opacity:1;" offset="0.7131682" id="stop7" /><stop style="stop-color:#fe6244;stop-opacity:0;" offset="1" id="stop6" /></linearGradient><linearGradient inkscape:collect="always" xlink:href="#linearGradient5" id="linearGradient6" x1="87.681421" y1="449.15844" x2="941.6146" y2="449.15844" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0.90866618,0,0,1.011345,47.004769,168.9843)" /></defs><sodipodi:namedview id="namedview1" pagecolor="#ffffff" bordercolor="#000000" borderopacity="0.25" inkscape:showpageshadow="2" inkscape:pageopacity="0.0" inkscape:pagecheckerboard="0" inkscape:deskcolor="#d1d1d1" inkscape:zoom="2.8743891" inkscape:cx="76.016153" inkscape:cy="89.584254" inkscape:window-width="1920" inkscape:window-height="1009" inkscape:window-x="2552" inkscape:window-y="210" inkscape:window-maximized="1" inkscape:current-layer="svg1" /><rect style="fill:#000000;fill-opacity:0;stroke:#4d4d4d;stroke-width:104.412;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke" id="rect1" width="902.71057" height="657.16858" x="63.05587" y="247.45821" /><path d="M 867.80935,38.151943 76.324432,281.07415 c -35.650975,10.93683 -55.70012,48.70261 -44.763288,84.3536 a 67.557519,67.557519 0 0 0 28.207709,37.11266 L 293.60984,551.83084 c 24.96294,15.93358 57.38988,13.79804 80.05142,-5.287 L 665.51413,300.73971 c 7.02862,-6.11634 17.69592,-5.3803 23.81226,1.65867 5.51506,6.34441 5.52542,15.77807 0.0207,22.13284 L 443.07648,616.11456 c -19.10576,22.58898 -21.2413,54.99519 -5.28699,79.9063 L 587.26651,929.5301 c 20.17355,31.46286 62.02379,40.61666 93.48663,20.44317 a 67.659113,67.659113 0 0 0 28.11442,-36.95725 l 243.66861,-790.469 c 10.95757,-35.671712 -9.0915,-73.478971 -44.7633,-84.426172 a 67.513978,67.513978 0 0 0 -39.73545,0.02074 h -0.22807 z" fill="#00c657" p-id="4192" id="path1" style="stroke-width:1.03667" /><path style="fill:#000000;fill-opacity:0;stroke:url(#linearGradient6);stroke-width:98.1639;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;paint-order:fill markers stroke" d="M 159.79643,697.67685 H 293.1864 l 70.11525,-263.23534 85.50643,377.59167 44.46331,-120.8293 34.20257,49.62631 73.53548,-189.87466 47.88359,107.88333 64.98488,10.78833 53.01396,21.57669 h 102.60772 v 0" id="path2" /></svg>"""
+
+_log = Logger('critical', APP_PATH, count_limit=5)
+
+
+def exception_handler(exc_type, exc_value, exc_traceback) -> None:
+    if issubclass(exc_type, KeyboardInterrupt):
+        sys.__excepthook__(exc_type, exc_value, exc_traceback)
+        return
+    error_message = "".join(traceback.format_exception(exc_type, exc_value, exc_traceback))
+    _log.critical(error_message)
+    sys.exit(1)
 
 
 class Simulator(Ui_MainWindow, QMainWindow):
@@ -131,6 +144,7 @@ QDoubleSpinBox {
         self.dsb_energy_rate.setMinimum(0)
         self.dsb_energy_rate.wheelEvent = lambda event: None
         self.dsb_energy_rate.setButtonSymbols(QDoubleSpinBox.NoButtons)
+        self.widget_2005.hide()
         self.update_display()
 
     def __init_signal_connections(self) -> None:
@@ -176,17 +190,20 @@ QDoubleSpinBox {
         return pixmap
 
     def write(self):
-        with open(JSON_FILE_PATH, 'r', encoding='utf-8')as f:
-            read_data: dict = json.load(f)
-        with open(JSON_FILE_PATH, 'w', encoding='utf-8') as f:
-            temp_dict = {
-                '1007': self.evse_state_1007,
-                '1002': self.vehicle_state_1002,
-                '2002': self.current_min_2002,
-                '1003': self.current_max_1003,
-            }
-            read_data.update(temp_dict)
-            json.dump(read_data, f, indent=4, ensure_ascii=False)
+        try:
+            with open(JSON_FILE_PATH, 'r', encoding='utf-8')as f:
+                read_data: dict = json.load(f)
+            with open(JSON_FILE_PATH, 'w', encoding='utf-8') as f:
+                temp_dict = {
+                    '1007': self.evse_state_1007,
+                    '1002': self.vehicle_state_1002,
+                    '2002': self.current_min_2002,
+                    '1003': self.current_max_1003,
+                }
+                read_data.update(temp_dict)
+                json.dump(read_data, f, indent=4, ensure_ascii=False)
+        except Exception as e:
+            QMessageBox.error(self, '错误', f'写入文件失败\n{traceback.format_exc()}')
 
     def write_data_by_evse(self, key, value):
         temp_dict: dict = {
@@ -241,16 +258,16 @@ QDoubleSpinBox {
             try:
                 with open(JSON_FILE_PATH, 'r') as f:
                     json_dict: dict = json.load(f)
-                self.evse_state_1007 = json_dict.get('1007', 0)
-                self.vehicle_state_1002 = json_dict.get('1002', 1)
-                self.current_min_2002 = max(0, min(13, json_dict.get('2002', 0)))
-                self.current_max_1003 = json_dict.get('1003', 0)
+                self.evse_state_1007 = int(json_dict.get('1007', 0))
+                self.vehicle_state_1002 = int(json_dict.get('1002', 1))
+                self.current_min_2002 = max(0, min(13, int(json_dict.get('2002', 0))))
+                self.current_max_1003 = int(json_dict.get('1003', 0))
                 self.onoff_selftest_1004 = json_dict.get('1004', None)
                 self.configured_amps_1000 = json_dict.get('1000', None)
                 self.charge_operation_2005 = json_dict.get('2005', None)
                 self.latch_lock_pin = json_dict.get('latch_lock_pin', None)
                 self.latch_unlock_pin = json_dict.get('latch_unlock_pin', None)
-                self.max_voltage = json_dict.get('max_voltage', 230)
+                self.max_voltage = int(json_dict.get('max_voltage', 230))
                 self.current_max_1003 = max(0, min(80, self.current_max_1003))
                 self.current_min_2002 = max(0, min(13, self.current_min_2002))
                 self.configured_amps_1000 = min(max(self.current_min_2002, self.configured_amps_1000), self.current_max_1003)
@@ -609,6 +626,7 @@ QDoubleSpinBox {
 
 
 if __name__ == '__main__':
+    sys.excepthook = exception_handler
     app = QApplication(sys.argv)
     mainWin = Simulator()
     mainWin.show()
