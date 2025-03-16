@@ -30,6 +30,14 @@ class GPIOManager:
         self.__signal_request_charge_plan_calibration: XSignal = XSignal()
         self.__request_waiting_list: list = []
 
+    def stop(self):
+        self.__thread_polling_evse.stop()
+        self.__thread_polling_shelly.stop()
+        self.__data_collector.stop()
+
+    def __del__(self):
+        self.stop()
+
     @property
     def data_collector(self) -> DataCollector:
         return self.__data_collector
@@ -46,10 +54,10 @@ class GPIOManager:
     def charge_units_dict(self) -> dict:
         return self.__charge_units_dict
 
-    def set_charge_plan(self, data: dict, target_energy: int | None = None, depart_time: int | None = None, custom_data: dict | None = None) -> bool:
+    def set_charge_plan(self, data: dict, target_energy: int | None = None, depart_time: int | None = None, custom_data: dict | None = None, isManual: bool = False) -> bool:
         evse_id: int = data["evseId"]
         charge_unit: ChargeUnit = self.__charge_units_dict[evse_id]
-        return charge_unit.set_charge_plan(data['chargingProfile'], target_energy, depart_time, custom_data)
+        return charge_unit.set_charge_plan(data['chargingProfile'], target_energy, depart_time, custom_data, isManual)
 
     def get_current_limit(self, id: int) -> list | None:
         """ 
