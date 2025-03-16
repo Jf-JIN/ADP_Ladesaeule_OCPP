@@ -11,6 +11,7 @@ const lang_pkg_zh = {
     "text_home":"首页",
     "text_console": "控制台",
     "text_image": "图像",
+    "text_manual_input": "手动输入",
     "text_current_time": "当前时间：",
     "text_rasberry_pi_system": "树莓派系统信息",
     "text_optimisation_system": "优化系统信息",
@@ -20,6 +21,7 @@ const lang_pkg_zh = {
     "welcome_text": "欢迎使用 OCPP-Ladensaeule 充电桩，这是一个基于 OCPP 协议的充电桩软件。",
     "Testen_btn": "测试",
     "charge_mode_label": "充电模式: ",
+    "direct_charge": "直接充电",
     "select_dynamic": "动态调整",
     "select_shortest_time": "最短充电时间",
     "select_least_cost": "最少充电费用",
@@ -32,5 +34,11 @@ const lang_pkg_zh = {
     "home_charged_energy": "已充电量",
     "home_left_time": "剩余时间",
     "home_charging_status": "充电状态",
+    "stop":"停止",
+    // 手动输入
+    "implement": "执行",
+    "manual_stop": "停止",
+    "label_manual_target_energy": "目标电量(Wh)",
+    "manual_depart_time_label": "预计离开时间",
 
 }

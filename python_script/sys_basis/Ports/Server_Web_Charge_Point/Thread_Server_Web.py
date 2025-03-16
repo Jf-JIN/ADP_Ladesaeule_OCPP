@@ -28,9 +28,10 @@ class ServerWeb(Thread):
         except:
             self.__send_signal_info(f'<Error - __init__> info_title must be convertible to a string. It has been set to None. The provided type is {type(info_title)}')
             self.__info_title = None
-        self.__app.add_url_rule('/admin', 'admin', self.__admin_route, methods=['GET', 'POST'])
-        self.__app.add_url_rule('/', 'login', self.__login, methods=['GET', 'POST'])
-        self.__app.add_url_rule('/user', 'user', self.__user_route, methods=['GET', 'POST'])
+        self.__app.add_url_rule('/', 'admin', self.__admin_route, methods=['GET', 'POST'])
+        # self.__app.add_url_rule('/admin', 'admin', self.__admin_route, methods=['GET', 'POST'])
+        # self.__app.add_url_rule('/', 'login', self.__login, methods=['GET', 'POST'])
+        # self.__app.add_url_rule('/user', 'user', self.__user_route, methods=['GET', 'POST'])
         self.__start_timer()
         self.__listening_input_data()
         self.__logout()
@@ -82,8 +83,8 @@ class ServerWeb(Thread):
         return render_template('login.html')
 
     def __admin_route(self):
-        if not session.get('logged_in'):
-            return redirect(url_for('login'))
+        # if not session.get('logged_in'):
+        #     return redirect(url_for('login'))
         return render_template('AdminPage.html')
 
     def __user_route(self):

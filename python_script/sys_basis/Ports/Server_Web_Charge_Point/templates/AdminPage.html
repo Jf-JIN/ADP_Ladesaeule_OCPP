@@ -22,6 +22,9 @@
             <li id="title_image" class="title_item">
                 <span id="text_image">图像</span>
             </li>
+            <li id="title_manual_input" class="title_item">
+                <span id="text_manual_input">图像</span>
+            </li>
         </ul>
     </div>
     <div id="title_selection_blank"></div>
@@ -89,7 +92,8 @@
             </div>
             <div><label for="charge_mode" id="charge_mode_label">Charge_Mode: </label>
                 <select id="charge_mode">
-                    <option value="0" id="select_dynamic">Dynamic Adjusting</option>
+                    <option value="-1" id="direct_charge">Direct Charge</option>
+                    <option value="0" id="select_dynamic" selected>Dynamic Adjusting</option>
                     <option value="1" id="select_shortest_time">Shortest Charge Time</option>
                     <option value="2" id="select_least_cost">Least Charge Cost</option>
                 </select>
@@ -148,7 +152,31 @@
     </div>
 
     <div id="page_image">
+        <div id="image_contain" class="image_group">
+            <img id="cp_fig" class="image_widget" src="./static/blank.png" alt="Display_Charge_Point">
+            <img id="opt_fig" class="image_widget" src="./static/blank.png" alt="Display_Optimisation">
+        </div>
+    </div>
 
+    <div id="page_manual_input">
+        <div id="manual_input_edit">
+            <input type="button" text="implement" value="implement" id="implement">
+            <div style="margin: 0 10px; display: flex;">
+                <label for="manual_target_energy" id="label_manual_target_energy"></label>
+                <input type="text" id="manual_target_energy" placeholder="here inmput target energy">
+            </div>
+            <div style="margin: 0 10px; display: flex;">
+                <label for="manual_depart_time" id="manual_depart_time_label"></label>
+                <input type="datetime-local" id="manual_depart_time">
+            </div>
+            <!-- <input type="button" value="STOP" id="manual_stop"> -->
+        </div>
+        
+        <div>
+            <textarea id="manual_input" name="manual_input", placeholder="Please input the 'SetChargingProfileRequest' here. 
+Other commands will not be implemented. 
+Non-json format is not supported."></textarea>
+        </div>
     </div>
     <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
     <script src="./static/js/language_package_zh.js"></script>

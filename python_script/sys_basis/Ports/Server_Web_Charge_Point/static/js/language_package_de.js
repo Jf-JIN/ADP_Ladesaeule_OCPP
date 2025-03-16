@@ -8,9 +8,10 @@ const lang_pkg_de = {
     "password": "Passwort",
 
     // 主页
-    "text_home":"Home",
+    "text_home": "Home",
     "text_console": "Information",
     "text_image": "Darstellung",
+    "text_manual_input": "Manuale Eingabe",
     "text_current_time": "Akutelle Zeit",
     "text_rasberry_pi_system": "Information über Rasberry Pi System",
     "text_optimisation_system": "Optimisation System Information",
@@ -21,6 +22,7 @@ const lang_pkg_de = {
     "welcome_text": "Herzlich Willkommen bei der Nutzung der OCPP-Ladesäule, einer Ladestationssoftware, die auf dem OCPP-Protokoll basiert.",
     "Testen_btn": "Testen",
     "charge_mode_label": "Lademodus:",
+    "direct_charge": "Einfaches Laden",
     "select_dynamic": "Dynamische Anpassung",
     "select_shortest_time": "Minimale Ladezeit",
     "select_least_cost": "Minimale Ladekosten",
@@ -33,4 +35,10 @@ const lang_pkg_de = {
     "home_charged_energy": "Geladene Menge",
     "home_left_time": "Verbleibende Zeit",
     "home_charging_status": "Lade-Status",
+    "stop": "STOP",
+    // 手动输入
+    "implement": "Implementieren",
+    "manual_stop": "STOP",
+    "label_manual_target_energy": "Zielenergie(Wh)",
+    "manual_depart_time_label": "Geschätzte Abfahrtszeit",
 }
