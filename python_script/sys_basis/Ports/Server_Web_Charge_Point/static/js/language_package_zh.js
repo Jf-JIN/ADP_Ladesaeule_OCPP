@@ -40,5 +40,19 @@ const lang_pkg_zh = {
     "manual_stop": "停止",
     "label_manual_target_energy": "目标电量(Wh)",
     "manual_depart_time_label": "预计离开时间",
-
+    "drop_zone": "拖拽文件到这里 或 点击'请选择文件'",
+    "lb_btn_manual_input": "请选择文件",
+    "file_name": "<无文件>",
+    "btn_clear_csv": "清空CSV文件",
+    "btn_create_example_csv": "创建示例CSV文件",
+    // 词条
+    "csv_file_error": "CSV文件格式错误, 请检查文件格式",
+    "no_file_selected": "<无文件>",
+    "success": "成功",
+    "error": "错误",
+    "warning": "警告",
+    "info": "提示",
+    "TE_not_num": "目标电量必须为数字",
+    "TE_not_positive": "目标电量必须为正数",
+    "time_in_past": "离开时间不得早于当前时间",
 }

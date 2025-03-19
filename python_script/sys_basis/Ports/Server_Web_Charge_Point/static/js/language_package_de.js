@@ -41,4 +41,20 @@ const lang_pkg_de = {
     "manual_stop": "STOP",
     "label_manual_target_energy": "Zielenergie(Wh)",
     "manual_depart_time_label": "Geschätzte Abfahrtszeit",
+    "drop_zone": "Ziehen Sie die Datei zum Hochladen oder klicken Sie, um die Datei auszuwählen",
+    "lb_btn_manual_input": "Bitte laden Sie die Datei hoch",
+    "file_name": "<Keine Datei>",
+    "btn_clear_csv": "CSV-Datei löschen",
+    "btn_create_example_csv": "Beispiel-CSV-Datei erstellen",
+    // 词条
+    "csv_file_error": "CSV-Datei ist falsch, bitte überprüfen Sie das Dateiformat",
+    "no_file_selected": "<Keine Datei>",
+    "success": "Erfolg",
+    "error": "Fehler",
+    "warning": "Warning",
+    "info": "Info",
+    "TE_not_num": "Bitte geben Sie eine gültige Zahl ein. Ziel-Energie ist jetzt keine Zahl.",
+    "TE_not_positive": "Bitte geben Sie eine gültige Zahl ein. Ziel-Energie ist jetzt keine positive Zahl.",
+    "time_in_past": "Die ausgewählte Zeit kann nicht in der Vergangenheit liegen. Bitte wählen Sie eine gültige Zeit aus."
+
 }

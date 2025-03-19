@@ -1,5 +1,5 @@
 function update_language () {
-    const lang_setting = localStorage.getItem('display_language') || 'zh';
+    const lang_setting = localStorage.getItem('display_language') || 'en';
     set_language_package(lang_setting);
 }
 
@@ -9,15 +9,19 @@ function set_language_package (lang_str) {
     如果语言包不存在，会使用默认语言包*/
     if (lang_str == 'zh') { 
         apply_language_package(lang_pkg_zh);
+        window.lang_dict = lang_pkg_zh;
     }
     else if (lang_str == 'en') {
         apply_language_package(lang_pkg_en);
+        window.lang_dict = lang_pkg_en;
     }
     else if (lang_str == 'de') {
         apply_language_package(lang_pkg_de);
+        window.lang_dict = lang_pkg_de;
     }
     else {
-        apply_language_package(lang_pkg_zh);
+        apply_language_package(lang_pkg_en);
+        window.lang_dict = lang_pkg_en;
     }
 }
 function apply_language_package (language_package) { 

@@ -93,7 +93,7 @@ class ServerWeb(Thread):
     def __listening_input_data(self):
         @self.__socketio.on('input_data', namespace='/')
         def handle_input_data(message):
-            self.__send_signal_info(f'->>> Web Received> {message}')
+            # self.__send_signal_info(f'->>> Web Received> {message}')
             self.signal_web_server_recv.emit(message)
 
     def __logout(self):

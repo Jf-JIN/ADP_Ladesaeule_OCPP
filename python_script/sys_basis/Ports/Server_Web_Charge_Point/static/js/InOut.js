@@ -78,8 +78,8 @@ submit_btn.addEventListener('click', () => {
                     let currentTime = new Date();
                     let selectedTime = new Date(value);
                     if (selectedTime < currentTime) {
-                        alert("The selected time cannot be in the past. Please choose a valid time.");
-                        value = ''; // 清空输入框值
+                        Swal.fire(lang_dict.error, window.lang_dict.time_in_past, 'error');
+                        value = '';
                         widget.style.backgroundColor = 'red';
                         check_res = false;
                         return check_res;
@@ -122,38 +122,121 @@ btn_implement_page_manual.addEventListener("click", () => {
     target_energy = document.getElementById('manual_target_energy').value;
     departure_time = document.getElementById('manual_depart_time').value;
     data = textEdit.value;
-    if (!checkManualInput(data, target_energy, departure_time)) {
+    if (!checkManualInput(target_energy, departure_time)) {
         return;
     }
-    let isoDate = new Date(departure_time).toISOString().split('.')[0] + 'Z'; // 去掉毫秒部分
-    socket.emit('input_data', { 'manual_input': { 'depart_time' : isoDate, 'target_energy': target_energy, 'data': data }})
+    let isoDate = new Date(departure_time).toISOString().split('.')[0] + 'Z';
+    socket.emit('input_data', { 'manual_input': { 'depart_time' : isoDate, 'target_energy': target_energy }})
 })
 
-function checkManualInput (data, target_energy, depart_time) {
+function checkManualInput (target_energy, depart_time) {
     if (!isValidNumber(target_energy)) {
-        alert(`Please enter a valid number. ${key} is not a number.`);
+        Swal.fire(lang_dict.error, window.lang_dict.TE_not_num, 'error');
         return false
     } else if (parseFloat(target_energy) <= 0) {
-        alert(`Please enter a valid number. ${key} is not a positive number.`);
+        Swal.fire(lang_dict.error, window.lang_dict.TE_not_positive, 'error');
         return false;
     }
     let currentTime = new Date();
     let selectedTime = new Date(depart_time);
     if (selectedTime < currentTime) {
-        alert("The selected time cannot be in the past. Please choose a valid time.");
+        Swal.fire(lang_dict.error, window.lang_dict.time_in_past, 'error');
         return false;
     }
-    if (data.length == 0) {
-        alert("Text field cannot be empty");
-        return false;
-    }
-    console.log(data)
-    try {
-        JSON.parse(data)
-    } catch(e) {
-        console.log(e)
-        alert("Text field must be a valid JSON string");
-        return false;
-    }
+    // if (data.length == 0) {
+    //     alert("Text field cannot be empty");
+    //     return false;
+    // }
+    // console.log(data)
+    // try {
+    //     JSON.parse(data)
+    // } catch(e) {
+    //     console.log(e)
+    //     alert("Text field must be a valid JSON string");
+    //     return false;
+    // }
     return true;
 }
+
+const drop_zone = document.getElementById('drop_zone');
+const btn_file_input = document.getElementById('btn_manual_input');
+const input_area = document.getElementById('manual_input');
+const fileNameSpan = document.getElementById('file_name');
+
+drop_zone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    drop_zone.classList.add('dragover');
+});
+
+drop_zone.addEventListener('dragleave', () => {
+    drop_zone.classList.remove('dragover');
+});
+
+drop_zone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    drop_zone.classList.remove('dragover');
+    handleFiles(e.dataTransfer.files);
+});
+
+// 选择文件后处理
+btn_file_input.addEventListener('change', () => {
+    handleFiles(btn_file_input.files);
+    if (fileInput.files.length > 0) {
+        fileNameSpan.textContent = fileInput.files[0].name;
+    } else {
+        fileNameSpan.textContent = window.lang_dict.no_file_selected;
+    }
+});
+
+function handleFiles (files) {
+    if (files.length === 0) return;
+    const file = files[0];
+    if (!file.type.includes('csv')) {
+        Swal.fire(lang_dict.error, window.lang_dict.csv_file_error, 'error');
+        return;
+    }
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        const fileContent = e.target.result;
+        // socket.send(fileContent);
+        socket.emit('input_data', { 'manual_input_csv': {'data': fileContent } });
+    };
+    drop_zone.textContent = file.name;
+    btn_file_input.textContent = file.name;
+    fileNameSpan.textContent = file.name? file.name: window.lang_dict.select_file_hint;
+    reader.readAsText(file);
+}
+
+const btn_clear_csv = document.getElementById('btn_clear_csv');
+btn_clear_csv.addEventListener('click', () => {
+    drop_zone.textContent = window.lang_dict.drop_zone;
+    fileNameSpan.textContent = window.lang_dict.select_file_hint;
+    socket.emit('input_data', { 'manual_input_csv': { 'data': 'clear' } });
+})
+
+const btn_create_csv = document.getElementById('btn_create_example_csv')
+btn_create_csv.addEventListener('click', function () {
+    const data = [
+        ['evseId' ,1],
+        ['chargingProfileID',1],
+        ['stackLevel' ,1],
+        ['chargingProfilePurpose' ,'TxProfile' ],
+        ['chargingProfileKind' ,'Absolute' ],
+        ['ChargingScheduleID',1],
+        ['chargingRateUnit','W'],
+        [],
+        ['startSchedule', '2025-08-08T08:08:08Z'],
+        ['startPeriod_in_second','limit'],
+        [0,6666],
+    ];
+    console.log('lallalal');
+
+    const csvContent = data.map(row => row.join(',')).join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'example.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+})

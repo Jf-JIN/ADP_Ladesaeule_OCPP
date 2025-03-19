@@ -40,4 +40,22 @@ const lang_pkg_en = {
     "manual_stop": "STOP",
     "label_manual_target_energy": "target energy(Wh)",
     "manual_depart_time_label": "departure time",
+    "drop_zone": "Drag and drop the file here or click to select the file",
+    "lb_btn_manual_input": "Please upload the file",
+    "file_name": "<No File>",
+    "btn_clear_csv": "Clear CSV File",
+    "btn_create_example_csv": "Create Example CSV File",
+    // 词条
+    "csv_file_error": "CSV file is incorrect, please check the file format",
+    "no_file_selected": "<No File>",
+    // 弹窗
+    "success": "Success",
+    "error": "Error",
+    "warning": "Warnung",
+    "info": "Info",
+    "TE_not_num": "Please enter a valid number. Target Energy is not a number now.",
+    "TE_not_positive": "Please enter a valid number. Target Energy is not a positive number now.",
+    "time_in_past": "The selected time cannot be in the past. Please choose a valid time.",
+
+
 }
