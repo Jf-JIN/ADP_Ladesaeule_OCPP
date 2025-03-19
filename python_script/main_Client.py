@@ -14,19 +14,19 @@ class main(object):
 
         # 注册退出处理
         atexit.register(self.cleanup)
-        
+
         # 处理信号
         signals = (signal.SIGTERM, signal.SIGINT)
         for sig in signals:
             signal.signal(sig, self.signal_handler)
-        
+
         # 跨平台处理
         if sys.platform == 'win32':
             import win32api
             win32api.SetConsoleCtrlHandler(lambda sig: self.signal_handler(sig, None), True)
         else:
             signal.signal(signal.SIGHUP, self.signal_handler)
-        
+
         sys.excepthook = self.exception_hook
 
     def __del__(self):
@@ -36,11 +36,7 @@ class main(object):
         if self._exit_flag:
             return
         self._exit_flag = True
-
-        print("Cleaning up resources...")
-        # self.client.stop()
-
-        config_path = os.path.join(os.path.dirname(__file__), 'config.txt')
+        config_path = os.path.join(os.path.dirname(__file__), 'cleanup_config.txt')
         with open(config_path, 'w', encoding='utf-8') as f:
             f.write('Is successful to stop the program: True')
 
