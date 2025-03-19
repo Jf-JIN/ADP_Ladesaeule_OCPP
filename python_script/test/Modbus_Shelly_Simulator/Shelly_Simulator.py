@@ -237,3 +237,6 @@ class ShellySimulator_Thread(QThread):
 if __name__ == "__main__":
     web_server = ShellySimulator_Thread()
     web_server.run()
+""" 
+find C:/Users/jinju/miniconda3/envs/modbus_shelly_simulator/Lib -name "hook-_tkinter.py"
+"""

@@ -44,6 +44,10 @@ class PortWebSocketServer(object):
     def signal_thread_websocket_client_recv(self) -> XSignal:
         return self.__signal_thread_websocket_client_recv
 
+    def __del__(self):
+        self.__event_send_data.set()
+        self.__task_send_data.cancel()
+
     async def run(self) -> None:
         """
         异步协程主体
@@ -59,6 +63,13 @@ class PortWebSocketServer(object):
             self.__send_signal_info(f"<Error - Websocket_Server_Port>\n{traceback.format_exc()}")
         finally:
             self.__isRunning = False
+
+    def stop(self) -> None:
+        """
+        停止端口
+        """
+        self.__isRunning = False
+        self.__task_send_data.cancel()
 
     def send_data(self, data):
         self.__list_send_data.append(data)

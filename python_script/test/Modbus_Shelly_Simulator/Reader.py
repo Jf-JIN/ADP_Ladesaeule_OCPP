@@ -37,16 +37,16 @@ class ReaderThread(QThread):
             self.__file_lock = True
             with open(self.__file_path, 'r', encoding='utf-8') as f:
                 data: dict = json.load(f)
-                evse_state_1007 = data.get('1007', 0)
-                vehicle_state_1002 = data.get('1002', 1)
-                current_max_1003 = data.get('1003', 6)
-                current_min_2002 = data.get('2002', 5)
-                onoff_selftest_1004 = data.get('1004', None)
-                configured_amps_1000 = data.get('1000', None)
-                charge_operation_2005 = data.get('2005', None)
+                evse_state_1007 = int(data.get('1007', 0))
+                vehicle_state_1002 = int(data.get('1002', 1))
+                current_max_1003 = int(data.get('1003', 6))
+                current_min_2002 = int(data.get('2002', 5))
+                onoff_selftest_1004 = int(data.get('1004', 0))
+                configured_amps_1000 = int(data.get('1000', 0))
+                charge_operation_2005 = int(data.get('2005', 0))
                 latch_lock_pin = data.get('latch_lock_pin', None)
                 latch_unlock_pin = data.get('latch_unlock_pin', None)
-                max_voltage = data.get('max_voltage', 230)
+                max_voltage = int(data.get('max_voltage', 230))
                 if isinstance(latch_lock_pin, (int, float)):
                     if latch_lock_pin > 0:
                         latch_lock_pin = 1

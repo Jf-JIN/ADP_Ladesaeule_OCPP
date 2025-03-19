@@ -698,7 +698,7 @@ ventilation</string>
         </widget>
        </item>
        <item>
-        <widget class="QWidget" name="widget_15" native="true">
+        <widget class="QWidget" name="widget_2005" native="true">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>0</horstretch>

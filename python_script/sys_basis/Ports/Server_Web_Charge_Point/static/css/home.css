@@ -212,11 +212,12 @@ input[type="button"] {
     font-size: 1em;
     cursor: pointer;
     border-radius: 5px;
-    width: 200px;
+    width: 260px;
     /* 按钮宽度 */
     text-align: center;
     transition: background-color 0.3s, transform 0.2s;
 }
+
 
 input[type="button"]:hover {
     background-color: #45a049;
@@ -351,4 +352,47 @@ img {
     max-width: 100%;
     height: auto;
     display: block;
+}
+
+.image_group{
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    gap: 10px;
+}
+.image_widget{
+    width: 50vw;
+    height: 50vh;
+}
+
+#drop_zone{
+    border: #1A1A19 2px solid;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 20px auto;
+    justify-content: center;
+    width: 96vw;
+    height: 50vh;
+}
+/* #manual_input,
+#manual_input::placeholder {
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+} */
+#manual_input_edit{
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    grid: 100px;
+}
+#manual_stop, #stop {
+    background-color: var(--primary_hover_color);
+    color: white;
+}
+#lb_btn_manual_input{
+    cursor: pointer;
+}
+
+#placeholder_csv{
+    display: inline;
 }

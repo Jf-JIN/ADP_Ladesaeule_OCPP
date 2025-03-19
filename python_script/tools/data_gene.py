@@ -1,19 +1,19 @@
+
+
+import pprint
+import scienceplots
+from datetime import datetime, timedelta, timezone
+import numpy as np
+import pytz
+import matplotlib.pyplot as plt
 from const.Const_Parameter import *
 import base64
 import io
 import matplotlib
 matplotlib.use('Agg')  # 使用非交互式后端
-import matplotlib.pyplot as plt
-import pytz
-import numpy as np
-from datetime import datetime, timedelta, timezone
-import scienceplots
-import pprint
 
 
-_info = Log.OPT.info
-_error = Log.OPT.error
-_warning = Log.OPT.warning
+_log = Log.OPT
 
 
 class DataGene:
@@ -302,14 +302,18 @@ class DataGene:
                 charge_item in charge_plan] + [DataGene.str2time(charge_plan[-1]['finishedTime'])]
         time_split = [(time[i + 1] - time[i]).seconds / 60 for i in range(len(time) - 1)]
         limit = [charge_item['limit'] for charge_item in charge_plan]
+        limit.append(limit[-1])
         charged_energy_predict = [0]
         for duration, power in zip(time_split, limit):
             charged_energy_predict.append(charged_energy_predict[-1] + power * duration / 60)
         charged_energy_actual = [0] + [charge_item['chargedEnergy'] for charge_item in charge_plan]
-
+        time_f = [DataGene.str2time(item['finishedTime']) for item in charge_plan]
         plt.figure(figsize=(12, 6))  # 增加图表分辨率和大小
         plt.plot(time, charged_energy_actual, marker='o', linestyle='-', color=Color.BLUE, linewidth=2, label='actual charged energy')
         plt.plot(time, charged_energy_predict, marker='o', linestyle='--', color=Color.RED, linewidth=2, label='predict charged energy')
+        y_max = max(max(charged_energy_actual), max(charged_energy_predict))
+        plt.vlines(time, ymin=-1, ymax=y_max+5, colors=Color.GREEN, linestyles='--', linewidth=2, label="START")
+        plt.vlines(time_f, ymin=-1, ymax=y_max+5, colors=Color.RED, linestyles='-', linewidth=2, label="FINISH")
 
         plt.xticks(fontsize=FontSize.TICKS)
         plt.grid(True, linestyle='--', alpha=0.7)
@@ -358,10 +362,10 @@ class DataGene:
             - list: 包含每段时间的持续时间、电价和可用功率的列表
         """
         # if interval not in [15, 30, 60, 120]:
-        #     _error("Interval must be one of [15, 30, 60, 120]")
+        #     _log.error("Interval must be one of [15, 30, 60, 120]")
 
         if interval not in [15, 30, 60, 120]:
-            _error("Interval must be one of [15, 30, 60, 120]")
+            _log.error("Interval must be one of [15, 30, 60, 120]")
 
         result_time = []
         result_eprices = []
@@ -443,6 +447,9 @@ class DataGene:
 
 
 if __name__ == "__main__":
+    # import base64
+    # from io import BytesIO
+    # from PIL import Image
     # eprices = DataGene.gene_eprices(0.33, 0.3, 6, 22)
     # his_usage = DataGene.gene_his_usage()
     # DataGene.plot_usage(eprices)
@@ -489,4 +496,8 @@ if __name__ == "__main__":
         {'startPeriod': 300, 'limit': 9724, 'startTime': '2025-01-26T15:00:02Z', 'finishedTime': '2025-01-26T15:20:02Z', 'chargedEnergy': 6958, },
         {'startPeriod': 1200, 'limit': 8523, 'startTime': '2025-01-26T15:00:02Z', 'finishedTime': '2025-01-26T15:25:02Z', 'chargedEnergy': 7510, },
     ]
-    img = DataGene.plan2figure(charge_plan)
+    # img = DataGene.plan2figure(charge_plan)
+    # img = DataGene.plan2figure(charge_plan)
+    # image_data = base64.b64decode(img)
+    # image = Image.open(BytesIO(image_data))
+    # image.show()

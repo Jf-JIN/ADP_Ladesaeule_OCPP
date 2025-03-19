@@ -1,7 +1,9 @@
 
 import os
 from const.Analog_Define import AnalogDefine
-from tools.Logger import LogLevel, Logger, LoggerGroup
+# from tools.Logger import LogLevel, Logger, LoggerGroup
+from DToolslib.Logger import *
+
 
 os.chdir(os.path.dirname(os.path.dirname(__file__)))
 APP_WORKSPACE_PATH = os.getcwd()
@@ -36,57 +38,27 @@ class Style(AnalogDefine):
 
 
 class Log(AnalogDefine):
-    __EXCLUDE_FUNCS = ['_send_signal_info', '__send_signal_recv', '__send_signal_info', '__send_signal', '_log', 'log', 'who_called_me', 'send_web_error_message', '_send']
-    __EXCLUDE__CLASSES = []
-    __EXCLUDE_MODULES = ['server', 'serving', ]
-    __COUNT_LIMIT = 30
-    __LOG_LEVEL = LogLevel.INFO
-    RAS = Logger(
-        log_name='client_rasberryPi', log_folder_path=APP_WORKSPACE_PATH, log_sub_folder_name='client_rasberryPi',
-        count_limit=10, exclude_funcs=__EXCLUDE_FUNCS, exclude_classes=__EXCLUDE__CLASSES, exclude_modules=__EXCLUDE_MODULES, log_level=__LOG_LEVEL,
-    )
-    CSMS = Logger(
-        log_name='csms', log_folder_path=APP_WORKSPACE_PATH, log_sub_folder_name='csms', count_limit=__COUNT_LIMIT,
-        exclude_funcs=__EXCLUDE_FUNCS, exclude_classes=__EXCLUDE__CLASSES, exclude_modules=__EXCLUDE_MODULES, log_level=__LOG_LEVEL,
-    )
-    WS = Logger(
-        log_name='websocket', log_folder_path=APP_WORKSPACE_PATH, log_sub_folder_name='websocket', count_limit=__COUNT_LIMIT,
-        exclude_funcs=__EXCLUDE_FUNCS, exclude_classes=__EXCLUDE__CLASSES, exclude_modules=__EXCLUDE_MODULES, log_level=__LOG_LEVEL,
-    )
-    CP = Logger(
-        log_name='charge_point', log_folder_path=APP_WORKSPACE_PATH, log_sub_folder_name='charge_point',
-        count_limit=10, exclude_funcs=__EXCLUDE_FUNCS, exclude_classes=__EXCLUDE__CLASSES, exclude_modules=__EXCLUDE_MODULES, log_level=__LOG_LEVEL,
-    )
-    OCPP = Logger(
-        log_name='ocpp_port', log_folder_path=APP_WORKSPACE_PATH, log_sub_folder_name='ocpp_port', count_limit=__COUNT_LIMIT,
-        exclude_funcs=__EXCLUDE_FUNCS, exclude_classes=__EXCLUDE__CLASSES, exclude_modules=__EXCLUDE_MODULES, log_level=__LOG_LEVEL,
-    )
-    WEB = Logger(
-        log_name='web', log_folder_path=APP_WORKSPACE_PATH, log_sub_folder_name='web_server', count_limit=__COUNT_LIMIT,
-        exclude_funcs=__EXCLUDE_FUNCS, exclude_classes=__EXCLUDE__CLASSES, exclude_modules=__EXCLUDE_MODULES, log_level=__LOG_LEVEL,
-    )
-    GPIO = Logger(
-        log_name='gpio', log_folder_path=APP_WORKSPACE_PATH, log_sub_folder_name='gpio', count_limit=__COUNT_LIMIT,
-        exclude_funcs=__EXCLUDE_FUNCS, exclude_classes=__EXCLUDE__CLASSES, exclude_modules=__EXCLUDE_MODULES, log_level=__LOG_LEVEL,
-    )
-    MODBUS = Logger(
-        log_name='modbus', log_folder_path=APP_WORKSPACE_PATH, log_sub_folder_name='modbus', count_limit=__COUNT_LIMIT,
-        exclude_funcs=__EXCLUDE_FUNCS, exclude_classes=__EXCLUDE__CLASSES, exclude_modules=__EXCLUDE_MODULES, log_level=__LOG_LEVEL,
-    )
-    SHELLY = Logger(
-        log_name='shelly', log_folder_path=APP_WORKSPACE_PATH, log_sub_folder_name='shelly', count_limit=__COUNT_LIMIT,
-        exclude_funcs=__EXCLUDE_FUNCS, exclude_classes=__EXCLUDE__CLASSES, exclude_modules=__EXCLUDE_MODULES, log_level=__LOG_LEVEL,
-    )
-    EVSE = Logger(
-        log_name='evse', log_folder_path=APP_WORKSPACE_PATH, log_sub_folder_name='evse', count_limit=__COUNT_LIMIT,
-        exclude_funcs=__EXCLUDE_FUNCS, exclude_classes=__EXCLUDE__CLASSES, exclude_modules=__EXCLUDE_MODULES, log_level=__LOG_LEVEL,
-    )
-    OPT = Logger(
-        log_name='optimize', log_folder_path=APP_WORKSPACE_PATH, log_sub_folder_name='optimize', count_limit=__COUNT_LIMIT,
-        exclude_funcs=__EXCLUDE_FUNCS, exclude_classes=__EXCLUDE__CLASSES, exclude_modules=__EXCLUDE_MODULES, log_level=__LOG_LEVEL,
-    )
-    GUI = Logger(
-        log_name='gui_port', log_folder_path=APP_WORKSPACE_PATH, log_sub_folder_name='gui_port', count_limit=__COUNT_LIMIT,
-        exclude_funcs=__EXCLUDE_FUNCS, exclude_classes=__EXCLUDE__CLASSES, exclude_modules=__EXCLUDE_MODULES, log_level=__LOG_LEVEL,
-    )
-    GROUP = LoggerGroup(log_folder_path=APP_WORKSPACE_PATH, count_limit=__COUNT_LIMIT, size_limit=100)
+    RAS = Logger(log_name='client_rasberryPi', log_folder_path=APP_WORKSPACE_PATH)
+    CSMS = Logger(log_name='csms', log_folder_path=APP_WORKSPACE_PATH)
+    WS = Logger(log_name='websocket', log_folder_path=APP_WORKSPACE_PATH)
+    CP = Logger(log_name='charge_point', log_folder_path=APP_WORKSPACE_PATH)
+    OCPP = Logger(log_name='ocpp_port', log_folder_path=APP_WORKSPACE_PATH)
+    WEB = Logger(log_name='web', log_folder_path=APP_WORKSPACE_PATH)
+    GPIO = Logger(log_name='gpio', log_folder_path=APP_WORKSPACE_PATH)
+    MODBUS = Logger(log_name='modbus', log_folder_path=APP_WORKSPACE_PATH)
+    SHELLY = Logger(log_name='shelly', log_folder_path=APP_WORKSPACE_PATH)
+    EVSE = Logger(log_name='evse', log_folder_path=APP_WORKSPACE_PATH)
+    OPT = Logger(log_name='optimize', log_folder_path=APP_WORKSPACE_PATH)
+    GUI = Logger(log_name='gui_port', log_folder_path=APP_WORKSPACE_PATH)
+    CSVLoader = Logger(log_name='CSV_loader', log_folder_path=APP_WORKSPACE_PATH)
+    GROUP = LoggerGroup(log_folder_path=APP_WORKSPACE_PATH, limit_files_count=30, limit_single_file_size_kB=100)
+
+
+for log in [Log.RAS, Log.CSMS, Log.WS, Log.CP, Log.OCPP, Log.WEB, Log.GPIO, Log.MODBUS, Log.SHELLY, Log.EVSE, Log.OPT, Log.GUI, Log.CSVLoader]:
+    log.set_exclude_funcs(['_send_signal_info', '__send_signal_recv', '__send_signal_info', '__send_signal', '_log', 'log', 'who_called_me', 'send_web_error_message', '_send'])
+    log.set_exclude_classes(['XSignal', 'EventSignal'])
+    log.set_exclude_modules(['server', 'serving'])
+    log.set_level(LogLevel.INFO)
+    log.set_file_count_limit(30)
+    log.set_file_size_limit_kB(20*1000)
+    log.set_highlight_type(LogHighlightType.HTML)
