@@ -7,6 +7,7 @@ from const.GPIO_Parameter import *
 from const.Const_Parameter import *
 from sys_basis.XSignal import XSignal
 from tools.data_gene import DataGene
+from DToolslib import EventSignal
 from ._EVSE import Evse
 from ._Shelly import Shelly
 from ._Latch_Motor import LatchMotor
@@ -20,6 +21,8 @@ _log = Log.GPIO
 
 
 class ChargeUnit:
+    signal_hint_message = EventSignal(str, str)
+
     def __init__(self, parent: GPIOManager, id: int, shelly_address: str) -> None:
         self.__parent: GPIOManager = parent
         self.__id: int = id
@@ -114,6 +117,13 @@ class ChargeUnit:
             return False
 
     @property
+    def isCharging(self) -> bool:
+        """
+        当前充电单元是否正在充电
+        """
+        return self.__isCharging
+
+    @property
     def evse(self) -> Evse:
         return self.__evse
 
@@ -151,7 +161,7 @@ class ChargeUnit:
 
     def get_current_limit(self) -> list | None:
         """
-        返回: 
+        返回:
             list: [最小电流值(int), 最大电流值(int)]
                 - 空列表表示无车辆插入
             None: Evse故障
@@ -203,7 +213,7 @@ class ChargeUnit:
             ]
         }
 
-        返回值: 
+        返回值:
         True: 成功
         False:
             - 充电列表长度为0
@@ -212,7 +222,7 @@ class ChargeUnit:
             - EVSE
         """
         _log.info(f'已收到充电计划，开始处理充电计划表\nThe charging plan has been received, and the charging plan form began to handle the charging plan')
-        _log.info(f'充电计划表\nCharging plan\n{charging_profile}')
+        _log.debug(f'充电计划表\nCharging plan\n{charging_profile}')
         if not self.isAvailabel and not self.__isNoError:
             _log.warning('当前充电桩不可用,放弃执行充电\nThe current charging pile is not available, abandon the execution of the charging')
             return False
@@ -276,6 +286,8 @@ class ChargeUnit:
             self.__isCharging = True
         elif not len(self.__waiting_plan) > 0:
             _log.warning('当前没有充电计划表，无法启动充电\nAt present, there is no charging plan form, and the charging cannot be started')
+            self.signal_hint_message.emit('当前没有充电计划表，无法启动充电\nAt present, there is no charging plan form, and the charging cannot be started', 'warning')
+            return False
         else:
             _log.error(f"""\
 EVSE State abnormal, Unable to start charging (correct value)
@@ -284,6 +296,7 @@ EVSE State abnormal, Unable to start charging (correct value)
 - Shelly isAvailable: {self.__shelly.isAvailable}
 - isNoError (True): {self.__isNoError}
 """)
+            return False
         result = self.__execute_start_charging(enableDirectCharge)
         if not result:
             self.stop_charging()
@@ -329,6 +342,7 @@ EVSE State abnormal, Unable to start charging (correct value)
                 _log.info('已完成充电前的计划表准备\nPlanning table preparation before charging')
                 self.__data_collector.set_CU_waiting_plan(self.id, copy.deepcopy(self.__waiting_plan), self.__current_start_time_str)
                 self.__prepare_charging()
+        self.signal_hint_message.emit('充电前准备完成, 开始准备充电\nPreparation for charging is complete, start preparing for charging', 'success')
         return True
 
     def __prepare_charging(self) -> None:
@@ -351,8 +365,8 @@ EVSE State abnormal, Unable to start charging (correct value)
         self.__charging()
 
     def __isExecutable(self) -> bool:
-        """ 
-        返回值: 
+        """
+        返回值:
             - True: 可以执行
             - False: 不能执行
                 - 当前未在充电状态
@@ -362,7 +376,6 @@ EVSE State abnormal, Unable to start charging (correct value)
                 - 当前已无充电计划 / 充电计划全部完成
                 - Shelly设备不可用
         """
-        _log.info(f'warte_list:\n{self.waiting_plan}')
         if (
             not self.__isCharging
             or not self.__shelly.isAvailable
@@ -386,7 +399,7 @@ The charging unit is not executable (correct value)
             return True
 
     def __charging_direct(self) -> bool:
-        """ 
+        """
         不做设置直接充电
         """
         self.get_current_limit()
@@ -400,7 +413,7 @@ The charging unit is not executable (correct value)
         实际运行的周期函数
         """
         def set_charging_current() -> bool:
-            """ 
+            """
             设置电流, 开始充电
             """
             current = self.__convert_value_in_amps(self.__current_charge_action['limit'])
@@ -422,7 +435,7 @@ The charging unit is not executable (correct value)
         # 3. 取出充电动作, 计算单次充电时间
         self.__current_charge_action = self.__waiting_plan.pop(0)
         _log.info(f'开始充电，当前执行计划为\nStart charging, the current execution plan is\n{self.__current_charge_action}')
-        _log.info(f'剩余计划表\nRemaining planning table\n{self.__waiting_plan}')
+        _log.debug(f'剩余计划表\nRemaining planning table\n{self.__waiting_plan}')
         self.__data_collector.set_CU_waiting_plan(self.id, copy.deepcopy(self.__waiting_plan), self.__current_start_time_str)
         self.__data_collector.set_CU_current_charge_action(self.id, copy.copy(self.__current_charge_action))
         if len(self.__waiting_plan) != 0:
@@ -442,6 +455,8 @@ The charging unit is not executable (correct value)
                 self.__charge_index = current_index
                 _log.info('首次充电周期, 跳过校正, 更新充电周期戳\nThe first charging cycle, skips calibration, updates the charging cycle stamp')
             phase1_fill_time: int | float = self.__current_start_datetime.timestamp() + charge_duration_sec - current_time
+            if phase1_fill_time < 0:
+                phase1_fill_time = charge_duration_sec
             _log.info(f'时间同步, 首个充电动作时间: {phase1_fill_time} 秒')
             self.__isTimeSynchronized = True
             # 4.1 执行充电操作, 同时检查是否成功设置电流, 若否则停止充电
@@ -466,7 +481,7 @@ The charging unit is not executable (correct value)
             current_limit_list = self.get_current_limit()
             if current_limit_list is None or len(current_limit_list) == 0:
                 self.stop_charging()
-                _log.error("Error getting current limit")
+                _log.error("获取电流限制错误\nError getting current limit")
                 return False
             voltage_max = self.get_voltage_max()
 
@@ -486,14 +501,14 @@ The charging unit is not executable (correct value)
         result: bool = set_charging_current()
         if not result:
             self.stop_charging()
-            _log.error("Error setting charging current")
+            _log.error("设置充电电流错误\nError setting charging current")
             return False
         self.__timer = threading.Timer(charge_duration_sec, self.__charging)
         self.__timer.start()
         return True
 
     def stop_charging(self, error_code: str = '') -> None:
-        """ 
+        """
         停止充电
         添加结束动作
         关闭定时器
@@ -509,6 +524,8 @@ The charging unit is not executable (correct value)
         if self.__current_charge_action:
             self.__finished_plan.append(copy.copy(self.__current_charge_action))
             self.__data_collector.append_CU_finished_plan(self.id, copy.copy(self.__current_charge_action))
+            self.__current_charge_action = None
+        self.__waiting_plan.clear()
         if self.__timer.is_alive():
             self.__timer.cancel()
         self.__signal_charging_finished.emit()
@@ -516,19 +533,22 @@ The charging unit is not executable (correct value)
         # 进行初始化参数
         if error_code:
             self.__isNoError = False
-            _log.error(f'charge unit {self.id} has Errors, error code: {error_code}')
+            _log.error(f'充电单元[id:{self.id}]错误, 错误码: {error_code}\ncharge unit {self.id} has Errors, error code: {error_code}')
         self.__isCharging = False
         self.__isTimeSynchronized = False
         self.__isEVSESelfTested = False
         self.__isFistTimeChanging = True
+        self.signal_hint_message.emit(f'充电单元 <{self.id}> 已停止充电\nCharge unit <{self.id}> has stopped charging', 'info')
 
     def clear_error(self) -> None:
         """ 慎用, 前端应做提示 """
         if self.__isNoError:
             _log.info('当前状态无错误, 无需清除\nThere is no error in the current state, no need to clear')
+            self.signal_hint_message.emit('当前状态无错误, 无需清除\nThere is no error in the current state, no need to clear', 'info')
             return
         self.__isNoError = True
         _log.info('已清除错误\nError flag has been cleared')
+        self.signal_hint_message.emit('已清除错误\nError flag has been cleared', 'success')
 
     def __convert_value_in_amps(self, charging_limit: int) -> int:
         """
@@ -617,6 +637,7 @@ The charging unit is not executable (correct value)
     def __handle_shelly_charged_energy(self, charged_energy: int | float) -> None:
         if charged_energy >= self.__target_energy and self.__target_energy > 0 and self.__isCharging:
             _log.info(f'已完成充电电量\nCharge finished, charged_energy\n{charged_energy}')
+            self.signal_hint_message.emit(f'已完成充电, 充电电量{charged_energy}Wh\nCharge finished, charged_energy\n{charged_energy}Wh')
             self.stop_charging()
 
     def __trim_charge_plan(self, lag_sec: int | float, plan_list: list) -> list:
