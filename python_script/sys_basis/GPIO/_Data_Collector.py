@@ -2,9 +2,7 @@ from __future__ import annotations
 from threading import Timer
 import copy
 import datetime
-import time
 
-# from tools.Inner_Decorators import who_called_me
 from sys_basis.XSignal import XSignal
 from const.GPIO_Parameter import *
 from const.Const_Parameter import *
@@ -121,12 +119,23 @@ class DataCollector:
     }
     """
 
+    __instance__ = None
+
+    def __new__(cls, *args, **kwargs):
+        if not cls.__instance__:
+            cls.__instance__ = super().__new__(cls)
+            cls.__instance__.__isInitialized__ = False
+        return cls.__instance__
+
     def __init__(
         self,
         parent: GPIOManager,
         interval_send_data: int | float = 1,
         interval_send_fig: int | float = 30,
     ) -> None:
+        if self.__isInitialized__:
+            return
+        self.__isInitialized__ = True
         self.__parent: GPIOManager = parent
         self.__interval_send_data: int | float = interval_send_data
         self.__interval_send_fig: int | float = interval_send_fig
