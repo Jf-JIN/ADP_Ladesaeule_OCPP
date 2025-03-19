@@ -1,3 +1,5 @@
+
+
 import pprint
 import scienceplots
 from datetime import datetime, timedelta, timezone
@@ -299,7 +301,8 @@ class DataGene:
         time = [DataGene.str2time(charge_item['startTime']) + timedelta(seconds=charge_item['startPeriod']) for
                 charge_item in charge_plan] + [DataGene.str2time(charge_plan[-1]['finishedTime'])]
         time_split = [(time[i + 1] - time[i]).seconds / 60 for i in range(len(time) - 1)]
-        limit = [0]+[charge_item['limit'] for charge_item in charge_plan]
+        limit = [charge_item['limit'] for charge_item in charge_plan]
+        limit.append(limit[-1])
         charged_energy_predict = [0]
         for duration, power in zip(time_split, limit):
             charged_energy_predict.append(charged_energy_predict[-1] + power * duration / 60)
@@ -444,6 +447,9 @@ class DataGene:
 
 
 if __name__ == "__main__":
+    # import base64
+    # from io import BytesIO
+    # from PIL import Image
     # eprices = DataGene.gene_eprices(0.33, 0.3, 6, 22)
     # his_usage = DataGene.gene_his_usage()
     # DataGene.plot_usage(eprices)
@@ -490,4 +496,8 @@ if __name__ == "__main__":
         {'startPeriod': 300, 'limit': 9724, 'startTime': '2025-01-26T15:00:02Z', 'finishedTime': '2025-01-26T15:20:02Z', 'chargedEnergy': 6958, },
         {'startPeriod': 1200, 'limit': 8523, 'startTime': '2025-01-26T15:00:02Z', 'finishedTime': '2025-01-26T15:25:02Z', 'chargedEnergy': 7510, },
     ]
-    img = DataGene.plan2figure(charge_plan)
+    # img = DataGene.plan2figure(charge_plan)
+    # img = DataGene.plan2figure(charge_plan)
+    # image_data = base64.b64decode(img)
+    # image = Image.open(BytesIO(image_data))
+    # image.show()
