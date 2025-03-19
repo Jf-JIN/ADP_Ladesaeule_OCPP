@@ -3,30 +3,31 @@ import threading
 from const.GPIO_Parameter import GPIOParams
 from const.Const_Parameter import *
 from sys_basis.XSignal import XSignal
-from ._Charge_Unit import ChargeUnit
+from ._Charge_Unit import *
 from ._Thread_Polling_EVSE import PollingEVSE
 from ._Thread_Polling_Shelly import PollingShelly
 from ._Data_Collector import DataCollector
 
-_info = Log.GPIO.info
-_warning = Log.GPIO.warning
-_error = Log.GPIO.error
+_log = Log.GPIO
 
 
 class GPIOManager:
+
     def __init__(self):
         self.__data_collector: DataCollector = DataCollector(self, GPIOParams.DATACOLLECTOR_DATA_INTERVAL, GPIOParams.DATACOLLECTOR_FIG_INTERVAL)
         self.__charge_units_dict = {}
+        self.__signal_GPIO_info: XSignal = XSignal()
         for item in GPIOParams.CHARGE_UNITS:
             charge_unit = ChargeUnit(self, *item)
             self.__charge_units_dict[item[0]] = charge_unit
             self.__data_collector.init_add_charge_units_id(item[0])
             charge_unit.signal_request_charge_plan_calibration.connect(self.__send_request_charge_plan_calibration)
+            charge_unit.signal_hint_message.connect(self.__signal_GPIO_info.emit)
 
         self.__thread_polling_evse: PollingEVSE = PollingEVSE(self, self.__charge_units_dict, GPIOParams.POLLING_EVSE_INTERVAL)
         self.__thread_polling_shelly: PollingShelly = PollingShelly(self, self.__charge_units_dict, GPIOParams.POLLING_SHELLY_INTERVAL, GPIOParams.POLLING_SHELLY_TIMEOUT)
         self.__timer_send_requeset_calibration: threading.Timer = threading.Timer(GPIOParams.REQUEST_INTERVAL, self.__execute_on_send_request_calibration_timer)
-        self.__signal_GPIO_info: XSignal = XSignal()
+
         self.__signal_request_charge_plan_calibration: XSignal = XSignal()
         self.__request_waiting_list: list = []
 
@@ -60,7 +61,7 @@ class GPIOManager:
         return charge_unit.set_charge_plan(data['chargingProfile'], target_energy, depart_time, custom_data, isManual)
 
     def get_current_limit(self, id: int) -> list | None:
-        """ 
+        """
         获取允许的最小、最大电流值
 
         返回:
@@ -80,7 +81,7 @@ class GPIOManager:
 
     def get_charge_unit(self, id: int) -> ChargeUnit:
         if id not in self.__charge_units_dict:
-            _warning(f'未找到id为{id}的充电单元\nNo charging unit with ID {id} was not found')
+            _log.warning(f'未找到id为{id}的充电单元\nNo charging unit with ID {id} was not found')
         return self.__charge_units_dict[id]
 
     def stop_charging(self, id: int) -> None:
