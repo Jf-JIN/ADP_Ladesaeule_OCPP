@@ -32,7 +32,7 @@ class ChargeUnit:
         self.__latch_motor: LatchMotor = LatchMotor(self, id=id)
         self.__start_time_str: str = ''
         """ 充电开始时间, 每次完整充电中只会被定义一次, 校正时不会更改 """
-        self.__time_depart_str: str = ''
+        self.__depart_time_str: str = ''
         """ 离开时间, 每次完整充电中只会被定义一次, 校正时不会更改 """
         self.__info_title = 'ChargeUnit'
         self.__custom_data: int = 0
@@ -92,7 +92,7 @@ class ChargeUnit:
         self.shelly.signal_charged_energy.connect(self.__handle_shelly_charged_energy)
 
     @property
-    def id(self):
+    def id(self) -> int:
         return self.__id
 
     @property
@@ -260,7 +260,7 @@ class ChargeUnit:
         self.__value_unit = current_exec_dict['chargingRateUnit']
         self.__current_start_time_str = period_start_time
         self.__current_start_datetime = period_start_datetime
-        self.__time_depart_str = depart_time
+        self.__depart_time_str = depart_time
         self.__waiting_plan = current_exec_dict['chargingSchedulePeriod']
         self.__isTimeSynchronized = False  # 强制对齐时间
         # 数据类重置
@@ -491,7 +491,7 @@ The charging unit is not executable (correct value)
                 'evMaxCurrent': self.__current_limit[1],
                 'evMaxVoltage': voltage_max,
                 'energyAmount': remaining_energy,
-                'departureTime': self.__time_depart_str,
+                'departureTime': self.__depart_time_str,
                 'custom_data': self.__custom_data,
             }
             self.signal_request_charge_plan_calibration.emit(calibration_dict)

@@ -1,12 +1,13 @@
 import csv
 import io
 from const.Const_Parameter import *
+from enum import StrEnum, IntEnum
 
 _log = Log.CSVLoader
 
 
-class _CSVEnum(AnalogDefine):
-    class Line(AnalogDefine):
+class _CSVEnum():
+    class Line(IntEnum):
         evseId = 0
         chargingProfileID = 1
         stackLevel = 2
@@ -17,7 +18,7 @@ class _CSVEnum(AnalogDefine):
         startSchedule = 8
         chargingSchedule = 10
 
-    class Value(AnalogDefine):
+    class Value(IntEnum):
         evseId = 1
         chargingProfileID = 1
         stackLevel = 1
@@ -29,7 +30,7 @@ class _CSVEnum(AnalogDefine):
         startPeriod = 0
         limit = 1
 
-    class Key(AnalogDefine):
+    class Key(StrEnum):
         evseId = 'evseId'
         chargingProfile = 'chargingProfile'
         chargingProfileID = 'id'
@@ -45,6 +46,11 @@ class _CSVEnum(AnalogDefine):
         chargingSchedulePeriod = 'chargingSchedulePeriod'
         startPeriod = 'startPeriod'
         limit = 'limit'
+
+
+class CSVErrorMsg(StrEnum):
+    missing_params = 'Missing Parameters\n缺少参数'
+    invalid_unit = 'Unit Parameter Error, available value:["W", "A"]\n单位参数错误, 可选值:["W", "A"]'
 
 
 class CSVLoader:
@@ -65,11 +71,11 @@ class CSVLoader:
         self.__data = {}
 
     @staticmethod
-    def loadCSV(csv_data: str) -> dict | None:
+    def loadCSV(csv_data: str) -> dict | str:
         instance = CSVLoader()
         return instance.__analyse(csv_data)
 
-    def __analyse(self, csv_data) -> dict | None:
+    def __analyse(self, csv_data) -> dict | str:
         temp = {
             _CSVEnum.Key.chargingProfile: {
                 _CSVEnum.Key.chargingSchedule: [
@@ -108,6 +114,8 @@ class CSVLoader:
                     temp[_CSVEnum.Key.chargingProfile][_CSVEnum.Key.chargingSchedule][0][_CSVEnum.Key.ChargingScheduleID] = int(item1)
                     key_counts += 1
                 elif item0 == _CSVEnum.Key.chargingRateUnit:
+                    if item1.upper() not in ["W", "A"]:
+                        return CSVErrorMsg.invalid_unit
                     temp[_CSVEnum.Key.chargingProfile][_CSVEnum.Key.chargingSchedule][0][_CSVEnum.Key.chargingRateUnit] = item1.upper()
                     key_counts += 1
                 elif item0 == _CSVEnum.Key.startSchedule:
@@ -127,11 +135,10 @@ class CSVLoader:
                 self.__data: dict = temp
                 return temp
             else:
-                _log.critical(f'CSV file is not complete{key_counts}')
-                return None
+                return CSVErrorMsg.missing_params
         except Exception as e:
             _log.exception()
-            return None
+            return str(e)
 
     @staticmethod
     def getData():

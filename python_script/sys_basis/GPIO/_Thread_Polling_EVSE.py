@@ -12,11 +12,7 @@ if 0:
     from ._Data_Collector import DataCollector
     from ._EVSE import Evse
 
-_debug = Log.EVSE.debug
-_info = Log.EVSE.info
-_error = Log.EVSE.error
-_critical = Log.EVSE.critical
-_exception = Log.EVSE.exception
+_log = Log.EVSE
 
 
 class PollingEVSE(Thread):
@@ -53,7 +49,7 @@ class PollingEVSE(Thread):
                     evse_data['evse_error'] = evse_error
                     evse.set_evse_status_error(evse_error)
                 else:
-                    _error(f'EVSE {evse_id} read error')
+                    _log.error(f'EVSE {evse_id} read error')
 
                 if len(evse_data):
                     self.__data_collector.set_evse_data(evse_id, evse_data)

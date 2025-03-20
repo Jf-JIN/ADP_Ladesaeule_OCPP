@@ -294,8 +294,8 @@ voltage_max:{voltage_max}
                 self.send_web_alert_message('已清空充电计划CSV文件\nThe charging plan CSV file has been cleared', 'success')
                 return
             res = CSVLoader.loadCSV(csv_file)
-            if not res:
-                self.send_web_error_message('CSV文件格式错误\nCSV file format error')
+            if isinstance(res, str):
+                self.send_web_error_message('CSV文件格式错误\nCSV file format error\n\n'+res)
                 return
 
         _log.debug(f'接收消息\nReceiving message\n{web_message}')

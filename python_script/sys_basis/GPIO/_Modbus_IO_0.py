@@ -4,9 +4,7 @@ from pymodbus.client import ModbusSerialClient
 from const.Const_Parameter import *
 from const.GPIO_Parameter import BitsFlag, EVSEErrorInfo, EVSERegAddress, ModbusParams
 
-_debug = Log.MODBUS.debug
-_error = Log.MODBUS.error
-_exception = Log.MODBUS.exception
+_log = Log.MODBUS
 
 
 class ModbusIO(object):
@@ -40,8 +38,9 @@ class ModbusIO(object):
 
     def __exit__(self, exc_type, exc_val, exc_tb) -> bool:
         if exc_type is not None:
-            _exception(f'ModbusIO {self.__context_action_error} with error: {exc_val}')
-        self.__client.close()
+            _log.exception(f'ModbusIO {self.__context_action_error} with error: {exc_val}')
+        if self.__client and self.__client.is_socket_open():
+            self.__client.close()
         return True
 
     def read(self, address: int) -> None | int:
@@ -64,9 +63,9 @@ class ModbusIO(object):
             if not result.isError():
                 result_data: int = result.registers[0]
             else:
-                _error(f'ModbusIO read error.\naddress: {address}')
+                _log.error(f'ModbusIO read error.\naddress: {address}')
         except Exception as e:
-            _exception(f'ModbusIO read error: {e}\naddress: {address}')
+            _log.exception(f'ModbusIO read error: {e}\naddress: {address}')
         finally:
             return result_data
 
@@ -92,7 +91,7 @@ class ModbusIO(object):
         if bit_operation is not None:  # 按位操作
             ori_value = self.read(address=address)
             if ori_value is None:
-                _error(f'ModbusIO read error by writing.\naddress: {address}')
+                _log.error(f'ModbusIO read error by writing.\naddress: {address}')
                 return False
             if bit_operation == 0:  # 置0
                 ori_value &= ~value
@@ -102,13 +101,13 @@ class ModbusIO(object):
                 value = ori_value
         try:
             result: ModbusPDU = self.__client.write_registers(address=address, values=[value], slave=self.__id)
-            _debug(result, result.registers[0])
+            _log.debug(result, result.registers[0])
             if result.isError():
-                _exception(f'ModbusIO write error.\naddress: {address}\nvalue: {value}')
+                _log.exception(f'ModbusIO write error.\naddress: {address}\nvalue: {value}')
                 return False
             return True
         except Exception as e:
-            _exception(f'ModbusIO write error: {e}\naddress: {address}\nvalue: {value}')
+            _log.exception(f'ModbusIO write error: {e}\naddress: {address}\nvalue: {value}')
             return False
 
     def read_evse_status_fails(self) -> None | set:
