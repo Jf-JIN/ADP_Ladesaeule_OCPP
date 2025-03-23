@@ -11,14 +11,15 @@ class GPIOParams(AnalogDefine):
     MESSAGE_SEND_INTERVAL = 60  # seconds
     CHARGE_UNITS = [
         # (EVSE_Id, Shelly_main_url)
-        # (1, '172.18.42.37:6666'),
+        # (1, '172.18.47.223:6666'),
         (1, '192.168.124.9:6666'),
+
         # (0, '192.168.1.100'),
         # (1, 'url1'),
     ]
     DO_USE_RCD: bool = False
     MAX_VOLTAGE = 230
-    SELF_CHECK_TIMEOUT = 31
+    SELF_CHECK_TIMEOUT = -31
     """ EVSE 自检时间, 单位: 秒. 该值必须 >=30 秒, 否则自检将不会启动 """
     LETCH_MOTOR_RUNTIME = 2
     """ 栓电机运行时间, 单位: 秒. 该值必须大于0秒, 否则电机将不会启动 """

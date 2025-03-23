@@ -18,7 +18,7 @@ class ManagerCoroutines(object):
     def stop(self) -> None:
         for task_obj in self.__task_obj_tuple:
             task_obj: PortOCPPWebsocketClient | PortWebSocketServer
-            task_obj.close()
+            task_obj.stop()
 
     def __del__(self) -> None:
         self.stop()

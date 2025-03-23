@@ -202,6 +202,15 @@ class PortOCPPWebsocketServer(object):
         finally:
             self.__isRunning = False
 
+    def stop(self) -> None:
+        """
+        停止端口
+        """
+        self.__isRunning = False
+        self.__task_listening.cancel()
+        self.__task_send_request_messages.cancel()
+        self.__task_send_normal_messages.cancel()
+
     def send_request_message(self, message) -> None:
         """ 
         发送请求消息

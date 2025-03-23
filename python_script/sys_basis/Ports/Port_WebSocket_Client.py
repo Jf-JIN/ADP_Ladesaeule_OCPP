@@ -44,6 +44,13 @@ class WebSocketClientPort(object):
     def signal_thread_websocket_client_recv(self) -> XSignal:
         return self.__signal_thread_websocket_client_recv
 
+    def stop(self) -> None:
+        """
+        停止端口
+        """
+        self.__isRunning = False
+        self.__task_send_data.cancel()
+
     async def run(self) -> None:
         """
         异步协程主体

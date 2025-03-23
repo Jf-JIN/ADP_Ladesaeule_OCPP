@@ -26,7 +26,7 @@ class CP_Params(AnalogDefine):
     OCPP_LISTEN_INTERVAL = 1  # OCPP监听间隔时间
     DO_SEND_DEFAULT_RESPONSE = False  # 是否在规定的响应时间内发送默认响应
     HOST = 'ws://130.83.148.29'  # 优化算法器OCPP服务器地址
-    # HOST = 'ws://172.18.9.26'  # 优化算法器OCPP服务器地址
+    # HOST = 'ws://172.18.54.149'  # 优化算法器OCPP服务器地址
     PORT = 80
     # url = 'ws://192.168.43.65:1234'
     # url = 'ws://172.12.26.71:1234'
