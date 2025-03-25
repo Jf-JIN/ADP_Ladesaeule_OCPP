@@ -43,6 +43,7 @@ class Optimizer:
         self._max_grid_power = max_grid_power
         self._interval = interval
         self._mode = mode
+        self._change_rate = 0.05
         self._weight = self._get_weight()
         self._start_time = datetime.now() + timedelta(minutes=0)  # 2分钟计算和传输时间
         self._max_power = self._max_voltage * self._max_current
@@ -100,7 +101,7 @@ class Optimizer:
     def IsOpt(self):
         return self._isopt
 
-    def _get_weight(self):
+    def _get_weight(self) -> list:
         """
         根据模式返回权重(默认为0, 0表示动态调整, 1表示最小充电时间, 2表示最少电费花销)
         """
@@ -111,6 +112,21 @@ class Optimizer:
         elif self._mode == 2:
             return [0, 1]
 
+    def _adjust_weights(self, time: float, cost: float) -> list:
+        """
+        动态调整权重
+        """
+        if time > cost:
+            self._weight[0] += self._change_rate
+            self._weight[1] -= self._change_rate
+        else:
+            self._weight[0] -= self._change_rate
+            self._weight[1] += self._change_rate
+
+        # 归一化
+        total = sum(self._weight)
+        return [w / total for w in self._weight]
+
     def _calculate_charging_list(self):
         """
         生成充电计划, 综合考虑以下因素:
@@ -118,7 +134,7 @@ class Optimizer:
         2. 最少电费花销
         3. 最大家庭充电负载限制
         """
-        E_target = self._energy_amount / 1000 # 目标充电量(Wh)
+        E_target = self._energy_amount / 1000  # 目标充电量(Wh)
 
         # 时间段长度 (小时)
         time_step = self._interval / 60
@@ -134,8 +150,11 @@ class Optimizer:
         def cost_function(P):
             cumulative_energy = np.cumsum(P) * time_step
             over = np.argmax(cumulative_energy >= E_target) if np.any(cumulative_energy >= E_target) else self._num_split
+            cost_time = over * self._interval / 15
             cost = np.sum(P * self._eprices_split * time_step)
-            return self._weight[0] * over * self._interval / 15 + self._weight[1] * cost
+            if self._mode == 0:
+                self._weight = self._adjust_weights(cost_time, cost)
+            return self._weight[0] * cost_time + self._weight[1] * cost
 
         # 约束条件
         constraints = {'type': 'ineq', 'fun': lambda P: np.sum(P) * time_step - E_target}
@@ -180,7 +199,7 @@ class Optimizer:
             scpr = GenSetChargingProfileRequest()
             charging_schedule_period_list = []
             for i in range(self._num_split):
-                start_period = int(sum(self._time_split[:i]) * 60 / 30)
+                start_period = int(sum(self._time_split[:i]) * 60)   # 缩短60倍用于测试，实际使用请删除
                 charging_schedule_period_list.append(
                     scpr.get_charging_schedule_period(
                         start_period=start_period,
