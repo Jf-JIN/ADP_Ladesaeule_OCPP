@@ -1,4 +1,5 @@
 import time
+import json
 
 from sys_basis.Ports import *
 from sys_basis.Manager_Coroutine import ManagerCoroutines
@@ -41,7 +42,7 @@ class Server:
         self.__coroutine_OCPP_server.signal_thread_ocpp_server_recv_response_result.connect(self.__handle_response_result_message)
         # self.__thread_web_server.signal_thread_web_server_info.connect(self.__send_info_web_message)
         self.__thread_web_server.signal_thread_web_server_recv.connect(self.__receive_web_paraments)
-        LoggerGroup.signal_group_public_html.connect(self.__send_web_console_message)
+        # LoggerGroup.signal_all_color.connect(self.__send_web_console_message)
 
     def __init_parameters(self):
         pass
@@ -59,7 +60,7 @@ class Server:
             ping_interval_s=CP_Params.PING_INTERVAL,
             ping_timeout_s=CP_Params.PING_TIMEOUT
         )
-        self.__manager_coroutines = ManagerCoroutines(self.__coroutine_OCPP_server.run)
+        self.__manager_coroutines = ManagerCoroutines(self.__coroutine_OCPP_server)
 
     def __receive_web_paraments(self, message):
         """
@@ -67,13 +68,13 @@ class Server:
         """
         if 'max_grid_power' in message:
             self._max_grid_power = int(message['max_grid_power'])
-            self.__thread_web_server.send_console_message({'web_console': 'max_grid_power updated to ' + str(self._max_grid_power)})
+            self.__thread_web_server.send_console_message({'web_console': 'max_grid_power updated to ' + str(self._max_grid_power) + '\n'})
         if 'charging_interval' in message:
             self._charging_interval = int(message['charging_interval'])
-            self.__thread_web_server.send_console_message({'web_console': 'charging_interval updated to ' + str(self._charging_interval)})
+            self.__thread_web_server.send_console_message({'web_console': 'charging_interval updated to ' + str(self._charging_interval) + '\n'})
         if 'eprices' in message:
             self._eprices = message['eprices']
-            self.__thread_web_server.send_console_message({'web_console': 'eprices updated'})
+            self.__thread_web_server.send_console_message({'web_console': 'eprices updated' + '\n'})
 
     def __send_web_console_message(self, message):
         """
@@ -139,6 +140,9 @@ class Server:
         #         }
         #     }
         # }))
+        self.__coroutine_OCPP_server.send_normal_message(str(json.dumps({
+            "opt_img": opt.get_img_charging(),
+        })))
         _debug(self._isopt)
         if self._isopt:
             temp_request = GenSetChargingProfileRequest.generate(
