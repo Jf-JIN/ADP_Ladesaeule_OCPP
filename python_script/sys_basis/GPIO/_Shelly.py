@@ -29,15 +29,24 @@ class Shelly:
 
     @property
     def sub_address_0(self) -> str:
-        return f"http://{self.__main_address}/emeter/0"
+        if self.__main_address.startswith('http'):
+            return f"{self.__main_address}/emeter/0"
+        else:
+            return f"http://{self.__main_address}/emeter/0"
 
     @property
     def sub_address_1(self) -> str:
-        return f"http://{self.__main_address}/emeter/1"
+        if self.__main_address.startswith('http'):
+            return f"{self.__main_address}/emeter/1"
+        else:
+            return f"http://{self.__main_address}/emeter/1"
 
     @property
     def sub_address_2(self) -> str:
-        return f"http://{self.__main_address}/emeter/2"
+        if self.__main_address.startswith('http'):
+            return f"{self.__main_address}/emeter/2"
+        else:
+            return f"http://{self.__main_address}/emeter/2"
 
     @property
     def address_list(self) -> list:

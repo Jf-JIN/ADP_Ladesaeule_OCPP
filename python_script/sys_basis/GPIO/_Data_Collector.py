@@ -386,6 +386,7 @@ class DataCollector:
             # self.__all_data[cu_id]['finished_plan_figure_base64'] = fig
             # if fig:
             data['cp_fig'] = fig  # TODO 可以添加ID
+        # 此处可以适配id，当前不支持多个充电单元图像，当存在多个单元时，只会发送最后一个图像。如有需要多个图像显示此处可以进行修改，并同时修改Javascript代码
         if data:
             self.__signal_DC_figure_display.emit(data)
         if self.__timer_figure.is_alive():

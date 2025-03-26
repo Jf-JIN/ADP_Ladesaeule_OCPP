@@ -11,8 +11,8 @@ if 0:
     from ._Data_Collector import DataCollector
     from ._Shelly import Shelly
 
-_info = Log.SHELLY.info
-_exception = Log.SHELLY.exception
+
+_log = Log.SHELLY
 
 
 class PollingShelly(Thread):
@@ -35,6 +35,7 @@ class PollingShelly(Thread):
         return self.__isRunning
 
     def run(self) -> None:
+
         while self.__isRunning:
             shelly: Shelly = self.__shelly_list[self.__current_index]
             shelly_id = shelly.id
@@ -42,6 +43,11 @@ class PollingShelly(Thread):
             sub_url1: str = shelly.sub_address_1
             sub_url2: str = shelly.sub_address_2
             shelly_data = {}
+            # _log.info(
+            #     shelly.sub_address_0,
+            #     shelly.sub_address_1,
+            #     shelly.sub_address_2,
+            # )
             try:
                 response_0: requests.Response = requests.get(sub_url0, timeout=self.__timeout)
                 response_0.raise_for_status()
@@ -104,7 +110,7 @@ class PollingShelly(Thread):
                     'return_energy': 0,
                     'is_valid': False,
                 }
-                _exception(f'Shelly read exception: {e}')
+                _log.exception(f'Shelly read exception: {e}')
             shelly.set_data(shelly_data)
             self.__data_collector.set_shelly_data(shelly_id, shelly_data)
             self.__current_index = (self.__current_index + 1) % self.__shelly_quantity

@@ -111,7 +111,7 @@ class ChargeUnit:
         """
         当前充电单元是否可用
         """
-        if self.evse.vehicle_state < 3 and self.__isNoError:
+        if self.evse.vehicle_state is not None and self.evse.vehicle_state < 3 and self.__isNoError:
             return True
         else:
             return False
@@ -281,8 +281,8 @@ class ChargeUnit:
             and self.__evse.evse_status_error == {EVSEErrorInfo.RELAY_ON}
             and self.__isNoError
             and self.__shelly.isAvailable
-            and len(self.__waiting_plan) > 0
-        ) or enableDirectCharge:
+            and (enableDirectCharge or len(self.__waiting_plan) > 0)
+        ):
             self.__isCharging = True
         elif not len(self.__waiting_plan) > 0:
             _log.warning('当前没有充电计划表，无法启动充电\nAt present, there is no charging plan form, and the charging cannot be started')
