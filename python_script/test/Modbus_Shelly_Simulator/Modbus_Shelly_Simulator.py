@@ -320,6 +320,21 @@ QDoubleSpinBox {
         self.lb_latch_lock_pin_value.setText(str(self.latch_lock_pin) if self.latch_lock_pin is not None else 'UnDef')
         self.lb_latch_unlock_pin_value.setText(str(self.latch_unlock_pin) if self.latch_lock_pin is not None else 'UnDef')
         if self.__isCurrentValueChanged:
+            if not isinstance(self.current_min_2002, int):
+                try:
+                    self.current_min_2002 = int(self.current_min_2002)
+                except:
+                    self.current_min_2002 = 0
+            if not isinstance(self.current_max_1003, int):
+                try:
+                    self.current_max_1003 = int(self.current_max_1003)
+                except:
+                    self.current_max_1003 = 0
+            if not isinstance(self.configured_amps_1000, int):
+                try:
+                    self.configured_amps_1000 = int(self.configured_amps_1000)
+                except:
+                    self.configured_amps_1000 = 0
             self.sb_set_current.setValue(max(self.current_min_2002, min(self.configured_amps_1000, self.current_max_1003)))
             self.__isCurrentValueChanged = False
         if self.__isMaxVoltageChanged:

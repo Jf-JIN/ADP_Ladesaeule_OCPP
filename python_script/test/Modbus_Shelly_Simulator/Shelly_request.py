@@ -2,7 +2,9 @@
 from time import sleep
 import requests
 
-main_url = "http://127.0.0.1:6666"
+# main_url = "http://127.0.0.1:6666"
+main_url = "http://192.168.124.9:6666"
+# main_url = "http://192.168.1.103:6666"
 sub_url0 = main_url + "/emeter/0"
 sub_url1 = main_url + "/emeter/1"
 sub_url2 = main_url + "/emeter/2"
