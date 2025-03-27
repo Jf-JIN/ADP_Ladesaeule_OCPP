@@ -49,6 +49,8 @@ class ChargeUnit:
         self.__isFistTimeChanging: bool = True
         self.__isManual: bool = False
         """ 用于标记是否为手动输入 """
+        self.__enableDirectCharge = False
+        """ 用于标记是否为直接充电 """
         #
         self.__charge_index: int = 0
         """用于记录充电次数, 使用时间戳记录, 单位由self.__index_period_sec决定, 例如: self.__index_period_sec=3600, 则单位为小时"""
@@ -284,6 +286,7 @@ class ChargeUnit:
             and (enableDirectCharge or len(self.__waiting_plan) > 0)
         ):
             self.__isCharging = True
+            self.__enableDirectCharge = enableDirectCharge
         elif not len(self.__waiting_plan) > 0:
             _log.warning('当前没有充电计划表，无法启动充电\nAt present, there is no charging plan form, and the charging cannot be started')
             self.signal_hint_message.emit('当前没有充电计划表，无法启动充电\nAt present, there is no charging plan form, and the charging cannot be started', 'warning')
@@ -297,18 +300,19 @@ EVSE State abnormal, Unable to start charging (correct value)
 - isNoError (True): {self.__isNoError}
 """)
             return False
-        result = self.__execute_start_charging(enableDirectCharge)
+        result = self.__execute_start_charging()
         if not result:
             self.stop_charging()
         return result
 
-    def __execute_start_charging(self, enableDirectCharge=False) -> bool:
+    def __execute_start_charging(self) -> bool:
         """
         充电前期准备, 此部分主要是处理充电计划表, 将充电计划表与当前时间对齐
         """
-        _log.info(f'开始充电前准备...\nPreparing for charging...\nenableDirectCharge: {enableDirectCharge}')
-        if enableDirectCharge:
-            self.__charging_direct()
+        _log.info(f'开始充电前准备...\nPreparing for charging...\nenableDirectCharge: {self.__enableDirectCharge}')
+        if self.__enableDirectCharge:
+            self.signal_hint_message.emit('开始直接充电\nStart direct charging', 'success')
+            self.__charging_initial()
             return True
         if not self.__isCharging:
             # 如果当前没有充电计划, 则直接返回.
@@ -325,7 +329,7 @@ EVSE State abnormal, Unable to start charging (correct value)
             # 当前时间早于计划时间, 需要等待
             lag_sec = plan_timestamp - current_timestamp
             _log.info(f'当前时间早于计划时间, 需要等待 {lag_sec} 秒\nThe current time is earlier than the planned time, you need to wait for {lag_sec} seconds')
-            self.__timer = threading.Timer(lag_sec, self.__prepare_charging)
+            self.__timer = threading.Timer(lag_sec, self.__charging_initial)
             self.__timer.start()
         else:
             # 当前时间晚于计划时间, 需要扣除迟滞时间
@@ -341,28 +345,31 @@ EVSE State abnormal, Unable to start charging (correct value)
             else:
                 _log.info('已完成充电前的计划表准备\nPlanning table preparation before charging')
                 self.__data_collector.set_CU_waiting_plan(self.id, copy.deepcopy(self.__waiting_plan), self.__current_start_time_str)
-                self.__prepare_charging()
+                self.__charging_initial()
         self.signal_hint_message.emit('充电前准备完成, 开始准备充电\nPreparation for charging is complete, start preparing for charging', 'success')
         return True
 
-    def __prepare_charging(self) -> None:
-        # 硬件初始化
+    def __charging_initial(self) -> None:
+        """ 硬件初始化 """
         if self.__isFistTimeChanging:
             self.__shelly.reset()
         if not self.__isLatched and self.__isFistTimeChanging and GPIOParams.LETCH_MOTOR_RUNTIME > 0:
             # 执行上锁操作, 执行条件: 1.当前未上锁 2. 首次执行充电 3.电机运行时间大于0
             self.__latch_motor.lock()
             _log.info('开始执行上锁\nStart locking')
-            threading.Timer(GPIOParams.LETCH_MOTOR_RUNTIME+0.5, self.__prepare_charging).start()
+            threading.Timer(GPIOParams.LETCH_MOTOR_RUNTIME+0.5, self.__charging_initial).start()
             return
         if not self.__isEVSESelfTested and self.__isFistTimeChanging and GPIOParams.SELF_CHECK_TIMEOUT >= 30:
             # 执行自检操作, 执行条件: 1.当前未自检 2. 首次执行充电 3.自检超时时间大于等于30s
             _log.info('开始执行evse自检\nStart EVSE self-check')
             self.__evse.start_self_check()
-            threading.Timer(GPIOParams.SELF_CHECK_TIMEOUT+0.5, self.__prepare_charging).start()
+            threading.Timer(GPIOParams.SELF_CHECK_TIMEOUT+0.5, self.__charging_initial).start()
             return
         _log.info('已完成充电前的上锁及EVSE自检\nThe lock and EVSE self -inspection before the charging')
-        self.__charging()
+        if self.__enableDirectCharge:
+            self.__charging_direct()
+        else:
+            self.__charging()
 
     def __isExecutable(self) -> bool:
         """
@@ -383,7 +390,7 @@ EVSE State abnormal, Unable to start charging (correct value)
             or self.__evse.vehicle_state == VehicleState.CRITICAL
             or self.__evse.evse_status_error != {EVSEErrorInfo.RELAY_ON}
             or not self.__isNoError
-            or len(self.__waiting_plan) == 0
+            or (len(self.__waiting_plan) == 0 and not self.__enableDirectCharge)
         ):
             _log.error(f"""\
 The charging unit is not executable (correct value)
@@ -404,6 +411,11 @@ The charging unit is not executable (correct value)
         """
         self.get_current_limit()
         if self.__current_max > 0:
+            self.__start_time_str = DataGene.time2str(datetime.now())
+            self.__data_collector.clear_CU_finished_plan(self.id)
+            self.__data_collector.clear_CU_waiting_plan(self.id)
+            self.__data_collector.clear_CU_current_charge_action(self.id)
+            self.__data_collector.set_CU_charge_start_time(self.id, self.__start_time_str, target_energy=-1, depart_time=-1, custom_data=None, enableDirectCharge=True)
             self.__evse.set_current(self.__current_max)
         else:
             _log.info('最大电流为0,不充电\nThe maximum current is 0, no charging')
@@ -538,6 +550,8 @@ The charging unit is not executable (correct value)
         self.__isTimeSynchronized = False
         self.__isEVSESelfTested = False
         self.__isFistTimeChanging = True
+        self.__enableDirectCharge = False
+        self.__data_collector.stop_CU_charging(self.id)
         self.signal_hint_message.emit(f'充电单元 <{self.id}> 已停止充电\nCharge unit <{self.id}> has stopped charging', 'info')
 
     def clear_error(self) -> None:

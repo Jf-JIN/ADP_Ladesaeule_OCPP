@@ -120,7 +120,7 @@ body {
 }
 
 .console_contain {
-    height: 40vh;
+    height: 60vh;
     padding: 10px;
     background-color: var(--console_bg_color);
     border: 5px solid var(--console_border_color);

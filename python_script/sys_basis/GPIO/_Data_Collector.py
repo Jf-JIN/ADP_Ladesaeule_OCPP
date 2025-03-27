@@ -107,10 +107,12 @@ class DataCollector:
             'start_time': '2025-01-26T14:40:29Z', # 此开始时间指的是整个充电过程, 校正的计划表中的开始一时间不会记录
             'period_start_time': '2025-01-26T15:00:02Z', # 此开始时间指一个充电表的开始时间, 校正的计划表中的开始时间会被记录
             'depart_time': '2025-01-30T13:39:00Z',
-            'charged_time': 00:43:01,
+            'charged_time': '00:43:01,'
             'target_energy': 700000,
             'isLatched': True,
             'custom_data': {'mode': 0, 'vendorId'='1234'},
+            'enableDirectCharge': False,
+            'direct_charge_energy_list':[]
         },
         2:{
             ...
@@ -241,7 +243,7 @@ class DataCollector:
         self.__all_data[id]['current_charge_action'] = plan
         self.__isRunning = True
 
-    def set_CU_charge_start_time(self, id: int, start_time: str, target_energy: int, depart_time: str, custom_data: int) -> None:
+    def set_CU_charge_start_time(self, id: int, start_time: str, target_energy: int, depart_time: str, custom_data: int | None = None, enableDirectCharge=False) -> None:
         """
         设置充电单元开始充电时间.
 
@@ -252,6 +254,9 @@ class DataCollector:
         self.__all_data[id]['target_energy'] = target_energy
         self.__all_data[id]['depart_time'] = depart_time
         self.__all_data[id]['custom_data'] = custom_data
+        self.__all_data[id]['enableDirectCharge'] = enableDirectCharge
+        self.__all_data[id]['direct_charge_energy_list'] = []
+        self.__all_data[id]['isCharging'] = True
 
     def set_CU_waiting_plan(self, id: int, plan: list, period_start_time: str | None = None) -> None:
         """
@@ -271,6 +276,10 @@ class DataCollector:
         )
         ):
             self.__all_data[id]['period_start_time'] = self.__all_data[id]['start_time']
+
+    def clear_CU_waiting_plan(self, id: int) -> None:
+        self.__check_id(id)
+        self.__all_data[id]['waiting_plan'] = []
 
     def append_CU_finished_plan(self, id: int, plan: dict) -> None:
         """
@@ -299,6 +308,17 @@ class DataCollector:
         """
         self.__check_id(id)
         self.__all_data[id]['finished_plan'] = []
+
+    def clear_CU_current_charge_action(self, id: int) -> None:
+        self.__check_id(id)
+        self.__all_data[id]['current_charge_action'] = {}
+
+    def stop_CU_charging(self, id: int) -> None:
+        """
+        停止充电单元的充电.
+        """
+        self.__check_id(id)
+        self.__all_data[id]['isCharging'] = False
 
     def set_CU_isLatched(self, id: int, flag: bool) -> None:
         """
@@ -354,7 +374,16 @@ class DataCollector:
         确保 id 一定在 __all_data 中存在.
         """
         if id not in self.__all_data:
-            self.__all_data[id] = {}
+            self.__all_data[id] = {
+                'waiting_plan': [],
+                'current_charge_action': {},
+                'finished_plan': [],
+                'depart_time': '',
+                'charged_time': '',
+                'target_energy': 0,
+                'custom_data': {},
+                'enableDirectCharge': False,
+            }
 
     def __send_display_data(self) -> None:
         """
@@ -375,15 +404,38 @@ class DataCollector:
         data: dict = {}
         for cu_id in self.__all_data:
             self.__check_id(cu_id)
-            finished_plan: list = self.__all_data[cu_id].get('finished_plan', [])
-            current_charge_action: dict = self.__all_data[cu_id].get('current_charge_action', {})
-            if current_charge_action and 'startTime' in current_charge_action:
-                current_charge_action['finishedTime'] = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
-                img_list = finished_plan + [current_charge_action]
+            current_time = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
+            if self.__all_data[cu_id]['enableDirectCharge']:
+                if 'direct_charge_energy_list' not in self.__all_data[cu_id] or not isinstance(self.__all_data[cu_id]['direct_charge_energy_list'], list):
+                    self.__all_data[cu_id]['direct_charge_energy_list'] = []
+                img_list: list = self.__all_data[cu_id]['direct_charge_energy_list']
+                if self.__all_data[cu_id]['isCharging']:
+                    if len(img_list) == 0:
+                        last_finished_time: str = self.__all_data[cu_id]['start_time']
+                        charged_energy = 0
+                    else:
+                        last_finished_time = img_list[-1]['finishedTime']
+                        charged_energy = self.__all_data[cu_id]['current_charge_action'].get('chargedEnergy', 0)
+                    temp: dict = {
+                        'finishedTime': current_time,
+                        'chargedEnergy': charged_energy,
+                        'limit': 0,
+                        'startPeriod': (DataGene.str2time(last_finished_time) - DataGene.str2time(self.__all_data[cu_id]['start_time'])).total_seconds(),
+                        'startTime': self.__all_data[cu_id]['start_time'],
+                    }
+                    img_list.append(temp)
+                fig: str = DataGene.plan2figure(img_list)
+                # self.__all_data[cu_id]['finished_plan_figure_base64'] = fig
             else:
-                img_list = finished_plan
-            fig: str = DataGene.plan2figure(img_list)
-            # self.__all_data[cu_id]['finished_plan_figure_base64'] = fig
+                finished_plan: list = self.__all_data[cu_id].get('finished_plan', [])
+                current_charge_action: dict = self.__all_data[cu_id].get('current_charge_action', {})
+                if current_charge_action and 'startTime' in current_charge_action:
+                    current_charge_action['finishedTime'] = current_time
+                    img_list = finished_plan + [current_charge_action]
+                else:
+                    img_list = finished_plan
+                fig: str = DataGene.plan2figure(img_list)
+                # self.__all_data[cu_id]['finished_plan_figure_base64'] = fig
             # if fig:
             data['cp_fig'] = fig  # TODO 可以添加ID
         # 此处可以适配id，当前不支持多个充电单元图像，当存在多个单元时，只会发送最后一个图像。如有需要多个图像显示此处可以进行修改，并同时修改Javascript代码

@@ -85,9 +85,9 @@
             <div><label for="evse_id" id="esve_id_label">esve id: </label>
                 <select id="evse_id">
                     <option value="1" id="evse_id0">1</option>
-                    <option value="2" id="evse_id1">2</option>
+                    <!-- <option value="2" id="evse_id1">2</option>
                     <option value="3" id="evse_id2">3</option>
-                    <option value="4" id="evse_id2">4</option>
+                    <option value="4" id="evse_id2">4</option> -->
                 </select>
             </div>
             <div><label for="charge_mode" id="charge_mode_label">Charge_Mode: </label>
@@ -108,7 +108,7 @@
                 <input type="button" text="STOP" value="STOP" id="stop">
             </div>
         </div>
-        <div id="charging_display">
+        <div id="charging_display" style="display: none;">
             <div><span id="home_charged_energy">Charged Energy</span><span id="home_charged_energy_value"></span></div>
             <div><span id="home_left_time">Left Time</span><span id="home_left_time_value"></span></div>
             <div><span id="home_charging_status">Charging Status</span><span id="home_charging_status_value"></span></div>
@@ -123,15 +123,15 @@
                 <div id="main_display" class="display_base">
                     <select id="reset_no_error_evse_id">
                         <option value="1" id="reset_no_error_evse_id0">1</option>
-                        <option value="2" id="reset_no_error_evse_id1">2</option>
+                        <!-- <option value="2" id="reset_no_error_evse_id1">2</option>
                         <option value="3" id="reset_no_error_evse_id2">3</option>
-                        <option value="4" id="reset_no_error_evse_id2">4</option>
+                        <option value="4" id="reset_no_error_evse_id2">4</option> -->
                     </select>
                     <input type="button" text="reset_raspberry_pi_no_error" value="reset_raspberry_pi_no_error" id="reset_raspberry_pi_no_error">
                 </div>
             </div>
         </div>
-        <div id="sub_area" class="sub_area">
+        <div id="sub_area" class="sub_area" style="display: none;">
 
             <div id="opt_block" class="sub_console console_block">
                 <span id="text_optimisation_system">Optimierungssystem</span>

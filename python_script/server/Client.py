@@ -33,7 +33,7 @@ class Client:
     def init_parameters(self) -> None:
         self.GPIO_Manager = GPIOManager()
         self.__cp_info_dict: dict = {}
-        self.__csv_loader = CSVLoader(self)
+        self.__csv_loader = CSVLoader(self)  # singleton
         """ 该字典主要记录各个evse的充电需求信息, 如离开时间, 充电总量,其他信息 """
 
     def init_threads(self) -> None:
@@ -67,7 +67,10 @@ class Client:
         # self.coroutine_OCPP_client.signal_thread_ocpp_client_info.connect(self.send_info_web_message)
         # self.thread_web_server.signal_thread_web_server_info.connect(self.send_info_web_message)
         Log.RAS.signal_all_color.connect(self.send_web_console_message)
+        Log.CP.signal_all_color.connect(self.send_web_console_message)
+        Log.GPIO.signal_all_color.connect(self.send_web_console_message)
         Log.GROUP.signal_error_message.connect(self.send_web_error_message)
+        Log.GROUP.signal_critical_message.connect(self.send_web_error_message)
 
         # # 接收原始 ocpp 数据
         # self.coroutine_OCPP_client.signal_thread_ocpp_client_recv.connect(self.send_message_to_web)
@@ -177,9 +180,13 @@ class Client:
         def handle_web_charge_request(request_message):
             _log.debug(f"收到充电请求 Receive charging request:\n{request_message}")
             evse_id = int(request_message['evse_id'])
-            energy_amount = int(request_message['charge_power'])
-            depart_time = request_message['depart_time']
             mode = int(request_message['charge_mode'])
+            if mode >= 0:
+                energy_amount = int(request_message['charge_power'])
+                depart_time = request_message['depart_time']
+            else:
+                energy_amount = 0
+                depart_time = ''
             if evse_id not in self.GPIO_Manager.data_collector.available_charge_units_id_set:
                 self.send_web_error_message('EVSE_ID不可用\nevse_id is not available')
                 return

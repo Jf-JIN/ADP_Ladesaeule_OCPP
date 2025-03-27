@@ -300,6 +300,7 @@ class DataGene:
         charge_plan = [DataGene.convert_dict_keys(charge_item) for charge_item in charge_plan]
         time = [DataGene.str2time(charge_item['startTime']) + timedelta(seconds=charge_item['startPeriod']) for
                 charge_item in charge_plan] + [DataGene.str2time(charge_plan[-1]['finishedTime'])]
+        # length_time_axis = len(time)
         time_split = [(time[i + 1] - time[i]).seconds / 60 for i in range(len(time) - 1)]
         limit = [charge_item['limit'] for charge_item in charge_plan]
         limit.append(limit[-1])
@@ -307,14 +308,16 @@ class DataGene:
         for duration, power in zip(time_split, limit):
             charged_energy_predict.append(charged_energy_predict[-1] + power * duration / 60)
         charged_energy_actual = [0] + [charge_item['chargedEnergy'] for charge_item in charge_plan]
+        y_max = max(max(charged_energy_actual), max(charged_energy_predict))
         time_f = [DataGene.str2time(item['finishedTime']) for item in charge_plan]
         plt.figure(figsize=(12, 6))  # 增加图表分辨率和大小
         plt.plot(time, charged_energy_actual, marker='o', linestyle='-', color=Color.BLUE, linewidth=2, label='actual charged energy')
-        plt.plot(time, charged_energy_predict, marker='o', linestyle='--', color=Color.RED, linewidth=2, label='predict charged energy')
-        y_max = max(max(charged_energy_actual), max(charged_energy_predict))
-        plt.vlines(time, ymin=-1, ymax=y_max+5, colors=Color.GREEN, linestyles='--', linewidth=2, label="START")
-        plt.vlines(time_f, ymin=-1, ymax=y_max+5, colors=Color.RED, linestyles='-', linewidth=2, label="FINISH")
-
+        if charge_plan[0]['limit'] > 0:
+            # plt.vlines(time, ymin=-1, ymax=y_max+5, colors=Color.GREEN, linestyles='--', linewidth=2, label="START")
+            # plt.vlines(time_f, ymin=-1, ymax=y_max+5, colors=Color.RED, linestyles='-', linewidth=2, label="FINISH")
+            plt.plot(time, charged_energy_predict, marker='o', linestyle='--', color=Color.RED, linewidth=2, label='predict charged energy')
+        # _log.info(charge_plan)
+        # _log.info(charged_energy_actual, time)
         plt.xticks(fontsize=FontSize.TICKS)
         plt.grid(True, linestyle='--', alpha=0.7)
         plt.xlabel('Time', fontsize=FontSize.LABEL)
