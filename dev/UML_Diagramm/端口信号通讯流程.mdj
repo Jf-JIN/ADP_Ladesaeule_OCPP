@@ -9,7 +9,7 @@
 			"_parent": {
 				"$ref": "AAAAAAFF+h6SjaM2Hec="
 			},
-			"name": "Port Signals Sequence Diagramm",
+			"name": "端口信号通讯流程",
 			"ownedElements": [
 				{
 					"_type": "UMLSequenceDiagram",
@@ -17,7 +17,7 @@
 					"_parent": {
 						"$ref": "AAAAAAGUeOH6DbnT9y0="
 					},
-					"name": "Port Signals Sequence Diagramm",
+					"name": "端口信号通讯流程",
 					"ownedViews": [
 						{
 							"_type": "RectangleView",
@@ -67,9 +67,9 @@
 									"parentStyle": true,
 									"left": 32.123046875,
 									"top": 5,
-									"width": 301.259765625,
+									"width": 160,
 									"height": 20,
-									"text": "Port Signals Sequence Diagramm"
+									"text": "端口信号通讯流程"
 								},
 								{
 									"_type": "LabelView",
@@ -158,7 +158,7 @@
 											"left": -240,
 											"width": 249.5263671875,
 											"height": 13,
-											"text": "(from Port Signals Sequence Diagramm)"
+											"text": "(from 端口信号通讯流程)"
 										},
 										{
 											"_type": "LabelView",
@@ -289,7 +289,7 @@
 											"left": 416,
 											"width": 249.5263671875,
 											"height": 13,
-											"text": "(from Port Signals Sequence Diagramm)"
+											"text": "(from 端口信号通讯流程)"
 										},
 										{
 											"_type": "LabelView",
@@ -420,7 +420,7 @@
 											"left": 304,
 											"width": 249.5263671875,
 											"height": 13,
-											"text": "(from Port Signals Sequence Diagramm)"
+											"text": "(from 端口信号通讯流程)"
 										},
 										{
 											"_type": "LabelView",
@@ -551,7 +551,7 @@
 											"left": 368,
 											"width": 249.5263671875,
 											"height": 13,
-											"text": "(from Port Signals Sequence Diagramm)"
+											"text": "(from 端口信号通讯流程)"
 										},
 										{
 											"_type": "LabelView",
