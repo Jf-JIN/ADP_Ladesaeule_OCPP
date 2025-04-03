@@ -7,6 +7,8 @@ from ._Charge_Unit import *
 from ._Thread_Polling_EVSE import PollingEVSE
 from ._Thread_Polling_Shelly import PollingShelly
 from ._Data_Collector import DataCollector
+# import RPi
+from gpiozero import Button
 
 _log = Log.GPIO
 
@@ -30,6 +32,21 @@ class GPIOManager:
 
         self.__signal_request_charge_plan_calibration: XSignal = XSignal()
         self.__request_waiting_list: list = []
+        self.__init_btn_event()
+
+    def __init_btn_event(self):
+        # RPi.GPIO.setmode(RPi.GPIO.BCM)
+        # BTN_START = RaspPins.GPIO_17
+        # BTN_STOP = RaspPins.GPIO_27
+        # RPi.GPIO.setup(BTN_START, RPi.GPIO.IN, pull_up_down=RPi.GPIO.PUD_UP)
+        # RPi.GPIO.setup(BTN_STOP, RPi.GPIO.IN, pull_up_down=RPi.GPIO.PUD_UP)
+        # RPi.GPIO.add_event_detect(BTN_START, RPi.GPIO.FALLING, callback=self.__on_start_button_pressed, bouncetime=GPIOParams.BOUNCETIME)
+        # RPi.GPIO.add_event_detect(BTN_STOP, RPi.GPIO.FALLING, callback=self.__on_stop_button_pressed, bouncetime=GPIOParams.BOUNCETIME)
+
+        BTN_START = Button(RaspPins.BCM_PIN_5)
+        BTN_STOP = Button(RaspPins.BCM_PIN_6)
+        BTN_START.when_activated = self.__on_start_button_pressed
+        BTN_STOP.when_activated = self.__on_stop_button_pressed
 
     def stop(self):
         self.__thread_polling_evse.stop()
@@ -109,3 +126,17 @@ class GPIOManager:
         if len(self.__request_waiting_list) > 0:
             self.__signal_request_charge_plan_calibration.emit(self.__request_waiting_list.pop(0))
             self.__timer_send_requeset_calibration.start()
+
+    def __on_start_button_pressed(self):
+        for unit in self.__charge_units_dict.values():
+            unit: ChargeUnit
+            if unit.hasChargePlan:
+                enableDirectCharge: bool = False
+            else:
+                enableDirectCharge: bool = True
+            unit.start_charging(enableDirectCharge)
+
+    def __on_stop_button_pressed(self):
+        for unit in self.__charge_units_dict.values():
+            unit: ChargeUnit
+            unit.stop_charging()

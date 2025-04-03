@@ -38,6 +38,8 @@ class GPIOParams(AnalogDefine):
     """ 图像数据发送间隔, 单位: 秒. 该值必须大于0秒 """
     REQUEST_INTERVAL = 1
     """ 请求间隔, 单位: 秒. 该值必须大于0秒 """
+    BOUNCETIME = 200
+    """ 树莓派按钮检测防抖时间 """
 
 
 class ResultFlag(AnalogDefine):
@@ -74,39 +76,39 @@ class RaspPins(AnalogDefine):
     GPIO_3 = 5
     GROUND_0 = 6
     GPIO_4 = 7
-    GPI0_14 = 8
+    GPIO_14 = 8
     GROUND_1 = 9
-    GPI0_15 = 10
-    GPI0_17 = 11
-    GPI0_18 = 12
-    GPI0_27 = 13
+    GPIO_15 = 10
+    GPIO_17 = 11
+    GPIO_18 = 12
+    GPIO_27 = 13
     GROUND_2 = 14
-    GPI0_22 = 15
-    GPI0_23 = 16
+    GPIO_22 = 15
+    GPIO_23 = 16
     POWER_3V3_1 = 17
-    GPI0_24 = 18
-    GPI0_10 = 19
+    GPIO_24 = 18
+    GPIO_10 = 19
     GROUND_3 = 20
-    GPI0_9 = 21
-    GPI0_25 = 22
-    GPI0_11 = 23
-    GPI0_8 = 24
+    GPIO_9 = 21
+    GPIO_25 = 22
+    GPIO_11 = 23
+    GPIO_8 = 24
     GROUND_4 = 25
-    GPI0_7 = 26
-    GPI0_0 = 27
-    GPI0_1 = 28
-    GPI0_5 = 29
+    GPIO_7 = 26
+    GPIO_0 = 27
+    GPIO_1 = 28
+    GPIO_5 = 29
     GROUND_5 = 30
-    GPI0_6 = 31
-    GPI0_12 = 32
-    GPI0_13 = 33
+    GPIO_6 = 31
+    GPIO_12 = 32
+    GPIO_13 = 33
     GROUND_6 = 34
-    GPI0_19 = 35
-    GPI0_16 = 36
-    GPI0_26 = 37
-    GPI0_20 = 38
+    GPIO_19 = 35
+    GPIO_16 = 36
+    GPIO_26 = 37
+    GPIO_20 = 38
     GROUND_7 = 39
-    GPI0_21 = 40
+    GPIO_21 = 40
 
     BCM_PIN_0 = 0
     BCM_PIN_1 = 1

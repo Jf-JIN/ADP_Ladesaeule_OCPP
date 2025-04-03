@@ -75,7 +75,7 @@ class CSVLoader:
         instance = CSVLoader()
         return instance.__analyse(csv_data)
 
-    def __analyse(self, csv_data) -> dict | str:
+    def __analyse(self, csv_data: str) -> dict | str:
         temp = {
             _CSVEnum.Key.chargingProfile: {
                 _CSVEnum.Key.chargingSchedule: [
@@ -141,11 +141,11 @@ class CSVLoader:
             return str(e)
 
     @staticmethod
-    def getData():
+    def getData() -> dict:
         instance = CSVLoader()
         return instance.__data
 
     @staticmethod
-    def clear():
+    def clear() -> None:
         instance = CSVLoader()
         return instance.__data.clear()

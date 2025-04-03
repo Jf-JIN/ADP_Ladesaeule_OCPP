@@ -161,6 +161,10 @@ class ChargeUnit:
     def signal_charging_finished(self) -> XSignal:
         return self.__signal_charging_finished
 
+    @property
+    def hasChargePlan(self) -> bool:
+        return bool(self.__waiting_plan)
+
     def get_current_limit(self) -> list | None:
         """
         返回:
@@ -300,7 +304,7 @@ EVSE State abnormal, Unable to start charging (correct value)
 - isNoError (True): {self.__isNoError}
 """)
             return False
-        result = self.__execute_start_charging()
+        result: bool = self.__execute_start_charging()
         if not result:
             self.stop_charging()
         return result
