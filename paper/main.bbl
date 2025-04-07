@@ -1,0 +1,347 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global/global}
+    \entry{AF30-30-00-13}{online}{}{}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{labeltitlesource}{title}
+      \field{title}{AF30-30-00-13 | ABB}
+      \field{urlday}{19}
+      \field{urlmonth}{3}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://new.abb.com/products/1SBL277001R1300/af30-30-00-13
+      \endverb
+      \verb{url}
+      \verb https://new.abb.com/products/1SBL277001R1300/af30-30-00-13
+      \endverb
+    \endentry
+    \entry{miniUART}{online}{}{}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labeltitlesource}{title}
+      \field{title}{Configuration - Raspberry Pi Documentation}
+      \field{urlday}{24}
+      \field{urlmonth}{3}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.raspberrypi.com/documentation/computers/configuration.html#configure-uarts
+      \endverb
+      \verb{url}
+      \verb https://www.raspberrypi.com/documentation/computers/configuration.html#configure-uarts
+      \endverb
+    \endentry
+    \entry{Contactor}{online}{}{}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labeltitlesource}{title}
+      \field{title}{Contactor - Wikipedia}
+      \field{urlday}{24}
+      \field{urlmonth}{3}
+      \field{urlyear}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://en.wikipedia.org/wiki/Contactor
+      \endverb
+      \verb{url}
+      \verb https://en.wikipedia.org/wiki/Contactor
+      \endverb
+    \endentry
+    \entry{coroutinewiki}{online}{}{}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labeltitlesource}{title}
+      \field{title}{Coroutine - Wikipedia}
+      \field{urlday}{23}
+      \field{urlmonth}{3}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://en.wikipedia.org/wiki/Coroutine
+      \endverb
+      \verb{url}
+      \verb https://en.wikipedia.org/wiki/Coroutine
+      \endverb
+    \endentry
+    \entry{CSMS}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=9f6df8bb64a010dbc93487eab6509560}{%
+           family={Creavin},
+           familyi={C\bibinitperiod},
+           given={Adam},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{9f6df8bb64a010dbc93487eab6509560}
+      \strng{fullhash}{9f6df8bb64a010dbc93487eab6509560}
+      \strng{fullhashraw}{9f6df8bb64a010dbc93487eab6509560}
+      \strng{bibnamehash}{9f6df8bb64a010dbc93487eab6509560}
+      \strng{authorbibnamehash}{9f6df8bb64a010dbc93487eab6509560}
+      \strng{authornamehash}{9f6df8bb64a010dbc93487eab6509560}
+      \strng{authorfullhash}{9f6df8bb64a010dbc93487eab6509560}
+      \strng{authorfullhashraw}{9f6df8bb64a010dbc93487eab6509560}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{A Guide to EV Charging Station Management Systems - Wayleadr}
+      \field{urlday}{30}
+      \field{urlmonth}{7}
+      \field{urlyear}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://wayleadr.com/blog/ev-charging-station-management-systems-a-comprehensive-guide-for-workplaces/
+      \endverb
+      \verb{url}
+      \verb https://wayleadr.com/blog/ev-charging-station-management-systems-a-comprehensive-guide-for-workplaces/
+      \endverb
+    \endentry
+    \entry{EVSEdatasheet}{online}{}{}
+      \field{sortinit}{e}
+      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
+      \field{labeltitlesource}{title}
+      \field{note}{Resource: https://evracing.cz/evse/evse-wallbox/}
+      \field{title}{evracing.cz dir list}
+      \field{urlday}{19}
+      \field{urlmonth}{3}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://evracing.cz/evse/evse-wallbox/evse-wb-din_latest.pdf
+      \endverb
+      \verb{url}
+      \verb https://evracing.cz/evse/evse-wallbox/evse-wb-din_latest.pdf
+      \endverb
+    \endentry
+    \entry{OCPP}{online}{}{}
+      \field{sortinit}{I}
+      \field{sortinithash}{8d291c51ee89b6cd86bf5379f0b151d8}
+      \field{labeltitlesource}{title}
+      \field{title}{Info \& whitepapers - Open Charge Alliance}
+      \field{urlday}{21}
+      \field{urlmonth}{3}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://openchargealliance.org/whitepapers/
+      \endverb
+      \verb{url}
+      \verb https://openchargealliance.org/whitepapers/
+      \endverb
+    \endentry
+    \entry{ocpplibrary}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=45f81eb8b4e47ddc77dafbadaf071d7c}{%
+           family={mobilityhouse},
+           familyi={m\bibinitperiod}}}%
+      }
+      \strng{namehash}{45f81eb8b4e47ddc77dafbadaf071d7c}
+      \strng{fullhash}{45f81eb8b4e47ddc77dafbadaf071d7c}
+      \strng{fullhashraw}{45f81eb8b4e47ddc77dafbadaf071d7c}
+      \strng{bibnamehash}{45f81eb8b4e47ddc77dafbadaf071d7c}
+      \strng{authorbibnamehash}{45f81eb8b4e47ddc77dafbadaf071d7c}
+      \strng{authornamehash}{45f81eb8b4e47ddc77dafbadaf071d7c}
+      \strng{authorfullhash}{45f81eb8b4e47ddc77dafbadaf071d7c}
+      \strng{authorfullhashraw}{45f81eb8b4e47ddc77dafbadaf071d7c}
+      \field{sortinit}{m}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{mobilityhouse/ocpp: Python implementation of the Open Charge Point Protocol (OCPP).}
+      \field{urlday}{24}
+      \field{urlmonth}{3}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://github.com/mobilityhouse/ocpp
+      \endverb
+      \verb{url}
+      \verb https://github.com/mobilityhouse/ocpp
+      \endverb
+    \endentry
+    \entry{modbus}{online}{}{}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{labeltitlesource}{title}
+      \field{title}{Modbus - Wikipedia}
+      \field{urlday}{23}
+      \field{urlmonth}{3}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://en.wikipedia.org/wiki/Modbus
+      \endverb
+      \verb{url}
+      \verb https://en.wikipedia.org/wiki/Modbus
+      \endverb
+    \endentry
+    \entry{SAEJ3400}{online}{}{}
+      \field{sortinit}{N}
+      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
+      \field{labeltitlesource}{title}
+      \field{title}{North American Charging System - Wikipedia}
+      \field{urlday}{24}
+      \field{urlmonth}{3}
+      \field{urlyear}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://en.wikipedia.org/wiki/North_American_Charging_System
+      \endverb
+      \verb{url}
+      \verb https://en.wikipedia.org/wiki/North_American_Charging_System
+      \endverb
+    \endentry
+    \entry{threadcoroutine}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=d70a23efaa110bd7bc37376417a18a5e}{%
+           family={Patel},
+           familyi={P\bibinitperiod},
+           given={Jay},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{d70a23efaa110bd7bc37376417a18a5e}
+      \strng{fullhash}{d70a23efaa110bd7bc37376417a18a5e}
+      \strng{fullhashraw}{d70a23efaa110bd7bc37376417a18a5e}
+      \strng{bibnamehash}{d70a23efaa110bd7bc37376417a18a5e}
+      \strng{authorbibnamehash}{d70a23efaa110bd7bc37376417a18a5e}
+      \strng{authornamehash}{d70a23efaa110bd7bc37376417a18a5e}
+      \strng{authorfullhash}{d70a23efaa110bd7bc37376417a18a5e}
+      \strng{authorfullhashraw}{d70a23efaa110bd7bc37376417a18a5e}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Coroutine vs. Thread: Understanding the Differences | by Jay Patel | Medium}
+      \field{urlday}{23}
+      \field{urlmonth}{3}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://impateljay.medium.com/coroutine-vs-thread-understanding-the-differences-4b98a5a22a3a
+      \endverb
+      \verb{url}
+      \verb https://impateljay.medium.com/coroutine-vs-thread-understanding-the-differences-4b98a5a22a3a
+      \endverb
+    \endentry
+    \entry{SAEJ1772}{online}{}{}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{labeltitlesource}{title}
+      \field{title}{SAE J1772 - Wikipedia}
+      \field{urlday}{24}
+      \field{urlmonth}{3}
+      \field{urlyear}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://en.wikipedia.org/wiki/SAE_J1772
+      \endverb
+      \verb{url}
+      \verb https://en.wikipedia.org/wiki/SAE_J1772
+      \endverb
+    \endentry
+    \entry{Shelly}{online}{}{}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{labeltitlesource}{title}
+      \field{title}{Shelly Pro 3EM – Shelly Europe}
+      \field{urlday}{15}
+      \field{urlmonth}{3}
+      \field{urlyear}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.shelly.com/de/products/shelly-pro-3em-x1?srsltid=AfmBOopAsMzkel_HYApY229XHyU0HtRgCnETvK_sRnCDi0549gWNNiaw
+      \endverb
+      \verb{url}
+      \verb https://www.shelly.com/de/products/shelly-pro-3em-x1?srsltid=AfmBOopAsMzkel_HYApY229XHyU0HtRgCnETvK_sRnCDi0549gWNNiaw
+      \endverb
+    \endentry
+    \entry{typ2connector}{online}{}{}
+      \list{organization}{1}{%
+        {Wikipedia}%
+      }
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{labeltitlesource}{title}
+      \field{title}{Type 2 connector - Wikipedia}
+      \field{urlday}{19}
+      \field{urlmonth}{2}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://en.wikipedia.org/wiki/Type_2_connector
+      \endverb
+      \verb{url}
+      \verb https://en.wikipedia.org/wiki/Type_2_connector
+      \endverb
+    \endentry
+    \entry{websockets}{online}{}{}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{labeltitlesource}{title}
+      \field{title}{WebSocket - Wikipedia}
+      \field{urlday}{23}
+      \field{urlmonth}{3}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://en.wikipedia.org/wiki/WebSocket
+      \endverb
+      \verb{url}
+      \verb https://en.wikipedia.org/wiki/WebSocket
+      \endverb
+    \endentry
+    \entry{RaspberryPiOverview}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=abb6381fab54d003731f8aba3d6f13b5}{%
+           family={Winters},
+           familyi={W\bibinitperiod},
+           given={Ryan},
+           giveni={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{abb6381fab54d003731f8aba3d6f13b5}
+      \strng{fullhash}{abb6381fab54d003731f8aba3d6f13b5}
+      \strng{fullhashraw}{abb6381fab54d003731f8aba3d6f13b5}
+      \strng{bibnamehash}{abb6381fab54d003731f8aba3d6f13b5}
+      \strng{authorbibnamehash}{abb6381fab54d003731f8aba3d6f13b5}
+      \strng{authornamehash}{abb6381fab54d003731f8aba3d6f13b5}
+      \strng{authorfullhash}{abb6381fab54d003731f8aba3d6f13b5}
+      \strng{authorfullhashraw}{abb6381fab54d003731f8aba3d6f13b5}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Raspberry Pi Overview}
+      \field{urlday}{24}
+      \field{urlmonth}{3}
+      \field{urlyear}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.jameco.com/Jameco/workshop/CircuitNotes/Circuit_Notes_RasberryPiPDF.pdf
+      \endverb
+      \verb{url}
+      \verb https://www.jameco.com/Jameco/workshop/CircuitNotes/Circuit_Notes_RasberryPiPDF.pdf
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
