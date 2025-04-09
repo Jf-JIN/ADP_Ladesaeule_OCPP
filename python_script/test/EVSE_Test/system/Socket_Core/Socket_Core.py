@@ -2,7 +2,7 @@ from socket import *
 from socket import socket
 from threading import Thread
 from DToolslib import LogLevel, StaticEnum, Logger
-from const.ConstLogger import *
+from const.Const_Logger import *
 
 _log: Logger = Log.SOCKET
 
@@ -26,11 +26,6 @@ class _null:
 
 
 _Null = _null()
-
-
-class SocketEnum(StaticEnum):
-    DEFAULT_PORT = 10010    # 默认端口
-    BUFFER_SIZE = 1024      # 默认缓存大小
 
 
 class SocketThread(Thread):
