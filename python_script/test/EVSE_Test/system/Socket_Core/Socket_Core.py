@@ -25,7 +25,7 @@ class _null:
         return "_null in Socket_Core"
 
 
-_null = _null()
+_Null = _null()
 
 
 class SocketEnum(StaticEnum):
@@ -104,12 +104,14 @@ class SocketCore:
         else:
             _log.info("Socket is not connected with server")
 
-    def connect(self, host: str = _null, port: int) -> None:
+    def connect(self, host: str = _Null, port: int = _Null) -> None:
         if self.__thread.isRunning:
             _log.info(f"Socket is already connected with server({self.__host}:{self.__port})")
             return
-        self.__host = host
-        self.__port = port
+        if not isinstance(host, (str, _null)) or not isinstance(port, (int, _null)):
+            raise TypeError("host must be str and port must be int")
+        self.__host: str = host
+        self.__port: int = port
         self.__thread.set_host(host).set_port(port)
         self.__thread.start()
 
@@ -118,6 +120,3 @@ class SocketCore:
         self.__socket.close()
         self.__thread.wait()
         self.__isConnected = False
-
-    def start_listening(self) -> None:
-        self.__thread.start()

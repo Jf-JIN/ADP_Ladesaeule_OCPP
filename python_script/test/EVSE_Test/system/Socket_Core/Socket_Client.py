@@ -1,9 +1,13 @@
 from DToolslib import *
 from Socket_Core import *
 from const.ConstLogger import *
+from PyQt5.QtCore import pyqtSignal
 
 
-class SocketClient:
+class SocketClient(SocketCore):
+    signal_data_recv = EventSignal(dict)
+    signal_error_output = EventSignal(str)
+
     def __init__(self) -> None:
         ...
 
@@ -11,4 +15,7 @@ class SocketClient:
         ...
 
     def disconnect(self):
+        ...
+
+    def send(self, data):
         ...
