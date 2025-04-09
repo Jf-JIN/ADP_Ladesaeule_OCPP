@@ -5,7 +5,7 @@ from PyQt5.QtCore import pyqtSignal
 
 
 class SocketClient(SocketCore):
-    signal_data_recv = EventSignal(dict)
+    signal_recv = EventSignal(dict)
     signal_error_output = EventSignal(str)
 
     def __init__(self, host: str, port: int) -> None:
