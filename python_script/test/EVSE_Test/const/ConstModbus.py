@@ -1,6 +1,7 @@
-from const.Analog_Define import AnalogDefine
+from DToolslib import *
 
-class ModbusParams(AnalogDefine):
+
+class ModbusParams(StaticEnum):
     PORT = '/dev/ttyS0'  # 串口号
     BAUDRATE = 9600  # 波特率
     PARITY = 'N'  # 无校验位
