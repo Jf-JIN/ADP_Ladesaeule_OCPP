@@ -8,7 +8,25 @@ _log = Log.MODBUS
 
 
 class ModbusDataStruct:
-    def __init__(self, ModbusDataUnit: ModbusPDU) -> None:
+    def __init__(self, load_data: ModbusPDU | dict) -> None:
+        if isinstance(load_data, dict):
+            self.__load_dict(load_data)
+        else:
+            self.__load_ModbusDataUnit(load_data)
+
+    def __load_dict(self, data_dict: dict):
+        self.__ModbusDataUnit = data_dict.get('ModbusDataUnit', None)
+        self.__isError = data_dict.get('isError', None)
+        self.__exception_code = data_dict.get('exception_code', None)
+        self.__function_code: int = data_dict.get('function_code', None)
+        self.__dev_id: int = data_dict.get('dev_id', None)
+        self.__transaction_id: int = data_dict.get('transaction_id', None)
+        self.__bits: list = data_dict.get('bits', None)
+        self.__address: int = data_dict.get('address', None)
+        self.__registers: list = data_dict.get('registers', None)
+        self.__status: int = data_dict.get('status', None)
+
+    def __load_ModbusDataUnit(self, ModbusDataUnit: ModbusPDU):
         self.__ModbusDataUnit = ModbusDataUnit
         self.__isError = ModbusDataUnit.isError()
         if self.__isError:
@@ -65,8 +83,24 @@ class ModbusDataStruct:
         return self.__status
 
     @property
-    def info_dict(self) -> dict:
+    def serial_data(self) -> dict:
         return {
+            "ModbusDataUnit": self.__ModbusDataUnit,
+            "isError": self.__isError,
+            "exception_code": self.__exception_code,
+            "function_code": self.__function_code,
+            "dev_id": self.__dev_id,
+            "transaction_id": self.__transaction_id,
+            "bits": self.__bits,
+            "address": self.__address,
+            "registers": self.__registers,
+            "status": self.__status,
+        }
+
+    @property
+    def json_data(self) -> dict:
+        return {
+            "ModbusDataUnit": None,
             "isError": self.__isError,
             "exception_code": self.__exception_code,
             "function_code": self.__function_code,
@@ -86,18 +120,20 @@ class ModbusHandler(object):
         if cls.__instance__ is None:
             cls.__instance__ = super().__new__(cls)
             cls.__instance__.__isInitialized__ = False
-        # 返回唯一实例
         return cls.__instance__
 
-    def __init__(self, id: int):
+    def __init__(self):
         if self.__isInitialized__:
             return
         self.__isInitialized__ = True
-        if not isinstance(id, int) or id < 0:
-            raise TypeError('Id of ModbusIO must be int and greater than 0')
-        self.__id: int = id
+        self.__id = None
+        self.__isConnected = False
 
     def connect(self) -> ModbusSerialClient:
+        if self.__id is None:
+            _log.warning('Modbus Id is not set, please set Modbus Id first')
+            self.__isConnected = False
+            return None
         self.__client = ModbusSerialClient(
             port=ModbusParams.PORT,
             baudrate=ModbusParams.BAUDRATE,
@@ -108,9 +144,17 @@ class ModbusHandler(object):
             retries=ModbusParams.RETRIES,
             name=self.__class__.__name__,
         )
+        self.__isConnected = True
+        return self.__client
 
     def set_id(self, id: int) -> None:
-        self.__id = id
+        if not isinstance(id, int) or id < 0:
+            raise TypeError('Id of ModbusIO must be int and greater than 0')
+        if self.__id == id:
+            return
+        self.__id: int = id
+        if not self.__isConnected:
+            self.connect()
 
     def read(self, address: int) -> None | ModbusDataStruct:
         """

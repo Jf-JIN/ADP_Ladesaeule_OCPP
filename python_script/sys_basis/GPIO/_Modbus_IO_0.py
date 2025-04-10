@@ -59,9 +59,13 @@ class ModbusIO(object):
         """
         result_data = None
         try:
-            result: ModbusPDU = self.__client.read_holding_registers(address=address, slave=self.__id)
+            # result: ModbusPDU = self.__client.read_holding_registers(address=address, slave=self.__id)
+            result: ModbusPDU = self.__client.read_input_registers(address=address, slave=self.__id)
+            # _log.critical(f'function_code: {result.function_code}\naddress: {address}\ndata: result.registers[0]\nresult: {result.registers}')
+            _log.critical(f'function_code: {result.function_code}\naddress: {address}\nresult: {result}')
             if not result.isError():
                 result_data: int = result.registers[0]
+                _log.critical(f'function_code: {result.function_code}\naddress: {address}\nresult: {result}\nexception_code: {result.exception_code}')
             else:
                 _log.error(f'ModbusIO read error.\naddress: {address}')
         except Exception as e:

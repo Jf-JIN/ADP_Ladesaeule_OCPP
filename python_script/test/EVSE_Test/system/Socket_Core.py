@@ -1,13 +1,16 @@
 
 
 from __future__ import annotations
-from socket import *
+import socket
 from threading import Thread
 from const.Const_Logger import *
 from const.Const_Parameter import *
 import json
 import time
 import typing
+import subprocess
+import platform
+from DToolslib import *
 
 _log: Logger = Log.SOCKET
 
@@ -33,9 +36,60 @@ class _null:
 _Null = _null()
 
 
+def get_wifi_ssid_windows():
+    try:
+        result = subprocess.run(
+            ["netsh", "wlan", "show", "interfaces"],
+            capture_output=True, text=True, check=True
+        )
+        for line in result.stdout.split("\n"):
+            if "SSID" in line and "BSSID" not in line:
+                ssid = line.split(":")[1].strip()
+                return ssid
+    except subprocess.CalledProcessError as e:
+        print(f"Failed to get Wi-Fi SSID: {e}")
+        return None
+
+
+def get_wifi_ssid_linux():
+    try:
+        result = subprocess.run(
+            ["iwgetid", "-r"],
+            capture_output=True, text=True, check=True
+        )
+        ssid = result.stdout.strip()
+        return ssid.decode("utf-8") if isinstance(ssid, bytes) else ssid
+    except subprocess.CalledProcessError as e:
+        print(f"Failed to get Wi-Fi SSID: {e}")
+        return None
+
+
+def get_wifi_ssid():
+    system = platform.system()
+    if system == "Windows":
+        return get_wifi_ssid_windows()
+    elif system == "Linux":
+        return get_wifi_ssid_linux()
+    else:
+        raise NotImplementedError(f"Unsupported OS: {system}")
+
+
+def get_local_ip():
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(("8.8.8.8", 80))
+        local_ip = s.getsockname()[0]
+    except Exception as e:
+        local_ip = "Unable to get IP address"
+        _log.exception()
+    finally:
+        s.close()
+    return local_ip
+
+
 class _ClientConnectionStruct:
-    def __init__(self, socket_obj: socket, socket_address: tuple, recv_thread: Thread) -> None:
-        self.__socket_obj: socket = socket_obj
+    def __init__(self, socket_obj: socket.socket, socket_address: tuple, recv_thread: Thread) -> None:
+        self.__socket_obj: socket.socket = socket_obj
         self.__socket_address: tuple = socket_address
         self.__recv_thread: Thread = recv_thread
 
@@ -43,7 +97,7 @@ class _ClientConnectionStruct:
         return f'_ClientConnectionStruct(\nsocket: {self.__socket_obj}, address: {self.__socket_address},\nthread: {self.__recv_thread})'
 
     @property
-    def socket_obj(self) -> socket:
+    def socket_obj(self) -> socket.socket:
         return self.__socket_obj
 
     @property
@@ -56,10 +110,10 @@ class _ClientConnectionStruct:
 
 
 class _ServerReceiveThread(Thread):
-    def __init__(self, parent, socket_obj: socket, recv_func: typing.Callable) -> None:
+    def __init__(self, parent, socket_obj: socket.socket, recv_func: typing.Callable) -> None:
         super().__init__()
         self.__parent: _SocketThread = parent
-        self.__socket_obj: socket = socket_obj
+        self.__socket_obj: socket.socket = socket_obj
         self.__recv_func: typing.Callable = recv_func
         self.__isRunning: bool = True
 
@@ -88,15 +142,15 @@ class _SocketThread(Thread):
     signal_recv_json = EventSignal(dict)
     signal_recv = EventSignal(str)
 
-    def __init__(self, parent, socket_obj: socket, host: str = '0.0.0.0', port: int = SocketEnum.DEFAULT_PORT, isServer: bool = False) -> None:
+    def __init__(self, parent, socket_obj: socket.socket, host: str, port: int = SocketEnum.DEFAULT_PORT, isServer: bool = False) -> None:
         super().__init__()
         self.__parent: SocketCore = parent
-        self.__socket_obj: socket = socket_obj
+        self.__socket_obj: socket.socket = socket_obj
         self.__host: str = host
         self.__port: int = port
         self.__isServer: bool = isServer
         self.__isRunning = False
-        self.__client_list = []
+        self.__client_set = set()
 
     def __del__(self) -> None:
         self.stop()
@@ -107,15 +161,15 @@ class _SocketThread(Thread):
 
     @property
     def clients_list(self) -> list:
-        return self.__client_list
+        return list(self.__client_set)
 
     def clear_clients_list(self) -> None:
-        for client_struct in self.__client_list:
+        for client_struct in self.__client_set:
             client_struct: _ClientConnectionStruct
             client_struct.recv_thread.stop()
             client_struct.recv_thread.join()
             client_struct.socket_obj.close()
-        self.__client_list.clear()
+        self.__client_set.clear()
 
     def set_host(self, host: str) -> '_SocketThread':
         self.__host = host
@@ -125,7 +179,7 @@ class _SocketThread(Thread):
 
     def stop(self) -> None:
         self.__isRunning = False
-        if not len(self.__client_list):
+        if not len(self.__client_set):
             self.clear_clients_list()
 
     def __connect_server(self) -> bool:
@@ -137,7 +191,7 @@ class _SocketThread(Thread):
                 self.__socket_obj.bind((self.__host, self.__port))
                 self.__socket_obj.listen(SocketEnum.MAX_CONNECT)
                 self.signal_connection_status.emit(True)
-                _log.info('Server establish success, waiting for clients')
+                _log.info(f'Server establish success, waiting for clients {get_local_ip()}')
                 return True
             except Exception as _:
                 _log.exception('Server establish failed')
@@ -187,12 +241,14 @@ class _SocketThread(Thread):
                 time.sleep(0.1)
         return False
 
-    def __receive_decode(self, socket_obj: socket) -> None:
+    def __receive_decode(self, socket_obj: socket.socket) -> None:
         try:
             data: bytes = socket_obj.recv(SocketEnum.BUFFER_SIZE)
 
+            # _log.info(f'Received data: {data}')
+
             if not data:
-                _log.warning('连接断开：接收到空数据')
+                _log.warning('Disconnection: Empty data was received')
                 self.signal_connection_status.emit(False)
                 self.__connect_client()
                 return None
@@ -237,7 +293,7 @@ class _SocketThread(Thread):
                 client_socket, client_address = self.__socket_obj.accept()
                 _log.info(f'{client_address} connected')
                 recv_thread = _ServerReceiveThread(parent=self, socket_obj=client_socket, recv_func=self.__receive_decode)
-                self.__client_list.append(_ClientConnectionStruct(socket_obj=client_socket, socket_address=client_address, recv_thread=recv_thread))
+                self.__client_set.add(_ClientConnectionStruct(socket_obj=client_socket, socket_address=client_address, recv_thread=recv_thread))
                 recv_thread.start()
             except Exception as _:
                 _log.exception('Connection listening error')
@@ -273,8 +329,7 @@ class SocketCore:
         self.__host = host
         self.__port = port
         self.__isServer = isServer
-        self.__socket = socket(AF_INET, SOCK_STREAM)
-        self.__socket.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+        self.__socket = self.get_socket()
         self.__isConnected = False
         self.__thread_socket = _SocketThread(self, self.__socket, self.__host, self.__port, self.__isServer)
         self.__thread_socket.signal_connection_status.connect(self._set_connection_status)
@@ -286,9 +341,9 @@ class SocketCore:
     def isConnected(self) -> bool:
         return self.__isConnected
 
-    def get_socket(self) -> socket:
-        self.__socket = socket(AF_INET, SOCK_STREAM)
-        self.__socket.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+    def get_socket(self) -> socket.socket:
+        self.__socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.__socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         return self.__socket
 
     def _set_connection_status(self, status: bool) -> None:
@@ -296,7 +351,7 @@ class SocketCore:
             raise TypeError('status must be bool')
         self.__isConnected = status
 
-    def send(self, data: dict, client_socket: socket = _Null) -> bool:
+    def send(self, data: dict, client_socket: socket.socket = _Null) -> bool:
         if not isinstance(data, dict):
             _log.warning('Failed to send data: data must be dict')
             return False
@@ -315,7 +370,7 @@ class SocketCore:
                     result: bool = self.__send_chunked_data(data, client_struct.socket_obj)
                     isSucceeded: bool = isSucceeded and result
                 return isSucceeded
-            elif isinstance(client_socket, socket):
+            elif isinstance(client_socket, socket.socket):
                 return self.__send_chunked_data(data, client_socket)
             else:
                 _log.warning('Failed to send data: client_socket must be socket or _Null')
@@ -323,8 +378,10 @@ class SocketCore:
         else:
             return self.__send_chunked_data(data, self.__socket)
 
-    def __send_chunked_data(self, data: dict, client_socket: socket) -> bool:
+    def __send_chunked_data(self, data: dict, client_socket: socket.socket) -> bool:
         if not self.__isConnected or client_socket.fileno() == -1:
+            self.signal_connection_status.emit(False)
+            self.__isConnected
             # _log.info(f'Socket is not connected')
             return False
         try:
@@ -337,7 +394,7 @@ class SocketCore:
                 end_idx = min((i + 1) * SocketEnum.BUFFER_SIZE, total_bytes)
                 chunk = serialized_data[start_idx:end_idx]
                 client_socket.sendall(chunk.encode())
-            return
+            return True
         except Exception as _:
             _log.exception()
             return False
@@ -360,7 +417,8 @@ class SocketCore:
     def disconnect(self) -> None:
         self.__thread_socket.stop()
         self.__socket.close()
-        self.__thread_socket.join()
+        if self.__thread_socket.is_alive():
+            self.__thread_socket.join()
         self.__isConnected = False
 
     def __del__(self) -> None:

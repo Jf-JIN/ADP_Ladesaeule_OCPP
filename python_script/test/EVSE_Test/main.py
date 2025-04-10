@@ -1,9 +1,0 @@
-from system.Socket_Core import *
-
-
-a = SocketCore(host='127.0.0.1')
-a.signal_recv_json.connect(lambda x: print(x))
-a.connect()
-while 1:
-    a.send({'data': 'hello'})
-    time.sleep(0.5)

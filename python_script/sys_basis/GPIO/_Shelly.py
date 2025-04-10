@@ -28,29 +28,11 @@ class Shelly:
         return self.__main_address
 
     @property
-    def sub_address_0(self) -> str:
+    def data_address(self) -> str:
         if self.__main_address.startswith('http'):
-            return f"{self.__main_address}/emeter/0"
+            return f"{self.__main_address}/rpc/EM.GetStatus?id=0"
         else:
-            return f"http://{self.__main_address}/emeter/0"
-
-    @property
-    def sub_address_1(self) -> str:
-        if self.__main_address.startswith('http'):
-            return f"{self.__main_address}/emeter/1"
-        else:
-            return f"http://{self.__main_address}/emeter/1"
-
-    @property
-    def sub_address_2(self) -> str:
-        if self.__main_address.startswith('http'):
-            return f"{self.__main_address}/emeter/2"
-        else:
-            return f"http://{self.__main_address}/emeter/2"
-
-    @property
-    def address_list(self) -> list:
-        return copy.deepcopy([self.sub_address_0, self.sub_address_1, self.sub_address_2])
+            return f"http://{self.__main_address}/rpc/EM.GetStatus?id=0"
 
     @property
     def isAvailable(self) -> bool:
@@ -106,13 +88,9 @@ class Shelly:
         _info('Shelly reset')
         try:
             # 发送 POST 请求
-            reset_token = 'reset_totals'
-            response0 = requests.post(f"{self.sub_address_0}/{reset_token}", timeout=5)
+            reset_token = '/rpc/EMData.ResetCounters?id=0'
+            response0 = requests.post(f"{self.data_address}/{reset_token}", timeout=5)
             response0.raise_for_status()
-            response1 = requests.post(f"{self.sub_address_1}/{reset_token}", timeout=5)
-            response1.raise_for_status()
-            response2 = requests.post(f"{self.sub_address_2}/{reset_token}", timeout=5)
-            response2.raise_for_status()
             _info("Shelly 复位成功\nShelly reset successfully")
         except requests.exceptions.RequestException as e:
             _info(f"Shelly 复位失败\nShelly reset failed: {e}")

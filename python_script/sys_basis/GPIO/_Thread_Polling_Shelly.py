@@ -34,49 +34,78 @@ class PollingShelly(Thread):
     def isRunning(self) -> bool:
         return self.__isRunning
 
+    def __parse_data_json(self, data: dict) -> dict:
+        """ EM{
+                "id":0,
+                "a_current":0.028,
+                "a_voltage":234.1,
+                "a_act_power":0.0,
+                "a_aprt_power":6.6,
+                "a_pf":0.00,
+                "a_freq":50.0,
+
+                "b_current":0.027,
+                "b_voltage":234.2,
+                "b_act_power":0.0,
+                "b_aprt_power":6.2,
+                "b_pf":0.00,
+                "b_freq":50.0,
+
+                "c_current":0.027,
+                "c_voltage":234.9,
+                "c_act_power":0.0,
+                "c_aprt_power":6.4,
+                "c_pf":0.00,
+                "c_freq":50.0,
+
+                "n_current":null,
+                "total_current":0.082,
+                "total_act_power":0.000,
+                "total_aprt_power":19.245, 
+                "user_calibrated_phase":[]}
+        """
+        container: dict = {
+            0: {
+                'power': data['a_act_power'],
+                'pf': data['a_pf'],
+                'current': data['a_current'],
+                'voltage': data['a_voltage'],
+                'frequncy': data['a_freq'],
+                'is_valid': False,
+                'total': data['total_current']},
+            1: {
+                'power': data['b_act_power'],
+                'pf': data['b_pf'],
+                'current': data['b_current'],
+                'voltage': data['b_voltage'],
+                'frequncy': data['b_freq'],
+                'is_valid': False,
+                'total': data['total_current']},
+            2: {
+                'power': data['c_act_power'],
+                'pf': data['c_pf'],
+                'current': data['c_current'],
+                'voltage': data['c_voltage'],
+                'frequncy': data['c_freq'],
+                'is_valid': False,
+                'total': data['total_current']},
+        }
+        return container
+
     def run(self) -> None:
 
         while self.__isRunning:
             shelly: Shelly = self.__shelly_list[self.__current_index]
             shelly_id = shelly.id
-            sub_url0: str = shelly.sub_address_0
-            sub_url1: str = shelly.sub_address_1
-            sub_url2: str = shelly.sub_address_2
+            data_address: str = shelly.data_address
             shelly_data = {}
-            # _log.info(
-            #     shelly.sub_address_0,
-            #     shelly.sub_address_1,
-            #     shelly.sub_address_2,
-            # )
             try:
-                response_0: requests.Response = requests.get(sub_url0, timeout=self.__timeout)
-                response_0.raise_for_status()
-                data_0: dict = response_0.json()
-                shelly_data[0] = data_0
-
-                response_1: requests.Response = requests.get(sub_url1, timeout=self.__timeout)
-                response_1.raise_for_status()
-                data_1: dict = response_1.json()
-                shelly_data[1] = data_1
-
-                response_2: requests.Response = requests.get(sub_url2, timeout=self.__timeout)
-                response_2.raise_for_status()
-                data_2: dict = response_2.json()
-                shelly_data[2] = data_2
-                """
-                {
-                "power": 0,
-                "pf": 0,
-                "current": 0,
-                "voltage": 0,
-                "is_valid": true,
-                "total": 0,
-                "total_returned": 0
-                }
-                """
-                shelly_data['charged_energy'] = data_0['total'] + data_1['total'] + data_2['total']
-                shelly_data['return_energy'] = data_0['total_returned'] + data_1['total_returned'] + data_2['total_returned']
-                shelly_data['is_valid'] = data_0['is_valid'] and data_1['is_valid'] and data_2['is_valid']
+                response_data: requests.Response = requests.get(data_address, timeout=self.__timeout)
+                response_data.raise_for_status()
+                data_dict: dict = response_data.json()
+                shelly_data.update(self.__parse_data_json(data_dict))
+                shelly_data['charged_energy'] = data_dict['total_act_power']
+                shelly_data['is_valid'] = shelly_data[0]['is_valid'] and shelly_data[1]['is_valid'] and shelly_data[2]['is_valid']
             except Exception as e:
                 shelly_data = {
                     0: {
@@ -84,30 +113,26 @@ class PollingShelly(Thread):
                         'pf': 0,
                         'current': 0,
                         'voltage': 0,
-                        'is_valid': False,
-                        'total': 0,
-                        'total_returned': 0
-                    },
+                        'frequncy': 0,
+                        'is_valid': True,
+                        'total': 0},
                     1: {
                         'power': 0,
                         'pf': 0,
                         'current': 0,
                         'voltage': 0,
-                        'is_valid': False,
-                        'total': 0,
-                        'total_returned': 0
-                    },
+                        'frequncy': 0,
+                        'is_valid': True,
+                        'total': 0},
                     2: {
                         'power': 0,
                         'pf': 0,
                         'current': 0,
                         'voltage': 0,
-                        'is_valid': False,
-                        'total': 0,
-                        'total_returned': 0
-                    },
+                        'frequncy': 0,
+                        'is_valid': True,
+                        'total': 0},
                     'charged_energy': 0,
-                    'return_energy': 0,
                     'is_valid': False,
                 }
                 _log.exception(f'Shelly read exception: {e}')
