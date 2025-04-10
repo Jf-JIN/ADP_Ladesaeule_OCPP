@@ -60,7 +60,6 @@ class DataCollector:
                     'voltage': 0,
                     'is_valid': true,
                     'total': 0,
-                    'total_returned': 0
                 },
                 1: {
                     'power': 0,
@@ -69,7 +68,6 @@ class DataCollector:
                     'voltage': 0,
                     'is_valid': true,
                     'total': 0,
-                    'total_returned': 0
                 },
                 2: {
                     'power': 0,
@@ -78,10 +76,8 @@ class DataCollector:
                     'voltage': 0,
                     'is_valid': true,
                     'total': 0,
-                    'total_returned': 0
                 },
                 'charged_energy': 0,
-                'return_energy': 0
                 'is_valid': true,
             },
             'status': VehicleState.EV_IS_PRESENT,
