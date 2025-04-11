@@ -410,11 +410,21 @@ class DataCollector:
         """
         发送监控的数据
         """
-        for cu_data in self.__all_data:
+        for cu_data in self.__all_data.values():
+            evse_data: dict = copy.deepcopy(cu_data['evse'])
+            evse_data.pop('vehicle_state')
+            evse_data.pop('evse_error')
             data = {
-                'evse': cu_data['evse'],
-                'shelly': cu_data['shelly'],
+                'evse': evse_data,
+                'shelly': {
+                    "0": cu_data['shelly'][0],
+                    "1": cu_data['shelly'][1],
+                    "2": cu_data['shelly'][2],
+                    'charged_energy': cu_data['shelly']['charged_energy'],
+                    'is_valid': cu_data['shelly']['charged_energy'],
+                },
             }
+            _log.info(data)
             self.signal_DC_watching_data_display.emit(data)
         self.__timer_watching = Timer(self.__interval_send_watching_data, self.__send_watchting_data)
         self.__timer_watching.start()
