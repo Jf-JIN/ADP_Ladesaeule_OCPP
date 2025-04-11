@@ -39,7 +39,7 @@ class PollingEVSE(Thread):
         for register_address in GPIOParams.WATCHING_REGISTERS:
             subtmp = {}
             ModbusPDU_res: ModbusPDU = io.read(register_address)
-            isError = ModbusPDU_res.isError()
+            isError: bool = ModbusPDU_res.isError()
             subtmp['function_code'] = ModbusPDU_res.function_code
             subtmp['registers'] = ModbusPDU_res.registers
             subtmp['status'] = ModbusPDU_res.status
@@ -49,7 +49,7 @@ class PollingEVSE(Thread):
             subtmp['transaction_id'] = ModbusPDU_res.transaction_id
             subtmp['bits'] = ModbusPDU_res.bits
             subtmp['address'] = ModbusPDU_res.address
-            temp[register_address] = subtmp
+            temp[str(register_address)] = subtmp
         return temp
 
     def run(self) -> None:
