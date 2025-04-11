@@ -16,13 +16,15 @@ from system.Modbus_Handler import *
 from system.Socket_Core import *
 from system.Latch_Motor import *
 from const.Const_Logger import *
+from const.Const_Icon import *
+
 
 _log = Log.UI
 
 UNDEF_STR = 'Undefine'
 _TABLE_WIDGET_COLUMN_MIN_WIDTH = 40
 
-_DEFAULT_WIDGET_COLUMN_WIDTH = 100
+_DEFAULT_WIDGET_COLUMN_WIDTH = 140
 
 
 class _PDUTableStruct:
@@ -205,6 +207,18 @@ class EVSETestUI(Ui_MainWindow, QMainWindow):
         self.sp_modbus_id.setValue(1)
         self.sp_modbus_id.wheelEvent = lambda event: None
 
+        self.le_add_register.setClearButtonEnabled(True)
+        self.le_register_address.setClearButtonEnabled(True)
+        self.le_socket_id.setClearButtonEnabled(True)
+        self.le_write_value.setClearButtonEnabled(True)
+
+        self.pb_add.setIcon(QIcon(self.__convert_svg_to_pixmap(PLUS)))
+        self.pb_remove.setIcon(QIcon(self.__convert_svg_to_pixmap(MINUS)))
+        self.pb_add.setIconSize(QSize(20, 20))
+        self.pb_remove.setIconSize(QSize(20, 20))
+
+        self.setStyleSheet(""" font: 16px "Arial"; """)
+
     def __init_signal_connections(self) -> None:
         self.pb_add.clicked.connect(self.__on_pb_add_clicked)
         self.pb_remove.clicked.connect(self.__on_pb_remove_clicked)
@@ -214,6 +228,8 @@ class EVSETestUI(Ui_MainWindow, QMainWindow):
         self.__PDU_struct.signal_data_changed.connect(self.updata_tableWidget)
         self.pb_lock.clicked.connect(self.__run_motor_lock)
         self.pb_unlock.clicked.connect(self.__run_motor_unlock)
+        self.pb_shutdown.clicked.connect(self.__on_pb_shut_down)
+        self.le_socket_id.editingFinished.connect(self.__on_pb_connect_clicked)
 
     def updata_tableWidget(self):
         self.tableWidget_all_register.clearContents()
@@ -248,6 +264,11 @@ class EVSETestUI(Ui_MainWindow, QMainWindow):
                 item.setFlags(Qt.ItemFlag.ItemIsSelectable | Qt.ItemFlag.ItemIsEnabled)
                 self.tableWidget_all_register.setItem(index_row, index_column, item)
 
+    def __convert_svg_to_pixmap(self, svg_str: str) -> QPixmap:
+        pixmap = QPixmap()
+        pixmap.loadFromData(QByteArray(svg_str.encode()))
+        return pixmap
+
     def set_socket(self, socket_obj: SocketCore) -> typing.Self:
         self.__socket_obj: SocketCore = socket_obj
     # # 将真正的 UI 更新操作推到主线程中执行
@@ -259,7 +280,7 @@ class EVSETestUI(Ui_MainWindow, QMainWindow):
     def __send_read_request_loop(self):
         for idx, (register_address, item) in enumerate(self.__PDU_struct.get_data().items()):
             item: ModbusDataStruct
-            _log.info(register_address)
+            # _log.info(register_address)
             self.send_read_request(register_address)
 
     def send_read_request(self, register_address: int, isSpecific: bool = False) -> typing.Self:
@@ -288,7 +309,6 @@ class EVSETestUI(Ui_MainWindow, QMainWindow):
         elif value.isdigit():
             value = int(value)
         else:
-            _log.info(type(value), value.startswith('0x'), value.startswith('0b'), value.isdigit())
             return None
         return value
 
@@ -345,6 +365,7 @@ class EVSETestUI(Ui_MainWindow, QMainWindow):
         if register_address is None:
             return
         self.__PDU_struct.add_register_address(register_address)
+        self.le_add_register.clear()
 
     def __on_pb_remove_clicked(self):
         item: QTableWidgetItem | None = self.tableWidget_all_register.currentItem()
@@ -410,6 +431,12 @@ class EVSETestUI(Ui_MainWindow, QMainWindow):
             # QMessageBox.information(self, 'No Socket Connection', 'Please connect to the server first')
             return self
         self.__socket_obj.send({'motor_run': {'doLock': False, 'runtime': self.sp_motor_time.value(), }, })
+
+    def __on_pb_shut_down(self):
+        if not self.__socket_obj:
+            # QMessageBox.information(self, 'No Socket Connection', 'Please connect to the server first')
+            return self
+        self.__socket_obj.send({'shutdown': {'shouldShutDown': True}, })
 
     def closeEvent(self, a0):
         if self.__socket_obj:

@@ -10,6 +10,7 @@ class LED:
         elif arg == 24:
             self.__key = 'latch_unlock_pin'
         self.__fp = os.path.join(os.getcwd(), 'test', 'Motor.json')
+        print(self.__fp)
 
     def on(self):
         with open(self.__fp, 'r', encoding='utf-8') as f:

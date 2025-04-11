@@ -164,12 +164,19 @@ class _SocketThread(Thread):
         return list(self.__client_set)
 
     def clear_clients_list(self) -> None:
+        # _log.info(f"clear clients list<before>: {self.__client_set}")
         for client_struct in self.__client_set:
             client_struct: _ClientConnectionStruct
+            try:
+                client_struct.socket_obj.shutdown(socket.SHUT_RDWR)  # 中断可能的阻塞操作
+            except Exception as e:
+                _log.exception('shutdown client error')
             client_struct.recv_thread.stop()
-            client_struct.recv_thread.join()
             client_struct.socket_obj.close()
+            # client_struct.recv_thread.join()
+            _log.info(f"close client: {client_struct.socket_address}")
         self.__client_set.clear()
+        # _log.info(f"clear client list<after>: {self.__client_set}")
 
     def set_host(self, host: str) -> '_SocketThread':
         self.__host = host
@@ -250,7 +257,10 @@ class _SocketThread(Thread):
             if not data:
                 _log.warning('Disconnection: Empty data was received')
                 self.signal_connection_status.emit(False)
-                self.__connect_client()
+                if self.__isServer:
+                    socket_obj.close()
+                elif self.__isRunning:
+                    self.__connect_client()
                 return None
 
             try:
@@ -273,7 +283,8 @@ class _SocketThread(Thread):
                 return None
             # _log.exception(f'Connection exception')
             self.signal_connection_status.emit(False)
-            self.__connect_client(shouldCloseSocket=True)
+            if self.__isRunning:
+                self.__connect_client(shouldCloseSocket=True)
 
         except Exception as _:
             if self.__isServer:
@@ -281,7 +292,8 @@ class _SocketThread(Thread):
                 return None
             _log.exception(f'Unknown error')
             self.signal_connection_status.emit(False)
-            self.__connect_client(shouldCloseSocket=True)
+            if self.__isRunning:
+                self.__connect_client(shouldCloseSocket=True)
 
     def __server_connection_listening(self) -> None:
         if not self.__isServer:
@@ -296,7 +308,10 @@ class _SocketThread(Thread):
                 self.__client_set.add(_ClientConnectionStruct(socket_obj=client_socket, socket_address=client_address, recv_thread=recv_thread))
                 recv_thread.start()
             except Exception as _:
-                _log.exception('Connection listening error')
+                if self.__isRunning:
+                    _log.exception('Connection listening error')
+                else:
+                    break
         self.clear_clients_list()
         self.stop()
 
@@ -381,7 +396,8 @@ class SocketCore:
     def __send_chunked_data(self, data: dict, client_socket: socket.socket) -> bool:
         if not self.__isConnected or client_socket.fileno() == -1:
             self.signal_connection_status.emit(False)
-            self.__isConnected
+            self.__isConnected = False
+            client_socket.close()
             # _log.info(f'Socket is not connected')
             return False
         try:
@@ -415,6 +431,7 @@ class SocketCore:
         self.__thread_socket.start()
 
     def disconnect(self) -> None:
+        _log.info('Socket is disconnected')
         self.__thread_socket.stop()
         self.__socket.close()
         if self.__thread_socket.is_alive():

@@ -46,6 +46,13 @@
         <number>0</number>
        </property>
        <item>
+        <widget class="QPushButton" name="pb_shutdown">
+         <property name="text">
+          <string>Shut Down</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QLabel" name="label_4">
          <property name="text">
           <string>Socket ID</string>
@@ -539,7 +546,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>26</height>
+     <height>23</height>
     </rect>
    </property>
   </widget>

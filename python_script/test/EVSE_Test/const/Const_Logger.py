@@ -12,7 +12,7 @@ class Log(StaticEnum):
     UI = Logger('UI', log_folder_path=APP_WP)
     SERVER = Logger('Server', log_folder_path=APP_WP)
     GPIO = Logger('GPIO', log_folder_path=APP_WP)
-    GROUP = LoggerGroup(log_folder_path=APP_WP)
+    GROUP = LoggerGroup(log_folder_path=APP_WP, limit_files_count=10)
 
 
 Log.logging.set_listen_logging()

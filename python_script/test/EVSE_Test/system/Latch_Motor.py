@@ -2,8 +2,8 @@
 # from __future__ import annotations
 import threading
 
-# from gpiozero import LED  # 用于正常使用
-from ._LED import LED  # 用于测试
+from gpiozero import LED  # 用于正常使用
+# from ._LED import LED  # 用于测试
 from const.GPIO_Parameter import *
 from const.Const_Parameter import *
 from const.Const_Logger import *
@@ -16,11 +16,21 @@ class LatchMotor:
     """
     数值默认正数是上锁
     """
+    __instance__ = None
+
+    def __new__(cls, *args, **kwargs):
+        if not cls.__instance__:
+            cls.__instance__ = super().__new__(cls)
+            cls.__instance__.__isInitialized = False
+        return cls.__instance__
 
     def __init__(self) -> None:
-        _log.info(f'LatchMotor init success')
+        if self.__isInitialized:
+            return
+        self.__isInitialized = True
+        _log.info('chushihua')
         # self.__id: int = id
-        # self.__parent = parent
+        # self.__parent = None
         # self.__data_collector: DataCollector = DataCollector()
         self.__isLocked: bool = False  # 锁的状态, 是否是上锁状态
         self.__isRunning: bool = False  # 是否电机正在运行, 用于避免电机转动时, 动作冲突
@@ -31,7 +41,8 @@ class LatchMotor:
         self.__unlock_pin: LED = LED(RaspPins.BCM_PIN_24)  # 电机解锁控制引脚
         self.__timer: threading.Timer = threading.Timer(99, self.__off_lock_pin)
         self.__timer_intervall: int | float = GPIOParams.LETCH_MOTOR_RUNTIME  # 引脚状态转换的时间
-        _log.info(f'LatchMotor init success')
+        self.unlock(2)
+        _log.info('jieshu')
 
     # @property
     # def id(self) -> int:
@@ -49,42 +60,44 @@ class LatchMotor:
     def status_pin_unlock(self) -> bool:
         return self.__status_pin_unlock
 
-    def lock(self, timer_intervall=GPIOParams.LETCH_MOTOR_RUNTIME) -> None:
+    def lock(self, timer_intervall) -> None:
         """
         上锁操作
         """
-        _log.info("开始上锁")
+        _log.info("lock start")
         if self.__isRunning:
             self.__command_list.append(1)  # 正数表示上锁
         self.__timer_intervall = timer_intervall
         if self.__isLocked or self.__timer_intervall <= 0:
-            _log.info("上锁失败, 电机已经上锁 或 引脚状态转换时间过短")
+            _log.info(f"lock failed_already locked({self.__isLocked}) or intrvall too short({self.__timer_intervall}s)")
             return
         self.__unlock_pin.off()
         self.__status_pin_unlock = False
         self.__lock_pin.on()
         self.__status_pin_lock = True
         self.__timer = threading.Timer(self.__timer_intervall, self.__off_lock_pin)
+        _log.info("lock success")
         self.__timer.start()
 
     def unlock(self, timer_intervall=GPIOParams.LETCH_MOTOR_RUNTIME) -> None:
         """
         解锁操作
         """
-        _log.info("开始解锁")
+        _log.info("unlocking")
         if self.__isRunning:
             self.__command_list.append(-1)  # 负数表示解锁
         self.__timer_intervall = timer_intervall
         if not self.__isLocked or self.__timer_intervall <= 0:
-            _log.info("上锁失败, 电机已经上锁 或 引脚状态转换时间过短")
+            _log.info(f"lock failed_already locked({self.__isLocked}) or intrvall too short({self.__timer_intervall}s)")
             return
         self.__unlock_pin.on()
         self.__status_pin_unlock = True
         self.__lock_pin.off()
         self.__status_pin_lock = False
         self.__timer = threading.Timer(self.__timer_intervall, self.__off_unlock_pin)
-        self.__timer.start()
+        _log.info("unlocked")
 
+        
     def stop(self) -> None:
         self.__lock_pin.off()
         self.__unlock_pin.off()
@@ -94,7 +107,7 @@ class LatchMotor:
         """
         一段时间后将上锁正转引脚置否, 停止电机运转
         """
-        _log.info("上锁引脚关闭")
+        _log.info("lock_pin_closed")
         self.__lock_pin.off()
         self.__status_pin_lock = False
         self.__isLocked = True
@@ -104,7 +117,7 @@ class LatchMotor:
         """
         一段时间后将解锁反转引脚置否, 停止电机运转
         """
-        _log.info("解锁引脚关闭")
+        _log.info("unlock_pin_closed")
         self.__unlock_pin.off()
         self.__status_pin_unlock = False
         self.__isLocked = False
@@ -116,7 +129,7 @@ class LatchMotor:
         """
         # self.__data_collector.set_CU_isLatched(id=self.id, flag=self.__isLocked)
         _log.info(f'Action finished, isLatched: {self.__isLocked}')
-        setattr(self.__parent, f'_{self.__parent.__class__.__name__}__isLatched', self.__isLocked)
+        # setattr(self.__parent, f'_{self.__parent.__class__.__name__}__isLatched', self.__isLocked)
         if len(self.__command_list) == 0:
             return
         command = self.__command_list.pop(0)

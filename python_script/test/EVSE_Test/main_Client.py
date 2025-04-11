@@ -6,7 +6,7 @@ import traceback
 from PyQt5.QtWidgets import QApplication, QMessageBox
 
 
-isIntialized = False
+isInitialized = False
 
 
 def write_to_log(error_message: str):
@@ -17,12 +17,12 @@ def write_to_log(error_message: str):
 
 
 def exception_handler(exc_type, exc_value, exc_traceback) -> None:
-    global isIntialized
+    global isInitialized
     if issubclass(exc_type, KeyboardInterrupt):
         sys.__excepthook__(exc_type, exc_value, exc_traceback)
         return
     error_message = "".join(traceback.format_exception(exc_type, exc_value, exc_traceback))
-    if isIntialized:
+    if isInitialized:
         try:
             QMessageBox.critical(None, 'Error', f'Error occurred<br>Please check the log file for details<br><br>{Log.CRITICAL.folder_path}')
             Log.CRITICAL.critical(error_message)
@@ -34,10 +34,10 @@ def exception_handler(exc_type, exc_value, exc_traceback) -> None:
 
 
 def main():
-    global isIntialized
+    global isInitialized
     sys.excepthook = exception_handler
     app = QApplication(sys.argv)
-    isIntialized = True
+    isInitialized = True
     window = ClientFunction()
     sys.exit(app.exec_())
 
