@@ -45,13 +45,15 @@ class ShellySimulator_Thread(QThread):
         self.__timer.start()
 
         # 添加路由，访问不同的 URL 时返回不同的 JSON 数据
-        self.__app.add_url_rule('/emeter/0', '0', self.__phase0, methods=['GET'])
-        self.__app.add_url_rule('/emeter/1', '1', self.__phase1, methods=['GET'])
-        self.__app.add_url_rule('/emeter/2', '2', self.__phase2, methods=['GET'])
-        self.__app.add_url_rule('/emeter/0/reset_totals', 'reset_totals0', self.clear0, methods=['GET', 'POST'])
-        self.__app.add_url_rule('/emeter/1/reset_totals', 'reset_totals1', self.clear1, methods=['GET', 'POST'])
-        self.__app.add_url_rule('/emeter/2/reset_totals', 'reset_totals2', self.clear2, methods=['GET', 'POST'])
-        self.__app.add_url_rule('/reset_totals', 'reset_totals', self.clear, methods=['GET', 'POST'])
+        self.__app.add_url_rule('/rpc/EM.GetStatus', 'em_get_status', self.__phase, methods=['GET'])
+        # self.__app.add_url_rule('/emeter/0', '0', self.__phase0, methods=['GET'])
+        # self.__app.add_url_rule('/emeter/1', '1', self.__phase1, methods=['GET'])
+        # self.__app.add_url_rule('/emeter/2', '2', self.__phase2, methods=['GET'])
+        # self.__app.add_url_rule('/emeter/0/reset_totals', 'reset_totals0', self.clear0, methods=['GET', 'POST'])
+        # self.__app.add_url_rule('/emeter/1/reset_totals', 'reset_totals1', self.clear1, methods=['GET', 'POST'])
+        # self.__app.add_url_rule('/emeter/2/reset_totals', 'reset_totals2', self.clear2, methods=['GET', 'POST'])
+        # self.__app.add_url_rule('/rpc/EMData.ResetCounters', 'ResetCounters', self.clear, methods=['GET', 'POST'])
+        self.__app.add_url_rule('/rpc/EMData.ResetCounters', 'ResetCounters', self.clear, methods=['GET', 'POST'])
         self.__ip_local: str = '127.0.0.1' if host == '0.0.0.0' else '[::1]'
         self.__ip_remote: str = serving.get_interface_ip(AddressFamily.AF_INET)
         self.__ip_local_address: str = f'{self.__ip_local}:{port}'
@@ -142,9 +144,42 @@ class ShellySimulator_Thread(QThread):
         self.__power_p0 = self.__current_p0 * self.__voltage_p0 * self.__factor_p0
         self.__power_p1 = self.__current_p1 * self.__voltage_p1 * self.__factor_p1
         self.__power_p2 = self.__current_p2 * self.__voltage_p2 * self.__factor_p2
+        self.__power_ori_p0 = self.__current_p0 * self.__voltage_p0
+        self.__power_ori_p1 = self.__current_p1 * self.__voltage_p1
+        self.__power_ori_p2 = self.__current_p2 * self.__voltage_p2
         self.__total_power_p0 += (self.__period_ms / 1000) / 3600 * self.__power_p0 * self.__energy_rate
         self.__total_power_p1 += (self.__period_ms / 1000) / 3600 * self.__power_p1 * self.__energy_rate
         self.__total_power_p2 += (self.__period_ms / 1000) / 3600 * self.__power_p2 * self.__energy_rate
+        self.__total_power = self.__total_power_p0 + self.__total_power_p1 + self.__total_power_p2
+        self.__ph_dict = {
+            "id": 0,
+            "a_current": self.__current_p0,
+            "a_voltage": self.__voltage_p0,
+            "a_act_power": self.__power_p0,
+            "a_aprt_power": self.__power_ori_p0,
+            "a_pf": self.__factor_p0,
+            "a_freq": 50.0,
+
+            "b_current": self.__current_p1,
+            "b_voltage": self.__voltage_p1,
+            "b_act_power": self.__power_p1,
+            "b_aprt_power": self.__power_ori_p1,
+            "b_pf": self.__factor_p1,
+            "b_freq": 50.0,
+
+            "c_current": self.__current_p2,
+            "c_voltage": self.__voltage_p2,
+            "c_act_power": self.__power_p2,
+            "c_aprt_power": self.__power_ori_p2,
+            "c_pf": self.__factor_p2,
+            "c_freq": 50.0,
+
+            "n_current": None,
+            "total_current": self.__current_p0 + self.__current_p1 + self.__current_p2,
+            "total_act_power": self.__total_power,
+            "total_aprt_power": self.__power_ori_p0 + self.__power_ori_p1 + self.__power_ori_p2,
+            "user_calibrated_phase": []
+        }
         self.__ph0_dict = {
             'power': self.__power_p0,
             'pf': self.__factor_p0,
@@ -208,6 +243,9 @@ class ShellySimulator_Thread(QThread):
     def __phase2(self):
         return jsonify(self.__ph2_dict)
 
+    def __phase(self):
+        return jsonify(self.__ph_dict)
+
     def clear0(self):
         self.__total_power_p0 = 0
         return ''
@@ -237,6 +275,6 @@ class ShellySimulator_Thread(QThread):
 if __name__ == "__main__":
     web_server = ShellySimulator_Thread()
     web_server.run()
-""" 
+"""
 find C:/Users/jinju/miniconda3/envs/modbus_shelly_simulator/Lib -name "hook-_tkinter.py"
 """
