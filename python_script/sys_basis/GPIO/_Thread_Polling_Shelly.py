@@ -71,7 +71,7 @@ class PollingShelly(Thread):
                 'current': data['a_current'],
                 'voltage': data['a_voltage'],
                 'frequncy': data['a_freq'],
-                'is_valid': False,
+                'is_valid': True,
                 'total': data['total_current']},
             1: {
                 'power': data['b_act_power'],
@@ -79,7 +79,7 @@ class PollingShelly(Thread):
                 'current': data['b_current'],
                 'voltage': data['b_voltage'],
                 'frequncy': data['b_freq'],
-                'is_valid': False,
+                'is_valid': True,
                 'total': data['total_current']},
             2: {
                 'power': data['c_act_power'],
@@ -87,7 +87,7 @@ class PollingShelly(Thread):
                 'current': data['c_current'],
                 'voltage': data['c_voltage'],
                 'frequncy': data['c_freq'],
-                'is_valid': False,
+                'is_valid': True,
                 'total': data['total_current']},
         }
         return container
@@ -114,7 +114,7 @@ class PollingShelly(Thread):
                         'current': 0,
                         'voltage': 0,
                         'frequncy': 0,
-                        'is_valid': True,
+                        'is_valid': False,
                         'total': 0},
                     1: {
                         'power': 0,
@@ -122,7 +122,7 @@ class PollingShelly(Thread):
                         'current': 0,
                         'voltage': 0,
                         'frequncy': 0,
-                        'is_valid': True,
+                        'is_valid': False,
                         'total': 0},
                     2: {
                         'power': 0,
@@ -130,7 +130,7 @@ class PollingShelly(Thread):
                         'current': 0,
                         'voltage': 0,
                         'frequncy': 0,
-                        'is_valid': True,
+                        'is_valid': False,
                         'total': 0},
                     'charged_energy': 0,
                     'is_valid': False,

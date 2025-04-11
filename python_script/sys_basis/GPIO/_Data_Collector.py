@@ -8,6 +8,7 @@ from const.GPIO_Parameter import *
 from const.Const_Parameter import *
 
 from tools.data_gene import *
+from DToolslib import EventSignal
 
 
 if 0:
@@ -51,6 +52,17 @@ class DataCollector:
             'evse': {\
                 'vehicle_state': VehicleState.EVSE_IS_PRESENT,\
                 'evse_error': EVSEErrorInfo.RELAY_ON,
+                <register_address>: {
+                    "function_code": <int>,
+                    "registers": <list>,
+                    "status": <int>, 
+                    "isError": <bool>,
+                    "exception_code": <int>,
+                    "dev_id": <>,
+                    "transaction_id": <int>,
+                    "bits": <list>,
+                    "address": <int>,
+                }
             },
             'shelly': {
                 0: {
@@ -118,6 +130,7 @@ class DataCollector:
     """
 
     __instance__ = None
+    signal_DC_watching_data_display = EventSignal(dict)
 
     def __new__(cls, *args, **kwargs):
         if not cls.__instance__:
@@ -130,6 +143,7 @@ class DataCollector:
         parent: GPIOManager,
         interval_send_data: int | float = 1,
         interval_send_fig: int | float = 30,
+        interval_send_watching_data: int | float = 1,
     ) -> None:
         if self.__isInitialized__:
             return
@@ -137,17 +151,20 @@ class DataCollector:
         self.__parent: GPIOManager = parent
         self.__interval_send_data: int | float = interval_send_data
         self.__interval_send_fig: int | float = interval_send_fig
+        self.__interval_send_watching_data: int | float = interval_send_watching_data
         self.__all_data: dict = {}
         self.__evse_data: dict = {}
         self.__shelly_data: dict = {}
         self.__timer_data: Timer = Timer(self.__interval_send_data, self.__send_display_data)
         self.__timer_figure: Timer = Timer(self.__interval_send_fig, self.__send_figure_data)
+        self.__timer_watching: Timer = Timer(self.__interval_send_watching_data, self.__send_watchting_data)
         self.__charging_units_id_set: set = set()
         self.__available_charge_units_id_set: set = set()
         self.__signal_DC_data_display: XSignal = XSignal()
         self.__signal_DC_figure_display: XSignal = XSignal()
         self.__timer_data.start()
         self.__timer_figure.start()
+        self.__timer_watching.start()
         self.__isRunning = True
         """ 表示是否存在充电桩在充电中/准备充电 """
 
@@ -273,6 +290,14 @@ class DataCollector:
         ):
             self.__all_data[id]['period_start_time'] = self.__all_data[id]['start_time']
 
+    def get_CU_evse_data(self, id: int) -> dict:
+        self.__check_id(id)
+        return self.__all_data[id]['evse']
+
+    def get_CU_shelly_data(self, id: int) -> dict:
+        self.__check_id(id)
+        return self.__all_data[id]['shelly']
+
     def clear_CU_waiting_plan(self, id: int) -> None:
         self.__check_id(id)
         self.__all_data[id]['waiting_plan'] = []
@@ -380,6 +405,19 @@ class DataCollector:
                 'custom_data': {},
                 'enableDirectCharge': False,
             }
+
+    def __send_watchting_data(self) -> None:
+        """
+        发送监控的数据
+        """
+        for cu_data in self.__all_data:
+            data = {
+                'evse': cu_data['evse'],
+                'shelly': cu_data['shelly'],
+            }
+            self.signal_DC_watching_data_display.emit(data)
+        self.__timer_watching = Timer(self.__interval_send_watching_data, self.__send_watchting_data)
+        self.__timer_watching.start()
 
     def __send_display_data(self) -> None:
         """

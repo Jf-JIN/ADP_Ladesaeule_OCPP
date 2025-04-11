@@ -6,6 +6,38 @@ GPIO 枚举类
 from const.Analog_Define import AnalogDefine
 
 
+class EVSERegAddress(AnalogDefine):
+    CONFIGURED_AMPS = 1000
+    AMPS_OUTPUT = 1001
+    VEHICLE_STATE = 1002
+    CURRENT_MAX = 1003
+    TURN_OFF_SELFTEST_OPERATION = 1004  # turn off charging | self test operation
+    FIRMWARE_REVISION = 1005
+    EVSE_STATE = 1006
+    EVSE_STATUS_FAILS = 1007
+    TIMEOUT_ERROR = 1008
+    TIMEOUT_SELFTEST = 1009
+    # ...
+    DEFAULT_AMPS = 2000
+    SLAVE_ADDRESS = 2001
+    CURRENT_MIN = 2002
+    ANALOG_INPUT_CONFIG = 2003
+    AMPS_SETTINGS = 2004
+    CHARGE_OPERATION = 2005
+    CURRENT_SHARING_MODE = 2006
+    PP_DETECTION = 2007
+    # ...
+    BOOTLOADER_FIRMWARE_REVISION = 2009
+    AMPS1 = 2010
+    AMPS2 = 2011
+    AMPS3 = 2012
+    AMPS4 = 2013
+    AMPS5 = 2014
+    AMPS6 = 2015
+    AMPS7 = 2016
+    AMPS8 = 2017
+
+
 class GPIOParams(AnalogDefine):
     VENDOR_ID = 'Darmstadt'
     MESSAGE_SEND_INTERVAL = 60  # seconds
@@ -40,6 +72,16 @@ class GPIOParams(AnalogDefine):
     """ 请求间隔, 单位: 秒. 该值必须大于0秒 """
     BOUNCETIME = 200
     """ 树莓派按钮检测防抖时间 """
+    WATCHING_REGISTERS = [
+        EVSERegAddress.CONFIGURED_AMPS,
+        EVSERegAddress.AMPS_OUTPUT,
+        EVSERegAddress.VEHICLE_STATE,
+        EVSERegAddress.CURRENT_MAX,
+        EVSERegAddress.TURN_OFF_SELFTEST_OPERATION,
+        EVSERegAddress.EVSE_STATE,
+        EVSERegAddress.DEFAULT_AMPS,
+        EVSERegAddress.CURRENT_MIN,
+    ]
 
 
 class ResultFlag(AnalogDefine):
@@ -148,38 +190,6 @@ class ModbusParams(AnalogDefine):
     BYTESIZE = 8  # 数据位
     TIMEOUT = 3  # 超时时间
     RETRIES = 10  # 重试次数
-
-
-class EVSERegAddress(AnalogDefine):
-    CONFIGURED_AMPS = 1000
-    AMPS_OUTPUT = 1001
-    VEHICLE_STATE = 1002
-    CURRENT_MAX = 1003
-    TURN_OFF_SELFTEST_OPERATION = 1004  # turn off charging | self test operation
-    FIRMWARE_REVISION = 1005
-    EVSE_STATE = 1006
-    EVSE_STATUS_FAILS = 1007
-    TIMEOUT_ERROR = 1008
-    TIMEOUT_SELFTEST = 1009
-    # ...
-    DEFAULT_AMPS = 2000
-    SLAVE_ADDRESS = 2001
-    CURRENT_MIN = 2002
-    ANALOG_INPUT_CONFIG = 2003
-    AMPS_SETTINGS = 2004
-    CHARGE_OPERATION = 2005
-    CURRENT_SHARING_MODE = 2006
-    PP_DETECTION = 2007
-    # ...
-    BOOTLOADER_FIRMWARE_REVISION = 2009
-    AMPS1 = 2010
-    AMPS2 = 2011
-    AMPS3 = 2012
-    AMPS4 = 2013
-    AMPS5 = 2014
-    AMPS6 = 2015
-    AMPS7 = 2016
-    AMPS8 = 2017
 
 
 class BitsFlag(AnalogDefine):

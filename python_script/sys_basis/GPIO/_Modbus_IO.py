@@ -12,6 +12,18 @@ _critical = Log.MODBUS.critical
 _exception = Log.MODBUS.exception
 
 
+class ModbusPDU:
+    function_code = 0
+    registers = []
+    status = 0
+    isError = True
+    exception_code = 0
+    dev_id = 0
+    transaction_id = 0
+    bits = 0
+    address = 0
+
+
 class ModbusIO(object):
     isSelfChecking: set = set()
 
@@ -55,9 +67,10 @@ class ModbusIO(object):
         - 异常:
             - 当读取过程中发生任何异常时, 会被捕获并返回 None.
         """
-        with open(self.__json_file_path, 'r', encoding='utf-8') as f:
-            json_dict = json.load(f)
-            return json_dict[str(address)]
+        # with open(self.__json_file_path, 'r', encoding='utf-8') as f:
+        #     json_dict = json.load(f)
+        #     return json_dict[str(address)]
+        return ModbusPDU
 
     def write(self, address: int, value: int, bit_operation: int | None = None) -> None | bool:
         """

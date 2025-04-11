@@ -3,6 +3,7 @@ from pymodbus.pdu.pdu import ModbusPDU
 from pymodbus.client import ModbusSerialClient
 from const.Const_Parameter import *
 from const.GPIO_Parameter import BitsFlag, EVSEErrorInfo, EVSERegAddress, ModbusParams
+import time
 
 _log = Log.MODBUS
 
@@ -59,15 +60,16 @@ class ModbusIO(object):
         """
         result_data = None
         try:
-            # result: ModbusPDU = self.__client.read_holding_registers(address=address, slave=self.__id)
-            result: ModbusPDU = self.__client.read_input_registers(address=address, slave=self.__id)
+            result: ModbusPDU = self.__client.read_holding_registers(address=address, slave=self.__id)
+            # result: ModbusPDU = self.__client.read_input_registers(address=address, slave=self.__id)
             # _log.critical(f'function_code: {result.function_code}\naddress: {address}\ndata: result.registers[0]\nresult: {result.registers}')
-            _log.critical(f'function_code: {result.function_code}\naddress: {address}\nresult: {result}')
+            # _log.info(f'function_code: {result.function_code}\naddress: {address}\nresult: {result}')
             if not result.isError():
                 result_data: int = result.registers[0]
-                _log.critical(f'function_code: {result.function_code}\naddress: {address}\nresult: {result}\nexception_code: {result.exception_code}')
+                _log.info(f'function_code: {result.function_code}\naddress: {address}\nresult: {result}')
             else:
                 _log.error(f'ModbusIO read error.\naddress: {address}')
+                _log.info(f'function_code: {result.function_code}\naddress: {address}\nresult: {result}\nexception_code: {result.exception_code}')
         except Exception as e:
             _log.exception(f'ModbusIO read error: {e}\naddress: {address}')
         finally:
@@ -105,7 +107,10 @@ class ModbusIO(object):
                 value = ori_value
         try:
             result: ModbusPDU = self.__client.write_registers(address=address, values=[value], slave=self.__id)
-            _log.debug(result, result.registers[0])
+            _log.info(f'[WRITE] function_code: {result.function_code}\naddress: {address}\nresult: {result}')
+            check_res = self.__client.read_holding_registers(address=address, slave=self.__id)
+            _log.info(f'[CHECK] function_code: {result.function_code}\naddress: {address}\nresult: {result}')
+            # _log.debug(result, result.registers[0])
             if result.isError():
                 _log.exception(f'ModbusIO write error.\naddress: {address}\nvalue: {value}')
                 return False
@@ -123,22 +128,24 @@ class ModbusIO(object):
             - set: EVSE状态和故障集合
         """
         data_list = set()
-        status: None | int = self.read(address=EVSERegAddress.EVSE_STATUS_FAILS)
-        if status is None:
-            return None
-        if status & BitsFlag.REG1007.RELAY_OFF:
-            data_list.add(EVSEErrorInfo.RELAY_OFF)
-        else:
-            data_list.add(EVSEErrorInfo.RELAY_ON)
-        if status & BitsFlag.REG1007.DIODE_CHECK_FAIL:
-            data_list.add(EVSEErrorInfo.DIODE_CHECK_FAIL)
-        if status & BitsFlag.REG1007.VENT_REQUIRED_FAIL:
-            data_list.add(EVSEErrorInfo.VENT_REQUIRED_FAIL)
-        if status & BitsFlag.REG1007.WAITING_FOR_PILOT_RELEASE:
-            data_list.add(EVSEErrorInfo.WAITING_FOR_PILOT_RELEASE)
-        if status & BitsFlag.REG1007.RCD_CHECK_ERROR:
-            data_list.add(EVSEErrorInfo.RCD_CHECK_ERROR)
+        data_list.add(EVSEErrorInfo.RELAY_ON)
         return data_list
+        # status: None | int = self.read(address=EVSERegAddress.EVSE_STATUS_FAILS)
+        # if status is None:
+        #     return None
+        # if status & BitsFlag.REG1007.RELAY_OFF:
+        #     data_list.add(EVSEErrorInfo.RELAY_OFF)
+        # else:
+        #     data_list.add(EVSEErrorInfo.RELAY_ON)
+        # if status & BitsFlag.REG1007.DIODE_CHECK_FAIL:
+        #     data_list.add(EVSEErrorInfo.DIODE_CHECK_FAIL)
+        # if status & BitsFlag.REG1007.VENT_REQUIRED_FAIL:
+        #     data_list.add(EVSEErrorInfo.VENT_REQUIRED_FAIL)
+        # if status & BitsFlag.REG1007.WAITING_FOR_PILOT_RELEASE:
+        #     data_list.add(EVSEErrorInfo.WAITING_FOR_PILOT_RELEASE)
+        # if status & BitsFlag.REG1007.RCD_CHECK_ERROR:
+        #     data_list.add(EVSEErrorInfo.RCD_CHECK_ERROR)
+        # return data_list
 
     def read_vehicle_status(self) -> None | int:
         """
@@ -148,7 +155,8 @@ class ModbusIO(object):
             - 如果读取成功, 返回寄存器中的整数值.
             - 如果读取失败或发生错误, 返回None.
         """
-        return self.read(address=EVSERegAddress.VEHICLE_STATE)
+        return 2
+        # return self.read(address=EVSERegAddress.VEHICLE_STATE)
 
     def read_current_min(self) -> None | int:
         """
