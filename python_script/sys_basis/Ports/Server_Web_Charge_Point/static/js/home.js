@@ -3,6 +3,7 @@
 const client_console = document.getElementById('client_console_contain');
 const opt_console = document.getElementById('opt_console_contain');
 const gui_websocket_console = document.getElementById('gui_websocket_console_contain');
+const watcher_contain = document.getElementById('watcher_contain');
 
 const page_zh = document.getElementById("svg_zh");
 const page_en = document.getElementById("svg_en");
@@ -44,6 +45,10 @@ socket.on('update_data', (data) => {
     }
     if (data.figure) { 
         loadImage(data.figure);
+    }
+    if (data.watching_data) {
+//    写入函数，读取数据并创建表格
+        loadWatchingData(data.watching_data);
     }
     if (data.alert_message) { 
         msg_type = data.alert_message.type
@@ -177,3 +182,199 @@ function loadImage (data) {
 }
 handleTitleClick(title_home);
 
+
+function loadWatchingData(data) {
+    // 清空容器
+    watcher_contain.innerHTML = '';
+
+    if (!data) return;
+
+    // ========== EVSE 部分 ==========
+    if (data.evse) {
+        const evseTitle = document.createElement('h3');
+        evseTitle.textContent = lang_dict.evse_data;
+        watcher_contain.appendChild(evseTitle);
+
+        const evseTable = document.createElement('table');
+        evseTable.style.borderCollapse = 'collapse';
+        evseTable.style.width = '100%';
+        evseTable.style.marginBottom = '20px';
+
+        const evseHeaders = [
+            lang_dict.register_address, lang_dict.function_code, lang_dict.register_value, lang_dict.status, lang_dict.isError,
+            lang_dict.exception_code, lang_dict.dev_id, lang_dict.transaction_id, lang_dict.bits, lang_dict.address
+        ];
+
+        const evseThead = document.createElement("thead");
+        const evseHeaderRow = document.createElement("tr");
+        evseHeaders.forEach(h => {
+            const th = document.createElement("th");
+            th.textContent = h;
+            th.style.border = "1px solid #ccc";
+            th.style.padding = "6px";
+            th.style.backgroundColor = "#f0f0f0";
+            evseHeaderRow.appendChild(th);
+        });
+        evseThead.appendChild(evseHeaderRow);
+        evseTable.appendChild(evseThead);
+
+        const evseTbody = document.createElement("tbody");
+        for (const addr in data.evse) {
+            const item = data.evse[addr];
+            const row = document.createElement("tr");
+
+            const values = [
+                addr,
+                item.function_code,
+                JSON.stringify(item.registers),
+                item.status,
+                item.isError,
+                item.exception_code,
+                item.dev_id,
+                item.transaction_id,
+                JSON.stringify(item.bits),
+                item.address,
+            ];
+
+            values.forEach(val => {
+                const td = document.createElement("td");
+                td.textContent = val !== undefined ? val : "-";
+//                td.textContent = (val === undefined || val === null || (Array.isArray(val) && val.length === 0)) ? '-' : val;
+                td.style.border = "1px solid #ccc";
+                td.style.padding = "6px";
+                row.appendChild(td);
+            });
+
+            evseTbody.appendChild(row);
+        }
+        evseTable.appendChild(evseTbody);
+        watcher_contain.appendChild(evseTable);
+    }
+
+    // ========== Shelly 部分 ==========
+    if (data.shelly) {
+        const shellyTitle = document.createElement('h3');
+        shellyTitle.textContent = lang_dict.Shelly_data;
+        watcher_contain.appendChild(shellyTitle);
+
+        const shellyTable = document.createElement('table');
+        shellyTable.style.borderCollapse = 'collapse';
+        shellyTable.style.width = '100%';
+
+        const shellyHeaders = [lang_dict.phase, lang_dict.power, lang_dict.pf, lang_dict.current, lang_dict.voltage, lang_dict.is_valid,lang_dict.total];
+
+        const shellyThead = document.createElement("thead");
+        const shellyHeaderRow = document.createElement("tr");
+        shellyHeaders.forEach(h => {
+            const th = document.createElement("th");
+            th.textContent = h;
+            th.style.border = "1px solid #ccc";
+            th.style.padding = "6px";
+            th.style.backgroundColor = "#f0f0f0";
+            shellyHeaderRow.appendChild(th);
+        });
+        shellyThead.appendChild(shellyHeaderRow);
+        shellyTable.appendChild(shellyThead);
+
+        const shellyTbody = document.createElement("tbody");
+        for (const key in data.shelly) {
+            if (isNaN(parseInt(key))) continue;  // 跳过非编号项
+
+            const item = data.shelly[key];
+            const row = document.createElement("tr");
+
+            const values = [
+                key,
+                item.power,
+                item.pf,
+                item.current,
+                item.voltage,
+                item.is_valid,
+                item.total,
+            ];
+
+            values.forEach(val => {
+                const td = document.createElement("td");
+                td.textContent = val !== undefined ? val : "-";
+                td.style.border = "1px solid #ccc";
+                td.style.padding = "6px";
+                row.appendChild(td);
+            });
+
+            shellyTbody.appendChild(row);
+        }
+        shellyTable.appendChild(shellyTbody);
+        watcher_contain.appendChild(shellyTable);
+
+        // 添加额外信息：charged_energy 和 overall is_valid
+        const extraInfo = document.createElement('div');
+        extraInfo.style.marginTop = "10px";
+        extraInfo.innerHTML = `
+    <p><strong>${lang_dict.charged_energy}:</strong> ${data.shelly.charged_energy}</p>
+    <p><strong>${lang_dict.Shelly_is_valid}:</strong> ${data.shelly.is_valid}</p>`
+        watcher_contain.appendChild(extraInfo);
+    }
+}
+bspl = {'evse': {
+'1000': {
+//"function_code": 0,
+"registers": [1],
+"status": 1,
+"isError": false,
+"exception_code": 0,
+"dev_id": 1,
+"transaction_id": 1,
+"bits": [1],
+"address": 1000,
+},'6666': {
+"function_code": 0,
+"registers": [6666],
+"status": 1,
+//"isError": true,
+"exception_code": 1,
+"dev_id": 1,
+"transaction_id": 1,
+"bits": [1],
+"address": 1,
+},'1002': {
+"function_code": 0,
+"registers": [1],
+"status": 1,
+"isError": false,
+"exception_code": 1,
+//"dev_id": 0,
+"transaction_id": 1,
+"bits": [2],
+"address": 1002,
+}
+},
+'shelly': {
+0: {
+'power': 50,
+'pf': 0.6,
+'current': 13,
+'voltage': 230,
+'is_valid': true,
+'total': 1000,
+},
+1: {
+'power': 0,
+'pf': 0,
+'current': 0,
+'voltage': 0,
+'is_valid': true,
+'total': 0,
+},
+2: {
+    'power': 0,
+    'pf': 0,
+    'current': 0,
+    'voltage': 0,
+    'is_valid': true,
+    'total': 0,
+},
+    'charged_energy': 0,
+    'is_valid': true,
+},}
+
+loadWatchingData(bspl);

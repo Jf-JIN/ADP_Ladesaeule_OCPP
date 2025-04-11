@@ -56,6 +56,27 @@ const lang_pkg_en = {
     "TE_not_num": "Please enter a valid number. Target Energy is not a number now.",
     "TE_not_positive": "Please enter a valid number. Target Energy is not a positive number now.",
     "time_in_past": "The selected time cannot be in the past. Please choose a valid time.",
-
+    // 表格
+    "evse_data":"EVSE data",
+    "register_address": "register address",
+    "function_code": "function code",
+    "register_value":"register value",
+    "status": "status",
+    "isError": "is Error",
+    "exception_code": "exception code",
+    "dev_id":"dev_id",
+    "transaction_id": "transaction_id",
+    "bits": "bits",
+    "address": "address",
+    "Shelly_data": "Shelly data",
+    "phase":"phase",
+    "power": "power",
+    "pf":"power factor",
+    "current":"current",
+    "voltage":"voltage",
+    "is_valid": "is_valid",
+    "total": "total",
+    "charged_energy": "charged energy",
+    "Shelly_is_valid": "Shelly is valid",
 
 }

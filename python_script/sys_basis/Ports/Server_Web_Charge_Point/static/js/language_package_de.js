@@ -55,6 +55,29 @@ const lang_pkg_de = {
     "info": "Info",
     "TE_not_num": "Bitte geben Sie eine gültige Zahl ein. Ziel-Energie ist jetzt keine Zahl.",
     "TE_not_positive": "Bitte geben Sie eine gültige Zahl ein. Ziel-Energie ist jetzt keine positive Zahl.",
-    "time_in_past": "Die ausgewählte Zeit kann nicht in der Vergangenheit liegen. Bitte wählen Sie eine gültige Zeit aus."
+    "time_in_past": "Die ausgewählte Zeit kann nicht in der Vergangenheit liegen. Bitte wählen Sie eine gültige Zeit aus.",
+    // 表格
+    "evse_data": "EVSE Daten",
+    "register_address": "Registeradresse",
+    "function_code": "Funktionscode",
+    "register_value": "Registerwert",
+    "status": "Status",
+    "isError": "Fehler vorhanden",
+    "exception_code": "Ausnahmecode",
+    "dev_id": "Geräte ID",
+    "transaction_id": "TransaktionsID",
+    "bits": "Bits",
+    "address": "Adresse",
+    "Shelly_data": "Shelly Daten",
+    "phase": "Phase",
+    "power": "Leistung",
+    "pf": "Leistungsfaktor",
+    "current": "Strom",
+    "voltage": "Spannung",
+    "is_valid": "Gültig",
+    "total": "Gesamt",
+    "charged_energy": "Geladene Energie",
+    "Shelly_is_valid": "Shelly ist gültig"
+
 
 }
