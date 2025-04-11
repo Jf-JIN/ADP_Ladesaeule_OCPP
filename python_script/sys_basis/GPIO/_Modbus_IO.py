@@ -23,6 +23,10 @@ class ModbusPDU:
     bits = 0
     address = 0
 
+    @staticmethod
+    def isError():
+        return False
+
 
 class ModbusIO(object):
     isSelfChecking: set = set()
@@ -118,6 +122,8 @@ class ModbusIO(object):
             - set: EVSE状态和故障集合
         """
         data_list = set()
+        data_list.add(EVSEErrorInfo.RELAY_ON)
+        return data_list
         status: None | int = self.read(address=EVSERegAddress.EVSE_STATUS_FAILS)
         if status is None:
             return None
