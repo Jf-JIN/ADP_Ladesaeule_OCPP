@@ -88,8 +88,12 @@ class Shelly:
         _info('Shelly reset')
         try:
             # 发送 POST 请求
-            reset_token = '/rpc/EMData.ResetCounters?id=0'
-            response0 = requests.post(f"{self.data_address}/{reset_token}", timeout=5)
+            # reset_token = 'rpc/EMData.ResetCounters?id=0'
+            reset_token = 'rpc/EMData.ResetCounters'
+            data = {
+                "id": 0  # 通道号
+            }
+            response0 = requests.post(f"http://{self.__main_address}/{reset_token}", json=data, timeout=5)
             response0.raise_for_status()
             _info("Shelly 复位成功\nShelly reset successfully")
         except requests.exceptions.RequestException as e:

@@ -3,6 +3,7 @@ from threading import Thread
 from ._Modbus_IO import ModbusIO
 from const.GPIO_Parameter import *
 from const.Const_Parameter import *
+from pymodbus.pdu.pdu import ModbusPDU
 import time
 
 
@@ -33,12 +34,31 @@ class PollingEVSE(Thread):
     def isRunning(self) -> bool:
         return self.__isRunning
 
+    def __get_watching_registers_dict(self, io: ModbusIO):
+        temp = {}
+        for register_address in GPIOParams.WATCHING_REGISTERS:
+            subtmp = {}
+            ModbusPDU_res: ModbusPDU = io.read(register_address)
+            isError: bool = ModbusPDU_res.isError()
+            subtmp['function_code'] = ModbusPDU_res.function_code
+            subtmp['registers'] = ModbusPDU_res.registers
+            subtmp['status'] = ModbusPDU_res.status
+            subtmp['isError'] = isError
+            subtmp['exception_code'] = ModbusPDU_res.exception_code if isError else 0
+            subtmp['dev_id'] = ModbusPDU_res.dev_id
+            subtmp['transaction_id'] = ModbusPDU_res.transaction_id
+            subtmp['bits'] = ModbusPDU_res.bits
+            subtmp['address'] = ModbusPDU_res.address
+            temp[str(register_address)] = subtmp
+        return temp
+
     def run(self) -> None:
         while self.__isRunning:
             evse: Evse = self.__evse_list[self.__current_index]
             evse_id: int = evse.id
             evse_data = {}
             with ModbusIO(id=evse_id) as io:
+                evse_data.update(self.__get_watching_registers_dict(io))
                 vehicle_state: int | None = io.read_vehicle_status()  # timeout 由 Modbus 决定
                 if vehicle_state is not None:
                     evse_data['vehicle_state'] = vehicle_state

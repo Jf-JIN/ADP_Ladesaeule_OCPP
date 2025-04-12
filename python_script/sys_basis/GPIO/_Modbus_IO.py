@@ -12,6 +12,22 @@ _critical = Log.MODBUS.critical
 _exception = Log.MODBUS.exception
 
 
+class ModbusPDU:
+    function_code = 0
+    registers = []
+    status = 0
+    isError = True
+    exception_code = 0
+    dev_id = 0
+    transaction_id = 0
+    bits = 0
+    address = 0
+
+    @staticmethod
+    def isError():
+        return False
+
+
 class ModbusIO(object):
     isSelfChecking: set = set()
 
@@ -55,9 +71,10 @@ class ModbusIO(object):
         - 异常:
             - 当读取过程中发生任何异常时, 会被捕获并返回 None.
         """
-        with open(self.__json_file_path, 'r', encoding='utf-8') as f:
-            json_dict = json.load(f)
-            return json_dict[str(address)]
+        # with open(self.__json_file_path, 'r', encoding='utf-8') as f:
+        #     json_dict = json.load(f)
+        #     return json_dict[str(address)]
+        return ModbusPDU
 
     def write(self, address: int, value: int, bit_operation: int | None = None) -> None | bool:
         """
@@ -105,6 +122,8 @@ class ModbusIO(object):
             - set: EVSE状态和故障集合
         """
         data_list = set()
+        data_list.add(EVSEErrorInfo.RELAY_ON)
+        return data_list
         status: None | int = self.read(address=EVSERegAddress.EVSE_STATUS_FAILS)
         if status is None:
             return None

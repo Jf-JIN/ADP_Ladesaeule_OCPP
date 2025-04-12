@@ -35,6 +35,9 @@ class Ui_MainWindow(object):
         self.horizontalLayout_5.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_5.setSpacing(10)
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
+        self.pb_shutdown = QtWidgets.QPushButton(self.widget_8)
+        self.pb_shutdown.setObjectName("pb_shutdown")
+        self.horizontalLayout_5.addWidget(self.pb_shutdown)
         self.label_4 = QtWidgets.QLabel(self.widget_8)
         self.label_4.setObjectName("label_4")
         self.horizontalLayout_5.addWidget(self.label_4)
@@ -318,7 +321,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.addWidget(self.widget_7)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 26))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 23))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -332,6 +335,7 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.pb_shutdown.setText(_translate("MainWindow", "Shut Down"))
         self.label_4.setText(_translate("MainWindow", "Socket ID"))
         self.pb_connect.setText(_translate("MainWindow", "Connect"))
         self.label.setText(_translate("MainWindow", "EVSE ID:"))

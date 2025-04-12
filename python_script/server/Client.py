@@ -94,6 +94,7 @@ class Client:
         self.GPIO_Manager.signal_GPIO_info.connect(self.send_web_alert_message)
         self.GPIO_Manager.signal_GPIO_info.connect(self.handle_gpio_info)
         self.GPIO_Manager.data_collector.signal_DC_data_display.connect(self.send_web_txt_message)
+        self.GPIO_Manager.data_collector.signal_DC_watching_data_display.connect(self.send_web_watching_data_message)
         self.GPIO_Manager.data_collector.signal_DC_figure_display.connect(self.send_web_fig_message)
 
     def handle_request(self, request_message) -> None:
@@ -384,6 +385,9 @@ voltage_max:{voltage_max}
 
     def send_web_txt_message(self, message) -> None:
         self.send_message_to_web('txt', message)
+
+    def send_web_watching_data_message(self, message) -> None:
+        self.send_message_to_web('watching_data', message)
 
     def send_web_alert_message(self, message: str, message_type='info') -> None:
         self.send_message_to_web('alert_message', {"type": message_type, "message": message.replace('\n', '<br>')})

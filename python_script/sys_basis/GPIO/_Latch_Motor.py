@@ -22,7 +22,7 @@ class LatchMotor:
     def __init__(self, parent: ChargeUnit, id: int) -> None:
         self.__id: int = id
         self.__parent: ChargeUnit = parent
-        self.__data_collector: DataCollector = DataCollector()
+        self.__data_collector: DataCollector = parent.parent_obj.data_collector
         self.__isLocked: bool = False  # 锁的状态, 是否是上锁状态
         self.__isRunning: bool = False  # 是否电机正在运行, 用于避免电机转动时, 动作冲突
         self.__command_list: list = []  # 存储命令的列表

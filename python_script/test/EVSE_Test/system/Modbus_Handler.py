@@ -1,8 +1,9 @@
 
 from pymodbus.pdu.pdu import *
 from pymodbus.client import *
+from pymodbus.pdu.pdu import ModbusPDU
 from const.Const_Logger import *
-from const.ConstModbus import *
+from const.Const_Modbus import *
 
 _log = Log.MODBUS
 
@@ -27,7 +28,7 @@ class ModbusDataStruct:
         self.__status: int = data_dict.get('status', None)
 
     def __load_ModbusDataUnit(self, ModbusDataUnit: ModbusPDU):
-        self.__ModbusDataUnit = ModbusDataUnit
+        self.__ModbusDataUnit: ModbusPDU = ModbusDataUnit
         self.__isError = ModbusDataUnit.isError()
         if self.__isError:
             ModbusDataUnit: ExceptionResponse = ModbusDataUnit
