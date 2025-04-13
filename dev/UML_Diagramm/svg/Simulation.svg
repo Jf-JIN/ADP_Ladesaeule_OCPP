@@ -1,0 +1,1579 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   version="1.1"
+   width="584"
+   height="495"
+   id="svg109"
+   sodipodi:docname="Simulation.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   inkscape:export-filename="Simulation.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview109"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="2.2812612"
+     inkscape:cx="243.94401"
+     inkscape:cy="283.83422"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="2552"
+     inkscape:window-y="210"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g109" />
+  <defs
+     id="defs1" />
+  <g
+     id="g109">
+    <g
+       id="g1"
+       style="fill:#f09664;fill-opacity:1"
+       transform="matrix(1,0,0,1.0328787,-6,-14.745749)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="32"
+         y="288"
+         width="576"
+         height="224"
+         transform="translate(-22,-22)"
+         id="rect1"
+         style="fill:#f09664;fill-opacity:1" />
+    </g>
+    <g
+       id="g2"
+       transform="matrix(0.99996978,0,0,1.0351472,-5.9909946,-15.340444)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 10,266 H 586 V 490 H 10 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path1" />
+    </g>
+    <g
+       id="g3"
+       transform="translate(-6,-6)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="32"
+         y="32"
+         width="576"
+         height="240"
+         transform="translate(-22,-22)"
+         id="rect2" />
+    </g>
+    <g
+       id="g4"
+       style="fill:#78c8f0;fill-opacity:1"
+       transform="translate(-6,-6)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 10,10 H 586 V 250 H 10 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path3"
+         style="fill:#78c8f0;fill-opacity:1" />
+    </g>
+    <g
+       id="g5"
+       transform="translate(-6,-6)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 305,33 h 50.4 L 377,54.6 V 123 h -72"
+         fill-opacity="0.2"
+         id="path4" />
+    </g>
+    <g
+       id="g6"
+       transform="translate(-6,-6)">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 298,26 h 50.4 L 370,47.6 V 116 h -72"
+         id="path5" />
+    </g>
+    <g
+       id="g7"
+       transform="translate(-6,-6)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 298,26 h 50.4 L 370,47.6 V 116 H 298 V 26"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path6" />
+    </g>
+    <g
+       id="g8"
+       transform="translate(-6,-6)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 348.4,26 V 47.6 H 370 L 348.4,26"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path7" />
+    </g>
+    <g
+       id="g10"
+       transform="translate(-6,-40)">
+      <g
+         id="g9">
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="13px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="356.5"
+           y="151.5"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-22,-22)"
+           id="text8"
+           style="font-size:24px">.Json</text>
+      </g>
+    </g>
+    <g
+       id="g11"
+       transform="translate(-6,-6)">
+      <rect
+         fill="#c0c0c0"
+         stroke="none"
+         x="71"
+         y="55"
+         width="176"
+         height="192"
+         transform="translate(-22,-22)"
+         fill-opacity="0.2"
+         id="rect10" />
+    </g>
+    <g
+       id="g12"
+       transform="translate(-6,-6)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="64"
+         y="48"
+         width="176"
+         height="192"
+         transform="translate(-22,-22)"
+         id="rect11" />
+    </g>
+    <g
+       id="g13"
+       transform="translate(-6,-6)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 42,26 H 218 V 218 H 42 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path12" />
+    </g>
+    <g
+       id="g14"
+       transform="translate(-6,-6)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="64"
+         y="48"
+         width="176"
+         height="192"
+         transform="translate(-22,-22)"
+         id="rect13" />
+    </g>
+    <g
+       id="g15"
+       transform="translate(-6,-6)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 42,26 H 218 V 218 H 42 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path14" />
+    </g>
+    <g
+       id="g17"
+       transform="translate(-6,-6)">
+      <g
+         id="g16">
+        <path
+           fill="none"
+           stroke="none"
+           id="path15"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="152.5"
+           y="63"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-22,-22)"
+           id="text15">Charge Point System</text>
+        <path
+           fill="none"
+           stroke="#000000"
+           paint-order="fill stroke markers"
+           d="M 210.96484,49 H 50.035156"
+           stroke-miterlimit="10"
+           stroke-dasharray="none"
+           id="path16" />
+      </g>
+    </g>
+    <g
+       id="g18"
+       transform="translate(-6,-6)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 218,90 h 80"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path17" />
+    </g>
+    <g
+       id="g19"
+       transform="translate(-6,-6)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 287.83733,94.209518 298,90 287.83733,85.790482"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path18" />
+    </g>
+    <g
+       id="g20"
+       style="fill:none"
+       transform="translate(-6,-6)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="256"
+         y="116"
+         width="48.515625"
+         height="18"
+         transform="translate(-22,-22)"
+         id="rect19"
+         style="fill:none" />
+    </g>
+    <g
+       id="g22"
+       transform="translate(-6,-6)">
+      <g
+         id="g21">
+        <path
+           fill="none"
+           stroke="none"
+           id="path20"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="18px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="280.25781"
+           y="125"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-22,-22)"
+           id="text20">write</text>
+      </g>
+    </g>
+    <g
+       id="g23"
+       transform="translate(-6,-6)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 298,58 H 218"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path22" />
+    </g>
+    <g
+       id="g24"
+       transform="translate(-6,-6)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 228.16267,53.790482 218,58 l 10.16267,4.209518"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path23" />
+    </g>
+    <g
+       id="g25"
+       style="fill:none"
+       transform="translate(-6,-6)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="256"
+         y="60"
+         width="46.538086"
+         height="18"
+         transform="translate(-22,-22)"
+         id="rect24"
+         style="fill:none" />
+    </g>
+    <g
+       id="g27"
+       transform="translate(-6,-6)">
+      <g
+         id="g26">
+        <path
+           fill="none"
+           stroke="none"
+           id="path25"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="18px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="279.26904"
+           y="69"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-22,-22)"
+           id="text25">read</text>
+      </g>
+    </g>
+    <g
+       id="g28"
+       transform="translate(-6,-6)">
+      <rect
+         fill="#c0c0c0"
+         stroke="none"
+         x="487"
+         y="55"
+         width="96"
+         height="192"
+         transform="translate(-22,-22)"
+         fill-opacity="0.2"
+         id="rect27" />
+    </g>
+    <g
+       id="g29"
+       transform="translate(-6,-6)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="480"
+         y="48"
+         width="96"
+         height="192"
+         transform="translate(-22,-22)"
+         id="rect28" />
+    </g>
+    <g
+       id="g30"
+       transform="translate(-6,-6)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 458,26 h 96 v 192 h -96 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path29" />
+    </g>
+    <g
+       id="g31"
+       transform="translate(-6,-6)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="480"
+         y="48"
+         width="96"
+         height="192"
+         transform="translate(-22,-22)"
+         id="rect30" />
+    </g>
+    <g
+       id="g32"
+       transform="translate(-6,-6)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 458,26 h 96 v 192 h -96 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path31" />
+    </g>
+    <g
+       id="g34"
+       transform="translate(-6,-6)">
+      <g
+         id="g33">
+        <path
+           fill="none"
+           stroke="none"
+           id="path32"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="528.5"
+           y="63"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-22,-22)"
+           id="text32">Simulator</text>
+        <path
+           fill="none"
+           stroke="#000000"
+           paint-order="fill stroke markers"
+           d="M 543.39453,49 H 469.60547"
+           stroke-miterlimit="10"
+           stroke-dasharray="none"
+           id="path33" />
+      </g>
+    </g>
+    <g
+       id="g35"
+       transform="translate(-6,-6)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 458,58 H 370"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path34" />
+    </g>
+    <g
+       id="g36"
+       transform="translate(-6,-6)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 380.16267,53.790482 370,58 l 10.16267,4.209518"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path35" />
+    </g>
+    <g
+       id="g37"
+       style="fill:none"
+       transform="translate(-6,-6)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="411"
+         y="60"
+         width="48.515625"
+         height="18"
+         transform="translate(-22,-22)"
+         id="rect36"
+         style="fill:none" />
+    </g>
+    <g
+       id="g39"
+       transform="translate(-6,-6)">
+      <g
+         id="g38">
+        <path
+           fill="none"
+           stroke="none"
+           id="path37"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="18px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="435.25781"
+           y="69"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-22,-22)"
+           id="text37">write</text>
+      </g>
+    </g>
+    <g
+       id="g40"
+       transform="translate(-6,-6)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 370,90 h 88"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path39" />
+    </g>
+    <g
+       id="g41"
+       transform="translate(-6,-6)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 447.83733,94.209518 458,90 447.83733,85.790482"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path40" />
+    </g>
+    <g
+       id="g42"
+       style="fill:none"
+       transform="translate(-6,-6)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="409"
+         y="117"
+         width="46.538086"
+         height="18"
+         transform="translate(-22,-22)"
+         id="rect41"
+         style="fill:none" />
+    </g>
+    <g
+       id="g44"
+       transform="translate(-6,-6)">
+      <g
+         id="g43">
+        <path
+           fill="none"
+           stroke="none"
+           id="path42"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="18px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="432.26904"
+           y="126"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-22,-22)"
+           id="text42">read</text>
+      </g>
+    </g>
+    <g
+       id="g45"
+       transform="translate(-6,-6)">
+      <rect
+         fill="#c0c0c0"
+         stroke="none"
+         x="71"
+         y="311"
+         width="176"
+         height="176"
+         transform="translate(-22,-22)"
+         fill-opacity="0.2"
+         id="rect44" />
+    </g>
+    <g
+       id="g46"
+       transform="translate(-6,-6)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="64"
+         y="304"
+         width="176"
+         height="176"
+         transform="translate(-22,-22)"
+         id="rect45" />
+    </g>
+    <g
+       id="g47"
+       transform="translate(-6,-6)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 42,282 H 218 V 458 H 42 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path46" />
+    </g>
+    <g
+       id="g48"
+       transform="translate(-6,-6)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="64"
+         y="304"
+         width="176"
+         height="176"
+         transform="translate(-22,-22)"
+         id="rect47" />
+    </g>
+    <g
+       id="g49"
+       transform="translate(-6,-6)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 42,282 H 218 V 458 H 42 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path48" />
+    </g>
+    <g
+       id="g51"
+       transform="translate(-6,-6)">
+      <g
+         id="g50">
+        <path
+           fill="none"
+           stroke="none"
+           id="path49"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="152.5"
+           y="319"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-22,-22)"
+           id="text49">Charge Point System</text>
+        <path
+           fill="none"
+           stroke="#000000"
+           paint-order="fill stroke markers"
+           d="M 210.96484,305 H 50.035156"
+           stroke-miterlimit="10"
+           stroke-dasharray="none"
+           id="path50" />
+      </g>
+    </g>
+    <g
+       id="g52"
+       transform="translate(-6,-6)">
+      <rect
+         fill="#c0c0c0"
+         stroke="none"
+         x="471"
+         y="311"
+         width="112"
+         height="48"
+         transform="translate(-22,-22)"
+         fill-opacity="0.2"
+         id="rect51" />
+    </g>
+    <g
+       id="g53"
+       transform="translate(-6,-6)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="464"
+         y="304"
+         width="112"
+         height="48"
+         transform="translate(-22,-22)"
+         id="rect52" />
+    </g>
+    <g
+       id="g54"
+       transform="translate(-6,-6)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 442,282 h 112 v 48 H 442 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path53" />
+    </g>
+    <g
+       id="g55"
+       transform="translate(-6,-6)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="464"
+         y="304"
+         width="112"
+         height="48"
+         transform="translate(-22,-22)"
+         id="rect54" />
+    </g>
+    <g
+       id="g56"
+       transform="translate(-6,-6)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 442,282 h 112 v 48 H 442 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path55" />
+    </g>
+    <g
+       id="g58"
+       transform="translate(-6,-6)">
+      <g
+         id="g57">
+        <path
+           fill="none"
+           stroke="none"
+           id="path56"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="520.5"
+           y="319"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-22,-22)"
+           id="text56">EVSE</text>
+        <path
+           fill="none"
+           stroke="#000000"
+           paint-order="fill stroke markers"
+           d="m 519.84375,305 h -42.6875"
+           stroke-miterlimit="10"
+           stroke-dasharray="none"
+           id="path57" />
+      </g>
+    </g>
+    <g
+       id="g59"
+       transform="translate(-6,-6)">
+      <rect
+         fill="#c0c0c0"
+         stroke="none"
+         x="471"
+         y="439"
+         width="112"
+         height="48"
+         transform="translate(-22,-22)"
+         fill-opacity="0.2"
+         id="rect58" />
+    </g>
+    <g
+       id="g60"
+       transform="translate(-6,-6)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="464"
+         y="432"
+         width="112"
+         height="48"
+         transform="translate(-22,-22)"
+         id="rect59" />
+    </g>
+    <g
+       id="g61"
+       transform="translate(-6,-6)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 442,410 h 112 v 48 H 442 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path60" />
+    </g>
+    <g
+       id="g62"
+       transform="translate(-6,-6)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="464"
+         y="432"
+         width="112"
+         height="48"
+         transform="translate(-22,-22)"
+         id="rect61" />
+    </g>
+    <g
+       id="g63"
+       transform="translate(-6,-6)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 442,410 h 112 v 48 H 442 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path62" />
+    </g>
+    <g
+       id="g65"
+       transform="translate(-6,-6)">
+      <g
+         id="g64">
+        <path
+           fill="none"
+           stroke="none"
+           id="path63"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="520.5"
+           y="447"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-22,-22)"
+           id="text63">Shelly</text>
+        <path
+           fill="none"
+           stroke="#000000"
+           paint-order="fill stroke markers"
+           d="M 522.06641,433 H 474.93359"
+           stroke-miterlimit="10"
+           stroke-dasharray="none"
+           id="path64" />
+      </g>
+    </g>
+    <g
+       id="g66"
+       transform="translate(-6,-6)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 458,154 H 218"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path65" />
+    </g>
+    <g
+       id="g67"
+       transform="translate(-6,-6)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 228.16267,149.79048 218,154 l 10.16267,4.20952"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path66" />
+    </g>
+    <g
+       id="g68"
+       style="fill:none"
+       transform="translate(-6,-6)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="264"
+         y="181"
+         width="191.55762"
+         height="18"
+         transform="translate(-22,-22)"
+         id="rect67"
+         style="fill:none" />
+    </g>
+    <g
+       id="g70"
+       transform="translate(-6,-6)">
+      <g
+         id="g69">
+        <path
+           fill="none"
+           stroke="none"
+           id="path68"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="18px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="359.77881"
+           y="190"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-22,-22)"
+           id="text68">Shelly-message-HTTP</text>
+      </g>
+    </g>
+    <g
+       id="g71"
+       transform="translate(-6,-6)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 218,186 H 458"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path70" />
+    </g>
+    <g
+       id="g72"
+       transform="translate(-6,-6)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 447.83733,190.20952 458,186 447.83733,181.79048"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path71" />
+    </g>
+    <g
+       id="g73"
+       transform="translate(-6,-6)">
+      <rect
+         fill="#c0c0c0"
+         stroke="none"
+         x="471"
+         y="375"
+         width="112"
+         height="48"
+         transform="translate(-22,-22)"
+         fill-opacity="0.2"
+         id="rect72" />
+    </g>
+    <g
+       id="g74"
+       transform="translate(-6,-6)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="464"
+         y="368"
+         width="112"
+         height="48"
+         transform="translate(-22,-22)"
+         id="rect73" />
+    </g>
+    <g
+       id="g75"
+       transform="translate(-6,-6)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 442,346 h 112 v 48 H 442 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path74" />
+    </g>
+    <g
+       id="g76"
+       transform="translate(-6,-6)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="464"
+         y="368"
+         width="112"
+         height="48"
+         transform="translate(-22,-22)"
+         id="rect75" />
+    </g>
+    <g
+       id="g77"
+       transform="translate(-6,-6)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 442,346 h 112 v 48 H 442 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path76" />
+    </g>
+    <g
+       id="g79"
+       transform="translate(-6,-6)">
+      <g
+         id="g78">
+        <path
+           fill="none"
+           stroke="none"
+           id="path77"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="520.5"
+           y="383"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-22,-22)"
+           id="text77">LockMotor</text>
+        <path
+           fill="none"
+           stroke="#000000"
+           paint-order="fill stroke markers"
+           d="M 539.38672,369 H 457.61328"
+           stroke-miterlimit="10"
+           stroke-dasharray="none"
+           id="path78" />
+      </g>
+    </g>
+    <g
+       id="g80"
+       transform="translate(-6,-6)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 218,314 H 442"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path79" />
+    </g>
+    <g
+       id="g81"
+       transform="translate(-6,-6)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 431.83733,318.20952 442,314 431.83733,309.79048"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path80" />
+    </g>
+    <g
+       id="g82"
+       style="fill:none"
+       transform="translate(-6,-6)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="331"
+         y="339"
+         width="48.515625"
+         height="18"
+         transform="translate(-22,-22)"
+         id="rect81"
+         style="fill:none" />
+    </g>
+    <g
+       id="g84"
+       transform="translate(-6,-6)">
+      <g
+         id="g83">
+        <path
+           fill="none"
+           stroke="none"
+           id="path82"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="18px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="355.25781"
+           y="348"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-22,-22)"
+           id="text82">write</text>
+      </g>
+    </g>
+    <g
+       id="g85"
+       transform="translate(-6,-6)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 442,298 H 218"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path84" />
+    </g>
+    <g
+       id="g86"
+       transform="translate(-6,-6)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 228.16267,293.79048 218,298 l 10.16267,4.20952"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path85" />
+    </g>
+    <g
+       id="g87"
+       style="fill:none"
+       transform="translate(-6,-6)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="331"
+         y="301"
+         width="46.538086"
+         height="18"
+         transform="translate(-22,-22)"
+         id="rect86"
+         style="fill:none" />
+    </g>
+    <g
+       id="g89"
+       transform="translate(-6,-6)">
+      <g
+         id="g88">
+        <path
+           fill="none"
+           stroke="none"
+           id="path87"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="18px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="354.26904"
+           y="310"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-22,-22)"
+           id="text87"
+           inkscape:label="text87">read</text>
+      </g>
+    </g>
+    <g
+       id="g90"
+       transform="translate(-6,-6)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 442,426 H 218"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path89" />
+    </g>
+    <g
+       id="g91"
+       transform="translate(-6,-6)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 228.16267,421.79048 218,426 l 10.16267,4.20952"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path90" />
+    </g>
+    <g
+       id="g92"
+       style="fill:none"
+       transform="translate(-6,-6)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="332"
+         y="429"
+         width="47.513672"
+         height="18"
+         transform="translate(-22,-22)"
+         id="rect91"
+         style="fill:none" />
+    </g>
+    <g
+       id="g94"
+       transform="translate(-6,-6)">
+      <g
+         id="g93">
+        <path
+           fill="none"
+           stroke="none"
+           id="path92"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="18px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="355.75684"
+           y="438"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-22,-22)"
+           id="text92">GET</text>
+      </g>
+    </g>
+    <g
+       id="g95"
+       transform="translate(-6,-6)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 218,442 H 442"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path94" />
+    </g>
+    <g
+       id="g96"
+       transform="translate(-6,-6)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 431.83733,446.20952 442,442 431.83733,437.79048"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path95" />
+    </g>
+    <g
+       id="g97"
+       style="fill:none"
+       transform="translate(-6,-6)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="330"
+         y="467"
+         width="59.519531"
+         height="18"
+         transform="translate(-22,-22)"
+         id="rect96"
+         style="fill:none" />
+    </g>
+    <g
+       id="g99"
+       transform="translate(-6,-6)">
+      <g
+         id="g98">
+        <path
+           fill="none"
+           stroke="none"
+           id="path97"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="18px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="359.75977"
+           y="476"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-22,-22)"
+           id="text97">POST</text>
+      </g>
+    </g>
+    <g
+       id="g100"
+       transform="translate(-6,-6)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 218,370 H 442"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path99" />
+    </g>
+    <g
+       id="g101"
+       transform="translate(-6,-6)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 431.83733,374.20952 442,370 431.83733,365.79048"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path100" />
+    </g>
+    <g
+       id="g102"
+       style="fill:none"
+       transform="translate(-6,-6)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="331"
+         y="373"
+         width="48.515625"
+         height="18"
+         transform="translate(-22,-22)"
+         id="rect101"
+         style="fill:none" />
+    </g>
+    <g
+       id="g104"
+       transform="translate(-6,-6)">
+      <g
+         id="g103">
+        <path
+           fill="none"
+           stroke="none"
+           id="path102"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="18px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="355.25781"
+           y="382"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-22,-22)"
+           id="text102">write</text>
+      </g>
+    </g>
+    <g
+       id="g106"
+       transform="translate(-6,-6)">
+      <g
+         id="g105">
+        <path
+           fill="none"
+           stroke="none"
+           id="path104"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="24px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="269"
+           y="245"
+           text-anchor="start"
+           dominant-baseline="text-before-edge"
+           transform="translate(-22,-22)"
+           id="text104">Simulation</text>
+      </g>
+    </g>
+    <g
+       id="g108"
+       transform="translate(-24,2)">
+      <g
+         id="g107">
+        <path
+           fill="none"
+           stroke="none"
+           id="path106"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="24px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="269"
+           y="485"
+           text-anchor="start"
+           dominant-baseline="text-before-edge"
+           transform="translate(-22,-22)"
+           id="text106">Real application</text>
+      </g>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-size:17.3333px;font-family:Arial;-inkscape-font-specification:Arial;fill:none;fill-opacity:1"
+       x="48.077477"
+       y="70.250923"
+       id="text109"><tspan
+         sodipodi:role="line"
+         id="tspan109"
+         x="48.077477"
+         y="70.250923"
+         style="fill:#000000;fill-opacity:1">GPIOManager</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:17.3333px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;fill-opacity:1"
+       x="476.62891"
+       y="66.619118"
+       id="text110"><tspan
+         sodipodi:role="line"
+         x="476.62891"
+         y="66.619118"
+         id="tspan111">EVSE</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:17.3333px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;fill-opacity:1"
+       x="458.72324"
+       y="93.468636"
+       id="text112"><tspan
+         sodipodi:role="line"
+         x="458.72324"
+         y="93.468636"
+         id="tspan113">LockMotor</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:17.3333px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;fill-opacity:1"
+       x="477.22134"
+       y="164.44279"
+       id="text114"><tspan
+         sodipodi:role="line"
+         x="477.22134"
+         y="164.44279"
+         id="tspan115">Shelly</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:17.3333px;font-family:Arial;-inkscape-font-specification:Arial;fill:none;fill-opacity:1"
+       x="48.077477"
+       y="326.25092"
+       id="text116"><tspan
+         sodipodi:role="line"
+         id="tspan116"
+         x="48.077477"
+         y="326.25092"
+         style="fill:#000000;fill-opacity:1">GPIOManager</tspan></text>
+    <g
+       id="g111"
+       transform="translate(-6,-276)">
+      <g
+         id="g110">
+        <path
+           fill="none"
+           stroke="none"
+           id="path2"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="18px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="355.75684"
+           y="438"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-22,-22)"
+           id="text2">GET</text>
+      </g>
+    </g>
+    <g
+       id="g113"
+       transform="translate(-6,-262)">
+      <g
+         id="g112">
+        <path
+           fill="none"
+           stroke="none"
+           id="path111"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="18px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="359.75977"
+           y="476"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-22,-22)"
+           id="text111">POST</text>
+      </g>
+    </g>
+  </g>
+</svg>
