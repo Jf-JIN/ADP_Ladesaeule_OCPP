@@ -10,8 +10,18 @@ _log = Log.MODBUS
 
 class ModbusIO(object):
     isSelfChecking: set = set()
+    __instance__: 'ModbusIO' = None
 
-    def __init__(self, id: int):
+    def __new__(cls, *args, **kwargs):
+        if cls.__instance__ is None:
+            cls.__instance__ = super().__new__(cls)
+            cls.__instance__.__isInitialized__ = False
+        return cls.__instance__
+
+    def __init__(self, id: int) -> None:
+        if self.__isInitialized__:
+            return
+        self.__isInitialized__ = True
         if not isinstance(id, int):
             raise TypeError('Id of ModbusIO must be int')
         self.__id: int = id
@@ -26,6 +36,7 @@ class ModbusIO(object):
             retries=ModbusParams.RETRIES,
             name=self.__class__.__name__,
         )
+        self.__thread_lock = threading.Lock()
 
     def __enter__(self):
         if self.__id in self.__class__.isSelfChecking:
@@ -44,6 +55,16 @@ class ModbusIO(object):
             self.__client.close()
         return True
 
+    def read_PDU(self, address: int) -> None | ModbusPDU:
+        result_data = None
+        try:
+            with self.__thread_lock:
+                result_data: ModbusPDU = self.__client.read_holding_registers(address=address, slave=self.__id)
+        except Exception as e:
+            _log.info(f'ModbusIO read ModbusPDU error: {traceback.format_exc()}\naddress: {address}')
+        finally:
+            return result_data
+
     def read(self, address: int) -> None | int:
         """
         从指定的Modbus寄存器地址读取数据.
@@ -60,11 +81,12 @@ class ModbusIO(object):
         """
         result_data = None
         try:
-            result: ModbusPDU = self.__client.read_holding_registers(address=address, slave=self.__id)
-            # result: ModbusPDU = self.__client.read_input_registers(address=address, slave=self.__id)
-            # _log.critical(f'function_code: {result.function_code}\naddress: {address}\ndata: result.registers[0]\nresult: {result.registers}')
-            # _log.info(f'function_code: {result.function_code}\naddress: {address}\nresult: {result}')
-            if not result.isError():
+            with self.__thread_lock:
+                result: ModbusPDU = self.__client.read_holding_registers(address=address, slave=self.__id)
+                # result: ModbusPDU = self.__client.read_input_registers(address=address, slave=self.__id)
+                # _log.critical(f'function_code: {result.function_code}\naddress: {address}\ndata: result.registers[0]\nresult: {result.registers}')
+                # _log.info(f'function_code: {result.function_code}\naddress: {address}\nresult: {result}')
+            if result and not result.isError():
                 result_data: int = result.registers[0]
                 _log.info(f'function_code: {result.function_code}\naddress: {address}\nresult: {result}')
             else:
@@ -106,12 +128,13 @@ class ModbusIO(object):
                 ori_value |= value
                 value = ori_value
         try:
-            result: ModbusPDU = self.__client.write_registers(address=address, values=[value], slave=self.__id)
-            _log.info(f'[WRITE] function_code: {result.function_code}\naddress: {address}\nresult: {result}')
-            check_res = self.__client.read_holding_registers(address=address, slave=self.__id)
-            _log.info(f'[CHECK] function_code: {result.function_code}\naddress: {address}\nresult: {result}')
-            # _log.debug(result, result.registers[0])
-            if result.isError():
+            with self.__thread_lock:
+                result: ModbusPDU = self.__client.write_registers(address=address, values=[value], slave=self.__id)
+                _log.info(f'[WRITE] function_code: {result.function_code}\naddress: {address}\nresult: {result}')
+                # check_res = self.__client.read_holding_registers(address=address, slave=self.__id)
+                # _log.info(f'[CHECK] function_code: {check_res.function_code}\naddress: {address}\nresult: {check_res}')
+                # _log.debug(result, result.registers[0])
+            if result and result.isError():
                 _log.exception(f'ModbusIO write error.\naddress: {address}\nvalue: {value}')
                 return False
             return True

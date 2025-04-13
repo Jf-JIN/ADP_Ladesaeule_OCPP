@@ -11,6 +11,8 @@ _error = Log.MODBUS.error
 _critical = Log.MODBUS.critical
 _exception = Log.MODBUS.exception
 
+_log = Log.MODBUS
+
 
 class ModbusPDU:
     function_code = 0
@@ -30,8 +32,18 @@ class ModbusPDU:
 
 class ModbusIO(object):
     isSelfChecking: set = set()
+    __instance__: 'ModbusIO' = None
+
+    def __new__(cls, *args, **kwargs):
+        if cls.__instance__ is None:
+            cls.__instance__ = super().__new__(cls)
+            cls.__instance__.__isInitialized__ = False
+        return cls.__instance__
 
     def __init__(self, id: int) -> None:
+        if self.__isInitialized__:
+            return
+        self.__isInitialized__ = True
         if not isinstance(id, int):
             raise TypeError('Id of ModbusIO must be int')
         self.__id: int = id
@@ -56,6 +68,15 @@ class ModbusIO(object):
         if exc_type is not None:
             _exception(f'ModbusIO {self.__context_action_error} with error: {exc_val}')
         return True
+
+    def read_PDU(self, address: int) -> None | int:
+        result_data
+        try:
+            result_data: ModbusPDU = ModbusPDU()
+        except Exception as e:
+            _log.exception(f'ModbusIO read ModbusPDU error: {e}\naddress: {address}')
+        finally:
+            return result_data
 
     def read(self, address: int) -> None | int:
         """
