@@ -38,7 +38,10 @@ class PollingEVSE(Thread):
         temp = {}
         for register_address in GPIOParams.WATCHING_REGISTERS:
             subtmp = {}
-            ModbusPDU_res: ModbusPDU = io.read(register_address)
+            ModbusPDU_res: ModbusPDU = io.read_PDU(register_address)
+            if ModbusPDU_res is None:
+                _log.error(f'EVSE <{register_address}> read error')
+                continue
             isError: bool = ModbusPDU_res.isError()
             subtmp['function_code'] = ModbusPDU_res.function_code
             subtmp['registers'] = ModbusPDU_res.registers
