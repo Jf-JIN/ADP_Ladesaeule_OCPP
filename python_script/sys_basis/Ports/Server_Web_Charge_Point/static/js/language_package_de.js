@@ -16,7 +16,7 @@ const lang_pkg_de = {
     "text_rasberry_pi_system": "Information über Rasberry Pi System",
     "text_optimisation_system": "Optimisation System Information",
     "text_GPIO": "Hardware Information",
-    
+
     // 用户界面
     "welcome_title": "OCPP Charge Station",
     "welcome_text": "Herzlich Willkommen bei der Nutzung der OCPP-Ladesäule, einer Ladestationssoftware, die auf dem OCPP-Protokoll basiert.",
@@ -37,6 +37,15 @@ const lang_pkg_de = {
     "home_charging_status": "Lade-Status",
     "stop": "STOP",
     // 手动输入
+    "system_operation_question_title": "Systembetrieb",
+    "system_operation_question": "Möchten Sie das System neu starten oder herunterfahren?",
+    "system_operation_reboot_text": "Neustart",
+    "system_operation_shutdown_text": "Herunterfahren",
+    "system_operation_cancel_text": "Abbrechen",
+    "reboot_question": "Möchten Sie das System wirklich neu starten?",
+    "shutdown_question": "Möchten Sie das System wirklich herunterfahren?<br>Das Programm wird beendet!<br>Wenn Sie es erneut starten möchten, verwenden Sie bitte JupyterLab unter:<br>http://respberrypi.local:8888/lab",
+    "logout_question_2": "Bitte bestätigen Sie erneut das Herunterfahren des Systems.<br>Wenn Sie es erneut starten möchten, verwenden Sie bitte JupyterLab unter:<br>http://respberrypi.local:8888/lab",
+    "shutdown_message": "Das System wird jetzt heruntergefahren.<br>Wenn Sie es erneut starten möchten, verwenden Sie bitte JupyterLab unter:<br>http://respberrypi.local:8888/lab",
     "implement": "Implementieren",
     "manual_stop": "STOP",
     "label_manual_target_energy": "Zielenergie(Wh)",
@@ -77,7 +86,19 @@ const lang_pkg_de = {
     "is_valid": "Gültig",
     "total": "Gesamt",
     "charged_energy": "Geladene Energie",
-    "Shelly_is_valid": "Shelly ist gültig"
-
-
+    "Shelly_is_valid": "Shelly ist gültig",
+    "register_description": "Registerbeschreibung",
+    "reg_description": {
+        "1000": "[R/W] Tatsächlich konfigurierte Stromstärke",
+        "1001": "[R] Tatsächlich ausgegebene Stromstärke",
+        "1002": "[R] Fahrzeugstatus",
+        "1003": "[R] PP-Strombegrenzung",
+        "1004": "[R/W] Befehl(ein/ausschalten)",
+        "1006": "[R] EVSE-Status",
+        "1008": "[R] Fehler-Zeitüberschreitung",
+        "1009": "[R] Selbsttest-Zeitüberschreitung",
+        "2000": "[R/W] Standardstromwert",
+        "2001": "[R/W] Slave-Adresse",
+        "2002": "[R/W] Minimale Stromstärke",
+    },
 }

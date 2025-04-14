@@ -7,9 +7,12 @@ from ._Charge_Unit import *
 from ._Thread_Polling_EVSE import PollingEVSE
 from ._Thread_Polling_Shelly import PollingShelly
 from ._Data_Collector import DataCollector
+from ._Thread_Detection_Button import *
+import atexit
+import signal
 # import RPi
-# from gpiozero import Button
-from ._test_Module import Button
+from gpiozero import Button, LED
+# from ._test_Module import Button, LED
 
 _log = Log.GPIO
 
@@ -18,6 +21,8 @@ class GPIOManager:
 
     def __init__(self):
         self.__data_collector: DataCollector = DataCollector(self, GPIOParams.DATACOLLECTOR_DATA_INTERVAL, GPIOParams.DATACOLLECTOR_FIG_INTERVAL)
+        atexit.register(self.stop)
+        signal.signal(signal.SIGTERM, self.stop)
         self.__charge_units_dict = {}
         self.__signal_GPIO_info: XSignal = XSignal()
         for item in GPIOParams.CHARGE_UNITS:
@@ -46,17 +51,27 @@ class GPIOManager:
         # RPi.GPIO.add_event_detect(BTN_START, RPi.GPIO.FALLING, callback=self.__on_start_button_pressed, bouncetime=GPIOParams.BOUNCETIME)
         # RPi.GPIO.add_event_detect(BTN_STOP, RPi.GPIO.FALLING, callback=self.__on_stop_button_pressed, bouncetime=GPIOParams.BOUNCETIME)
 
-        BTN_START = Button(RaspPins.BCM_PIN_24, pull_up=True)
-        BTN_STOP = Button(RaspPins.BCM_PIN_25, pull_up=True)
-        BTN_START.when_activated = self.__on_start_button_pressed
-        BTN_STOP.when_activated = self.__on_stop_button_pressed
+        BTN_START = Button(RaspPins.BCM_PIN_20, pull_up=True)
+        BTN_STOP = Button(RaspPins.BCM_PIN_21, pull_up=True)
+        self.__button_led = LED(RaspPins.BCM_PIN_25)
+        self.__thread_detection_button_start = DetectionButton('start', button=BTN_START)
+        self.__thread_detection_button_stop = DetectionButton('start', button=BTN_STOP)
+        self.__thread_detection_button_start.pressed.connect(self.__on_start_button_pressed)
+        self.__thread_detection_button_stop.pressed.connect(self.__on_stop_button_pressed)
+        self.__thread_detection_button_start.start()
+        self.__thread_detection_button_stop.start()
 
     def stop(self):
         if self.__thread_polling_evse.is_alive():
             self.__thread_polling_evse.stop()
         if self.__thread_polling_shelly.is_alive():
             self.__thread_polling_shelly.stop()
+        if self.__thread_detection_button_start.is_alive():
+            self.__thread_detection_button_start.stop()
+        if self.__thread_detection_button_stop.is_alive():
+            self.__thread_detection_button_stop.stop()
         self.__data_collector.stop()
+        self.__set_enable_button_LED(False)
 
     def __del__(self):
         self.stop()
@@ -117,6 +132,13 @@ class GPIOManager:
     def listening_start(self) -> None:
         self.__thread_polling_evse.start()
         self.__thread_polling_shelly.start()
+        self.__set_enable_button_LED(True)
+
+    def __set_enable_button_LED(self, enable: bool) -> None:
+        if enable:
+            self.__button_led.on()
+        else:
+            self.__button_led.off()
 
     def __send_request_charge_plan_calibration(self, request_dict: dict) -> None:
         if self.__timer_send_requeset_calibration.is_alive():
@@ -134,7 +156,8 @@ class GPIOManager:
             self.__signal_request_charge_plan_calibration.emit(self.__request_waiting_list.pop(0))
             self.__timer_send_requeset_calibration.start()
 
-    def __on_start_button_pressed(self):
+    def __on_start_button_pressed(self, isPressed: bool):
+        _log.warning('Button Start pressed')
         for unit in self.__charge_units_dict.values():
             unit: ChargeUnit
             if unit.hasChargePlan:
@@ -143,7 +166,8 @@ class GPIOManager:
                 enableDirectCharge: bool = True
             unit.start_charging(enableDirectCharge)
 
-    def __on_stop_button_pressed(self):
+    def __on_stop_button_pressed(self, isPressed: bool):
+        _log.warning('Button Stop pressed')
         for unit in self.__charge_units_dict.values():
             unit: ChargeUnit
             unit.stop_charging()

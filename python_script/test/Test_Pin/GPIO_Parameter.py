@@ -3,10 +3,10 @@ GPIO 枚举类
 
 
 """
-from const.Analog_Define import AnalogDefine
+from DToolslib import *
 
 
-class EVSERegAddress(AnalogDefine):
+class EVSERegAddress(StaticEnum):
     CONFIGURED_AMPS = 1000
     AMPS_OUTPUT = 1001
     VEHICLE_STATE = 1002
@@ -38,7 +38,7 @@ class EVSERegAddress(AnalogDefine):
     AMPS8 = 2017
 
 
-class GPIOParams(AnalogDefine):
+class GPIOParams(StaticEnum):
     VENDOR_ID = 'Darmstadt'
     MESSAGE_SEND_INTERVAL = 60  # seconds
     CHARGE_UNITS = [
@@ -51,7 +51,7 @@ class GPIOParams(AnalogDefine):
         # (0, '192.168.1.100'),
         # (1, 'url1'),
     ]
-    DO_USE_RCD: bool = False
+    DO_USE_RCD: bool = 0
     MAX_VOLTAGE = 230
     SELF_CHECK_TIMEOUT = -31
     """ EVSE 自检时间, 单位: 秒. 该值必须 >=30 秒, 否则自检将不会启动 """
@@ -85,12 +85,12 @@ class GPIOParams(AnalogDefine):
     ]
 
 
-class ResultFlag(AnalogDefine):
+class ResultFlag(StaticEnum):
     SUCCESS = 0
     FAIL = 1
 
 
-class VehicleState(AnalogDefine):
+class VehicleState(StaticEnum):
     READY = 1  # 准备就绪, 可以开始充电
     EV_IS_PRESENT = 2  # 车辆已插入
     CHARGING = 3  # 充电中
@@ -99,7 +99,7 @@ class VehicleState(AnalogDefine):
     CRITICAL = 666  # 严重故障
 
 
-class EVSEErrorInfo(AnalogDefine):
+class EVSEErrorInfo(StaticEnum):
     RELAY_OFF = 'Relay Off'
     RELAY_ON = 'Relay On'
     DIODE_CHECK_FAIL = 'diode Check Fail'
@@ -111,7 +111,7 @@ class EVSEErrorInfo(AnalogDefine):
     WRITE_ERROR = 'Write Error'
 
 
-class RaspPins(AnalogDefine):
+class RaspPins(StaticEnum):
     POWER_3V3_0 = 1
     POWER_5V_0 = 2
     GPIO_2 = 3
@@ -183,7 +183,7 @@ class RaspPins(AnalogDefine):
     BCM_PIN_27 = 27
 
 
-class ModbusParams(AnalogDefine):
+class ModbusParams(StaticEnum):
     PORT = '/dev/ttyS0'  # 串口号
     BAUDRATE = 9600  # 波特率
     PARITY = 'N'  # 无校验位
@@ -193,14 +193,14 @@ class ModbusParams(AnalogDefine):
     RETRIES = 10  # 重试次数
 
 
-class BitsFlag(AnalogDefine):
+class BitsFlag(StaticEnum):
 
-    class _REG1004(AnalogDefine):
+    class _REG1004(StaticEnum):
         TURN_OFF_CHARGING_NOW: int = 1 << 0
         SELFTEST_RCDTEST: int = 1 << 1
         CLEAR_RCD_ERROR: int = 1 << 2
 
-    class _REG1007(AnalogDefine):
+    class _REG1007(StaticEnum):
         """
         EVSE status and fails:
             bit0: relay on/off (暂定0 = on, 1 = off)
@@ -217,7 +217,7 @@ class BitsFlag(AnalogDefine):
         WAITING_FOR_PILOT_RELEASE: int = 1 << 3
         RCD_CHECK_ERROR: int = 1 << 4
 
-    class _REG2005(AnalogDefine):
+    class _REG2005(StaticEnum):
         ENABLE_BUTTON: int = 1 << 0
         ENABLE_STOP_BUTTON: int = 1 << 1
         PILOT_READE_LED: int = 1 << 2
