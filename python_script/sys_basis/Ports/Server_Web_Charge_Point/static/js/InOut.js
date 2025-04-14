@@ -16,7 +16,8 @@ socket.on('redirect_to_login', () => {
 
 const logout_button = document.getElementById('logout');
 logout_button.addEventListener('click', () => {
-    socket.emit('logout');
+    // socket.emit('logout');
+    socket.emit('input_data', {'logout': true});
 })
 
 // const test_btn = document.getElementById('test_btn');

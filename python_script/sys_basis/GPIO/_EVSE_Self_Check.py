@@ -16,7 +16,7 @@ class EVSESelfCheck(Thread):
     isChecking = False
 
     def __init__(self, id: int, doUseRCD: bool = False):
-        super().__init__()
+        super().__init__(name='EVSESelfCheck')
         self.__id: int = id
         self.__doUseRCD: bool = doUseRCD
         if doUseRCD:

@@ -8,7 +8,8 @@ from ._Thread_Polling_EVSE import PollingEVSE
 from ._Thread_Polling_Shelly import PollingShelly
 from ._Data_Collector import DataCollector
 # import RPi
-from gpiozero import Button
+# from gpiozero import Button
+from ._test_Module import Button
 
 _log = Log.GPIO
 
@@ -28,7 +29,9 @@ class GPIOManager:
 
         self.__thread_polling_evse: PollingEVSE = PollingEVSE(self, self.__charge_units_dict, GPIOParams.POLLING_EVSE_INTERVAL)
         self.__thread_polling_shelly: PollingShelly = PollingShelly(self, self.__charge_units_dict, GPIOParams.POLLING_SHELLY_INTERVAL, GPIOParams.POLLING_SHELLY_TIMEOUT)
-        self.__timer_send_requeset_calibration: threading.Timer = threading.Timer(GPIOParams.REQUEST_INTERVAL, self.__execute_on_send_request_calibration_timer)
+        self.__timer_send_requeset_calibration: threading.Timer = threading.Timer(
+            GPIOParams.REQUEST_INTERVAL, self.__execute_on_send_request_calibration_timer)
+        self.__timer_send_requeset_calibration.name = 'GPIOManager.TimerSendRequestCalibration'
 
         self.__signal_request_charge_plan_calibration: XSignal = XSignal()
         self.__request_waiting_list: list = []
@@ -43,14 +46,16 @@ class GPIOManager:
         # RPi.GPIO.add_event_detect(BTN_START, RPi.GPIO.FALLING, callback=self.__on_start_button_pressed, bouncetime=GPIOParams.BOUNCETIME)
         # RPi.GPIO.add_event_detect(BTN_STOP, RPi.GPIO.FALLING, callback=self.__on_stop_button_pressed, bouncetime=GPIOParams.BOUNCETIME)
 
-        BTN_START = Button(RaspPins.BCM_PIN_5)
-        BTN_STOP = Button(RaspPins.BCM_PIN_6)
+        BTN_START = Button(RaspPins.BCM_PIN_24, pull_up=True)
+        BTN_STOP = Button(RaspPins.BCM_PIN_25, pull_up=True)
         BTN_START.when_activated = self.__on_start_button_pressed
         BTN_STOP.when_activated = self.__on_stop_button_pressed
 
     def stop(self):
-        self.__thread_polling_evse.stop()
-        self.__thread_polling_shelly.stop()
+        if self.__thread_polling_evse.is_alive():
+            self.__thread_polling_evse.stop()
+        if self.__thread_polling_shelly.is_alive():
+            self.__thread_polling_shelly.stop()
         self.__data_collector.stop()
 
     def __del__(self):
@@ -119,10 +124,12 @@ class GPIOManager:
         else:
             self.__signal_request_charge_plan_calibration.emit(request_dict)
             self.__timer_send_requeset_calibration = threading.Timer(GPIOParams.REQUEST_INTERVAL, self.__execute_on_send_request_calibration_timer)
+            self.__timer_send_requeset_calibration.name = 'GPIOManager.TimerSendRequestCalibration'
             self.__timer_send_requeset_calibration.start()
 
     def __execute_on_send_request_calibration_timer(self) -> None:
         self.__timer_send_requeset_calibration = threading.Timer(GPIOParams.REQUEST_INTERVAL, self.__execute_on_send_request_calibration_timer)
+        self.__timer_send_requeset_calibration.name = 'GPIOManager.TimerSendRequestCalibration'
         if len(self.__request_waiting_list) > 0:
             self.__signal_request_charge_plan_calibration.emit(self.__request_waiting_list.pop(0))
             self.__timer_send_requeset_calibration.start()

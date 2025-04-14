@@ -188,7 +188,16 @@ function loadWatchingData(data) {
     watcher_contain.innerHTML = '';
 
     if (!data) return;
-
+    console.log(data);
+    console.log(data.current_time);
+    if (data.current_time) {
+        const watchingDataTime = document.createElement('h1');
+        watchingDataTime.innerHTML = data.current_time;
+        // watchingDataTime.style.textAlign = 'center';
+        watchingDataTime.style.marginBottom = '20px';
+        watchingDataTime.style.fontSize = '20px';
+        watcher_contain.appendChild(watchingDataTime);
+    }
     // ========== EVSE 部分 ==========
     if (data.evse) {
         const evseTitle = document.createElement('h3');
@@ -257,6 +266,13 @@ function loadWatchingData(data) {
         shellyTitle.textContent = lang_dict.Shelly_data;
         watcher_contain.appendChild(shellyTitle);
 
+        // 添加额外信息：charged_energy 和 overall is_valid
+        const extraInfo = document.createElement('div');
+        extraInfo.style.marginTop = "10px";
+        extraInfo.innerHTML = `<p><strong>${lang_dict.charged_energy}:</strong> ${data.shelly.charged_energy}</p>` +
+            `<p><strong>${lang_dict.Shelly_is_valid}:</strong> ${data.shelly.is_valid}</p>`
+        watcher_contain.appendChild(extraInfo);
+
         const shellyTable = document.createElement('table');
         shellyTable.style.borderCollapse = 'collapse';
         shellyTable.style.width = '100%';
@@ -306,12 +322,6 @@ function loadWatchingData(data) {
         shellyTable.appendChild(shellyTbody);
         watcher_contain.appendChild(shellyTable);
 
-        // 添加额外信息：charged_energy 和 overall is_valid
-        const extraInfo = document.createElement('div');
-        extraInfo.style.marginTop = "10px";
-        extraInfo.innerHTML = `
-    <p><strong>${lang_dict.charged_energy}:</strong> ${data.shelly.charged_energy}</p>
-    <p><strong>${lang_dict.Shelly_is_valid}:</strong> ${data.shelly.is_valid}</p>`
-        watcher_contain.appendChild(extraInfo);
+        
     }
 }

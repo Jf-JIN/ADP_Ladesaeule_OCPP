@@ -73,6 +73,7 @@ class ChargeUnit:
         self.__voltage_max: int = GPIOParams.MAX_VOLTAGE
         #
         self.__timer: threading.Timer = threading.Timer(99, self.__charging)
+        self.__timer.name = f'ChargeUnit<{self.__id}>'
         """ 充电计划定时器, 用于限制每个充电计划表项的执行时间, 确保不会超过计划表项的执行时间 """
         self.__finished_plan: list[dict] = []
         """ 已完成的充电计划项 """
@@ -334,6 +335,7 @@ EVSE State abnormal, Unable to start charging (correct value)
             lag_sec = plan_timestamp - current_timestamp
             _log.info(f'当前时间早于计划时间, 需要等待 {lag_sec} 秒\nThe current time is earlier than the planned time, you need to wait for {lag_sec} seconds')
             self.__timer = threading.Timer(lag_sec, self.__charging_initial)
+            self.__timer.name = f'ChargeUnit<{self.__id}>.executeStartCharging'
             self.__timer.start()
         else:
             # 当前时间晚于计划时间, 需要扣除迟滞时间
@@ -361,13 +363,17 @@ EVSE State abnormal, Unable to start charging (correct value)
             # 执行上锁操作, 执行条件: 1.当前未上锁 2. 首次执行充电 3.电机运行时间大于0
             self.__latch_motor.lock()
             _log.info('开始执行上锁\nStart locking')
-            threading.Timer(GPIOParams.LETCH_MOTOR_RUNTIME+0.5, self.__charging_initial).start()
+            t = threading.Timer(GPIOParams.LETCH_MOTOR_RUNTIME+0.5, self.__charging_initial)
+            t.name = f'ChargeUnit<{self.__id}>.chargingInitial_latchMotor'
+            t.start()
             return
         if not self.__isEVSESelfTested and self.__isFistTimeChanging and GPIOParams.SELF_CHECK_TIMEOUT >= 30:
             # 执行自检操作, 执行条件: 1.当前未自检 2. 首次执行充电 3.自检超时时间大于等于30s
             _log.info('开始执行evse自检\nStart EVSE self-check')
             self.__evse.start_self_check()
-            threading.Timer(GPIOParams.SELF_CHECK_TIMEOUT+0.5, self.__charging_initial).start()
+            t = threading.Timer(GPIOParams.SELF_CHECK_TIMEOUT+0.5, self.__charging_initial)
+            t.name = f'ChargeUnit<{self.__id}>.chargingInitial_evseSelfCheck'
+            t.start()
             return
         _log.info('已完成充电前的上锁及EVSE自检\nThe lock and EVSE self -inspection before the charging')
         if self.__enableDirectCharge:
@@ -483,6 +489,7 @@ The charging unit is not executable (correct value)
                 _log.error("Error setting charging current")
                 return False
             self.__timer = threading.Timer(phase1_fill_time, self.__charging)
+            self.__timer.name = f'ChargeUnit<{self.__id}>.charging'
             self.__timer.start()
             _log.info('充电时间同步完成, 开始等待至第一个周期开始\nThe charging time synchronization is completed, starting to wait for the first cycle')
             self.__isFistTimeChanging = False
@@ -520,6 +527,7 @@ The charging unit is not executable (correct value)
             _log.error("设置充电电流错误\nError setting charging current")
             return False
         self.__timer = threading.Timer(charge_duration_sec, self.__charging)
+        self.__timer.name = f'ChargeUnit<{self.__id}>.charging'
         self.__timer.start()
         return True
 

@@ -121,8 +121,8 @@ class WebSocketServer(object):
         关闭连接
         """
         if self.__server:
-            await self.__server.close()
-            await self.__server.wait_closed()
+            self.__server.close()
+            self.__server.wait_closed()
         self.__send_signal_info('--<WebSocket_Closed>')
 
     async def __handle_client(self, websocket: ServerConnection) -> None:

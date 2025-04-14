@@ -14,11 +14,7 @@ class main(object):
 
         # 注册退出处理
         atexit.register(self.cleanup)
-
-        # 处理信号
-        signals = (signal.SIGTERM, signal.SIGINT)
-        for sig in signals:
-            signal.signal(sig, self.signal_handler)
+        signal.signal(signal.SIGTERM, self.signal_handler)
 
         # 跨平台处理
         if sys.platform == 'win32':
@@ -33,6 +29,7 @@ class main(object):
         self.cleanup()
 
     def cleanup(self):
+        print('cleanup')
         if self._exit_flag:
             return
         self._exit_flag = True

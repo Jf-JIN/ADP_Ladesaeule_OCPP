@@ -2,8 +2,8 @@
 # from __future__ import annotations
 import threading
 
-from gpiozero import LED  # 用于正常使用
-# from ._LED import LED  # 用于测试
+# from gpiozero import LED  # 用于正常使用
+from ._LED import LED  # 用于测试
 from const.GPIO_Parameter import *
 from const.Const_Parameter import *
 from const.Const_Logger import *
@@ -97,7 +97,6 @@ class LatchMotor:
         self.__timer = threading.Timer(self.__timer_intervall, self.__off_unlock_pin)
         _log.info("unlocked")
 
-        
     def stop(self) -> None:
         self.__lock_pin.off()
         self.__unlock_pin.off()

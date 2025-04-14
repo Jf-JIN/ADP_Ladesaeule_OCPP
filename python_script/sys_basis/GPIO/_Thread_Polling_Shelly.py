@@ -17,7 +17,7 @@ _log = Log.SHELLY
 
 class PollingShelly(Thread):
     def __init__(self, parent: GPIOManager, charge_unit_dict: dict, intervall: int | float, timeout: int | float) -> None:
-        super().__init__()
+        super().__init__(name='PollingShelly')
         self.__parent: GPIOManager = parent
         self.__shelly_list: list = []
         for item in charge_unit_dict.values():
@@ -135,7 +135,10 @@ class PollingShelly(Thread):
                     'charged_energy': 0,
                     'is_valid': False,
                 }
-                _log.exception(f'Shelly read exception: {e}')
+                if isinstance(e, requests.exceptions.ConnectionError):
+                    _log.error(f'Shelly is not connected: {e}')
+                else:
+                    _log.exception('Shelly read exception')
             shelly.set_data(shelly_data)
             self.__data_collector.set_shelly_data(shelly_id, shelly_data)
             self.__current_index = (self.__current_index + 1) % self.__shelly_quantity

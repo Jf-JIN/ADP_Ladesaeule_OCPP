@@ -172,7 +172,8 @@ class ModbusHandler(object):
             - 当读取过程中发生任何异常时, 会被捕获并返回 None.
         """
         try:
-            result: ModbusPDU = self.__client.read_holding_registers(address=address, slave=self.__id)
+            # result: ModbusPDU = self.__client.read_holding_registers(address=address, slave=self.__id)
+            result = {}
             return ModbusDataStruct(result)
         except Exception as e:
             _log.exception(f'ModbusIO read error: {e}\naddress: {address}')

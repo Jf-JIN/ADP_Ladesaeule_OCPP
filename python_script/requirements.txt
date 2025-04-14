@@ -2,7 +2,7 @@ flask
 flask_socketio
 websockets
 wrapt
-ocpp
+ocpp==1.0.0
 requests
 serial
 pymodbus
@@ -10,3 +10,4 @@ pyserial
 matplotlib
 scienceplots
 DToolslib
+pytz

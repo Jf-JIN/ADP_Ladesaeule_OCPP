@@ -53,9 +53,16 @@ class Client:
         self.manager_coroutines = ManagerCoroutines(self.coroutine_OCPP_client, self.coroutine_gui_websocket_server)
 
     def stop(self):
-        self.GPIO_Manager.stop()
-        self.thread_web_server.stop()
-        self.manager_coroutines.stop()
+        if hasattr(self, 'GPIO_Manager'):
+            self.GPIO_Manager.stop()
+            # self.GPIO_Manager = None
+        if hasattr(self, 'thread_web_server'):
+            self.thread_web_server.stop()
+            # self.thread_web_server = None
+        if hasattr(self, 'manager_coroutines'):
+            self.manager_coroutines.stop()
+            # self.manager_coroutines = None
+        # os._exit(0)
 
     def __del__(self):
         self.stop()
@@ -178,26 +185,41 @@ class Client:
         """
         处理 Web端 消息
         """
-        def handle_web_charge_request(request_message):
-            _log.debug(f"收到充电请求 Receive charging request:\n{request_message}")
-            evse_id = int(request_message['evse_id'])
-            mode = int(request_message['charge_mode'])
-            if mode >= 0:
-                energy_amount = int(request_message['charge_power'])
-                depart_time = request_message['depart_time']
-            else:
-                energy_amount = 0
-                depart_time = ''
-            if evse_id not in self.GPIO_Manager.data_collector.available_charge_units_id_set:
-                self.send_web_error_message('EVSE_ID不可用\nevse_id is not available')
-                return
-            charge_unit: ChargeUnit = self.GPIO_Manager.get_charge_unit(evse_id)
-            if not charge_unit.isAvailabel:
-                self.send_web_error_message('充电单元不可用\ncharge_unit is not available')
-                return
-            current_limit_list = self.GPIO_Manager.get_current_limit(evse_id)
-            voltage_max = self.GPIO_Manager.get_voltage_max(evse_id)
-            _log.info(f""" \
+        _log.debug(f'接收消息\nReceiving message\n{web_message}')
+        handle_dict = {
+            # 接收的消息标签: (给Web发送消息的标签, 处理函数)
+            'charge_request': self.web_handle_charge_request,
+            'charge_now': self.web_handle_charge_now,
+            'stop': self.web_handle_charge_stop,
+            'reset_raspberry_pi_no_error': self.web_handle_reset_no_error,
+            'manual_input': self.web_handle_manual_input,
+            'manual_input_csv': self.web_handle_manual_input_csv,
+            'logout': self.web_handle_logout,
+        }
+        for key, value in handle_dict.items():
+            if key in web_message:
+                value(web_message[key])
+
+    def web_handle_charge_request(self, request_message):
+        _log.debug(f"收到充电请求 Receive charging request:\n{request_message}")
+        evse_id = int(request_message['evse_id'])
+        mode = int(request_message['charge_mode'])
+        if mode >= 0:
+            energy_amount = int(request_message['charge_power'])
+            depart_time = request_message['depart_time']
+        else:
+            energy_amount = 0
+            depart_time = ''
+        if evse_id not in self.GPIO_Manager.data_collector.available_charge_units_id_set:
+            self.send_web_error_message('EVSE_ID不可用\nevse_id is not available')
+            return
+        charge_unit: ChargeUnit = self.GPIO_Manager.get_charge_unit(evse_id)
+        if not charge_unit.isAvailabel:
+            self.send_web_error_message('充电单元不可用\ncharge_unit is not available')
+            return
+        current_limit_list = self.GPIO_Manager.get_current_limit(evse_id)
+        voltage_max = self.GPIO_Manager.get_voltage_max(evse_id)
+        _log.info(f""" \
 已获取 Obtain
 evse_id:{evse_id},
 energy_amount: {energy_amount},
@@ -206,119 +228,111 @@ mode:{mode},
 current_limit_list:{current_limit_list},
 voltage_max:{voltage_max}
 """)
-            if current_limit_list is None or len(current_limit_list) == 0:
-                self.send_web_error_message('获取电流限制错误\nget current_limit error')
-                return
-            self.__cp_info_dict[evse_id] = {
-                'target_energy': energy_amount,
-                'depart_time': depart_time,
-                'custom_data': {"vendor_id": GPIOParams.VENDOR_ID, "mode": mode},
-            }
-            try:
-                g = GenNotifyEVChargingNeedsRequest
-                self.coroutine_OCPP_client.send_request_message(
-                    g.generate(
-                        evse_id=evse_id,
-                        charging_needs=g.get_charging_needs(
-                            requested_energy_transfer=EnergyTransferModeType.ac_three_phase,
-                            ac_charging_parameters=g.get_ac_charging_parameters(
-                                energy_amount=energy_amount,
-                                ev_max_voltage=voltage_max,
-                                ev_max_current=current_limit_list[1],
-                                ev_min_current=current_limit_list[0],
-                            ),
-                            departure_time=depart_time,
-                        ),
-                        custom_data=g.get_custom_data(vendor_id=GPIOParams.VENDOR_ID, mode=mode)
-                    )
-                )
-            except:
-                _log.exception()
-                self.send_web_error_message('充电请求失败\nCharging request failed')
-
-        def handle_charge_now(charge_now_dict: dict):
-            _log.debug(f'收到立即充电请求:\nReceive the immediately charging request\n{charge_now_dict}')
-            evse_id = int(charge_now_dict['evse_id'])
-            charge_mode = int(charge_now_dict['charge_mode'])
-            if charge_mode == -1:
-                enableDirectCharge = True
-            else:
-                enableDirectCharge = False
-            res = self.GPIO_Manager.get_charge_unit(evse_id).start_charging(enableDirectCharge)
-            if not res:
-                _log.error('立即充电失败\nimmediately charging failed')
-
-        def handle_charge_stop(charge_stop_dict: dict):
-            _log.info(f'收到停止充电请求:\nReceive the stop charging request\n{charge_stop_dict}')
-            evse_id = int(charge_stop_dict['evse_id'])
-            self.GPIO_Manager.get_charge_unit(evse_id).stop_charging()
-
-        def handle_reset_no_error(charge_stop_dict: dict):
-            _log.info(f'收到重置请求:\nReceive the reset request\n{charge_stop_dict}')
-            evse_id = int(charge_stop_dict['evse_id'])
-            self.GPIO_Manager.get_charge_unit(evse_id).clear_error()
-
-        def handle_manual_input(manual_input_dict: dict):
-            _log.info(f'收到手动输入请求:\nReceive the manual input request\n{manual_input_dict}')
-            if not manual_input_dict:
-                _log.warning('手动输入请求为空\nManual input request is empty')
-                self.send_web_alert_message('手动输入请求为空\nManual input request is empty', 'warning')
-            data: dict | None = CSVLoader.getData()
-            if not data:
-                self.send_web_alert_message('未上传文件\nhas not uploaded the file', 'warning')
-                _log.warning(f'未上传文件\nhas not uploaded the file')
-                return
-            evse_id = int(data.get('evseId', -1))
-            if evse_id < 0 or evse_id not in self.GPIO_Manager.charge_units_dict:
-                id_list = list(self.GPIO_Manager.charge_units_dict.keys())
-                self.send_web_error_message(f'EVSE ID 错误, 可用ID {id_list}\nEVSE ID error, available ID {id_list}')
-                return
-            if evse_id not in self.__cp_info_dict:
-                self.__cp_info_dict[evse_id] = {
-                    'target_energy': float(manual_input_dict.get('target_energy', 0)),
-                    'depart_time': manual_input_dict.get('target_energy', datetime.now().replace(microsecond=0).isoformat() + 'Z'),
-                    'custom_data': {"vendor_id": GPIOParams.VENDOR_ID, "mode": 0},
-                }
-            res: bool = self.GPIO_Manager.set_charge_plan(
-                data=data,
-                target_energy=self.__cp_info_dict[evse_id]['target_energy'],
-                depart_time=self.__cp_info_dict[evse_id]['depart_time'],
-                custom_data=self.__cp_info_dict[evse_id]['custom_data'],
-                isManual=True
-            )
-            if not res:
-                self.send_web_error_message('设置充电计划失败\nSet up the charging plan failed')
-                return
-            self.GPIO_Manager.get_charge_unit(evse_id).start_charging()
-
-        def handle_manual_input_csv(csv_file) -> None:
-            csv_file = csv_file['data']
-            if not csv_file:
-                return
-            if csv_file == 'clear':
-                if not CSVLoader.getData():
-                    return
-                CSVLoader.clear()
-                self.send_web_alert_message('已清空充电计划CSV文件\nThe charging plan CSV file has been cleared', 'success')
-                return
-            res = CSVLoader.loadCSV(csv_file)
-            if isinstance(res, str):
-                self.send_web_error_message('CSV文件格式错误\nCSV file format error\n\n'+res)
-                return
-
-        _log.debug(f'接收消息\nReceiving message\n{web_message}')
-        handle_dict = {
-            # 接收的消息标签: (给Web发送消息的标签, 处理函数)
-            'charge_request': handle_web_charge_request,
-            'charge_now': handle_charge_now,
-            'stop': handle_charge_stop,
-            'reset_raspberry_pi_no_error': handle_reset_no_error,
-            'manual_input': handle_manual_input,
-            'manual_input_csv': handle_manual_input_csv,
+        if current_limit_list is None or len(current_limit_list) == 0:
+            self.send_web_error_message('获取电流限制错误\nget current_limit error')
+            return
+        self.__cp_info_dict[evse_id] = {
+            'target_energy': energy_amount,
+            'depart_time': depart_time,
+            'custom_data': {"vendor_id": GPIOParams.VENDOR_ID, "mode": mode},
         }
-        for key, value in handle_dict.items():
-            if key in web_message:
-                value(web_message[key])
+        try:
+            g = GenNotifyEVChargingNeedsRequest
+            self.coroutine_OCPP_client.send_request_message(
+                g.generate(
+                    evse_id=evse_id,
+                    charging_needs=g.get_charging_needs(
+                        requested_energy_transfer=EnergyTransferModeType.ac_three_phase,
+                        ac_charging_parameters=g.get_ac_charging_parameters(
+                            energy_amount=energy_amount,
+                            ev_max_voltage=voltage_max,
+                            ev_max_current=current_limit_list[1],
+                            ev_min_current=current_limit_list[0],
+                        ),
+                        departure_time=depart_time,
+                    ),
+                    custom_data=g.get_custom_data(vendor_id=GPIOParams.VENDOR_ID, mode=mode)
+                )
+            )
+        except:
+            _log.exception()
+            self.send_web_error_message('充电请求失败\nCharging request failed')
+
+    def web_handle_charge_now(self, charge_now_dict: dict):
+        _log.debug(f'收到立即充电请求:\nReceive the immediately charging request\n{charge_now_dict}')
+        evse_id = int(charge_now_dict['evse_id'])
+        charge_mode = int(charge_now_dict['charge_mode'])
+        if charge_mode == -1:
+            enableDirectCharge = True
+        else:
+            enableDirectCharge = False
+        res = self.GPIO_Manager.get_charge_unit(evse_id).start_charging(enableDirectCharge)
+        if not res:
+            _log.error('立即充电失败\nimmediately charging failed')
+
+    def web_handle_charge_stop(self, charge_stop_dict: dict):
+        _log.info(f'收到停止充电请求:\nReceive the stop charging request\n{charge_stop_dict}')
+        evse_id = int(charge_stop_dict['evse_id'])
+        self.GPIO_Manager.get_charge_unit(evse_id).stop_charging()
+
+    def web_handle_reset_no_error(self, charge_stop_dict: dict):
+        _log.info(f'收到重置请求:\nReceive the reset request\n{charge_stop_dict}')
+        evse_id = int(charge_stop_dict['evse_id'])
+        self.GPIO_Manager.get_charge_unit(evse_id).clear_error()
+
+    def web_handle_manual_input(self, manual_input_dict: dict):
+        _log.info(f'收到手动输入请求:\nReceive the manual input request\n{manual_input_dict}')
+        if not manual_input_dict:
+            _log.warning('手动输入请求为空\nManual input request is empty')
+            self.send_web_alert_message('手动输入请求为空\nManual input request is empty', 'warning')
+        data: dict | None = CSVLoader.getData()
+        if not data:
+            self.send_web_alert_message('未上传文件\nhas not uploaded the file', 'warning')
+            _log.warning(f'未上传文件\nhas not uploaded the file')
+            return
+        evse_id = int(data.get('evseId', -1))
+        if evse_id < 0 or evse_id not in self.GPIO_Manager.charge_units_dict:
+            id_list = list(self.GPIO_Manager.charge_units_dict.keys())
+            self.send_web_error_message(f'EVSE ID 错误, 可用ID {id_list}\nEVSE ID error, available ID {id_list}')
+            return
+        if evse_id not in self.__cp_info_dict:
+            self.__cp_info_dict[evse_id] = {
+                'target_energy': float(manual_input_dict.get('target_energy', 0)),
+                'depart_time': manual_input_dict.get('target_energy', datetime.now().replace(microsecond=0).isoformat() + 'Z'),
+                'custom_data': {"vendor_id": GPIOParams.VENDOR_ID, "mode": 0},
+            }
+        res: bool = self.GPIO_Manager.set_charge_plan(
+            data=data,
+            target_energy=self.__cp_info_dict[evse_id]['target_energy'],
+            depart_time=self.__cp_info_dict[evse_id]['depart_time'],
+            custom_data=self.__cp_info_dict[evse_id]['custom_data'],
+            isManual=True
+        )
+        if not res:
+            self.send_web_error_message('设置充电计划失败\nSet up the charging plan failed')
+            return
+        self.GPIO_Manager.get_charge_unit(evse_id).start_charging()
+
+    def web_handle_manual_input_csv(self, csv_file) -> None:
+        csv_file = csv_file['data']
+        if not csv_file:
+            return
+        if csv_file == 'clear':
+            if not CSVLoader.getData():
+                return
+            CSVLoader.clear()
+            self.send_web_alert_message('已清空充电计划CSV文件\nThe charging plan CSV file has been cleared', 'success')
+            return
+        res = CSVLoader.loadCSV(csv_file)
+        if isinstance(res, str):
+            self.send_web_error_message('CSV文件格式错误\nCSV file format error\n\n'+res)
+            return
+
+    def web_handle_logout(self, enable: bool) -> None:
+        _log.info(f'关闭程序 Close the Programm\t{enable}')
+        if enable:
+            self.stop()
+            sys.exit(0)
 
     def handle_computer_message(self, computer_message) -> None:
         """

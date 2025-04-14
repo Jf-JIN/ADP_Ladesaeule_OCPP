@@ -3,7 +3,7 @@ from __future__ import annotations
 import threading
 
 # from gpiozero import LED # 用于正常使用
-from ._LED import LED  # 用于测试
+from ._test_Module import LED  # 用于测试
 from const.GPIO_Parameter import *
 from const.Const_Parameter import *
 
@@ -29,8 +29,9 @@ class LatchMotor:
         self.__status_pin_lock: bool = False  # 电机上锁控制引脚的状态, 可表示电机是否在正转
         self.__status_pin_unlock: bool = False  # 电机解锁控制引脚的状态, 可表示电机是否在反转
         self.__lock_pin: LED = LED(RaspPins.BCM_PIN_23)  # 电机上锁控制引脚
-        self.__unlock_pin: LED = LED(RaspPins.BCM_PIN_24)  # 电机解锁控制引脚
+        self.__unlock_pin: LED = LED(RaspPins.BCM_PIN_22)  # 电机解锁控制引脚
         self.__timer: threading.Timer = threading.Timer(99, self.__off_lock_pin)
+        self.__timer.name = 'LatchMotor'
         self.__timer_intervall: int | float = GPIOParams.LETCH_MOTOR_RUNTIME  # 引脚状态转换的时间
 
     @property
@@ -62,6 +63,7 @@ class LatchMotor:
         self.__lock_pin.on()
         self.__status_pin_lock = True
         self.__timer = threading.Timer(self.__timer_intervall, self.__off_lock_pin)
+        self.__timer.name = 'LatchMotor'
         self.__timer.start()
 
     def unlock(self) -> None:
@@ -77,6 +79,7 @@ class LatchMotor:
         self.__lock_pin.off()
         self.__status_pin_lock = False
         self.__timer = threading.Timer(self.__timer_intervall, self.__off_unlock_pin)
+        self.__timer.name = 'LatchMotor'
         self.__timer.start()
 
     def stop(self) -> None:

@@ -8,12 +8,9 @@ from threading import Thread, Timer
 from sys_basis.XSignal import XSignal
 from const.Const_Parameter import *
 from datetime import datetime
+from tools.Inner_Decorators import *
 import requests
-import signal
-import atexit
-from const.Const_Parameter import *
-
-_log = Log.WEB
+from DToolslib import *
 
 
 class ServerWeb(Thread):
@@ -22,7 +19,6 @@ class ServerWeb(Thread):
         self.__host: str = host
         self.__port: int = port
         self.__app = Flask(__name__, static_folder='static', template_folder='templates')
-
         self.__app.config['SECRET_KEY'] = 'secret!'
         # self.__socketio = SocketIO(self.__app)
         self.__socketio = SocketIO()
@@ -43,21 +39,11 @@ class ServerWeb(Thread):
         self.__start_timer()
         self.__listening_input_data()
         self.__logout()
-        self.__shutdow_route()
         self.__ip_local: str = '127.0.0.1' if host == '0.0.0.0' else '[::1]'
         self.__ip_remote: str = serving.get_interface_ip(AddressFamily.AF_INET)
         self.__ip_local_address: str = f'http://{self.__ip_local}:{port}'
         self.__ip_remote_address: str = f'http://{self.__ip_remote}:{port}'
         self.__send_signal_info(f'Web Server started on \n\t- local : {self.__ip_local_address}\n\t- remote: {self.__ip_remote_address}')
-        atexit.register(self.cleanup)
-        signal.signal(signal.SIGTERM, self.signal_handler)
-
-    def cleanup(self):
-        self.update_data()
-
-    def signal_handler(self, signum, frame):
-        self.cleanup()
-        os._exit(0)
 
     @property
     def signal_web_server_info(self):
@@ -122,15 +108,6 @@ class ServerWeb(Thread):
             session.pop('logged_in', None)
             self.__socketio.emit('redirect_to_login', namespace='/')
 
-    def __shutdow_route(self):
-        @self.__app.route('/shutdown', methods=['POST'])
-        def shutdown():
-            func = request.environ.get('werkzeug.server.shutdown')
-            if func is None:
-                raise RuntimeError('Not running with the Werkzeug Server')
-            func()
-            return 'Server shutting down...'
-
     def __send_signal_info(self, *args) -> None:
         """
         发送/打印 信息信号
@@ -176,18 +153,11 @@ class ServerWeb(Thread):
                 log(error_text)
 
     def run(self):
-        # self.__app.run(host=self.__host, port=self.__port, debug=True, threaded=True, use_reloader=False)
+        self.__app.run(host=self.__host, port=self.__port, debug=False, threaded=True)
         # self.__socketio.run(self.__app, host=self.__host, port=self.__port, debug=False)
-        self.__app.run(host=self.__host, port=self.__port, debug=False, use_reloader=False)
 
     def stop(self):
-        try:
-            # requests.post(f'http://{self.__ip_local}:{self.__port}/shutdown')
-            # os.kill(os.getpid(), signal.SIGINT)
-            os.kill(os.getpid(), signal.SIGTERM)
-            # os.kill(os.getpid(), signal.SIGILL)
-        except Exception as e:
-            _log.exception(f'Error while sending shutdown request')
+        request.environ.get('werkzeug.server.shutdown')()
         self._stop_requested = True
         if hasattr(self, f'_{self.__class__.__name__}__timer') and self.__timer:
             self.__timer.cancel()

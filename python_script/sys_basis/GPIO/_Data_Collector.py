@@ -156,8 +156,11 @@ class DataCollector:
         self.__evse_data: dict = {}
         self.__shelly_data: dict = {}
         self.__timer_data: Timer = Timer(self.__interval_send_data, self.__send_display_data)
+        self.__timer_data.name = 'DataCollector.data'
         self.__timer_figure: Timer = Timer(self.__interval_send_fig, self.__send_figure_data)
+        self.__timer_figure.name = 'DataCollector.figure'
         self.__timer_watching: Timer = Timer(self.__interval_send_watching_data, self.__send_watchting_data)
+        self.__timer_watching.name = 'DataCollector.watching'
         self.__charging_units_id_set: set = set()
         self.__available_charge_units_id_set: set = set()
         self.__signal_DC_data_display: XSignal = XSignal()
@@ -171,6 +174,7 @@ class DataCollector:
     def stop(self) -> None:
         self.__timer_data.cancel()
         self.__timer_figure.cancel()
+        self.__timer_watching.cancel()
         self.__isRunning = False
 
     def __str__(self) -> str:
@@ -422,7 +426,7 @@ class DataCollector:
             shelly_charged_energy = shelly_data.get('charged_energy', 0)
             shelly_is_valid: bool = shelly_data.get('is_valid', False)
             data: dict = {
-                'current_time': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                'current_time': datetime.now().strftime('%Y-%m-%d | %H:%M:%S.%f')[:-3],
                 'evse': evse_data,
                 'shelly': {
                     "0": sehlly_0_data,
@@ -435,6 +439,7 @@ class DataCollector:
             # _log.info(data)
             self.signal_DC_watching_data_display.emit(data)
         self.__timer_watching = Timer(self.__interval_send_watching_data, self.__send_watchting_data)
+        self.__timer_watching.name = 'DataCollector.watching'
         self.__timer_watching.start()
 
     def __send_display_data(self) -> None:
@@ -447,6 +452,7 @@ class DataCollector:
         if data:
             self.__signal_DC_data_display.emit(data)
         self.__timer_data = Timer(self.__interval_send_data, self.__send_display_data)
+        self.__timer_data.name = 'DataCollector.data'
         self.__timer_data.start()
 
     def __send_figure_data(self) -> None:
@@ -496,4 +502,5 @@ class DataCollector:
         if self.__timer_figure.is_alive():
             self.__timer_figure.cancel()
         self.__timer_figure = Timer(self.__interval_send_fig, self.__send_figure_data)
+        self.__timer_figure.name = 'DataCollector.figure'
         self.__timer_figure.start()

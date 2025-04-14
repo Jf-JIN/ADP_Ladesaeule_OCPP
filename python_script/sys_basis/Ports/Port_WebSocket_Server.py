@@ -7,7 +7,7 @@ from sys_basis.XSignal import XSignal
 from sys_basis.Ports.Core_WebSocket.WebSocket_Server import WebSocketServer
 from const.Const_Parameter import *
 
-_info = Log.GUI.info
+_log = Log.GUI
 
 
 class PortWebSocketServer(object):
@@ -145,7 +145,10 @@ class PortWebSocketServer(object):
         当信息列表 __list_send_data 为空时, 将等待事件 __event_send_data 触发
         """
         while self.__isRunning:
-            await self.__event_send_data.wait()
+            try:
+                await self.__event_send_data.wait()
+            except asyncio.CancelledError:
+                _log.info('send_data cancelled')
             if not self.__isRunning:  # 提前终止
                 break
             if self.__list_send_data:

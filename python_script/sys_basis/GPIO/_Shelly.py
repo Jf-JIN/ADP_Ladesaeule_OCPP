@@ -4,7 +4,7 @@ from const.Const_Parameter import *
 import requests
 from sys_basis.XSignal import XSignal
 
-_info = Log.GPIO
+_log = Log.GPIO
 
 
 class Shelly:
@@ -85,7 +85,7 @@ class Shelly:
         self.signal_charged_energy.emit(charged_energy)
 
     def reset(self) -> None:
-        _info('Shelly reset')
+        _log.info('Shelly reset')
         try:
             # 发送 POST 请求
             # reset_token = 'rpc/EMData.ResetCounters?id=0'
@@ -95,6 +95,6 @@ class Shelly:
             }
             response0 = requests.post(f"http://{self.__main_address}/{reset_token}", json=data, timeout=5)
             response0.raise_for_status()
-            _info("Shelly 复位成功\nShelly reset successfully")
+            _log.info("Shelly 复位成功\nShelly reset successfully")
         except requests.exceptions.RequestException as e:
-            _info(f"Shelly 复位失败\nShelly reset failed: {e}")
+            _log.info(f"Shelly 复位失败\nShelly reset failed: {e}")
