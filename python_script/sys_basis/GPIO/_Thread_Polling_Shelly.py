@@ -29,6 +29,8 @@ class PollingShelly(Thread):
         self.__data_collector: DataCollector = self.__parent.data_collector
         self.__isRunning: bool = True
         self.__current_index: int = 0
+        self.__retry_count: int = 0
+        self.__max_retry_count: int = GPIOParams.MAX_SHELLY_RETRY
 
     @property
     def isRunning(self) -> bool:
@@ -93,7 +95,6 @@ class PollingShelly(Thread):
         return container
 
     def run(self) -> None:
-
         while self.__isRunning:
             shelly: Shelly = self.__shelly_list[self.__current_index]
             shelly_id = shelly.id
@@ -107,6 +108,10 @@ class PollingShelly(Thread):
                 shelly_data['charged_energy'] = data_dict['total_act_power']
                 shelly_data['is_valid'] = shelly_data[0]['is_valid'] and shelly_data[1]['is_valid'] and shelly_data[2]['is_valid']
             except Exception as e:
+                if self.__retry_count <= self.__max_retry_count:
+                    self.__retry_count += 1
+                    time.sleep(self.__interval)
+                    continue
                 shelly_data = {
                     0: {
                         'power': 0,
