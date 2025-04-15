@@ -1,4 +1,5 @@
 
+from logging import CRITICAL
 import os
 from const.Analog_Define import AnalogDefine
 # from tools.Logger import LogLevel, Logger, LoggerGroup
@@ -8,6 +9,7 @@ from DToolslib import *
 
 os.chdir(os.path.dirname(os.path.dirname(__file__)))
 APP_WORKSPACE_PATH = os.getcwd()
+LOCK_FILE_PATH = os.path.join(APP_WORKSPACE_PATH, '.main_Client.lock')
 
 
 class FontSize(AnalogDefine):
@@ -39,6 +41,7 @@ class Style(AnalogDefine):
 
 
 class Log(StaticEnum):
+    CRITICAL = Logger(log_name='CRITICAL', root_dir=APP_WORKSPACE_PATH)
     RAS = Logger(log_name='client_rasberryPi', root_dir=APP_WORKSPACE_PATH)
     CSMS = Logger(log_name='csms', root_dir=APP_WORKSPACE_PATH)
     WS = Logger(log_name='websocket', root_dir=APP_WORKSPACE_PATH)
@@ -68,4 +71,4 @@ for log in Log:
     log.set_file_count_limit(30)
     log.set_file_size_limit_kB(20*1000)
     log.set_highlight_type(LogHighlightType.HTML)
-    log.set_enable_runtime_zip(True)
+    log.set_enable_runtime_zip(False)

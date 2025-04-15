@@ -441,10 +441,12 @@ The charging unit is not executable (correct value)
         self.get_current_limit()
         if self.__current_max > 0:
             self.__start_time_str = DataGene.time2str(datetime.now())
+            _log.info('清空数据库对应数据\nClear database data corresponding to CU')
             self.__data_collector.clear_CU_finished_plan(self.id)
             self.__data_collector.clear_CU_waiting_plan(self.id)
             self.__data_collector.clear_CU_current_charge_action(self.id)
             self.__data_collector.set_CU_charge_start_time(self.id, self.__start_time_str, target_energy=-1, depart_time=-1, custom_data=None, enableDirectCharge=True)
+            _log.info('设置电流, 开始充电\nSet current, start charging')
             self.__evse.set_current(self.__current_max)
             MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable_blink(True, apply_now=True)
             return True
@@ -590,7 +592,8 @@ The charging unit is not executable (correct value)
         self.__enableDirectCharge = False
         self.__data_collector.stop_CU_charging(self.id)
         self.signal_hint_message.emit(f'充电单元 <{self.id}> 已停止充电\nCharge unit <{self.id}> has stopped charging', 'info')
-        MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable_blink(False, apply_now=True)
+        MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable_blink(False)
+        MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable(True)
 
     def clear_error(self) -> None:
         """ 慎用, 前端应做提示 """

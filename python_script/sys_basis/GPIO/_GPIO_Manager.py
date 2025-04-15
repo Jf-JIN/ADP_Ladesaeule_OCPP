@@ -20,8 +20,18 @@ _log = Log.GPIO
 
 
 class GPIOManager:
+    __instance__ = None
+
+    def __new__(cls, *args, **kwargs):
+        if cls.__instance__ is None:
+            cls.__instance__ = super().__new__(cls)
+            cls.__instance__.__isInitialized__ = False
+        return cls.__instance__
 
     def __init__(self):
+        if self.__isInitialized__:
+            return
+        self.__isInitialized__ = True
         self.__data_collector: DataCollector = DataCollector(self, GPIOParams.DATACOLLECTOR_DATA_INTERVAL, GPIOParams.DATACOLLECTOR_FIG_INTERVAL)
         atexit.register(self.stop)
         signal.signal(signal.SIGTERM, self.stop)

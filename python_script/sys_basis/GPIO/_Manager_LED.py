@@ -12,7 +12,7 @@ _log = Log.GPIO
 class StructLED:
     __leds_name_list__ = set()
 
-    def __init__(self, name: str, pin: int):
+    def __init__(self, name: str, pin: int) -> None:
         if name in self.__leds_name_list__:
             _log.error(f'LED name {name} already exists')
             raise Exception(f'LED name {name} already exists')
@@ -21,8 +21,10 @@ class StructLED:
         self.__led = LED(pin)
         self.__led.off()
         self.__status = False
+        self.__blink_led_status = False
         self.__shouldBlink = False
         self.__class__.__leds_name_list__.add(name)
+        self.__blink_thread = threading.Timer(1, self.__blink)
 
     @property
     def status(self) -> bool:
@@ -38,18 +40,44 @@ class StructLED:
 
     def set_enable(self, enable: bool) -> typing.Self:
         self.__status = enable
+        _log.debug(f'LED {self.__name} set_enable {self.__status} shouldBlink {self.__shouldBlink}')
         if self.__status and not self.__shouldBlink:
             self.__led.on()
         elif self.__status and self.__shouldBlink:
-            self.__led.blink()
+            _log.debug('in set_enable')
+            self.__blink()
         else:
+            self.__shouldBlink = False
             self.__led.off()
+        return self
+
+    def __blink(self) -> typing.Self:
+        _log.debug(f'in __blink __shouldBlink {self.__shouldBlink}')
+        if self.__shouldBlink and self.__status:
+            _log.debug(f'in __blink __blink_led_status {self.__blink_led_status}')
+            if self.__blink_led_status:
+                _log.debug('led_off')
+                self.__led.off()
+                self.__blink_led_status = False
+            else:
+                _log.debug('led_on')
+                self.__led.on()
+                self.__blink_led_status = True
+            _log.debug('set blink thread')
+            if self.__blink_thread.is_alive():
+                self.__blink_thread.cancel()
+            self.__blink_thread = threading.Timer(1, self.__blink)
+            self.__blink_thread.start()
+            _log.debug('start blink thread')
         return self
 
     def set_enable_blink(self, enable: bool, apply_now: bool = False) -> typing.Self:
         self.__shouldBlink: bool = enable
+        if not enable:
+            if self.__blink_thread.is_alive():
+                self.__blink_thread.cancel()
         if apply_now:
-            self.set_enable(self.__status)
+            self.__blink()
         return self
 
 

@@ -170,9 +170,10 @@ class ModbusIO(object):
             - None: 读取失败
             - set: EVSE状态和故障集合
         """
-        data_list = set()
-        data_list.add(EVSEErrorInfo.RELAY_ON)
-        return data_list
+        return {EVSEErrorInfo.RELAY_ON}
+        # data_list = set()
+        # data_list.add(EVSEErrorInfo.RELAY_ON)
+        # return data_list
         # status: None | int = self.read(address=EVSERegAddress.EVSE_STATUS_FAILS)
         # if status is None:
         #     return None
@@ -198,8 +199,8 @@ class ModbusIO(object):
             - 如果读取成功, 返回寄存器中的整数值.
             - 如果读取失败或发生错误, 返回None.
         """
-        return 2
-        # return self.read(address=EVSERegAddress.VEHICLE_STATE)
+        # return 2
+        return self.read(address=EVSERegAddress.VEHICLE_STATE)
 
     def read_current_min(self) -> None | int:
         """

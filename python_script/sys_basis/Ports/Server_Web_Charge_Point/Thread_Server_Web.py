@@ -6,6 +6,7 @@ from werkzeug import serving
 from socket import AddressFamily
 from threading import Thread, Timer
 from sys_basis.XSignal import XSignal
+from sys_basis.Process_Lock import *
 from const.Const_Parameter import *
 from datetime import datetime
 import requests
@@ -53,7 +54,9 @@ class ServerWeb(Thread):
         signal.signal(signal.SIGTERM, self.signal_handler)
 
     def cleanup(self):
-        pass
+        if os.path.exists(LOCK_FILE_PATH):
+            ProcessLock.release()
+            _log.info('Lock file removed')
 
     def signal_handler(self, signum, frame):
         self.cleanup()
