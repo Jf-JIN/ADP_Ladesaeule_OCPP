@@ -1,8 +1,8 @@
 
-# from pymodbus.pdu.pdu import ModbusPDU  # 实际使用
-# from pymodbus.client import ModbusSerialClient  # 实际使用
+from pymodbus.pdu.pdu import ModbusPDU  # 实际使用
+from pymodbus.client import ModbusSerialClient  # 实际使用
 
-from ._test_Module import ModbusPDU, ModbusSerialClient  # 用于测试
+# from ._test_Module import ModbusPDU, ModbusSerialClient  # 用于测试
 
 from const.Const_Parameter import *
 from const.GPIO_Parameter import BitsFlag, EVSEErrorInfo, EVSERegAddress, ModbusParams
@@ -149,7 +149,7 @@ class ModbusIO(object):
         try:
             # _log.info(f'threadlock {self.__thread_lock.locked()}')
             result: ModbusPDU = self.__client.write_registers(address=address, values=[value], slave=self.__id)
-            _log.info(f'[WRITE] function_code: {result.function_code}\naddress: {address}\nresult: {result}')
+            # _log.info(f'[WRITE] function_code: {result.function_code}\naddress: {address}\nresult: {result}')
             # check_res = self.__client.read_holding_registers(address=address, slave=self.__id)
             # _log.info(f'[CHECK] function_code: {check_res.function_code}\naddress: {address}\nresult: {check_res}')
             # _log.debug(result, result.registers[0])
