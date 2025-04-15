@@ -28,13 +28,13 @@ const logout_button = document.getElementById('logout');
 logout_button.addEventListener('click', () => {
     Swal.fire({
         title: lang_dict.system_operation_question_title,
-        text: system_operation_question,
+        text: lang_dict.system_operation_question,
         icon: 'question',
         showDenyButton: true,
         showCancelButton: true,
-        confirmButtonText: system_operation_reboot_text,
-        denyButtonText: system_operation_shutdown_text,
-        cancelButtonText: system_operation_cancel_text
+        confirmButtonText: lang_dict.system_operation_reboot_text,
+        denyButtonText: lang_dict.system_operation_shutdown_text,
+        cancelButtonText: lang_dict.system_operation_cancel_text
     }).then((result) => {
         if (result.isConfirmed) {
             Swal.fire(lang_dict.question, lang_dict.reboot_question, 'question').then((result_root) => {
