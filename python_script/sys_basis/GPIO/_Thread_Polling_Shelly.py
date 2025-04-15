@@ -74,7 +74,7 @@ class PollingShelly(Thread):
                 'voltage': data['a_voltage'],
                 'frequncy': data['a_freq'],
                 'is_valid': True,
-                'total': data['total_current']},
+                'total': data['total_act_power']},
             1: {
                 'power': data['b_act_power'],
                 'pf': data['b_pf'],
@@ -82,7 +82,7 @@ class PollingShelly(Thread):
                 'voltage': data['b_voltage'],
                 'frequncy': data['b_freq'],
                 'is_valid': True,
-                'total': data['total_current']},
+                'total': data['total_act_power']},
             2: {
                 'power': data['c_act_power'],
                 'pf': data['c_pf'],
@@ -90,7 +90,7 @@ class PollingShelly(Thread):
                 'voltage': data['c_voltage'],
                 'frequncy': data['c_freq'],
                 'is_valid': True,
-                'total': data['total_current']},
+                'total': data['total_act_power']},
         }
         return container
 
