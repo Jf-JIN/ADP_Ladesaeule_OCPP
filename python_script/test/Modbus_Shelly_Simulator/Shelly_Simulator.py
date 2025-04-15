@@ -1,5 +1,5 @@
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_socketio import SocketIO
 from socket import AddressFamily
 from werkzeug import serving
@@ -45,7 +45,7 @@ class ShellySimulator_Thread(QThread):
         self.__timer.start()
 
         # 添加路由，访问不同的 URL 时返回不同的 JSON 数据
-        self.__app.add_url_rule('/rpc/EM.GetStatus', 'em_get_status', self.__phase, methods=['GET'])
+        self.__app.add_url_rule('/rpc/EM.GetStatus', 'em_get_status', self.__phase, methods=['GET', 'POST'])
         # self.__app.add_url_rule('/emeter/0', '0', self.__phase0, methods=['GET'])
         # self.__app.add_url_rule('/emeter/1', '1', self.__phase1, methods=['GET'])
         # self.__app.add_url_rule('/emeter/2', '2', self.__phase2, methods=['GET'])
@@ -53,7 +53,7 @@ class ShellySimulator_Thread(QThread):
         # self.__app.add_url_rule('/emeter/1/reset_totals', 'reset_totals1', self.clear1, methods=['GET', 'POST'])
         # self.__app.add_url_rule('/emeter/2/reset_totals', 'reset_totals2', self.clear2, methods=['GET', 'POST'])
         # self.__app.add_url_rule('/rpc/EMData.ResetCounters', 'ResetCounters', self.clear, methods=['GET', 'POST'])
-        self.__app.add_url_rule('/rpc/EMData.ResetCounters', 'ResetCounters', self.clear, methods=['GET', 'POST'])
+        self.__app.add_url_rule('/rpc/EMData.ResetCounters', 'em_data_resetCounters', self.clear, methods=['GET', 'POST'])
         self.__ip_local: str = '127.0.0.1' if host == '0.0.0.0' else '[::1]'
         self.__ip_remote: str = serving.get_interface_ip(AddressFamily.AF_INET)
         self.__ip_local_address: str = f'{self.__ip_local}:{port}'
@@ -186,7 +186,7 @@ class ShellySimulator_Thread(QThread):
             'current': self.__current_p0,
             'voltage': self.__voltage_p0,
             'is_valid': self.__isVaild,
-            'total': self.__total_power_p0,
+            'total': self.__total_power,
             'total_returned': 0
         }
         self.__ph1_dict = {
@@ -195,7 +195,7 @@ class ShellySimulator_Thread(QThread):
             'current': self.__current_p1,
             'voltage': self.__voltage_p1,
             'is_valid':  self.__isVaild,
-            'total': self.__total_power_p1,
+            'total': self.__total_power,
             'total_returned': 0
         }
         self.__ph2_dict = {
@@ -204,7 +204,7 @@ class ShellySimulator_Thread(QThread):
             'current': self.__current_p2,
             'voltage': self.__voltage_p2,
             'is_valid':  self.__isVaild,
-            'total': self.__total_power_p2,
+            'total': self.__total_power,
             'total_returned': 0
         }
         self.signal_ph0.emit(self.__ph0_dict)
@@ -244,6 +244,8 @@ class ShellySimulator_Thread(QThread):
         return jsonify(self.__ph2_dict)
 
     def __phase(self):
+        id_param = request.args.get('id')  # 会读取 ?id=0 中的 id
+        print(f"Received id: {id_param}")
         return jsonify(self.__ph_dict)
 
     def clear0(self):
@@ -275,6 +277,3 @@ class ShellySimulator_Thread(QThread):
 if __name__ == "__main__":
     web_server = ShellySimulator_Thread()
     web_server.run()
-"""
-find C:/Users/jinju/miniconda3/envs/modbus_shelly_simulator/Lib -name "hook-_tkinter.py"
-"""
