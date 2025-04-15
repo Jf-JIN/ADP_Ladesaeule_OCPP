@@ -1,4 +1,5 @@
 
+import functools
 import threading
 from const.GPIO_Parameter import GPIOParams
 from const.Const_Parameter import *
@@ -8,11 +9,12 @@ from ._Thread_Polling_EVSE import PollingEVSE
 from ._Thread_Polling_Shelly import PollingShelly
 from ._Data_Collector import DataCollector
 from ._Thread_Detection_Button import *
-import atexit
-import signal
-# import RPi
+from ._Manager_LED import *
 from gpiozero import Button, LED
 # from ._test_Module import Button, LED
+# import RPi
+import atexit
+import signal
 
 _log = Log.GPIO
 
@@ -53,13 +55,18 @@ class GPIOManager:
 
         BTN_START = Button(RaspPins.BCM_PIN_20, pull_up=True)
         BTN_STOP = Button(RaspPins.BCM_PIN_21, pull_up=True)
-        self.__button_led = LED(RaspPins.BCM_PIN_25)
         self.__thread_detection_button_start = DetectionButton('start', button=BTN_START)
         self.__thread_detection_button_stop = DetectionButton('start', button=BTN_STOP)
         self.__thread_detection_button_start.pressed.connect(self.__on_start_button_pressed)
         self.__thread_detection_button_stop.pressed.connect(self.__on_stop_button_pressed)
-        self.__thread_detection_button_start.start()
-        self.__thread_detection_button_stop.start()
+        self.__ManagerLED = ManagerLED()
+        MLED.registerGroup(LEDGroup.SYSTEM_AVAILABILITY, LEDName.LED_SYSTEM_READY, RaspPins.BCM_PIN_25)
+        MLED.registerGroup(LEDGroup.SYSTEM_AVAILABILITY, LEDName.LED_SYSTEM_NOT_READY, RaspPins.BCM_PIN_24)
+        Log.GROUP.signal_error.connect(self.__led_handle_system_error)
+        Log.GROUP.signal_critical.connect(self.__led_handle_system_error)
+
+    def __led_handle_system_error(self, error: str):
+        MLED.getGroup(LEDGroup.SYSTEM_AVAILABILITY).set_enable(LEDName.LED_SYSTEM_NOT_READY)
 
     def stop(self):
         if self.__thread_polling_evse.is_alive():
@@ -71,7 +78,7 @@ class GPIOManager:
         if self.__thread_detection_button_stop.is_alive():
             self.__thread_detection_button_stop.stop()
         self.__data_collector.stop()
-        self.__set_enable_button_LED(False)
+        MLED.shutdown()
 
     def __del__(self):
         self.stop()
@@ -132,13 +139,9 @@ class GPIOManager:
     def listening_start(self) -> None:
         self.__thread_polling_evse.start()
         self.__thread_polling_shelly.start()
-        self.__set_enable_button_LED(True)
-
-    def __set_enable_button_LED(self, enable: bool) -> None:
-        if enable:
-            self.__button_led.on()
-        else:
-            self.__button_led.off()
+        self.__thread_detection_button_start.start()
+        self.__thread_detection_button_stop.start()
+        MLED.getGroup(LEDGroup.SYSTEM_AVAILABILITY).set_enable(LEDName.LED_SYSTEM_READY)
 
     def __send_request_charge_plan_calibration(self, request_dict: dict) -> None:
         if self.__timer_send_requeset_calibration.is_alive():
