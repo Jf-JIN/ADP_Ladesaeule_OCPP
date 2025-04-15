@@ -38,7 +38,7 @@ class LatchMotor:
         self.__status_pin_lock: bool = False  # 电机上锁控制引脚的状态, 可表示电机是否在正转
         self.__status_pin_unlock: bool = False  # 电机解锁控制引脚的状态, 可表示电机是否在反转
         self.__lock_pin: LED = LED(RaspPins.BCM_PIN_23)  # 电机上锁控制引脚
-        self.__unlock_pin: LED = LED(RaspPins.BCM_PIN_24)  # 电机解锁控制引脚
+        self.__unlock_pin: LED = LED(RaspPins.BCM_PIN_22)  # 电机解锁控制引脚
         self.__timer: threading.Timer = threading.Timer(99, self.__off_lock_pin)
         self.__timer_intervall: int | float = GPIOParams.LETCH_MOTOR_RUNTIME  # 引脚状态转换的时间
         self.unlock(2)
