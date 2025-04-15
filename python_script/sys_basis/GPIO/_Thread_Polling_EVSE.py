@@ -5,9 +5,9 @@ from const.GPIO_Parameter import *
 from const.Const_Parameter import *
 import time
 
-# from pymodbus.pdu.pdu import ModbusPDU  # 实际使用
+from pymodbus.pdu.pdu import ModbusPDU  # 实际使用
 
-from ._test_Module import *  # 用于测试
+# from ._test_Module import *  # 用于测试
 
 
 if 0:
