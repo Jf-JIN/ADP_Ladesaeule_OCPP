@@ -333,6 +333,9 @@ voltage_max:{voltage_max}
         if enable:
             self.stop()
             sys.exit(0)
+        else:
+            # os.execv(sys.executable, ['python'] + sys.argv)
+            self.send_web_alert_message('Not suported yet.')
 
     def handle_computer_message(self, computer_message) -> None:
         """
