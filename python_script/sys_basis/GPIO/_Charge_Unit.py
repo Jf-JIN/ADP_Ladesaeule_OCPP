@@ -2,6 +2,7 @@ from __future__ import annotations
 import threading
 import sys
 import copy
+import time
 from datetime import datetime
 from const.GPIO_Parameter import *
 from const.Const_Parameter import *
@@ -292,7 +293,12 @@ class ChargeUnit:
         ):
             self.__isCharging = True
             self.__enableDirectCharge = enableDirectCharge
-        elif not len(self.__waiting_plan) > 0:
+        elif (
+                self.__evse.vehicle_state == VehicleState.EV_IS_PRESENT
+                and self.__evse.evse_status_error == {EVSEErrorInfo.RELAY_ON}
+                and self.__isNoError
+                and self.__shelly.isAvailable
+                and not len(self.__waiting_plan) > 0):
             _log.warning('当前没有充电计划表，无法启动充电\nAt present, there is no charging plan form, and the charging cannot be started')
             self.signal_hint_message.emit('当前没有充电计划表，无法启动充电\nAt present, there is no charging plan form, and the charging cannot be started', 'warning')
             return False
@@ -358,7 +364,19 @@ EVSE State abnormal, Unable to start charging (correct value)
     def __charging_initial(self) -> None:
         """ 硬件初始化 """
         if self.__isFistTimeChanging:
-            self.__shelly.reset()
+            retry: int = 0
+            while retry < 6:
+                res = self.__shelly.reset()
+                if res:
+                    break
+                else:
+                    retry += 1
+                    _log.warning(f'重置 Shelly 失败, 尝试次数: {retry}\nFailed to reset the Shelly, retry: {retry}')
+                    time.sleep(0.5)
+            if retry >= 6:
+                self.stop_charging()
+                _log.error('重置 Shelly 失败, 尝试次数: 6\n充电终止\nFailed to reset the charger, retry: 6\nCharging terminated')
+                return
         if not self.__isLatched and self.__isFistTimeChanging and GPIOParams.LETCH_MOTOR_RUNTIME > 0:
             # 执行上锁操作, 执行条件: 1.当前未上锁 2. 首次执行充电 3.电机运行时间大于0
             self.__latch_motor.lock()
@@ -427,8 +445,11 @@ The charging unit is not executable (correct value)
             self.__data_collector.clear_CU_current_charge_action(self.id)
             self.__data_collector.set_CU_charge_start_time(self.id, self.__start_time_str, target_energy=-1, depart_time=-1, custom_data=None, enableDirectCharge=True)
             self.__evse.set_current(self.__current_max)
+            return True
         else:
             _log.info('最大电流为0,不充电\nThe maximum current is 0, no charging')
+            self.signal_hint_message.emit(f'最大电流为0,不充电\nThe maximum current is 0, no charging', 'info')
+            return False
 
     def __charging(self) -> bool:
         """
