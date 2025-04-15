@@ -17,7 +17,7 @@ _log = Log.SHELLY
 
 class PollingShelly(Thread):
     def __init__(self, parent: GPIOManager, charge_unit_dict: dict, intervall: int | float, timeout: int | float) -> None:
-        super().__init__()
+        super().__init__(name='PollingShelly')
         self.__parent: GPIOManager = parent
         self.__shelly_list: list = []
         for item in charge_unit_dict.values():
@@ -29,6 +29,8 @@ class PollingShelly(Thread):
         self.__data_collector: DataCollector = self.__parent.data_collector
         self.__isRunning: bool = True
         self.__current_index: int = 0
+        self.__retry_count: int = 0
+        self.__max_retry_count: int = GPIOParams.MAX_SHELLY_RETRY
 
     @property
     def isRunning(self) -> bool:
@@ -72,7 +74,7 @@ class PollingShelly(Thread):
                 'voltage': data['a_voltage'],
                 'frequncy': data['a_freq'],
                 'is_valid': True,
-                'total': data['total_current']},
+                'total': data['total_act_power']},
             1: {
                 'power': data['b_act_power'],
                 'pf': data['b_pf'],
@@ -80,7 +82,7 @@ class PollingShelly(Thread):
                 'voltage': data['b_voltage'],
                 'frequncy': data['b_freq'],
                 'is_valid': True,
-                'total': data['total_current']},
+                'total': data['total_act_power']},
             2: {
                 'power': data['c_act_power'],
                 'pf': data['c_pf'],
@@ -88,12 +90,11 @@ class PollingShelly(Thread):
                 'voltage': data['c_voltage'],
                 'frequncy': data['c_freq'],
                 'is_valid': True,
-                'total': data['total_current']},
+                'total': data['total_act_power']},
         }
         return container
 
     def run(self) -> None:
-
         while self.__isRunning:
             shelly: Shelly = self.__shelly_list[self.__current_index]
             shelly_id = shelly.id
@@ -107,6 +108,10 @@ class PollingShelly(Thread):
                 shelly_data['charged_energy'] = data_dict['total_act_power']
                 shelly_data['is_valid'] = shelly_data[0]['is_valid'] and shelly_data[1]['is_valid'] and shelly_data[2]['is_valid']
             except Exception as e:
+                if self.__retry_count <= self.__max_retry_count:
+                    self.__retry_count += 1
+                    time.sleep(self.__interval)
+                    continue
                 shelly_data = {
                     0: {
                         'power': 0,
@@ -135,7 +140,10 @@ class PollingShelly(Thread):
                     'charged_energy': 0,
                     'is_valid': False,
                 }
-                _log.exception(f'Shelly read exception: {e}')
+                if isinstance(e, requests.exceptions.ConnectionError):
+                    _log.error(f'Shelly is not connected: {e}')
+                else:
+                    _log.exception('Shelly read exception')
             shelly.set_data(shelly_data)
             self.__data_collector.set_shelly_data(shelly_id, shelly_data)
             self.__current_index = (self.__current_index + 1) % self.__shelly_quantity

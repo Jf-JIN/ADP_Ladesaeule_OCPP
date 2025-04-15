@@ -5,14 +5,14 @@ APP_WP = os.path.dirname(os.path.dirname(__file__))
 
 
 class Log(StaticEnum):
-    logging = Logger('Logging', log_folder_path=APP_WP)
-    CRITICAL = Logger('Critical', log_folder_path=APP_WP)
-    SOCKET = Logger('Socket_Core', log_folder_path=APP_WP)
-    MODBUS = Logger('Modbus_Handler', log_folder_path=APP_WP)
-    UI = Logger('UI', log_folder_path=APP_WP)
-    SERVER = Logger('Server', log_folder_path=APP_WP)
-    GPIO = Logger('GPIO', log_folder_path=APP_WP)
-    GROUP = LoggerGroup(log_folder_path=APP_WP, limit_files_count=10)
+    logging = Logger('Logging', root_dir=APP_WP)
+    CRITICAL = Logger('Critical', root_dir=APP_WP)
+    SOCKET = Logger('Socket_Core', root_dir=APP_WP)
+    MODBUS = Logger('Modbus_Handler', root_dir=APP_WP)
+    UI = Logger('UI', root_dir=APP_WP)
+    SERVER = Logger('Server', root_dir=APP_WP)
+    GPIO = Logger('GPIO', root_dir=APP_WP)
+    GROUP = LoggerGroup(root_dir=APP_WP)
 
 
 Log.logging.set_listen_logging()

@@ -1,0 +1,4554 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   version="1.1"
+   width="210mm"
+   height="297mm"
+   id="svg371"
+   sodipodi:docname="组件图_pdf.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   inkscape:export-filename="组件图_pdf.pdf"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview371"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.55921966"
+     inkscape:cx="79.575171"
+     inkscape:cy="537.35593"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="2552"
+     inkscape:window-y="210"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g371"
+     inkscape:document-units="mm" />
+  <defs
+     id="defs1" />
+  <g
+     id="g371"
+     transform="matrix(0.76342097,0,0,0.76342097,59.736967,3.3299146)">
+    <g
+       id="g1"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 234,122 V 22 h 199.70996"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path1" />
+    </g>
+    <g
+       id="g2"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 311,122 V 78 h 122.70996"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path2" />
+    </g>
+    <g
+       id="g3"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#c0c0c0"
+         stroke="none"
+         x="545"
+         y="695"
+         width="246"
+         height="88"
+         transform="translate(-70,-78)"
+         fill-opacity="0.2"
+         id="rect2" />
+    </g>
+    <g
+       id="g4"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="538"
+         y="688"
+         width="246"
+         height="88"
+         transform="translate(-70,-78)"
+         id="rect3" />
+    </g>
+    <g
+       id="g5"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 468,610 h 246 v 88 H 468 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path4" />
+    </g>
+    <g
+       id="g6"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="528"
+         y="695"
+         width="20"
+         height="10"
+         transform="translate(-70,-78)"
+         id="rect5" />
+    </g>
+    <g
+       id="g7"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 458,617 h 20 v 10 h -20 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path6" />
+    </g>
+    <g
+       id="g8"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="528"
+         y="715"
+         width="20"
+         height="10"
+         transform="translate(-70,-78)"
+         id="rect7" />
+    </g>
+    <g
+       id="g9"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 458,637 h 20 v 10 h -20 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path8" />
+    </g>
+    <g
+       id="g10"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 478,638 H 714"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path9" />
+    </g>
+    <g
+       id="g12"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g11">
+        <path
+           fill="none"
+           stroke="none"
+           id="path10"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="666.5"
+           y="703"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text10">Client Central Processor</text>
+      </g>
+    </g>
+    <g
+       id="g13"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#c0c0c0"
+         stroke="none"
+         x="97"
+         y="679"
+         width="334"
+         height="424"
+         transform="translate(-70,-78)"
+         fill-opacity="0.2"
+         id="rect12" />
+    </g>
+    <g
+       id="g14"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="90"
+         y="672"
+         width="334"
+         height="424"
+         transform="translate(-70,-78)"
+         id="rect13" />
+    </g>
+    <g
+       id="g15"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 20,594 h 334 v 424 H 20 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path14" />
+    </g>
+    <g
+       id="g16"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="80"
+         y="679"
+         width="20"
+         height="10"
+         transform="translate(-70,-78)"
+         id="rect15" />
+    </g>
+    <g
+       id="g17"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 10,601 h 20 v 10 H 10 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path16" />
+    </g>
+    <g
+       id="g18"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="80"
+         y="699"
+         width="20"
+         height="10"
+         transform="translate(-70,-78)"
+         id="rect17" />
+    </g>
+    <g
+       id="g19"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 10,621 h 20 v 10 H 10 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path18" />
+    </g>
+    <g
+       id="g21"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g20">
+        <path
+           fill="none"
+           stroke="none"
+           id="path19"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="262.5"
+           y="687"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text19">ManagerCoroutines</text>
+      </g>
+    </g>
+    <g
+       id="g22"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#c0c0c0"
+         stroke="none"
+         x="673"
+         y="215"
+         width="189.36719"
+         height="128"
+         transform="translate(-70,-78)"
+         fill-opacity="0.2"
+         id="rect21" />
+    </g>
+    <g
+       id="g23"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="666"
+         y="208"
+         width="189.36719"
+         height="128"
+         transform="translate(-70,-78)"
+         id="rect22" />
+    </g>
+    <g
+       id="g24"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 596,130 H 785.36719 V 258 H 596 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path23" />
+    </g>
+    <g
+       id="g25"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="656"
+         y="215"
+         width="20"
+         height="10"
+         transform="translate(-70,-78)"
+         id="rect24" />
+    </g>
+    <g
+       id="g26"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 586,137 h 20 v 10 h -20 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path25" />
+    </g>
+    <g
+       id="g27"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="656"
+         y="235"
+         width="20"
+         height="10"
+         transform="translate(-70,-78)"
+         id="rect26" />
+    </g>
+    <g
+       id="g28"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 586,157 h 20 v 10 h -20 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path27" />
+    </g>
+    <g
+       id="g30"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g29">
+        <path
+           fill="none"
+           stroke="none"
+           id="path28"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="766.18359"
+           y="223"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text28">Opt Central Processo</text>
+      </g>
+    </g>
+    <g
+       id="g32"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="274"
+         y="200"
+         width="286"
+         height="320"
+         transform="translate(-70,-78)"
+         id="rect31" />
+    </g>
+    <g
+       id="g33"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 204,122 H 490 V 442 H 204 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path32" />
+    </g>
+    <g
+       id="g34"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="264"
+         y="207"
+         width="20"
+         height="10"
+         transform="translate(-70,-78)"
+         id="rect33" />
+    </g>
+    <g
+       id="g35"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 194,129 h 20 v 10 h -20 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path34" />
+    </g>
+    <g
+       id="g36"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="264"
+         y="227"
+         width="20"
+         height="10"
+         transform="translate(-70,-78)"
+         id="rect35" />
+    </g>
+    <g
+       id="g37"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 194,149 h 20 v 10 h -20 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path36" />
+    </g>
+    <g
+       id="g39"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g38">
+        <path
+           fill="none"
+           stroke="none"
+           id="path37"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="422.5"
+           y="215"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text37">ManagerCoroutines</text>
+      </g>
+    </g>
+    <g
+       id="g40"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#c0c0c0"
+         stroke="none"
+         x="193"
+         y="711"
+         width="214"
+         height="104"
+         transform="translate(-70,-78)"
+         fill-opacity="0.2"
+         id="rect39" />
+    </g>
+    <g
+       id="g41"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="186"
+         y="704"
+         width="214"
+         height="104"
+         transform="translate(-70,-78)"
+         id="rect40" />
+    </g>
+    <g
+       id="g42"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 116,626 H 330 V 730 H 116 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path41" />
+    </g>
+    <g
+       id="g43"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="176"
+         y="711"
+         width="20"
+         height="10"
+         transform="translate(-70,-78)"
+         id="rect42" />
+    </g>
+    <g
+       id="g44"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 106,633 h 20 v 10 h -20 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path43" />
+    </g>
+    <g
+       id="g45"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="176"
+         y="731"
+         width="20"
+         height="10"
+         transform="translate(-70,-78)"
+         id="rect44" />
+    </g>
+    <g
+       id="g46"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 106,653 h 20 v 10 h -20 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path45" />
+    </g>
+    <g
+       id="g48"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g47">
+        <path
+           fill="none"
+           stroke="none"
+           id="path46"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="298.5"
+           y="719"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text46">PortWebSocketServer</text>
+      </g>
+    </g>
+    <g
+       id="g49"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#c0c0c0"
+         stroke="none"
+         x="137"
+         y="839"
+         width="270"
+         height="240"
+         transform="translate(-70,-78)"
+         fill-opacity="0.2"
+         id="rect48" />
+    </g>
+    <g
+       id="g50"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="130"
+         y="832"
+         width="270"
+         height="240"
+         transform="translate(-70,-78)"
+         id="rect49" />
+    </g>
+    <g
+       id="g51"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 60,754 H 330 V 994 H 60 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path50" />
+    </g>
+    <g
+       id="g52"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="120"
+         y="839"
+         width="20"
+         height="10"
+         transform="translate(-70,-78)"
+         id="rect51" />
+    </g>
+    <g
+       id="g53"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 50,761 h 20 v 10 H 50 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path52" />
+    </g>
+    <g
+       id="g54"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="120"
+         y="859"
+         width="20"
+         height="10"
+         transform="translate(-70,-78)"
+         id="rect53" />
+    </g>
+    <g
+       id="g55"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 50,781 h 20 v 10 H 50 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path54" />
+    </g>
+    <g
+       id="g57"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g56">
+        <path
+           fill="none"
+           stroke="none"
+           id="path55"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="270.5"
+           y="847"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text55">PortOCPPWebsocketClient</text>
+      </g>
+    </g>
+    <g
+       id="g59"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="298"
+         y="232"
+         width="239.80469"
+         height="280"
+         transform="translate(-70,-78)"
+         id="rect58" />
+    </g>
+    <g
+       id="g60"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 228,154 H 467.80469 V 434 H 228 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path59" />
+    </g>
+    <g
+       id="g61"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="288"
+         y="239"
+         width="20"
+         height="10"
+         transform="translate(-70,-78)"
+         id="rect60" />
+    </g>
+    <g
+       id="g62"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 218,161 h 20 v 10 h -20 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path61" />
+    </g>
+    <g
+       id="g63"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="288"
+         y="259"
+         width="20"
+         height="10"
+         transform="translate(-70,-78)"
+         id="rect62" />
+    </g>
+    <g
+       id="g64"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 218,181 h 20 v 10 h -20 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path63" />
+    </g>
+    <g
+       id="g66"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g65">
+        <path
+           fill="none"
+           stroke="none"
+           id="path64"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="423.40234"
+           y="247"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text64">PortOCPPWebsocketServer</text>
+      </g>
+    </g>
+    <g
+       id="g67"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#c0c0c0"
+         stroke="none"
+         x="369"
+         y="271"
+         width="161.92969"
+         height="45"
+         transform="translate(-70,-78)"
+         fill-opacity="0.2"
+         id="rect66" />
+    </g>
+    <g
+       id="g68"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="362"
+         y="264"
+         width="161.92969"
+         height="45"
+         transform="translate(-70,-78)"
+         id="rect67" />
+    </g>
+    <g
+       id="g69"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 292,186 h 161.92969 v 45 H 292 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path68" />
+    </g>
+    <g
+       id="g70"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="352"
+         y="271"
+         width="20"
+         height="10"
+         transform="translate(-70,-78)"
+         id="rect69" />
+    </g>
+    <g
+       id="g71"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 282,193 h 20 v 10 h -20 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path70" />
+    </g>
+    <g
+       id="g72"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="352"
+         y="291"
+         width="20"
+         height="10"
+         transform="translate(-70,-78)"
+         id="rect71" />
+    </g>
+    <g
+       id="g73"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 282,213 h 20 v 10 h -20 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path72" />
+    </g>
+    <g
+       id="g75"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g74">
+        <path
+           fill="none"
+           stroke="none"
+           id="path73"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="448.46484"
+           y="279"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text73">WebSocketServer</text>
+      </g>
+    </g>
+    <g
+       id="g76"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#c0c0c0"
+         stroke="none"
+         x="241"
+         y="983"
+         width="119.21875"
+         height="45"
+         transform="translate(-70,-78)"
+         fill-opacity="0.2"
+         id="rect75" />
+    </g>
+    <g
+       id="g77"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="234"
+         y="976"
+         width="119.21875"
+         height="45"
+         transform="translate(-70,-78)"
+         id="rect76" />
+    </g>
+    <g
+       id="g78"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 164,898 h 119.21875 v 45 H 164 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path77" />
+    </g>
+    <g
+       id="g79"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="224"
+         y="983"
+         width="20"
+         height="10"
+         transform="translate(-70,-78)"
+         id="rect78" />
+    </g>
+    <g
+       id="g80"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 154,905 h 20 v 10 h -20 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path79" />
+    </g>
+    <g
+       id="g81"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="224"
+         y="1003"
+         width="20"
+         height="10"
+         transform="translate(-70,-78)"
+         id="rect80" />
+    </g>
+    <g
+       id="g82"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 154,925 h 20 v 10 h -20 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path81" />
+    </g>
+    <g
+       id="g84"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g83">
+        <path
+           fill="none"
+           stroke="none"
+           id="path82"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="299.10938"
+           y="991"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text82">ChargePoint</text>
+      </g>
+    </g>
+    <g
+       id="g85"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#c0c0c0"
+         stroke="none"
+         x="1049"
+         y="215"
+         width="134"
+         height="144"
+         transform="translate(-70,-78)"
+         fill-opacity="0.2"
+         id="rect84" />
+    </g>
+    <g
+       id="g86"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="1042"
+         y="208"
+         width="134"
+         height="144"
+         transform="translate(-70,-78)"
+         id="rect85" />
+    </g>
+    <g
+       id="g87"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 972,130 h 134 V 274 H 972 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path86" />
+    </g>
+    <g
+       id="g88"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="1032"
+         y="215"
+         width="20"
+         height="10"
+         transform="translate(-70,-78)"
+         id="rect87" />
+    </g>
+    <g
+       id="g89"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 962,137 h 20 v 10 h -20 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path88" />
+    </g>
+    <g
+       id="g90"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="1032"
+         y="235"
+         width="20"
+         height="10"
+         transform="translate(-70,-78)"
+         id="rect89" />
+    </g>
+    <g
+       id="g91"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 962,157 h 20 v 10 h -20 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path90" />
+    </g>
+    <g
+       id="g93"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g92">
+        <path
+           fill="none"
+           stroke="none"
+           id="path91"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="1114.5"
+           y="223"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text91">Optimizer</text>
+      </g>
+    </g>
+    <g
+       id="g94"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#c0c0c0"
+         stroke="none"
+         x="217"
+         y="863"
+         width="156.91406"
+         height="45"
+         transform="translate(-70,-78)"
+         fill-opacity="0.2"
+         id="rect93" />
+    </g>
+    <g
+       id="g95"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="210"
+         y="856"
+         width="156.91406"
+         height="45"
+         transform="translate(-70,-78)"
+         id="rect94" />
+    </g>
+    <g
+       id="g96"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 140,778 h 156.91406 v 45 H 140 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path95" />
+    </g>
+    <g
+       id="g97"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="200"
+         y="863"
+         width="20"
+         height="10"
+         transform="translate(-70,-78)"
+         id="rect96" />
+    </g>
+    <g
+       id="g98"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 130,785 h 20 v 10 h -20 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path97" />
+    </g>
+    <g
+       id="g99"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="200"
+         y="883"
+         width="20"
+         height="10"
+         transform="translate(-70,-78)"
+         id="rect98" />
+    </g>
+    <g
+       id="g100"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 130,805 h 20 v 10 h -20 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path99" />
+    </g>
+    <g
+       id="g102"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g101">
+        <path
+           fill="none"
+           stroke="none"
+           id="path100"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="293.95703"
+           y="869"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text100">«context»</text>
+      </g>
+    </g>
+    <g
+       id="g104"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g103">
+        <path
+           fill="none"
+           stroke="none"
+           id="path102"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="293.95703"
+           y="887"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text102">WebSocketClient</text>
+      </g>
+    </g>
+    <g
+       id="g105"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#c0c0c0"
+         stroke="none"
+         x="369"
+         y="407"
+         width="135.21875"
+         height="45"
+         transform="translate(-70,-78)"
+         fill-opacity="0.2"
+         id="rect104" />
+    </g>
+    <g
+       id="g106"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="362"
+         y="400"
+         width="135.21875"
+         height="45"
+         transform="translate(-70,-78)"
+         id="rect105" />
+    </g>
+    <g
+       id="g107"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 292,322 h 135.21875 v 45 H 292 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path106" />
+    </g>
+    <g
+       id="g108"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="352"
+         y="407"
+         width="20"
+         height="10"
+         transform="translate(-70,-78)"
+         id="rect107" />
+    </g>
+    <g
+       id="g109"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 282,329 h 20 v 10 h -20 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path108" />
+    </g>
+    <g
+       id="g110"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="352"
+         y="427"
+         width="20"
+         height="10"
+         transform="translate(-70,-78)"
+         id="rect109" />
+    </g>
+    <g
+       id="g111"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 282,349 h 20 v 10 h -20 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path110" />
+    </g>
+    <g
+       id="g113"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g112">
+        <path
+           fill="none"
+           stroke="none"
+           id="path111"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="435.10938"
+           y="415"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text111">ChargePoint</text>
+      </g>
+    </g>
+    <g
+       id="g114"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#c0c0c0"
+         stroke="none"
+         x="241"
+         y="751"
+         width="161.92969"
+         height="45"
+         transform="translate(-70,-78)"
+         fill-opacity="0.2"
+         id="rect113" />
+    </g>
+    <g
+       id="g115"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="234"
+         y="744"
+         width="161.92969"
+         height="45"
+         transform="translate(-70,-78)"
+         id="rect114" />
+    </g>
+    <g
+       id="g116"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 164,666 h 161.92969 v 45 H 164 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path115" />
+    </g>
+    <g
+       id="g117"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="224"
+         y="751"
+         width="20"
+         height="10"
+         transform="translate(-70,-78)"
+         id="rect116" />
+    </g>
+    <g
+       id="g118"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 154,673 h 20 v 10 h -20 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path117" />
+    </g>
+    <g
+       id="g119"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="224"
+         y="771"
+         width="20"
+         height="10"
+         transform="translate(-70,-78)"
+         id="rect118" />
+    </g>
+    <g
+       id="g120"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 154,693 h 20 v 10 h -20 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path119" />
+    </g>
+    <g
+       id="g122"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g121">
+        <path
+           fill="none"
+           stroke="none"
+           id="path120"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="320.46484"
+           y="759"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text120">WebSocketServer</text>
+      </g>
+    </g>
+    <g
+       id="g123"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#c0c0c0"
+         stroke="none"
+         x="897"
+         y="831"
+         width="181.57812"
+         height="88"
+         transform="translate(-70,-78)"
+         fill-opacity="0.2"
+         id="rect122" />
+    </g>
+    <g
+       id="g124"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="890"
+         y="824"
+         width="181.57812"
+         height="88"
+         transform="translate(-70,-78)"
+         id="rect123" />
+    </g>
+    <g
+       id="g125"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 820,746 h 181.5781 v 88 H 820 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path124" />
+    </g>
+    <g
+       id="g126"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="880"
+         y="831"
+         width="20"
+         height="10"
+         transform="translate(-70,-78)"
+         id="rect125" />
+    </g>
+    <g
+       id="g127"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 810,753 h 20 v 10 h -20 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path126" />
+    </g>
+    <g
+       id="g128"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="880"
+         y="851"
+         width="20"
+         height="10"
+         transform="translate(-70,-78)"
+         id="rect127" />
+    </g>
+    <g
+       id="g129"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 810,773 h 20 v 10 h -20 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path128" />
+    </g>
+    <g
+       id="g131"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g130">
+        <path
+           fill="none"
+           stroke="none"
+           id="path129"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="986.28906"
+           y="839"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text129">GPIO Manager</text>
+      </g>
+    </g>
+    <g
+       id="g132"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#c0c0c0"
+         stroke="none"
+         x="905"
+         y="975"
+         width="241.91406"
+         height="80"
+         transform="translate(-70,-78)"
+         fill-opacity="0.2"
+         id="rect131" />
+    </g>
+    <g
+       id="g133"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="898"
+         y="968"
+         width="241.91406"
+         height="80"
+         transform="translate(-70,-78)"
+         id="rect132" />
+    </g>
+    <g
+       id="g134"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 828,890 h 241.9141 v 80 H 828 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path133" />
+    </g>
+    <g
+       id="g135"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="888"
+         y="975"
+         width="20"
+         height="10"
+         transform="translate(-70,-78)"
+         id="rect134" />
+    </g>
+    <g
+       id="g136"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 818,897 h 20 v 10 h -20 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path135" />
+    </g>
+    <g
+       id="g137"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="888"
+         y="995"
+         width="20"
+         height="10"
+         transform="translate(-70,-78)"
+         id="rect136" />
+    </g>
+    <g
+       id="g138"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 818,917 h 20 v 10 h -20 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path137" />
+    </g>
+    <g
+       id="g140"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g139">
+        <path
+           fill="none"
+           stroke="none"
+           id="path138"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="1024.457"
+           y="983"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text138">PortWebServerChargePoint</text>
+      </g>
+    </g>
+    <g
+       id="g141"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 301,269 c 0,-6.62742 5.37258,-12 12,-12 6.62742,0 12,5.37258 12,12 0,6.62742 -5.37258,12 -12,12 -6.62742,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path140" />
+    </g>
+    <g
+       id="g142"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 318,262 a 12,12 0 0 1 -24,0"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path141" />
+    </g>
+    <g
+       id="g143"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 297,262 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         id="path142" />
+    </g>
+    <g
+       id="g144"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 297,262 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path143" />
+    </g>
+    <g
+       id="g146"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g145">
+        <path
+           fill="none"
+           stroke="none"
+           id="path144"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="376.5"
+           y="367"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text144">signal_recv</text>
+      </g>
+    </g>
+    <g
+       id="g147"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 306,231 v 19"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path146" />
+    </g>
+    <g
+       id="g148"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 306,322 V 274"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path147" />
+    </g>
+    <g
+       id="g149"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 384.70996,269 c 0,-6.62742 5.37258,-12 12,-12 6.62742,0 12,5.37258 12,12 0,6.62742 -5.37258,12 -12,12 -6.62742,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path148" />
+    </g>
+    <g
+       id="g150"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 401,262 a 12,12 0 0 1 -24,0"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path149" />
+    </g>
+    <g
+       id="g151"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 380.70996,262 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         id="path150" />
+    </g>
+    <g
+       id="g152"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 380.70996,262 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path151" />
+    </g>
+    <g
+       id="g154"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g153">
+        <path
+           fill="none"
+           stroke="none"
+           id="path152"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="460.20996"
+           y="367"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text152">send</text>
+      </g>
+    </g>
+    <g
+       id="g155"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 389,231 v 19"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path154" />
+    </g>
+    <g
+       id="g156"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 389,322 V 274"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path155" />
+    </g>
+    <g
+       id="g157"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 165,853 c 0,-6.62742 5.37258,-12 12,-12 6.62742,0 12,5.37258 12,12 0,6.62742 -5.37258,12 -12,12 -6.62742,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path156" />
+    </g>
+    <g
+       id="g158"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 182,846 a 12,12 0 0 1 -24,0"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path157" />
+    </g>
+    <g
+       id="g159"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 161,846 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         id="path158" />
+    </g>
+    <g
+       id="g160"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 161,846 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path159" />
+    </g>
+    <g
+       id="g162"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g161">
+        <path
+           fill="none"
+           stroke="none"
+           id="path160"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="240.5"
+           y="951"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text160">send</text>
+      </g>
+    </g>
+    <g
+       id="g163"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 182,823 v 11"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path162" />
+    </g>
+    <g
+       id="g164"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 262.14844,853 c 0,-6.62742 5.37258,-12 12,-12 6.62742,0 12,5.37258 12,12 0,6.62742 -5.37258,12 -12,12 -6.62742,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path163" />
+    </g>
+    <g
+       id="g165"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 279,846 a 12,12 0 0 1 -24,0"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path164" />
+    </g>
+    <g
+       id="g166"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 258.14844,846 c 0,-4.97056 4.02943,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97057,0 -9,-4.02944 -9,-9 z"
+         id="path165" />
+    </g>
+    <g
+       id="g167"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 258.14844,846 c 0,-4.97056 4.02943,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97057,0 -9,-4.02944 -9,-9 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path166" />
+    </g>
+    <g
+       id="g169"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g168">
+        <path
+           fill="none"
+           stroke="none"
+           id="path167"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="337.64844"
+           y="951"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text167">signal_recv</text>
+      </g>
+    </g>
+    <g
+       id="g170"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 255.14844,823 v 11.14844"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path169" />
+    </g>
+    <g
+       id="g171"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 170,898 V 858"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path170" />
+    </g>
+    <g
+       id="g172"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 267,898 V 858"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path171" />
+    </g>
+    <g
+       id="g173"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 136.70996,545 c 0,-6.62742 5.37258,-12 12,-12 6.62742,0 12,5.37258 12,12 0,6.62742 -5.37258,12 -12,12 -6.62742,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path172" />
+    </g>
+    <g
+       id="g174"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 129,538 a 12,12 0 0 1 24,0"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path173" />
+    </g>
+    <g
+       id="g175"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 132.70996,538 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         id="path174" />
+    </g>
+    <g
+       id="g176"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 132.70996,538 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path175" />
+    </g>
+    <g
+       id="g178"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g177">
+        <path
+           fill="none"
+           stroke="none"
+           id="path176"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="212.20996"
+           y="643"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text176">send</text>
+      </g>
+    </g>
+    <g
+       id="g179"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 141,626 V 550"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path178" />
+    </g>
+    <g
+       id="g180"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 231.56836,545 c 0,-6.62742 5.37258,-12 12,-12 6.62742,0 12,5.37258 12,12 0,6.62742 -5.37258,12 -12,12 -6.62742,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path179" />
+    </g>
+    <g
+       id="g181"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 236,526 a 12,12 0 0 1 0,24"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path180" />
+    </g>
+    <g
+       id="g182"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 227.56836,538 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         id="path181" />
+    </g>
+    <g
+       id="g183"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 227.56836,538 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path182" />
+    </g>
+    <g
+       id="g185"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g184">
+        <path
+           fill="none"
+           stroke="none"
+           id="path183"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="307.06836"
+           y="643"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text183">signal_recv</text>
+      </g>
+    </g>
+    <g
+       id="g186"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 236,626 V 550"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path185" />
+    </g>
+    <g
+       id="g187"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 606.75,861 c 0,-6.62742 5.37258,-12 12,-12 6.62742,0 12,5.37258 12,12 0,6.62742 -5.37258,12 -12,12 -6.62742,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path186" />
+    </g>
+    <g
+       id="g188"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 599.04145,854.99655 a 12.000001,12.000001 0 0 1 23.9171,-1.9931"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path187" />
+    </g>
+    <g
+       id="g189"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 602.75,854 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         id="path188" />
+    </g>
+    <g
+       id="g190"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 602.75,854 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path189" />
+    </g>
+    <g
+       id="g192"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g191">
+        <path
+           fill="none"
+           stroke="none"
+           id="path190"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="682.25"
+           y="959"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text190">send_ocpp_request</text>
+      </g>
+    </g>
+    <g
+       id="g193"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 283,930 H 611 V 866"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path192" />
+    </g>
+    <g
+       id="g194"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 636.65625,933 c 0,-6.62742 5.37258,-12 12,-12 6.62742,0 12,5.37258 12,12 0,6.62742 -5.37258,12 -12,12 -6.62742,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path193" />
+    </g>
+    <g
+       id="g195"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 629.04145,925.00345 a 12.000001,12.000001 0 0 1 23.9171,1.9931"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path194" />
+    </g>
+    <g
+       id="g196"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 632.65625,926 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         id="path195" />
+    </g>
+    <g
+       id="g197"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 632.65625,926 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path196" />
+    </g>
+    <g
+       id="g199"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g198">
+        <path
+           fill="none"
+           stroke="none"
+           id="path197"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="712.15625"
+           y="1031"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text197">send_ocpp_response</text>
+      </g>
+    </g>
+    <g
+       id="g200"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 209,943 v 27 h 432 v -32"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path199" />
+    </g>
+    <g
+       id="g201"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 529.35547,789 c 0,-6.62742 5.37258,-12 12,-12 6.62742,0 12,5.37258 12,12 0,6.62742 -5.37258,12 -12,12 -6.62742,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path200" />
+    </g>
+    <g
+       id="g202"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 522.6158,785.79473 a 12,12 0 0 1 22.7684,-7.58946"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path201" />
+    </g>
+    <g
+       id="g203"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 525.35547,782 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         id="path202" />
+    </g>
+    <g
+       id="g204"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 525.35547,782 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path203" />
+    </g>
+    <g
+       id="g206"
+       transform="matrix(0,0.94579112,-0.94579112,0,935.1009,42.035353)">
+      <g
+         id="g205">
+        <path
+           fill="none"
+           stroke="none"
+           id="path204"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="604.85547"
+           y="887"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text204">signal_ocpp_response</text>
+      </g>
+    </g>
+    <g
+       id="g207"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 283,922 H 534 V 794"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path206" />
+    </g>
+    <g
+       id="g208"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 435.44922,813 c 0,-6.62742 5.37258,-12 12,-12 6.62742,0 12,5.37258 12,12 0,6.62742 -5.37258,12 -12,12 -6.62742,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path207" />
+    </g>
+    <g
+       id="g209"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 428.16327,804.02721 a 12.000003,12.000003 0 0 1 23.67346,3.94558"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path208" />
+    </g>
+    <g
+       id="g210"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 431.44922,806 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         id="path209" />
+    </g>
+    <g
+       id="g211"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 431.44922,806 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path210" />
+    </g>
+    <g
+       id="g213"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g212">
+        <path
+           fill="none"
+           stroke="none"
+           id="path211"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="510.94922"
+           y="911"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text211">signal_ocpp_request</text>
+      </g>
+    </g>
+    <g
+       id="g214"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 283,914 H 440 V 818"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path213" />
+    </g>
+    <g
+       id="g215"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 498,698 v 32 h -56 v 64"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path214" />
+    </g>
+    <g
+       id="g216"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 530,698 v 72"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path215" />
+    </g>
+    <g
+       id="g217"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 610,698 V 842"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path216" />
+    </g>
+    <g
+       id="g218"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 642,698 V 914"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path217" />
+    </g>
+    <g
+       id="g219"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 408.70996,677 c 0,-6.62742 5.37258,-12 12,-12 6.62742,0 12,5.37258 12,12 0,6.62742 -5.37258,12 -12,12 -6.62742,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path218" />
+    </g>
+    <g
+       id="g220"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 413,658 a 12,12 0 0 1 0,24"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path219" />
+    </g>
+    <g
+       id="g221"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 404.70996,670 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         id="path220" />
+    </g>
+    <g
+       id="g222"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 404.70996,670 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path221" />
+    </g>
+    <g
+       id="g224"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g223">
+        <path
+           fill="none"
+           stroke="none"
+           id="path222"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="484.20996"
+           y="775"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text222">run</text>
+      </g>
+    </g>
+    <g
+       id="g225"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 354,670 h 47.70996"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path224" />
+    </g>
+    <g
+       id="g226"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 384.70996,637 c 0,-6.62742 5.37258,-12 12,-12 6.62742,0 12,5.37258 12,12 0,6.62742 -5.37258,12 -12,12 -6.62742,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path225" />
+    </g>
+    <g
+       id="g227"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 389,618 a 12,12 0 0 1 0,24"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path226" />
+    </g>
+    <g
+       id="g228"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 380.70996,630 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         id="path227" />
+    </g>
+    <g
+       id="g229"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 380.70996,630 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path228" />
+    </g>
+    <g
+       id="g231"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g230">
+        <path
+           fill="none"
+           stroke="none"
+           id="path229"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="460.20996"
+           y="735"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text229">stop</text>
+      </g>
+    </g>
+    <g
+       id="g232"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 354,630 h 23.70996"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path231" />
+    </g>
+    <g
+       id="g233"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 458,670 H 425.70996"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path232" />
+    </g>
+    <g
+       id="g234"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 458,630 H 401.70996"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path233" />
+    </g>
+    <g
+       id="g235"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 506,610 V 538 H 248.56836"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path234" />
+    </g>
+    <g
+       id="g236"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 546,610 V 514 H 141 v 12"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path235" />
+    </g>
+    <g
+       id="g237"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 440.70996,29 c 0,-6.627418 5.37258,-12 12,-12 6.62742,0 12,5.372582 12,12 0,6.627418 -5.37258,12 -12,12 -6.62742,0 -12,-5.372582 -12,-12 z"
+         fill-opacity="0.2"
+         id="path236" />
+    </g>
+    <g
+       id="g238"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 445,10 a 12,12 0 0 1 0,24"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path237" />
+    </g>
+    <g
+       id="g239"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 436.70996,22 c 0,-4.970563 4.02944,-9 9,-9 4.97056,0 9,4.029437 9,9 0,4.970563 -4.02944,9 -9,9 -4.97056,0 -9,-4.029437 -9,-9 z"
+         id="path238" />
+    </g>
+    <g
+       id="g240"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 436.70996,22 c 0,-4.970563 4.02944,-9 9,-9 4.97056,0 9,4.029437 9,9 0,4.970563 -4.02944,9 -9,9 -4.97056,0 -9,-4.029437 -9,-9 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path239" />
+    </g>
+    <g
+       id="g242"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g241">
+        <path
+           fill="none"
+           stroke="none"
+           id="path240"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="516.20996"
+           y="127"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text240">run</text>
+      </g>
+    </g>
+    <g
+       id="g243"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 440.70996,85 c 0,-6.627418 5.37258,-12 12,-12 6.62742,0 12,5.372582 12,12 0,6.627418 -5.37258,12 -12,12 -6.62742,0 -12,-5.372582 -12,-12 z"
+         fill-opacity="0.2"
+         id="path242" />
+    </g>
+    <g
+       id="g244"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 445,66 a 12,12 0 0 1 0,24"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path243" />
+    </g>
+    <g
+       id="g245"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 436.70996,78 c 0,-4.970563 4.02944,-9 9,-9 4.97056,0 9,4.029437 9,9 0,4.970563 -4.02944,9 -9,9 -4.97056,0 -9,-4.029437 -9,-9 z"
+         id="path244" />
+    </g>
+    <g
+       id="g246"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 436.70996,78 c 0,-4.970563 4.02944,-9 9,-9 4.97056,0 9,4.029437 9,9 0,4.970563 -4.02944,9 -9,9 -4.97056,0 -9,-4.029437 -9,-9 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path245" />
+    </g>
+    <g
+       id="g248"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g247">
+        <path
+           fill="none"
+           stroke="none"
+           id="path246"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="516.20996"
+           y="183"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text246">stop</text>
+      </g>
+    </g>
+    <g
+       id="g249"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 710.75,381 c 0,-6.62742 5.37258,-12 12,-12 6.62742,0 12,5.37258 12,12 0,6.62742 -5.37258,12 -12,12 -6.62742,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path248" />
+    </g>
+    <g
+       id="g250"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 703.35829,376.91043 a 12.000001,12.000001 0 0 1 23.28342,-5.82086"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path249" />
+    </g>
+    <g
+       id="g251"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 706.75,374 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         id="path250" />
+    </g>
+    <g
+       id="g252"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 706.75,374 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path251" />
+    </g>
+    <g
+       id="g254"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g253">
+        <path
+           fill="none"
+           stroke="none"
+           id="path252"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="786.25"
+           y="479"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text252">send_ocpp_request</text>
+      </g>
+    </g>
+    <g
+       id="g255"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 572.65625,421 c 0,-6.62742 5.37258,-12 12,-12 6.62742,0 12,5.37258 12,12 0,6.62742 -5.37258,12 -12,12 -6.62742,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path254" />
+    </g>
+    <g
+       id="g256"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 577,402 a 12,12 0 0 1 0,24"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path255" />
+    </g>
+    <g
+       id="g257"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 568.65625,414 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         id="path256" />
+    </g>
+    <g
+       id="g258"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 568.65625,414 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path257" />
+    </g>
+    <g
+       id="g260"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g259">
+        <path
+           fill="none"
+           stroke="none"
+           id="path258"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="648.15625"
+           y="519"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text258">send_ocpp_response</text>
+      </g>
+    </g>
+    <g
+       id="g261"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 712,258 V 362"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path260" />
+    </g>
+    <g
+       id="g262"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 754,258 V 414 H 589.65625"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path261" />
+    </g>
+    <g
+       id="g263"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 649.35547,341 c 0,-6.62742 5.37258,-12 12,-12 6.62742,0 12,5.37258 12,12 0,6.62742 -5.37258,12 -12,12 -6.62742,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path262" />
+    </g>
+    <g
+       id="g264"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 645.51472,325.51472 a 12,12 0 0 1 16.97056,16.97056"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path263" />
+    </g>
+    <g
+       id="g265"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 645.35547,334 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         id="path264" />
+    </g>
+    <g
+       id="g266"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 645.35547,334 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path265" />
+    </g>
+    <g
+       id="g268"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g267">
+        <path
+           fill="none"
+           stroke="none"
+           id="path266"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="724.85547"
+           y="439"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text266">signal_ocpp_response</text>
+      </g>
+    </g>
+    <g
+       id="g269"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 539.44922,301 c 0,-6.62742 5.37258,-12 12,-12 6.62742,0 12,5.37258 12,12 0,6.62742 -5.37258,12 -12,12 -6.62742,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path268" />
+    </g>
+    <g
+       id="g270"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 544,282 a 12,12 0 0 1 0,24"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path269" />
+    </g>
+    <g
+       id="g271"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 535.44922,294 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         id="path270" />
+    </g>
+    <g
+       id="g272"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 535.44922,294 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path271" />
+    </g>
+    <g
+       id="g274"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g273">
+        <path
+           fill="none"
+           stroke="none"
+           id="path272"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="614.94922"
+           y="399"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text272">signal_ocpp_request</text>
+      </g>
+    </g>
+    <g
+       id="g275"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 352,367 v 7 h 351.75"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path274" />
+    </g>
+    <g
+       id="g276"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 322,367 v 47 h 243.65625"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path275" />
+    </g>
+    <g
+       id="g277"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 682,130 V 22 H 457.70996"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path276" />
+    </g>
+    <g
+       id="g278"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 658,130 V 78 H 457.70996"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path277" />
+    </g>
+    <g
+       id="g279"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 427,334 H 642.35547"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path278" />
+    </g>
+    <g
+       id="g280"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 407,322 V 294 H 532.44922"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path279" />
+    </g>
+    <g
+       id="g281"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 634,258 v 36 h -77.55078"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path280" />
+    </g>
+    <g
+       id="g282"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 666,258 v 64"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path281" />
+    </g>
+    <g
+       id="g283"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 657.83203,581 c 0,-6.62742 5.37258,-12 12,-12 6.62742,0 12,5.37258 12,12 0,6.62742 -5.37258,12 -12,12 -6.62742,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path282" />
+    </g>
+    <g
+       id="g284"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 662,586 a 12,12 0 0 1 0,-24"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path283" />
+    </g>
+    <g
+       id="g285"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 653.83203,574 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         id="path284" />
+    </g>
+    <g
+       id="g286"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 653.83203,574 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path285" />
+    </g>
+    <g
+       id="g288"
+       transform="matrix(0,0.94579112,-0.94579112,0,939.10073,28.407091)">
+      <g
+         id="g287">
+        <path
+           fill="none"
+           stroke="none"
+           id="path286"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="733.33203"
+           y="679"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text286">set_charge_plan</text>
+      </g>
+    </g>
+    <g
+       id="g289"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 826,746 V 574 H 674.83203"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path288" />
+    </g>
+    <g
+       id="g290"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 725.9375,549 c 0,-6.62742 5.37258,-12 12,-12 6.62742,0 12,5.37258 12,12 0,6.62742 -5.37258,12 -12,12 -6.62742,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path289" />
+    </g>
+    <g
+       id="g291"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 730,554 a 12,12 0 0 1 0,-24"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path290" />
+    </g>
+    <g
+       id="g292"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 721.9375,542 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         id="path291" />
+    </g>
+    <g
+       id="g293"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 721.9375,542 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path292" />
+    </g>
+    <g
+       id="g295"
+       transform="matrix(0,0.94579112,-0.94579112,0,939.65461,33.391704)">
+      <g
+         id="g294">
+        <path
+           fill="none"
+           stroke="none"
+           id="path293"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="801.4375"
+           y="647"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text293">get_current_limit</text>
+      </g>
+    </g>
+    <g
+       id="g296"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 842,746 V 542 h -99.0625"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path295" />
+    </g>
+    <g
+       id="g297"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 789.67578,517 c 0,-6.62742 5.37258,-12 12,-12 6.62742,0 12,5.37258 12,12 0,6.62742 -5.37258,12 -12,12 -6.62742,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path296" />
+    </g>
+    <g
+       id="g298"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 794,522 a 12,12 0 0 1 0,-24"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path297" />
+    </g>
+    <g
+       id="g299"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 785.67578,510 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         id="path298" />
+    </g>
+    <g
+       id="g300"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 785.67578,510 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path299" />
+    </g>
+    <g
+       id="g302"
+       transform="matrix(0,0.94579112,-0.94579112,0,957.93145,117.02239)">
+      <g
+         id="g301">
+        <path
+           fill="none"
+           stroke="none"
+           id="path300"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="865.17578"
+           y="615"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text300">get_voltage_max</text>
+      </g>
+    </g>
+    <g
+       id="g303"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 810,746 H 794 V 522"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path302" />
+    </g>
+    <g
+       id="g304"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 801.74609,605 c 0,-6.62742 5.37259,-12 12,-12 6.62742,0 12,5.37258 12,12 0,6.62742 -5.37258,12 -12,12 -6.62741,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path303" />
+    </g>
+    <g
+       id="g305"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 806,610 a 12,12 0 0 1 0,-24"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path304" />
+    </g>
+    <g
+       id="g306"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 797.74609,598 c 0,-4.97056 4.02944,-9 9,-9 4.97057,0 9,4.02944 9,9 0,4.97056 -4.02943,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         id="path305" />
+    </g>
+    <g
+       id="g307"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 797.74609,598 c 0,-4.97056 4.02944,-9 9,-9 4.97057,0 9,4.02944 9,9 0,4.97056 -4.02943,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path306" />
+    </g>
+    <g
+       id="g309"
+       transform="matrix(0,0.94579112,-0.94579112,0,935.77767,43.914767)">
+      <g
+         id="g308">
+        <path
+           fill="none"
+           stroke="none"
+           id="path307"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="877.24609"
+           y="703"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text307">get_charge_unit</text>
+      </g>
+    </g>
+    <g
+       id="g310"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 954,746 V 598 H 818.74609"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path309" />
+    </g>
+    <g
+       id="g311"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 906.85156,653 c 0,-6.62742 5.37258,-12 12,-12 6.62742,0 12,5.37258 12,12 0,6.62742 -5.37258,12 -12,12 -6.62742,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path310" />
+    </g>
+    <g
+       id="g312"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 911,658 a 12,12 0 0 1 0,-24"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path311" />
+    </g>
+    <g
+       id="g313"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 902.85156,646 c 0,-4.97056 4.02944,-9 9,-9 4.97057,0 9,4.02944 9,9 0,4.97056 -4.02943,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         id="path312" />
+    </g>
+    <g
+       id="g314"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 902.85156,646 c 0,-4.97056 4.02944,-9 9,-9 4.97057,0 9,4.02944 9,9 0,4.97056 -4.02943,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path313" />
+    </g>
+    <g
+       id="g316"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g315">
+        <path
+           fill="none"
+           stroke="none"
+           id="path314"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="982.35156"
+           y="751"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text314">stop_charging</text>
+      </g>
+    </g>
+    <g
+       id="g317"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 911,746 V 658"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path316" />
+    </g>
+    <g
+       id="g318"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 868.80078,709 c 0,-6.62742 5.37258,-12 12,-12 6.62742,0 12,5.37258 12,12 0,6.62742 -5.37258,12 -12,12 -6.62742,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path317" />
+    </g>
+    <g
+       id="g319"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 861.35829,704.91043 a 12.000001,12.000001 0 0 1 23.28342,-5.82086"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path318" />
+    </g>
+    <g
+       id="g320"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 864.80078,702 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         id="path319" />
+    </g>
+    <g
+       id="g321"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 864.80078,702 c 0,-4.97056 4.02944,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path320" />
+    </g>
+    <g
+       id="g323"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g322">
+        <path
+           fill="none"
+           stroke="none"
+           id="path321"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="944.30078"
+           y="807"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text321">clear_error</text>
+      </g>
+    </g>
+    <g
+       id="g324"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 873,746 V 714"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path323" />
+    </g>
+    <g
+       id="g325"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 1022.2656,549 c 0,-6.62742 5.3726,-12 12,-12 6.6274,0 12,5.37258 12,12 0,6.62742 -5.3726,12 -12,12 -6.6274,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path324" />
+    </g>
+    <g
+       id="g326"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 1015.6158,545.79473 a 12,12 0 0 1 22.7684,-7.58946"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path325" />
+    </g>
+    <g
+       id="g327"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 1018.2656,542 c 0,-4.97056 4.0295,-9 9,-9 4.9706,0 9,4.02944 9,9 0,4.97056 -4.0294,9 -9,9 -4.9705,0 -9,-4.02944 -9,-9 z"
+         id="path326" />
+    </g>
+    <g
+       id="g328"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 1018.2656,542 c 0,-4.97056 4.0295,-9 9,-9 4.9706,0 9,4.02944 9,9 0,4.97056 -4.0294,9 -9,9 -4.9705,0 -9,-4.02944 -9,-9 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path327" />
+    </g>
+    <g
+       id="g330"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g329">
+        <path
+           fill="none"
+           stroke="none"
+           id="path328"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="1097.7656"
+           y="647"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text328">signal_request_charge_plan_calibration</text>
+      </g>
+    </g>
+    <g
+       id="g331"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 978,746 v -57 h 49 V 554"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path330" />
+    </g>
+    <g
+       id="g332"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 586,610 v -36 h 64.83203"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path331" />
+    </g>
+    <g
+       id="g333"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 578,610 V 542 H 718.9375"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path332" />
+    </g>
+    <g
+       id="g334"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 714,646 H 899.85156"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path333" />
+    </g>
+    <g
+       id="g335"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 570,610 V 510 h 212.67578"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path334" />
+    </g>
+    <g
+       id="g336"
+       transform="matrix(0,0.83473413,-0.94813126,0,932.20593,124.40931)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 714,610 v -12 h 80.74609"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path335" />
+    </g>
+    <g
+       id="g337"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 562,610 V 490 h 461 v 40"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path336" />
+    </g>
+    <g
+       id="g338"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 714,686 h 156 v 4"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path337" />
+    </g>
+    <g
+       id="g339"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 747.69531,901 c 0,-6.62742 5.37258,-12 12,-12 6.62742,0 12,5.37258 12,12 0,6.62742 -5.37258,12 -12,12 -6.62742,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path338" />
+    </g>
+    <g
+       id="g340"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 752,906 a 12,12 0 0 1 0,-24"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path339" />
+    </g>
+    <g
+       id="g341"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 743.69531,894 c 0,-4.97056 4.02944,-9 9,-9 4.97057,0 9,4.02944 9,9 0,4.97056 -4.02943,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         id="path340" />
+    </g>
+    <g
+       id="g342"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 743.69531,894 c 0,-4.97056 4.02944,-9 9,-9 4.97057,0 9,4.02944 9,9 0,4.97056 -4.02943,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path341" />
+    </g>
+    <g
+       id="g344"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g343">
+        <path
+           fill="none"
+           stroke="none"
+           id="path342"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="823.19531"
+           y="999"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text342">send_message</text>
+      </g>
+    </g>
+    <g
+       id="g345"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 818,938 H 752 V 906"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path344" />
+    </g>
+    <g
+       id="g346"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 733.00391,829 c 0,-6.62742 5.37258,-12 12,-12 6.62741,0 12,5.37258 12,12 0,6.62742 -5.37259,12 -12,12 -6.62742,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path345" />
+    </g>
+    <g
+       id="g347"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 729.51472,830.48528 a 12,12 0 0 1 16.97056,-16.97056"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path346" />
+    </g>
+    <g
+       id="g348"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 729.00391,822 c 0,-4.97056 4.02943,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97057,0 -9,-4.02944 -9,-9 z"
+         id="path347" />
+    </g>
+    <g
+       id="g349"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 729.00391,822 c 0,-4.97056 4.02943,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97057,0 -9,-4.02944 -9,-9 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path348" />
+    </g>
+    <g
+       id="g351"
+       transform="matrix(0,0.94579112,-0.94579112,0,933.53442,47.126517)">
+      <g
+         id="g350">
+        <path
+           fill="none"
+           stroke="none"
+           id="path349"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="808.50391"
+           y="927"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text349">signal_thread_web_server_recv</text>
+      </g>
+    </g>
+    <g
+       id="g352"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 937,890 V 866 H 738 v -32"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path351" />
+    </g>
+    <g
+       id="g353"
+       transform="matrix(0,1.1237769,-0.97921295,0,957.17954,-90.940402)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 714,698 h 12.00391 v 112.00391"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path352" />
+    </g>
+    <g
+       id="g354"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 666,698 v 196 h 74.69531"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path353" />
+    </g>
+    <g
+       id="g355"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 877.33594,213 c 0,-6.62742 5.37258,-12 12,-12 6.62742,0 12,5.37258 12,12 0,6.62742 -5.37258,12 -12,12 -6.62742,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path354" />
+    </g>
+    <g
+       id="g356"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 882,218 a 12,12 0 0 1 0,-24"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path355" />
+    </g>
+    <g
+       id="g357"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 873.33594,206 c 0,-4.97056 4.02943,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97057,0 -9,-4.02944 -9,-9 z"
+         id="path356" />
+    </g>
+    <g
+       id="g358"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 873.33594,206 c 0,-4.97056 4.02943,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97057,0 -9,-4.02944 -9,-9 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path357" />
+    </g>
+    <g
+       id="g360"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g359">
+        <path
+           fill="none"
+           stroke="none"
+           id="path358"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="952.83594"
+           y="311"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text358">get_charging_schedule</text>
+      </g>
+    </g>
+    <g
+       id="g361"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 962,212.16797 H 894.33594"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path360" />
+    </g>
+    <g
+       id="g362"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 881.67187,157 c 0,-6.62742 5.37259,-12 12,-12 6.62742,0 12,5.37258 12,12 0,6.62742 -5.37258,12 -12,12 -6.62741,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path361" />
+    </g>
+    <g
+       id="g363"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 886,162 a 12,12 0 0 1 0,-24"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path362" />
+    </g>
+    <g
+       id="g364"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 877.67187,150 c 0,-4.97056 4.02944,-9 9,-9 4.97057,0 9,4.02944 9,9 0,4.97056 -4.02943,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         id="path363" />
+    </g>
+    <g
+       id="g365"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 877.67187,150 c 0,-4.97056 4.02944,-9 9,-9 4.97057,0 9,4.02944 9,9 0,4.97056 -4.02943,9 -9,9 -4.97056,0 -9,-4.02944 -9,-9 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path364" />
+    </g>
+    <g
+       id="g367"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <g
+         id="g366">
+        <path
+           fill="none"
+           stroke="none"
+           id="path365"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="957.17188"
+           y="255"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-70,-78)"
+           id="text365">get_charging_needs</text>
+      </g>
+    </g>
+    <g
+       id="g368"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 962,156.66941 H 898.67187"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path367" />
+    </g>
+    <g
+       id="g369"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 785,150 h 89.67187"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path368" />
+    </g>
+    <g
+       id="g370"
+       transform="matrix(0,0.94579112,-0.94579112,0,930.79307,36.160929)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 785,206 h 85.33594"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path369" />
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-size:22.7048px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000;stroke-width:1.30989"
+       x="345.41599"
+       y="1373.6317"
+       id="text371"><tspan
+         sodipodi:role="line"
+         id="tspan371"
+         style="font-size:22.7048px;stroke-width:1.30989"
+         x="345.41599"
+         y="1373.6317">Component Diagram</tspan></text>
+    <path
+       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.754569;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       d="m 354.86043,720.3701 h -9.83882"
+       id="path371"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.754569;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       d="m 345.16214,711.28238 v 9.41715"
+       id="path372"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0" />
+  </g>
+</svg>

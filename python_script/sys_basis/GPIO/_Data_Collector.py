@@ -156,8 +156,11 @@ class DataCollector:
         self.__evse_data: dict = {}
         self.__shelly_data: dict = {}
         self.__timer_data: Timer = Timer(self.__interval_send_data, self.__send_display_data)
+        self.__timer_data.name = 'DataCollector.data'
         self.__timer_figure: Timer = Timer(self.__interval_send_fig, self.__send_figure_data)
+        self.__timer_figure.name = 'DataCollector.figure'
         self.__timer_watching: Timer = Timer(self.__interval_send_watching_data, self.__send_watchting_data)
+        self.__timer_watching.name = 'DataCollector.watching'
         self.__charging_units_id_set: set = set()
         self.__available_charge_units_id_set: set = set()
         self.__signal_DC_data_display: XSignal = XSignal()
@@ -171,6 +174,7 @@ class DataCollector:
     def stop(self) -> None:
         self.__timer_data.cancel()
         self.__timer_figure.cancel()
+        self.__timer_watching.cancel()
         self.__isRunning = False
 
     def __str__(self) -> str:
@@ -411,22 +415,31 @@ class DataCollector:
         发送监控的数据
         """
         for cu_data in self.__all_data.values():
-            evse_data: dict = copy.deepcopy(cu_data['evse'])
-            evse_data.pop('vehicle_state')
-            evse_data.pop('evse_error')
-            data = {
+            # _log.info(f'cu_data: {cu_data}')
+            evse_data: dict = copy.deepcopy(cu_data.get('evse', {}))
+            evse_data.pop('vehicle_state') if 'vehicle_state' in evse_data else None
+            evse_data.pop('evse_error') if 'evse_error' in evse_data else None
+            shelly_data: dict = cu_data.get('shelly', {})
+            sehlly_0_data: dict = shelly_data.get(0, {})
+            sehlly_1_data: dict = shelly_data.get(1, {})
+            sehlly_2_data: dict = shelly_data.get(2, {})
+            shelly_charged_energy = shelly_data.get('charged_energy', 0)
+            shelly_is_valid: bool = shelly_data.get('is_valid', False)
+            data: dict = {
+                'current_time': datetime.now().strftime('%Y-%m-%d | %H:%M:%S.%f')[:-3],
                 'evse': evse_data,
                 'shelly': {
-                    "0": cu_data['shelly'][0],
-                    "1": cu_data['shelly'][1],
-                    "2": cu_data['shelly'][2],
-                    'charged_energy': cu_data['shelly']['charged_energy'],
-                    'is_valid': cu_data['shelly']['charged_energy'],
+                    "0": sehlly_0_data,
+                    "1": sehlly_1_data,
+                    "2": sehlly_2_data,
+                    'charged_energy': shelly_charged_energy,
+                    'is_valid': shelly_is_valid,
                 },
             }
-            _log.info(data)
+            # _log.info(data)
             self.signal_DC_watching_data_display.emit(data)
         self.__timer_watching = Timer(self.__interval_send_watching_data, self.__send_watchting_data)
+        self.__timer_watching.name = 'DataCollector.watching'
         self.__timer_watching.start()
 
     def __send_display_data(self) -> None:
@@ -439,6 +452,7 @@ class DataCollector:
         if data:
             self.__signal_DC_data_display.emit(data)
         self.__timer_data = Timer(self.__interval_send_data, self.__send_display_data)
+        self.__timer_data.name = 'DataCollector.data'
         self.__timer_data.start()
 
     def __send_figure_data(self) -> None:
@@ -488,4 +502,5 @@ class DataCollector:
         if self.__timer_figure.is_alive():
             self.__timer_figure.cancel()
         self.__timer_figure = Timer(self.__interval_send_fig, self.__send_figure_data)
+        self.__timer_figure.name = 'DataCollector.figure'
         self.__timer_figure.start()

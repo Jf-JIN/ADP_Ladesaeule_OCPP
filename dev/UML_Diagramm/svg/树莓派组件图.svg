@@ -1,0 +1,2720 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   version="1.1"
+   width="1199.53125"
+   height="548"
+   id="svg237"
+   sodipodi:docname="树莓派组件图.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   inkscape:export-filename="树莓派组件图.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview237"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="1.4206611"
+     inkscape:cx="603.59224"
+     inkscape:cy="305.13964"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="2552"
+     inkscape:window-y="210"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g237" />
+  <defs
+     id="defs1" />
+  <g
+     id="g237">
+    <g
+       id="g1">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="493"
+         y="161"
+         width="246"
+         height="88"
+         transform="matrix(1 0 0 1 -18 -24)"
+         fill-opacity="0.2"
+         id="rect1" />
+    </g>
+    <g
+       id="g2">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="486"
+         y="154"
+         width="246"
+         height="88"
+         transform="matrix(1 0 0 1 -18 -24)"
+         id="rect2" />
+    </g>
+    <g
+       id="g3">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 468 130 L 714 130 L 714 218 L 468 218 L 468 130 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path2" />
+    </g>
+    <g
+       id="g4">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="476"
+         y="161"
+         width="20"
+         height="10"
+         transform="matrix(1 0 0 1 -18 -24)"
+         id="rect3" />
+    </g>
+    <g
+       id="g5">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 458 137 L 478 137 L 478 147 L 458 147 L 458 137 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path4" />
+    </g>
+    <g
+       id="g6">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="476"
+         y="181"
+         width="20"
+         height="10"
+         transform="matrix(1 0 0 1 -18 -24)"
+         id="rect5" />
+    </g>
+    <g
+       id="g7">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 458 157 L 478 157 L 478 167 L 458 167 L 458 157 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path6" />
+    </g>
+    <g
+       id="g8">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 478 158 L 714 158"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path7" />
+    </g>
+    <g
+       id="g10">
+      <g
+         id="g9">
+        <path
+           fill="none"
+           stroke="none"
+           id="path8" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="614.5"
+           y="169"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -18 -24)"
+           id="text8">Client Central Processor</text>
+      </g>
+    </g>
+    <g
+       id="g11">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="45"
+         y="145"
+         width="334"
+         height="424"
+         transform="matrix(1 0 0 1 -18 -24)"
+         fill-opacity="0.2"
+         id="rect10" />
+    </g>
+    <g
+       id="g12">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="38"
+         y="138"
+         width="334"
+         height="424"
+         transform="matrix(1 0 0 1 -18 -24)"
+         id="rect11" />
+    </g>
+    <g
+       id="g13">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 20 114 L 354 114 L 354 538 L 20 538 L 20 114 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path12" />
+    </g>
+    <g
+       id="g14">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="28"
+         y="145"
+         width="20"
+         height="10"
+         transform="matrix(1 0 0 1 -18 -24)"
+         id="rect13" />
+    </g>
+    <g
+       id="g15">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 10 121 L 30 121 L 30 131 L 10 131 L 10 121 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path14" />
+    </g>
+    <g
+       id="g16">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="28"
+         y="165"
+         width="20"
+         height="10"
+         transform="matrix(1 0 0 1 -18 -24)"
+         id="rect15" />
+    </g>
+    <g
+       id="g17">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 10 141 L 30 141 L 30 151 L 10 151 L 10 141 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path16" />
+    </g>
+    <g
+       id="g19">
+      <g
+         id="g18">
+        <path
+           fill="none"
+           stroke="none"
+           id="path17" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="210.5"
+           y="153"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -18 -24)"
+           id="text17">ManagerCoroutines</text>
+      </g>
+    </g>
+    <g
+       id="g20">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="141"
+         y="177"
+         width="214"
+         height="104"
+         transform="matrix(1 0 0 1 -18 -24)"
+         fill-opacity="0.2"
+         id="rect19" />
+    </g>
+    <g
+       id="g21">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="134"
+         y="170"
+         width="214"
+         height="104"
+         transform="matrix(1 0 0 1 -18 -24)"
+         id="rect20" />
+    </g>
+    <g
+       id="g22">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 116 146 L 330 146 L 330 250 L 116 250 L 116 146 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path21" />
+    </g>
+    <g
+       id="g23">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="124"
+         y="177"
+         width="20"
+         height="10"
+         transform="matrix(1 0 0 1 -18 -24)"
+         id="rect22" />
+    </g>
+    <g
+       id="g24">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 106 153 L 126 153 L 126 163 L 106 163 L 106 153 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path23" />
+    </g>
+    <g
+       id="g25">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="124"
+         y="197"
+         width="20"
+         height="10"
+         transform="matrix(1 0 0 1 -18 -24)"
+         id="rect24" />
+    </g>
+    <g
+       id="g26">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 106 173 L 126 173 L 126 183 L 106 183 L 106 173 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path25" />
+    </g>
+    <g
+       id="g28">
+      <g
+         id="g27">
+        <path
+           fill="none"
+           stroke="none"
+           id="path26" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="246.5"
+           y="185"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -18 -24)"
+           id="text26">PortWebSocketServer</text>
+      </g>
+    </g>
+    <g
+       id="g29">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="85"
+         y="305"
+         width="270"
+         height="240"
+         transform="matrix(1 0 0 1 -18 -24)"
+         fill-opacity="0.2"
+         id="rect28" />
+    </g>
+    <g
+       id="g30">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="78"
+         y="298"
+         width="270"
+         height="240"
+         transform="matrix(1 0 0 1 -18 -24)"
+         id="rect29" />
+    </g>
+    <g
+       id="g31">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 60 274 L 330 274 L 330 514 L 60 514 L 60 274 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path30" />
+    </g>
+    <g
+       id="g32">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="68"
+         y="305"
+         width="20"
+         height="10"
+         transform="matrix(1 0 0 1 -18 -24)"
+         id="rect31" />
+    </g>
+    <g
+       id="g33">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 50 281 L 70 281 L 70 291 L 50 291 L 50 281 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path32" />
+    </g>
+    <g
+       id="g34">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="68"
+         y="325"
+         width="20"
+         height="10"
+         transform="matrix(1 0 0 1 -18 -24)"
+         id="rect33" />
+    </g>
+    <g
+       id="g35">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 50 301 L 70 301 L 70 311 L 50 311 L 50 301 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path34" />
+    </g>
+    <g
+       id="g37">
+      <g
+         id="g36">
+        <path
+           fill="none"
+           stroke="none"
+           id="path35" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="218.5"
+           y="313"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -18 -24)"
+           id="text35">PortOCPPWebsocketClient</text>
+      </g>
+    </g>
+    <g
+       id="g38">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="189"
+         y="449"
+         width="119.21875"
+         height="45"
+         transform="matrix(1 0 0 1 -18 -24)"
+         fill-opacity="0.2"
+         id="rect37" />
+    </g>
+    <g
+       id="g39">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="182"
+         y="442"
+         width="119.21875"
+         height="45"
+         transform="matrix(1 0 0 1 -18 -24)"
+         id="rect38" />
+    </g>
+    <g
+       id="g40">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 164 418 L 283.21875 418 L 283.21875 463 L 164 463 L 164 418 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path39" />
+    </g>
+    <g
+       id="g41">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="172"
+         y="449"
+         width="20"
+         height="10"
+         transform="matrix(1 0 0 1 -18 -24)"
+         id="rect40" />
+    </g>
+    <g
+       id="g42">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 154 425 L 174 425 L 174 435 L 154 435 L 154 425 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path41" />
+    </g>
+    <g
+       id="g43">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="172"
+         y="469"
+         width="20"
+         height="10"
+         transform="matrix(1 0 0 1 -18 -24)"
+         id="rect42" />
+    </g>
+    <g
+       id="g44">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 154 445 L 174 445 L 174 455 L 154 455 L 154 445 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path43" />
+    </g>
+    <g
+       id="g46">
+      <g
+         id="g45">
+        <path
+           fill="none"
+           stroke="none"
+           id="path44" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="247.109375"
+           y="457"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -18 -24)"
+           id="text44">ChargePoint</text>
+      </g>
+    </g>
+    <g
+       id="g47">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="165"
+         y="329"
+         width="156.9140625"
+         height="45"
+         transform="matrix(1 0 0 1 -18 -24)"
+         fill-opacity="0.2"
+         id="rect46" />
+    </g>
+    <g
+       id="g48">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="158"
+         y="322"
+         width="156.9140625"
+         height="45"
+         transform="matrix(1 0 0 1 -18 -24)"
+         id="rect47" />
+    </g>
+    <g
+       id="g49">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 140 298 L 296.9140625 298 L 296.9140625 343 L 140 343 L 140 298 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path48" />
+    </g>
+    <g
+       id="g50">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="148"
+         y="329"
+         width="20"
+         height="10"
+         transform="matrix(1 0 0 1 -18 -24)"
+         id="rect49" />
+    </g>
+    <g
+       id="g51">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 130 305 L 150 305 L 150 315 L 130 315 L 130 305 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path50" />
+    </g>
+    <g
+       id="g52">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="148"
+         y="349"
+         width="20"
+         height="10"
+         transform="matrix(1 0 0 1 -18 -24)"
+         id="rect51" />
+    </g>
+    <g
+       id="g53">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 130 325 L 150 325 L 150 335 L 130 335 L 130 325 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path52" />
+    </g>
+    <g
+       id="g55">
+      <g
+         id="g54">
+        <path
+           fill="none"
+           stroke="none"
+           id="path53" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="normal"
+           text-decoration="undefined"
+           x="241.95703125"
+           y="335"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -18 -24)"
+           id="text53">«context»</text>
+      </g>
+    </g>
+    <g
+       id="g57">
+      <g
+         id="g56">
+        <path
+           fill="none"
+           stroke="none"
+           id="path55" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="241.95703125"
+           y="353"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -18 -24)"
+           id="text55">WebSocketClient</text>
+      </g>
+    </g>
+    <g
+       id="g58">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="189"
+         y="217"
+         width="161.9296875"
+         height="45"
+         transform="matrix(1 0 0 1 -18 -24)"
+         fill-opacity="0.2"
+         id="rect57" />
+    </g>
+    <g
+       id="g59">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="182"
+         y="210"
+         width="161.9296875"
+         height="45"
+         transform="matrix(1 0 0 1 -18 -24)"
+         id="rect58" />
+    </g>
+    <g
+       id="g60">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 164 186 L 325.9296875 186 L 325.9296875 231 L 164 231 L 164 186 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path59" />
+    </g>
+    <g
+       id="g61">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="172"
+         y="217"
+         width="20"
+         height="10"
+         transform="matrix(1 0 0 1 -18 -24)"
+         id="rect60" />
+    </g>
+    <g
+       id="g62">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 154 193 L 174 193 L 174 203 L 154 203 L 154 193 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path61" />
+    </g>
+    <g
+       id="g63">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="172"
+         y="237"
+         width="20"
+         height="10"
+         transform="matrix(1 0 0 1 -18 -24)"
+         id="rect62" />
+    </g>
+    <g
+       id="g64">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 154 213 L 174 213 L 174 223 L 154 223 L 154 213 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path63" />
+    </g>
+    <g
+       id="g66">
+      <g
+         id="g65">
+        <path
+           fill="none"
+           stroke="none"
+           id="path64" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="268.46484375"
+           y="225"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -18 -24)"
+           id="text64">WebSocketServer</text>
+      </g>
+    </g>
+    <g
+       id="g67">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="845"
+         y="297"
+         width="181.578125"
+         height="88"
+         transform="matrix(1 0 0 1 -18 -24)"
+         fill-opacity="0.2"
+         id="rect66" />
+    </g>
+    <g
+       id="g68">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="838"
+         y="290"
+         width="181.578125"
+         height="88"
+         transform="matrix(1 0 0 1 -18 -24)"
+         id="rect67" />
+    </g>
+    <g
+       id="g69">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 820 266 L 1001.578125 266 L 1001.578125 354 L 820 354 L 820 266 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path68" />
+    </g>
+    <g
+       id="g70">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="828"
+         y="297"
+         width="20"
+         height="10"
+         transform="matrix(1 0 0 1 -18 -24)"
+         id="rect69" />
+    </g>
+    <g
+       id="g71">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 810 273 L 830 273 L 830 283 L 810 283 L 810 273 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path70" />
+    </g>
+    <g
+       id="g72">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="828"
+         y="317"
+         width="20"
+         height="10"
+         transform="matrix(1 0 0 1 -18 -24)"
+         id="rect71" />
+    </g>
+    <g
+       id="g73">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 810 293 L 830 293 L 830 303 L 810 303 L 810 293 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path72" />
+    </g>
+    <g
+       id="g75">
+      <g
+         id="g74">
+        <path
+           fill="none"
+           stroke="none"
+           id="path73" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="934.2890625"
+           y="305"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -18 -24)"
+           id="text73">GPIO Manager</text>
+      </g>
+    </g>
+    <g
+       id="g76">
+      <rect
+         fill="#C0C0C0"
+         stroke="none"
+         x="853"
+         y="441"
+         width="241.9140625"
+         height="80"
+         transform="matrix(1 0 0 1 -18 -24)"
+         fill-opacity="0.2"
+         id="rect75" />
+    </g>
+    <g
+       id="g77">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="846"
+         y="434"
+         width="241.9140625"
+         height="80"
+         transform="matrix(1 0 0 1 -18 -24)"
+         id="rect76" />
+    </g>
+    <g
+       id="g78">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 828 410 L 1069.9140625 410 L 1069.9140625 490 L 828 490 L 828 410 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path77" />
+    </g>
+    <g
+       id="g79">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="836"
+         y="441"
+         width="20"
+         height="10"
+         transform="matrix(1 0 0 1 -18 -24)"
+         id="rect78" />
+    </g>
+    <g
+       id="g80">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 818 417 L 838 417 L 838 427 L 818 427 L 818 417 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path79" />
+    </g>
+    <g
+       id="g81">
+      <rect
+         fill="#ffffff"
+         stroke="none"
+         x="836"
+         y="461"
+         width="20"
+         height="10"
+         transform="matrix(1 0 0 1 -18 -24)"
+         id="rect80" />
+    </g>
+    <g
+       id="g82">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 818 437 L 838 437 L 838 447 L 818 447 L 818 437 Z Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path81" />
+    </g>
+    <g
+       id="g84">
+      <g
+         id="g83">
+        <path
+           fill="none"
+           stroke="none"
+           id="path82" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="972.45703125"
+           y="449"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -18 -24)"
+           id="text82">PortWebServerChargePoint</text>
+      </g>
+    </g>
+    <g
+       id="g85"
+       transform="translate(-6,-4)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 165,373 c 0,-6.62742 5.37258,-12 12,-12 6.62742,0 12,5.37258 12,12 0,6.62742 -5.37258,12 -12,12 -6.62742,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path84" />
+    </g>
+    <g
+       id="g86">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 182 366 A 12 12 0 0 1 158 366"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path85" />
+    </g>
+    <g
+       id="g87">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 161 366 C 161 361.0294368 165.0294368 357 170 357 C 174.9705632 357 179 361.0294368 179 366 C 179 370.9705632 174.9705632 375 170 375 C 165.0294368 375 161 370.9705632 161 366 Z"
+         id="path86" />
+    </g>
+    <g
+       id="g88">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 161 366 C 161 361.0294368 165.0294368 357 170 357 C 174.9705632 357 179 361.0294368 179 366 C 179 370.9705632 174.9705632 375 170 375 C 165.0294368 375 161 370.9705632 161 366 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path87" />
+    </g>
+    <g
+       id="g90">
+      <g
+         id="g89">
+        <path
+           fill="none"
+           stroke="none"
+           id="path88" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="188.5"
+           y="417"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -18 -24)"
+           id="text88">send</text>
+      </g>
+    </g>
+    <g
+       id="g91">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 182 343 L 182 354"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path90" />
+    </g>
+    <g
+       id="g92"
+       transform="translate(-6,-6)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 262.14844,373 c 0,-6.62742 5.37258,-12 12,-12 6.62742,0 12,5.37258 12,12 0,6.62742 -5.37258,12 -12,12 -6.62742,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path91" />
+    </g>
+    <g
+       id="g93">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 279 366 A 12 12 0 0 1 255 366"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path92" />
+    </g>
+    <g
+       id="g94">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 258.1484375 366 C 258.1484375 361.0294368 262.1778743 357 267.1484375 357 C 272.1190007 357 276.1484375 361.0294368 276.1484375 366 C 276.1484375 370.9705632 272.1190007 375 267.1484375 375 C 262.1778743 375 258.1484375 370.9705632 258.1484375 366 Z"
+         id="path93" />
+    </g>
+    <g
+       id="g95">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 258.1484375 366 C 258.1484375 361.0294368 262.1778743 357 267.1484375 357 C 272.1190007 357 276.1484375 361.0294368 276.1484375 366 C 276.1484375 370.9705632 272.1190007 375 267.1484375 375 C 262.1778743 375 258.1484375 370.9705632 258.1484375 366 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path94" />
+    </g>
+    <g
+       id="g97">
+      <g
+         id="g96">
+        <path
+           fill="none"
+           stroke="none"
+           id="path95" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="285.6484375"
+           y="417"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -18 -24)"
+           id="text95">signal_recv</text>
+      </g>
+    </g>
+    <g
+       id="g98">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 255.1484375 343 L 255.1484375 354.1484375"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path97" />
+    </g>
+    <g
+       id="g99">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 170 418 L 170 378"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path98" />
+    </g>
+    <g
+       id="g100">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 267 418 L 267 378"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path99" />
+    </g>
+    <g
+       id="g101"
+       transform="translate(-6,-8)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 136.70996,65 c 0,-6.627418 5.37258,-12 12,-12 6.62742,0 12,5.372582 12,12 0,6.627418 -5.37258,12 -12,12 -6.62742,0 -12,-5.372582 -12,-12 z"
+         fill-opacity="0.2"
+         id="path100" />
+    </g>
+    <g
+       id="g102">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 129 58 A 12 12 0 0 1 153 58"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path101" />
+    </g>
+    <g
+       id="g103">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 132.7099609375 58 C 132.7099609375 53.0294368 136.7393977375 49 141.7099609375 49 C 146.6805241375 49 150.7099609375 53.0294368 150.7099609375 58 C 150.7099609375 62.9705632 146.6805241375 67 141.7099609375 67 C 136.7393977375 67 132.7099609375 62.9705632 132.7099609375 58 Z"
+         id="path102" />
+    </g>
+    <g
+       id="g104">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 132.7099609375 58 C 132.7099609375 53.0294368 136.7393977375 49 141.7099609375 49 C 146.6805241375 49 150.7099609375 53.0294368 150.7099609375 58 C 150.7099609375 62.9705632 146.6805241375 67 141.7099609375 67 C 136.7393977375 67 132.7099609375 62.9705632 132.7099609375 58 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path103" />
+    </g>
+    <g
+       id="g106"
+       transform="translate(19.181211,-3.6954627)">
+      <g
+         id="g105">
+        <path
+           fill="none"
+           stroke="none"
+           id="path104"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="160.20996"
+           y="109"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-18,-24)"
+           id="text104">send</text>
+      </g>
+    </g>
+    <g
+       id="g107">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 141 146 L 141 70"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path106" />
+    </g>
+    <g
+       id="g108"
+       transform="translate(-6,-8)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 231.56836,65 c 0,-6.627418 5.37258,-12 12,-12 6.62742,0 12,5.372582 12,12 0,6.627418 -5.37258,12 -12,12 -6.62742,0 -12,-5.372582 -12,-12 z"
+         fill-opacity="0.2"
+         id="path107" />
+    </g>
+    <g
+       id="g109">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 236 46 A 12 12 0 0 1 236 70"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path108" />
+    </g>
+    <g
+       id="g110">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 227.568359375 58 C 227.568359375 53.0294368 231.597796175 49 236.568359375 49 C 241.53892257500002 49 245.568359375 53.0294368 245.568359375 58 C 245.568359375 62.9705632 241.53892257500002 67 236.568359375 67 C 231.597796175 67 227.568359375 62.9705632 227.568359375 58 Z"
+         id="path109" />
+    </g>
+    <g
+       id="g111">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 227.568359375 58 C 227.568359375 53.0294368 231.597796175 49 236.568359375 49 C 241.53892257500002 49 245.568359375 53.0294368 245.568359375 58 C 245.568359375 62.9705632 241.53892257500002 67 236.568359375 67 C 231.597796175 67 227.568359375 62.9705632 227.568359375 58 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path110" />
+    </g>
+    <g
+       id="g113"
+       transform="translate(45.04945,-4.9272836)">
+      <g
+         id="g112">
+        <path
+           fill="none"
+           stroke="none"
+           id="path111"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="255.06836"
+           y="109"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-18,-24)"
+           id="text111">signal_recv</text>
+      </g>
+    </g>
+    <g
+       id="g114">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 236 146 L 236 70"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path113" />
+    </g>
+    <g
+       id="g115"
+       transform="translate(-6,-6)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 606.75,381 c 0,-6.62742 5.37258,-12 12,-12 6.62742,0 12,5.37258 12,12 0,6.62742 -5.37258,12 -12,12 -6.62742,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path114" />
+    </g>
+    <g
+       id="g116">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 599.0414509010615 374.9965457582449 A 12 12 0 0 1 622.9585490989385 373.0034542417551"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path115" />
+    </g>
+    <g
+       id="g117">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 602.75 374 C 602.75 369.0294368 606.7794368 365 611.75 365 C 616.7205632 365 620.75 369.0294368 620.75 374 C 620.75 378.9705632 616.7205632 383 611.75 383 C 606.7794368 383 602.75 378.9705632 602.75 374 Z"
+         id="path116" />
+    </g>
+    <g
+       id="g118">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 602.75 374 C 602.75 369.0294368 606.7794368 365 611.75 365 C 616.7205632 365 620.75 369.0294368 620.75 374 C 620.75 378.9705632 616.7205632 383 611.75 383 C 606.7794368 383 602.75 378.9705632 602.75 374 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path117" />
+    </g>
+    <g
+       id="g120">
+      <g
+         id="g119">
+        <path
+           fill="none"
+           stroke="none"
+           id="path118" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="630.25"
+           y="425"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -18 -24)"
+           id="text118">send_ocpp_request</text>
+      </g>
+    </g>
+    <g
+       id="g121">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 283 450 L 611 450 L 611 386"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path120" />
+    </g>
+    <g
+       id="g122"
+       transform="translate(-6,-6)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 636.65625,453 c 0,-6.62742 5.37258,-12 12,-12 6.62742,0 12,5.37258 12,12 0,6.62742 -5.37258,12 -12,12 -6.62742,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path121" />
+    </g>
+    <g
+       id="g123">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 629.0414509010615 445.0034542417551 A 12 12 0 0 1 652.9585490989385 446.9965457582449"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path122" />
+    </g>
+    <g
+       id="g124">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 632.65625 446 C 632.65625 441.0294368 636.6856868 437 641.65625 437 C 646.6268132 437 650.65625 441.0294368 650.65625 446 C 650.65625 450.9705632 646.6268132 455 641.65625 455 C 636.6856868 455 632.65625 450.9705632 632.65625 446 Z"
+         id="path123" />
+    </g>
+    <g
+       id="g125">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 632.65625 446 C 632.65625 441.0294368 636.6856868 437 641.65625 437 C 646.6268132 437 650.65625 441.0294368 650.65625 446 C 650.65625 450.9705632 646.6268132 455 641.65625 455 C 636.6856868 455 632.65625 450.9705632 632.65625 446 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path124" />
+    </g>
+    <g
+       id="g127">
+      <g
+         id="g126">
+        <path
+           fill="none"
+           stroke="none"
+           id="path125" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="660.15625"
+           y="497"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -18 -24)"
+           id="text125">send_ocpp_response</text>
+      </g>
+    </g>
+    <g
+       id="g128">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 209 463 L 209 490 L 641 490 L 641 458"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path127" />
+    </g>
+    <g
+       id="g129"
+       transform="translate(-6,-6)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 529.35547,309 c 0,-6.62742 5.37258,-12 12,-12 6.62742,0 12,5.37258 12,12 0,6.62742 -5.37258,12 -12,12 -6.62742,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path128" />
+    </g>
+    <g
+       id="g130">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 522.6158004233938 305.79473319220205 A 12 12 0 0 1 545.3841995766062 298.20526680779795"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path129" />
+    </g>
+    <g
+       id="g131">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 525.35546875 302 C 525.35546875 297.0294368 529.38490555 293 534.35546875 293 C 539.32603195 293 543.35546875 297.0294368 543.35546875 302 C 543.35546875 306.9705632 539.32603195 311 534.35546875 311 C 529.38490555 311 525.35546875 306.9705632 525.35546875 302 Z"
+         id="path130" />
+    </g>
+    <g
+       id="g132">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 525.35546875 302 C 525.35546875 297.0294368 529.38490555 293 534.35546875 293 C 539.32603195 293 543.35546875 297.0294368 543.35546875 302 C 543.35546875 306.9705632 539.32603195 311 534.35546875 311 C 529.38490555 311 525.35546875 306.9705632 525.35546875 302 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path131" />
+    </g>
+    <g
+       id="g134"
+       transform="translate(-1.4077953,-54.376094)">
+      <g
+         id="g133">
+        <path
+           fill="none"
+           stroke="none"
+           id="path132"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="552.85547"
+           y="353"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-18,-24)"
+           id="text132">signal_ocpp_response</text>
+      </g>
+    </g>
+    <g
+       id="g135">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 283 442 L 534 442 L 534 314"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path134" />
+    </g>
+    <g
+       id="g136"
+       transform="translate(-6,-6)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 435.44922,333 c 0,-6.62742 5.37258,-12 12,-12 6.62742,0 12,5.37258 12,12 0,6.62742 -5.37258,12 -12,12 -6.62742,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path135" />
+    </g>
+    <g
+       id="g137">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 428.16327291401427 324.0272121523357 A 12 12 0 0 1 451.83672708598573 327.9727878476643"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path136" />
+    </g>
+    <g
+       id="g138">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 431.44921875 326 C 431.44921875 321.0294368 435.47865555 317 440.44921875 317 C 445.41978195 317 449.44921875 321.0294368 449.44921875 326 C 449.44921875 330.9705632 445.41978195 335 440.44921875 335 C 435.47865555 335 431.44921875 330.9705632 431.44921875 326 Z"
+         id="path137" />
+    </g>
+    <g
+       id="g139">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 431.44921875 326 C 431.44921875 321.0294368 435.47865555 317 440.44921875 317 C 445.41978195 317 449.44921875 321.0294368 449.44921875 326 C 449.44921875 330.9705632 445.41978195 335 440.44921875 335 C 435.47865555 335 431.44921875 330.9705632 431.44921875 326 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path138" />
+    </g>
+    <g
+       id="g141">
+      <g
+         id="g140">
+        <path
+           fill="none"
+           stroke="none"
+           id="path139" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="458.94921875"
+           y="377"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -18 -24)"
+           id="text139">signal_ocpp_request</text>
+      </g>
+    </g>
+    <g
+       id="g142">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 283 434 L 440 434 L 440 338"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path141" />
+    </g>
+    <g
+       id="g143">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 498 218 L 498 250 L 442 250 L 442 314"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path142" />
+    </g>
+    <g
+       id="g144">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 530 218 L 530 290"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path143" />
+    </g>
+    <g
+       id="g145">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 610 218 L 610 362"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path144" />
+    </g>
+    <g
+       id="g146">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 642 218 L 642 434"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path145" />
+    </g>
+    <g
+       id="g147"
+       transform="translate(-6,-6)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 408.70996,197 c 0,-6.62742 5.37258,-12 12,-12 6.62742,0 12,5.37258 12,12 0,6.62742 -5.37258,12 -12,12 -6.62742,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path146" />
+    </g>
+    <g
+       id="g148">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 413 178 A 12 12 0 0 1 413 202"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path147" />
+    </g>
+    <g
+       id="g149">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 404.7099609375 190 C 404.7099609375 185.0294368 408.7393977375 181 413.7099609375 181 C 418.6805241375 181 422.7099609375 185.0294368 422.7099609375 190 C 422.7099609375 194.9705632 418.6805241375 199 413.7099609375 199 C 408.7393977375 199 404.7099609375 194.9705632 404.7099609375 190 Z"
+         id="path148" />
+    </g>
+    <g
+       id="g150">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 404.7099609375 190 C 404.7099609375 185.0294368 408.7393977375 181 413.7099609375 181 C 418.6805241375 181 422.7099609375 185.0294368 422.7099609375 190 C 422.7099609375 194.9705632 418.6805241375 199 413.7099609375 199 C 408.7393977375 199 404.7099609375 194.9705632 404.7099609375 190 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path149" />
+    </g>
+    <g
+       id="g152">
+      <g
+         id="g151">
+        <path
+           fill="none"
+           stroke="none"
+           id="path150" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="432.2099609375"
+           y="241"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -18 -24)"
+           id="text150">run</text>
+      </g>
+    </g>
+    <g
+       id="g153">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 354 190 L 401.7099609375 190"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path152" />
+    </g>
+    <g
+       id="g154"
+       transform="translate(-6,-6)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 384.70996,157 c 0,-6.62742 5.37258,-12 12,-12 6.62742,0 12,5.37258 12,12 0,6.62742 -5.37258,12 -12,12 -6.62742,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path153" />
+    </g>
+    <g
+       id="g155">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 389 138 A 12 12 0 0 1 389 162"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path154" />
+    </g>
+    <g
+       id="g156">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 380.7099609375 150 C 380.7099609375 145.0294368 384.7393977375 141 389.7099609375 141 C 394.6805241375 141 398.7099609375 145.0294368 398.7099609375 150 C 398.7099609375 154.9705632 394.6805241375 159 389.7099609375 159 C 384.7393977375 159 380.7099609375 154.9705632 380.7099609375 150 Z"
+         id="path155" />
+    </g>
+    <g
+       id="g157">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 380.7099609375 150 C 380.7099609375 145.0294368 384.7393977375 141 389.7099609375 141 C 394.6805241375 141 398.7099609375 145.0294368 398.7099609375 150 C 398.7099609375 154.9705632 394.6805241375 159 389.7099609375 159 C 384.7393977375 159 380.7099609375 154.9705632 380.7099609375 150 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path156" />
+    </g>
+    <g
+       id="g159">
+      <g
+         id="g158">
+        <path
+           fill="none"
+           stroke="none"
+           id="path157" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="408.2099609375"
+           y="201"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -18 -24)"
+           id="text157">stop</text>
+      </g>
+    </g>
+    <g
+       id="g160">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 354 150 L 377.7099609375 150"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path159" />
+    </g>
+    <g
+       id="g161">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 458 190 L 425.7099609375 190"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path160" />
+    </g>
+    <g
+       id="g162">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 458 150 L 401.7099609375 150"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path161" />
+    </g>
+    <g
+       id="g163">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 506 130 L 506 58 L 248.568359375 58"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path162" />
+    </g>
+    <g
+       id="g164">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 546 130 L 546 34 L 141 34 L 141 46"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path163" />
+    </g>
+    <g
+       id="g165"
+       transform="translate(-6,-6)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 657.83203,101 c 0,-6.627418 5.37258,-12 12,-12 6.62742,0 12,5.372582 12,12 0,6.62742 -5.37258,12 -12,12 -6.62742,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path164" />
+    </g>
+    <g
+       id="g166">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 662 106 A 12 12 0 0 1 662 82"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path165" />
+    </g>
+    <g
+       id="g167">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 653.83203125 94 C 653.83203125 89.0294368 657.86146805 85 662.83203125 85 C 667.80259445 85 671.83203125 89.0294368 671.83203125 94 C 671.83203125 98.9705632 667.80259445 103 662.83203125 103 C 657.86146805 103 653.83203125 98.9705632 653.83203125 94 Z"
+         id="path166" />
+    </g>
+    <g
+       id="g168">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 653.83203125 94 C 653.83203125 89.0294368 657.86146805 85 662.83203125 85 C 667.80259445 85 671.83203125 89.0294368 671.83203125 94 C 671.83203125 98.9705632 667.80259445 103 662.83203125 103 C 657.86146805 103 653.83203125 98.9705632 653.83203125 94 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path167" />
+    </g>
+    <g
+       id="g170"
+       transform="translate(1.5837697,-10.38249)">
+      <g
+         id="g169">
+        <path
+           fill="none"
+           stroke="none"
+           id="path168"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="681.33203"
+           y="145"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-18,-24)"
+           id="text168">set_charge_plan</text>
+      </g>
+    </g>
+    <g
+       id="g171">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 826 266 L 826 94 L 674.83203125 94"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path170" />
+    </g>
+    <g
+       id="g172"
+       transform="translate(-6,-6)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 725.9375,69 c 0,-6.627418 5.37258,-12 12,-12 6.62742,0 12,5.372582 12,12 0,6.627418 -5.37258,12 -12,12 -6.62742,0 -12,-5.372582 -12,-12 z"
+         fill-opacity="0.2"
+         id="path171" />
+    </g>
+    <g
+       id="g173">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 730 74 A 12 12 0 0 1 730 50"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path172" />
+    </g>
+    <g
+       id="g174">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 721.9375 62 C 721.9375 57.0294368 725.9669368 53 730.9375 53 C 735.9080632 53 739.9375 57.0294368 739.9375 62 C 739.9375 66.9705632 735.9080632 71 730.9375 71 C 725.9669368 71 721.9375 66.9705632 721.9375 62 Z"
+         id="path173" />
+    </g>
+    <g
+       id="g175">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 721.9375 62 C 721.9375 57.0294368 725.9669368 53 730.9375 53 C 735.9080632 53 739.9375 57.0294368 739.9375 62 C 739.9375 66.9705632 735.9080632 71 730.9375 71 C 725.9669368 71 721.9375 66.9705632 721.9375 62 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path174" />
+    </g>
+    <g
+       id="g177"
+       transform="translate(-1.5837701,-11.438337)">
+      <g
+         id="g176">
+        <path
+           fill="none"
+           stroke="none"
+           id="path175"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="749.4375"
+           y="113"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-18,-24)"
+           id="text175">get_current_limit</text>
+      </g>
+    </g>
+    <g
+       id="g178">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 842 266 L 842 62 L 742.9375 62"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path177" />
+    </g>
+    <g
+       id="g179"
+       transform="translate(-6,-6)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 789.67578,37 c 0,-6.627418 5.37258,-12 12,-12 6.62742,0 12,5.372582 12,12 0,6.627418 -5.37258,12 -12,12 -6.62742,0 -12,-5.372582 -12,-12 z"
+         fill-opacity="0.2"
+         id="path178" />
+    </g>
+    <g
+       id="g180">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 794 42 A 12 12 0 0 1 794 18"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path179" />
+    </g>
+    <g
+       id="g181">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 785.67578125 30 C 785.67578125 25.0294368 789.70521805 21 794.67578125 21 C 799.64634445 21 803.67578125 25.0294368 803.67578125 30 C 803.67578125 34.9705632 799.64634445 39 794.67578125 39 C 789.70521805 39 785.67578125 34.9705632 785.67578125 30 Z"
+         id="path180" />
+    </g>
+    <g
+       id="g182">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 785.67578125 30 C 785.67578125 25.0294368 789.70521805 21 794.67578125 21 C 799.64634445 21 803.67578125 25.0294368 803.67578125 30 C 803.67578125 34.9705632 799.64634445 39 794.67578125 39 C 789.70521805 39 785.67578125 34.9705632 785.67578125 30 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path181" />
+    </g>
+    <g
+       id="g184"
+       transform="translate(68.981971,7.5668999)">
+      <g
+         id="g183"
+         transform="translate(5.9831304,-36.602679)">
+        <path
+           fill="none"
+           stroke="none"
+           id="path182"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="813.17578"
+           y="81"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-18,-24)"
+           id="text182">get_voltage_max</text>
+      </g>
+    </g>
+    <g
+       id="g185">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 810 266 L 794 266 L 794 42"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path184" />
+    </g>
+    <g
+       id="g186">
+      <path
+         fill="#C0C0C0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 801.74609375 125 C 801.74609375 118.3725824 807.11867615 113 813.74609375 113 C 820.37351135 113 825.74609375 118.3725824 825.74609375 125 C 825.74609375 131.6274176 820.37351135 137 813.74609375 137 C 807.11867615 137 801.74609375 131.6274176 801.74609375 125 Z"
+         fill-opacity="0.2"
+         id="path185" />
+    </g>
+    <g
+       id="g187">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 806 130 A 12 12 0 0 1 806 106"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path186" />
+    </g>
+    <g
+       id="g188">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 797.74609375 118 C 797.74609375 113.02943680000001 801.77553055 109 806.74609375 109 C 811.71665695 109 815.74609375 113.02943680000001 815.74609375 118 C 815.74609375 122.97056319999999 811.71665695 127 806.74609375 127 C 801.77553055 127 797.74609375 122.97056319999999 797.74609375 118 Z"
+         id="path187" />
+    </g>
+    <g
+       id="g189">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 797.74609375 118 C 797.74609375 113.02943680000001 801.77553055 109 806.74609375 109 C 811.71665695 109 815.74609375 113.02943680000001 815.74609375 118 C 815.74609375 122.97056319999999 811.71665695 127 806.74609375 127 C 801.77553055 127 797.74609375 122.97056319999999 797.74609375 118 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path188" />
+    </g>
+    <g
+       id="g191">
+      <g
+         id="g190">
+        <path
+           fill="none"
+           stroke="none"
+           id="path189" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="825.24609375"
+           y="169"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -18 -24)"
+           id="text189">get_charge_unit</text>
+      </g>
+    </g>
+    <g
+       id="g192">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 954 266 L 954 118 L 818.74609375 118"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path191" />
+    </g>
+    <g
+       id="g193"
+       transform="translate(-6,-6)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 906.85156,173 c 0,-6.62742 5.37258,-12 12,-12 6.62742,0 12,5.37258 12,12 0,6.62742 -5.37258,12 -12,12 -6.62742,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path192" />
+    </g>
+    <g
+       id="g194">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 911 178 A 12 12 0 0 1 911 154"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path193" />
+    </g>
+    <g
+       id="g195">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 902.8515625 166 C 902.8515625 161.0294368 906.8809993 157 911.8515625 157 C 916.8221257 157 920.8515625 161.0294368 920.8515625 166 C 920.8515625 170.9705632 916.8221257 175 911.8515625 175 C 906.8809993 175 902.8515625 170.9705632 902.8515625 166 Z"
+         id="path194" />
+    </g>
+    <g
+       id="g196">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 902.8515625 166 C 902.8515625 161.0294368 906.8809993 157 911.8515625 157 C 916.8221257 157 920.8515625 161.0294368 920.8515625 166 C 920.8515625 170.9705632 916.8221257 175 911.8515625 175 C 906.8809993 175 902.8515625 170.9705632 902.8515625 166 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path195" />
+    </g>
+    <g
+       id="g198">
+      <g
+         id="g197">
+        <path
+           fill="none"
+           stroke="none"
+           id="path196" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="930.3515625"
+           y="217"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -18 -24)"
+           id="text196">stop_charging</text>
+      </g>
+    </g>
+    <g
+       id="g199">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 911 266 L 911 178"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path198" />
+    </g>
+    <g
+       id="g200"
+       transform="translate(-6,-8)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 868.80078,229 c 0,-6.62742 5.37258,-12 12,-12 6.62742,0 12,5.37258 12,12 0,6.62742 -5.37258,12 -12,12 -6.62742,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path199" />
+    </g>
+    <g
+       id="g201">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 861.358289998256 224.910427500436 A 12 12 0 0 1 884.641710001744 219.089572499564"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path200" />
+    </g>
+    <g
+       id="g202">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 864.80078125 222 C 864.80078125 217.0294368 868.83021805 213 873.80078125 213 C 878.77134445 213 882.80078125 217.0294368 882.80078125 222 C 882.80078125 226.9705632 878.77134445 231 873.80078125 231 C 868.83021805 231 864.80078125 226.9705632 864.80078125 222 Z"
+         id="path201" />
+    </g>
+    <g
+       id="g203">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 864.80078125 222 C 864.80078125 217.0294368 868.83021805 213 873.80078125 213 C 878.77134445 213 882.80078125 217.0294368 882.80078125 222 C 882.80078125 226.9705632 878.77134445 231 873.80078125 231 C 868.83021805 231 864.80078125 226.9705632 864.80078125 222 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path202" />
+    </g>
+    <g
+       id="g205">
+      <g
+         id="g204">
+        <path
+           fill="none"
+           stroke="none"
+           id="path203" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="892.30078125"
+           y="273"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -18 -24)"
+           id="text203">clear_error</text>
+      </g>
+    </g>
+    <g
+       id="g206">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 873 266 L 873 234"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path205" />
+    </g>
+    <g
+       id="g207"
+       transform="translate(-6,-6)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 1022.2656,69 c 0,-6.627418 5.3726,-12 12,-12 6.6274,0 12,5.372582 12,12 0,6.627418 -5.3726,12 -12,12 -6.6274,0 -12,-5.372582 -12,-12 z"
+         fill-opacity="0.2"
+         id="path206" />
+    </g>
+    <g
+       id="g208">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1015.6158004233939 65.79473319220206 A 12 12 0 0 1 1038.384199576606 58.20526680779794"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path207" />
+    </g>
+    <g
+       id="g209">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 1018.265625 62 C 1018.265625 57.0294368 1022.2950618 53 1027.265625 53 C 1032.2361882 53 1036.265625 57.0294368 1036.265625 62 C 1036.265625 66.9705632 1032.2361882 71 1027.265625 71 C 1022.2950618 71 1018.265625 66.9705632 1018.265625 62 Z"
+         id="path208" />
+    </g>
+    <g
+       id="g210">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 1018.265625 62 C 1018.265625 57.0294368 1022.2950618 53 1027.265625 53 C 1032.2361882 53 1036.265625 57.0294368 1036.265625 62 C 1036.265625 66.9705632 1032.2361882 71 1027.265625 71 C 1022.2950618 71 1018.265625 66.9705632 1018.265625 62 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path209" />
+    </g>
+    <g
+       id="g212">
+      <g
+         id="g211">
+        <path
+           fill="none"
+           stroke="none"
+           id="path210" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="1045.765625"
+           y="113"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -18 -24)"
+           id="text210">signal_request_charge_plan_calibration</text>
+      </g>
+    </g>
+    <g
+       id="g213">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 978 266 L 978 209 L 1027 209 L 1027 74"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path212" />
+    </g>
+    <g
+       id="g214">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 586 130 L 586 94 L 650.83203125 94"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path213" />
+    </g>
+    <g
+       id="g215">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 578 130 L 578 62 L 718.9375 62"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path214" />
+    </g>
+    <g
+       id="g216">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 714 166 L 899.8515625 166"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path215" />
+    </g>
+    <g
+       id="g217">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 570 130 L 570 30 L 782.67578125 30"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path216" />
+    </g>
+    <g
+       id="g218">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 714 130 L 714 118 L 794.74609375 118"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path217" />
+    </g>
+    <g
+       id="g219">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 562 130 L 562 10 L 1023 10 L 1023 50"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path218" />
+    </g>
+    <g
+       id="g220">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 714 206 L 870 206 L 870 210"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path219" />
+    </g>
+    <g
+       id="g221"
+       transform="translate(-6,-6)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 747.69531,421 c 0,-6.62742 5.37258,-12 12,-12 6.62742,0 12,5.37258 12,12 0,6.62742 -5.37258,12 -12,12 -6.62742,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path220" />
+    </g>
+    <g
+       id="g222">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 752 426 A 12 12 0 0 1 752 402"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path221" />
+    </g>
+    <g
+       id="g223">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d=" M 743.6953125 414 C 743.6953125 409.0294368 747.7247493 405 752.6953125 405 C 757.6658757 405 761.6953125 409.0294368 761.6953125 414 C 761.6953125 418.9705632 757.6658757 423 752.6953125 423 C 747.7247493 423 743.6953125 418.9705632 743.6953125 414 Z"
+         id="path222" />
+    </g>
+    <g
+       id="g224">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 743.6953125 414 C 743.6953125 409.0294368 747.7247493 405 752.6953125 405 C 757.6658757 405 761.6953125 409.0294368 761.6953125 414 C 761.6953125 418.9705632 757.6658757 423 752.6953125 423 C 747.7247493 423 743.6953125 418.9705632 743.6953125 414 Z"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path223" />
+    </g>
+    <g
+       id="g226">
+      <g
+         id="g225">
+        <path
+           fill="none"
+           stroke="none"
+           id="path224" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="771.1953125"
+           y="465"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="matrix(1 0 0 1 -18 -24)"
+           id="text224">send_message</text>
+      </g>
+    </g>
+    <g
+       id="g227">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 818 458 L 752 458 L 752 426"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path226" />
+    </g>
+    <g
+       id="g228"
+       transform="translate(-14,-6)">
+      <path
+         fill="#c0c0c0"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 733.00391,349 c 0,-6.62742 5.37258,-12 12,-12 6.62741,0 12,5.37258 12,12 0,6.62742 -5.37259,12 -12,12 -6.62742,0 -12,-5.37258 -12,-12 z"
+         fill-opacity="0.2"
+         id="path227" />
+    </g>
+    <g
+       id="g229"
+       inkscape:transform-center-x="0.19638578"
+       inkscape:transform-center-y="-4.7637173"
+       transform="rotate(31.672259,734.10912,328.00736)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 729.51472,350.48528 a 12,12 0 0 1 16.97056,-16.97056"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path228" />
+    </g>
+    <g
+       id="g230"
+       transform="translate(-8)">
+      <path
+         fill="#ffffff"
+         stroke="none"
+         paint-order="stroke fill markers"
+         d="m 729.00391,342 c 0,-4.97056 4.02943,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97057,0 -9,-4.02944 -9,-9 z"
+         id="path229" />
+    </g>
+    <g
+       id="g231"
+       transform="translate(-8)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="m 729.00391,342 c 0,-4.97056 4.02943,-9 9,-9 4.97056,0 9,4.02944 9,9 0,4.97056 -4.02944,9 -9,9 -4.97057,0 -9,-4.02944 -9,-9 z"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path230" />
+    </g>
+    <g
+       id="g233"
+       transform="translate(1.7597442,-50.680632)">
+      <g
+         id="g232">
+        <path
+           fill="none"
+           stroke="none"
+           id="path231"
+           d="" />
+        <text
+           fill="#000000"
+           stroke="none"
+           font-family="Arial"
+           font-size="16px"
+           font-style="normal"
+           font-weight="bold"
+           text-decoration="undefined"
+           x="756.50391"
+           y="393"
+           text-anchor="middle"
+           dominant-baseline="central"
+           transform="translate(-18,-24)"
+           id="text231">signal_thread_web_server_recv</text>
+      </g>
+    </g>
+    <g
+       id="g234"
+       transform="matrix(1,0,0,1.0399962,-8,-16.158664)">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d="M 937,410 V 386 H 738 v -32"
+         stroke-miterlimit="10"
+         stroke-dasharray="none"
+         id="path233" />
+    </g>
+    <g
+       id="g235">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 714 218 L 726.00390625 218 L 726.00390625 330.00390625"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path234" />
+    </g>
+    <g
+       id="g236">
+      <path
+         fill="none"
+         stroke="#000000"
+         paint-order="fill stroke markers"
+         d=" M 666 218 L 666 414 L 740.6953125 414"
+         stroke-miterlimit="10"
+         stroke-dasharray=""
+         id="path235" />
+    </g>
+  </g>
+</svg>

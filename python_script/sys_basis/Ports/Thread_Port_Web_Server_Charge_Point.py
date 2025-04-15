@@ -8,9 +8,8 @@ from const.Const_Parameter import *
 _info = Log.WEB.info
 
 
-class PortWebServerChargePoint(Thread):
+class PortWebServerChargePoint:
     def __init__(self, host='0.0.0.0', port=2311, info_title='Web_Server_Port'):
-        super().__init__()
         self.__signal_thread_web_server_info = XSignal()
         self.__signal_thread_web_server_recv = XSignal()
         self.__signal_thread_webs_server_finished = XSignal()
@@ -97,7 +96,8 @@ class PortWebServerChargePoint(Thread):
         `__isRunning` 将设置为 `False`
         """
         self.__isRunning = False
+        self.__web_server.stop()
         self.__signal_thread_webs_server_finished.emit()
 
-    def run(self):
+    def start(self):
         self.__web_server.start()

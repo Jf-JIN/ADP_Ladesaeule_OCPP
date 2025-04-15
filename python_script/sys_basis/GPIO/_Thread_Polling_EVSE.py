@@ -3,8 +3,11 @@ from threading import Thread
 from ._Modbus_IO import ModbusIO
 from const.GPIO_Parameter import *
 from const.Const_Parameter import *
-from pymodbus.pdu.pdu import ModbusPDU
 import time
+
+from pymodbus.pdu.pdu import ModbusPDU  # 实际使用
+
+# from ._test_Module import *  # 用于测试
 
 
 if 0:
@@ -18,7 +21,7 @@ _log = Log.EVSE
 
 class PollingEVSE(Thread):
     def __init__(self, parent: GPIOManager, charge_unit_dict: dict, intervall: int | float) -> None:
-        super().__init__()
+        super().__init__(name='PollingEVSE')
         self.__parent: GPIOManager = parent
         self.__evse_list: list = []
         for item in charge_unit_dict.values():
@@ -38,7 +41,11 @@ class PollingEVSE(Thread):
         temp = {}
         for register_address in GPIOParams.WATCHING_REGISTERS:
             subtmp = {}
-            ModbusPDU_res: ModbusPDU = io.read(register_address)
+            ModbusPDU_res: ModbusPDU = io.read_PDU(register_address)
+            if ModbusPDU_res is None:
+                temp[str(register_address)] = {}
+                _log.warning(f'EVSE <{register_address}> read error')
+                continue
             isError: bool = ModbusPDU_res.isError()
             subtmp['function_code'] = ModbusPDU_res.function_code
             subtmp['registers'] = ModbusPDU_res.registers

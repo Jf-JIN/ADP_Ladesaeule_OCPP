@@ -156,6 +156,15 @@ class WebSocketClient(object):
                 await self.__connect()
                 return await self.recv()
 
+    def close(self) -> None:
+        """
+        关闭连接
+        """
+        if self.__websocket is not None:
+            self.__websocket.close()
+        self.__isConnected = False
+        self.__send_signal_info('--<WebSocket_Closed>')
+
     async def __aenter__(self) -> ClientConnection:
         """
         with 进入口
@@ -167,10 +176,7 @@ class WebSocketClient(object):
         """
         关闭连接
         """
-        if self.__websocket is not None:
-            await self.__websocket.close()
-        self.__isConnected = False
-        self.__send_signal_info('--<WebSocket_Closed>')
+        self.close()
 
     async def __connect(self):
         """

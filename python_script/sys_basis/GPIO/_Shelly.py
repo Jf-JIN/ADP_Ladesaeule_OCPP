@@ -4,7 +4,7 @@ from const.Const_Parameter import *
 import requests
 from sys_basis.XSignal import XSignal
 
-_info = Log.GPIO
+_log = Log.GPIO
 
 
 class Shelly:
@@ -33,6 +33,13 @@ class Shelly:
             return f"{self.__main_address}/rpc/EM.GetStatus?id=0"
         else:
             return f"http://{self.__main_address}/rpc/EM.GetStatus?id=0"
+
+    @property
+    def reset_address(self) -> str:
+        if self.__main_address.startswith('http'):
+            return f"{self.__main_address}/rpc/EMData.ResetCounters"
+        else:
+            return f"http://{self.__main_address}/rpc/EMData.ResetCounters"
 
     @property
     def isAvailable(self) -> bool:
@@ -84,8 +91,8 @@ class Shelly:
             return
         self.signal_charged_energy.emit(charged_energy)
 
-    def reset(self) -> None:
-        _info('Shelly reset')
+    def reset(self) -> bool:
+        _log.info('Shelly reset')
         try:
             # 发送 POST 请求
             # reset_token = 'rpc/EMData.ResetCounters?id=0'
@@ -93,8 +100,10 @@ class Shelly:
             data = {
                 "id": 0  # 通道号
             }
-            response0 = requests.post(f"http://{self.__main_address}/{reset_token}", json=data, timeout=5)
+            response0 = requests.post(self.reset_address, json=data, timeout=5)
             response0.raise_for_status()
-            _info("Shelly 复位成功\nShelly reset successfully")
-        except requests.exceptions.RequestException as e:
-            _info(f"Shelly 复位失败\nShelly reset failed: {e}")
+            _log.info("Shelly 复位成功\nShelly reset successfully")
+            return True
+        except Exception as e:
+            _log.info(f"Shelly 复位失败\nShelly reset failed: {e}")
+            return False

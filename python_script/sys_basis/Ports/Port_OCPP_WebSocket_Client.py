@@ -216,7 +216,7 @@ class PortOCPPWebsocketClient(object):
                     self.__task_send_request_messages,
                     self.__task_send_normal_messages,
                 )
-                await asyncio.Future()
+                # await asyncio.Future()
         except Exception as e:
             self.__send_signal_info(f"<Error - OCPP_Client_Port>\n{traceback.format_exc()}")
         finally:
@@ -227,9 +227,15 @@ class PortOCPPWebsocketClient(object):
         停止端口
         """
         self.__isRunning = False
-        self.__task_listening.cancel()
-        self.__task_send_request_messages.cancel()
-        self.__task_send_normal_messages.cancel()
+        if hasattr(self, f'_{self.__class__.__name__}__task_listening'):
+            self.__task_listening.cancel()
+        if hasattr(self, f'_{self.__class__.__name__}__task_send_request_messages'):
+            self.__task_send_request_messages.cancel()
+        if hasattr(self, f'_{self.__class__.__name__}__task_send_normal_messages'):
+            self.__task_send_normal_messages.cancel()
+        if hasattr(self, f'_{self.__class__.__name__}__websocket') and self.__websocket:
+            self.__websocket.close()
+            self.__websocket = None
 
     def send_request_message(self, message) -> None:
         """
@@ -402,7 +408,10 @@ class PortOCPPWebsocketClient(object):
         当信息列表 __list_request_message 为空时, 将等待事件 __event_request_message 触发
         """
         while self.__isRunning:
-            await self.__event_request_message.wait()
+            try:
+                await self.__event_request_message.wait()
+            except asyncio.CancelledError:
+                _log.info('send_request_message cancelled')
             _log.debug('Sending request message..............')
             if not self.__isRunning:  # 提前终止
                 break
@@ -428,7 +437,10 @@ class PortOCPPWebsocketClient(object):
         """
         while self.__isRunning:
             _log.debug(f'Listen to the normal message queue and wait for messages to be sent++++++++\n{self.__list_normal_message}')
-            await self.__event_normal_message.wait()
+            try:
+                await self.__event_normal_message.wait()
+            except asyncio.CancelledError:
+                _log.info('send_normal_message cancelled')
             if not self.__isRunning:  # 提前终止
                 break
             try:

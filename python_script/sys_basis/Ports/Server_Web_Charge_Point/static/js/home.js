@@ -17,7 +17,7 @@ socket.on('update_data', (data) => {
     }
 
     function updateConsole (consoleElement, content) {
-        const wasAtBottom = Math.abs(consoleElement.scrollHeight - consoleElement.scrollTop - consoleElement.clientHeight) < 5;        
+        const wasAtBottom = Math.abs(consoleElement.scrollHeight - consoleElement.scrollTop - consoleElement.clientHeight) < 5;
         if (!content) {
             return;
         }
@@ -43,25 +43,25 @@ socket.on('update_data', (data) => {
     if (data.console) {
         updateConsole(client_console, data.console);
     }
-    if (data.figure) { 
+    if (data.figure) {
         loadImage(data.figure);
     }
     if (data.watching_data) {
-//    写入函数，读取数据并创建表格
+        //    写入函数，读取数据并创建表格
         loadWatchingData(data.watching_data);
     }
-    if (data.alert_message) { 
+    if (data.alert_message) {
         msg_type = data.alert_message.type
         msg = data.alert_message.message
-        if (msg_type == 'success') { 
+        if (msg_type == 'success') {
             Swal.fire(lang_dict.success, msg, 'success');
-        }else if (msg_type == 'error') {
+        } else if (msg_type == 'error') {
             Swal.fire(lang_dict.error, msg, 'error');
-        }else if (msg_type == 'warning') {
+        } else if (msg_type == 'warning') {
             Swal.fire(lang_dict.warning, msg, 'warning');
-        }else if (msg_type == 'info') {
+        } else if (msg_type == 'info') {
             Swal.fire(lang_dict.info, msg, 'info');
-        }else if (msg_type == 'question') {
+        } else if (msg_type == 'question') {
             Swal.fire(lang_dict.question, msg, 'question');
         }
     }
@@ -158,7 +158,7 @@ function loadImage (data) {
         return
     }
 
-    if ('cp_fig' in data) { 
+    if ('cp_fig' in data) {
         let base64Data = data.cp_fig.trim();
         if (base64Data.startsWith('data:image')) {
             base64Data = base64Data.split(',')[1];
@@ -183,7 +183,7 @@ function loadImage (data) {
 handleTitleClick(title_home);
 
 
-function loadWatchingData(data) {
+function loadWatchingData (data) {
     // 清空容器
     watcher_contain.innerHTML = '';
 
@@ -201,7 +201,7 @@ function loadWatchingData(data) {
         evseTable.style.marginBottom = '20px';
 
         const evseHeaders = [
-            lang_dict.register_address, lang_dict.function_code, lang_dict.register_value, lang_dict.status, lang_dict.isError,
+            lang_dict.register_address, lang_dict.register_description, lang_dict.register_value, lang_dict.function_code, lang_dict.status, lang_dict.isError,
             lang_dict.exception_code, lang_dict.dev_id, lang_dict.transaction_id, lang_dict.bits, lang_dict.address
         ];
 
@@ -222,11 +222,17 @@ function loadWatchingData(data) {
         for (const addr in data.evse) {
             const item = data.evse[addr];
             const row = document.createElement("tr");
-
+            let reg_description
+            if (addr in lang_dict.reg_description) {
+                reg_description = lang_dict.reg_description[addr]
+            } else {
+                reg_description = `-`
+            };
             const values = [
                 addr,
-                item.function_code,
+                reg_description,
                 JSON.stringify(item.registers),
+                item.function_code,
                 item.status,
                 item.isError,
                 item.exception_code,
@@ -239,7 +245,7 @@ function loadWatchingData(data) {
             values.forEach(val => {
                 const td = document.createElement("td");
                 td.textContent = val !== undefined ? val : "-";
-//                td.textContent = (val === undefined || val === null || (Array.isArray(val) && val.length === 0)) ? '-' : val;
+                //                td.textContent = (val === undefined || val === null || (Array.isArray(val) && val.length === 0)) ? '-' : val;
                 td.style.border = "1px solid #ccc";
                 td.style.padding = "6px";
                 row.appendChild(td);
@@ -261,7 +267,7 @@ function loadWatchingData(data) {
         shellyTable.style.borderCollapse = 'collapse';
         shellyTable.style.width = '100%';
 
-        const shellyHeaders = [lang_dict.phase, lang_dict.power, lang_dict.pf, lang_dict.current, lang_dict.voltage, lang_dict.is_valid,lang_dict.total];
+        const shellyHeaders = [lang_dict.phase, lang_dict.power, lang_dict.pf, lang_dict.current, lang_dict.voltage, lang_dict.is_valid, lang_dict.total];
 
         const shellyThead = document.createElement("thead");
         const shellyHeaderRow = document.createElement("tr");
@@ -315,66 +321,3 @@ function loadWatchingData(data) {
         watcher_contain.appendChild(extraInfo);
     }
 }
-bspl = {'evse': {
-'1000': {
-//"function_code": 0,
-"registers": [1],
-"status": 1,
-"isError": false,
-"exception_code": 0,
-"dev_id": 1,
-"transaction_id": 1,
-"bits": [1],
-"address": 1000,
-},'6666': {
-"function_code": 0,
-"registers": [6666],
-"status": 1,
-//"isError": true,
-"exception_code": 1,
-"dev_id": 1,
-"transaction_id": 1,
-"bits": [1],
-"address": 1,
-},'1002': {
-"function_code": 0,
-"registers": [1],
-"status": 1,
-"isError": false,
-"exception_code": 1,
-//"dev_id": 0,
-"transaction_id": 1,
-"bits": [2],
-"address": 1002,
-}
-},
-'shelly': {
-0: {
-'power': 50,
-'pf': 0.6,
-'current': 13,
-'voltage': 230,
-'is_valid': true,
-'total': 1000,
-},
-1: {
-'power': 0,
-'pf': 0,
-'current': 0,
-'voltage': 0,
-'is_valid': true,
-'total': 0,
-},
-2: {
-    'power': 0,
-    'pf': 0,
-    'current': 0,
-    'voltage': 0,
-    'is_valid': true,
-    'total': 0,
-},
-    'charged_energy': 0,
-    'is_valid': true,
-},}
-
-loadWatchingData(bspl);

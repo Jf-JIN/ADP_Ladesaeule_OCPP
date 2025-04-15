@@ -1,4 +1,5 @@
 
+import functools
 import threading
 from const.GPIO_Parameter import GPIOParams
 from const.Const_Parameter import *
@@ -7,16 +8,33 @@ from ._Charge_Unit import *
 from ._Thread_Polling_EVSE import PollingEVSE
 from ._Thread_Polling_Shelly import PollingShelly
 from ._Data_Collector import DataCollector
+from ._Thread_Detection_Button import *
+from ._Manager_LED import *
+from gpiozero import Button, LED
+# from ._test_Module import Button, LED
 # import RPi
-from gpiozero import Button
+import atexit
+import signal
 
 _log = Log.GPIO
 
 
 class GPIOManager:
+    __instance__ = None
+
+    def __new__(cls, *args, **kwargs):
+        if cls.__instance__ is None:
+            cls.__instance__ = super().__new__(cls)
+            cls.__instance__.__isInitialized__ = False
+        return cls.__instance__
 
     def __init__(self):
+        if self.__isInitialized__:
+            return
+        self.__isInitialized__ = True
         self.__data_collector: DataCollector = DataCollector(self, GPIOParams.DATACOLLECTOR_DATA_INTERVAL, GPIOParams.DATACOLLECTOR_FIG_INTERVAL)
+        atexit.register(self.stop)
+        signal.signal(signal.SIGTERM, self.stop)
         self.__charge_units_dict = {}
         self.__signal_GPIO_info: XSignal = XSignal()
         for item in GPIOParams.CHARGE_UNITS:
@@ -28,7 +46,9 @@ class GPIOManager:
 
         self.__thread_polling_evse: PollingEVSE = PollingEVSE(self, self.__charge_units_dict, GPIOParams.POLLING_EVSE_INTERVAL)
         self.__thread_polling_shelly: PollingShelly = PollingShelly(self, self.__charge_units_dict, GPIOParams.POLLING_SHELLY_INTERVAL, GPIOParams.POLLING_SHELLY_TIMEOUT)
-        self.__timer_send_requeset_calibration: threading.Timer = threading.Timer(GPIOParams.REQUEST_INTERVAL, self.__execute_on_send_request_calibration_timer)
+        self.__timer_send_requeset_calibration: threading.Timer = threading.Timer(
+            GPIOParams.REQUEST_INTERVAL, self.__execute_on_send_request_calibration_timer)
+        self.__timer_send_requeset_calibration.name = 'GPIOManager.TimerSendRequestCalibration'
 
         self.__signal_request_charge_plan_calibration: XSignal = XSignal()
         self.__request_waiting_list: list = []
@@ -43,15 +63,31 @@ class GPIOManager:
         # RPi.GPIO.add_event_detect(BTN_START, RPi.GPIO.FALLING, callback=self.__on_start_button_pressed, bouncetime=GPIOParams.BOUNCETIME)
         # RPi.GPIO.add_event_detect(BTN_STOP, RPi.GPIO.FALLING, callback=self.__on_stop_button_pressed, bouncetime=GPIOParams.BOUNCETIME)
 
-        BTN_START = Button(RaspPins.BCM_PIN_5)
-        BTN_STOP = Button(RaspPins.BCM_PIN_6)
-        BTN_START.when_activated = self.__on_start_button_pressed
-        BTN_STOP.when_activated = self.__on_stop_button_pressed
+        BTN_START = Button(RaspPins.BCM_PIN_20, pull_up=True)
+        BTN_STOP = Button(RaspPins.BCM_PIN_21, pull_up=True)
+        self.__thread_detection_button_start = DetectionButton('start', button=BTN_START)
+        self.__thread_detection_button_stop = DetectionButton('start', button=BTN_STOP)
+        self.__thread_detection_button_start.pressed.connect(self.__on_start_button_pressed)
+        self.__thread_detection_button_stop.pressed.connect(self.__on_stop_button_pressed)
+        self.__ManagerLED = ManagerLED()
+        MLED.registerLed(LEDName.LED_SYSTEM_READY, RaspPins.BCM_PIN_25)
+        Log.GROUP.signal_error.connect(self.__led_handle_system_error)
+        Log.GROUP.signal_critical.connect(self.__led_handle_system_error)
+
+    def __led_handle_system_error(self, error: str):
+        MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable_blink(True, apply_now=True)
 
     def stop(self):
-        self.__thread_polling_evse.stop()
-        self.__thread_polling_shelly.stop()
+        if self.__thread_polling_evse.is_alive():
+            self.__thread_polling_evse.stop()
+        if self.__thread_polling_shelly.is_alive():
+            self.__thread_polling_shelly.stop()
+        if self.__thread_detection_button_start.is_alive():
+            self.__thread_detection_button_start.stop()
+        if self.__thread_detection_button_stop.is_alive():
+            self.__thread_detection_button_stop.stop()
         self.__data_collector.stop()
+        MLED.shutdown()
 
     def __del__(self):
         self.stop()
@@ -112,6 +148,9 @@ class GPIOManager:
     def listening_start(self) -> None:
         self.__thread_polling_evse.start()
         self.__thread_polling_shelly.start()
+        self.__thread_detection_button_start.start()
+        self.__thread_detection_button_stop.start()
+        MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable(True)
 
     def __send_request_charge_plan_calibration(self, request_dict: dict) -> None:
         if self.__timer_send_requeset_calibration.is_alive():
@@ -119,15 +158,18 @@ class GPIOManager:
         else:
             self.__signal_request_charge_plan_calibration.emit(request_dict)
             self.__timer_send_requeset_calibration = threading.Timer(GPIOParams.REQUEST_INTERVAL, self.__execute_on_send_request_calibration_timer)
+            self.__timer_send_requeset_calibration.name = 'GPIOManager.TimerSendRequestCalibration'
             self.__timer_send_requeset_calibration.start()
 
     def __execute_on_send_request_calibration_timer(self) -> None:
         self.__timer_send_requeset_calibration = threading.Timer(GPIOParams.REQUEST_INTERVAL, self.__execute_on_send_request_calibration_timer)
+        self.__timer_send_requeset_calibration.name = 'GPIOManager.TimerSendRequestCalibration'
         if len(self.__request_waiting_list) > 0:
             self.__signal_request_charge_plan_calibration.emit(self.__request_waiting_list.pop(0))
             self.__timer_send_requeset_calibration.start()
 
-    def __on_start_button_pressed(self):
+    def __on_start_button_pressed(self, isPressed: bool):
+        _log.warning('Button Start pressed')
         for unit in self.__charge_units_dict.values():
             unit: ChargeUnit
             if unit.hasChargePlan:
@@ -136,7 +178,8 @@ class GPIOManager:
                 enableDirectCharge: bool = True
             unit.start_charging(enableDirectCharge)
 
-    def __on_stop_button_pressed(self):
+    def __on_stop_button_pressed(self, isPressed: bool):
+        _log.warning('Button Stop pressed')
         for unit in self.__charge_units_dict.values():
             unit: ChargeUnit
             unit.stop_charging()

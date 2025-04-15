@@ -15,9 +15,50 @@ socket.on('redirect_to_login', () => {
 });
 
 const logout_button = document.getElementById('logout');
+// logout_button.addEventListener('click', async () => {
+//     // socket.emit('logout');
+//     const result = await Swal.fire(lang_dict.question, lang_dict.logout_question, 'question');
+//     if (result.isConfirmed) {
+//         const result_2 = await Swal.fire(lang_dict.question, lang_dict.logout_question_2, 'question');
+//         if (result_2.isConfirmed) {
+//             socket.emit('input_data', {'logout': true});
+//         }
+//     }
+// })
 logout_button.addEventListener('click', () => {
-    socket.emit('logout');
+    Swal.fire({
+        title: lang_dict.system_operation_question_title,
+        text: lang_dict.system_operation_question,
+        icon: 'question',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: lang_dict.system_operation_reboot_text,
+        denyButtonText: lang_dict.system_operation_shutdown_text,
+        cancelButtonText: lang_dict.system_operation_cancel_text
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire(lang_dict.question, lang_dict.reboot_question, 'question').then((result_root) => {
+                if (result_root.isConfirmed) {
+                    socket.emit('input_data', { 'logout': false });
+                }
+            });
+        } else if (result.isDenied) {
+            Swal.fire(lang_dict.question, lang_dict.shutdown_question, 'question').then((result_shutdown_1) => {
+                if (result_shutdown_1.isConfirmed) {
+                    Swal.fire(lang_dict.question, lang_dict.shutdown_question_2, 'question').then((result_shutdown_2) => {
+                        if (result_shutdown_2.isConfirmed) {
+                            socket.emit('input_data', { 'logout': true });
+                            Swal.fire(lang_dict.question, lang_dict.shutdown_message, 'success')
+                        }
+                    });
+                }
+            });
+        };
+    });
+
 })
+
+
 
 // const test_btn = document.getElementById('test_btn');
 // test_btn.addEventListener('click', () => {
@@ -48,7 +89,6 @@ submit_btn.addEventListener('click', () => {
         data = data.charge_request
         for (let [key, value] of Object.entries(data)) {
             let widget = document.getElementById(key);
-            console.log(widget)
             if (widget) {
                 if (key =='charge_mode' && value == -1) {
                     return true
@@ -229,7 +269,6 @@ btn_create_csv.addEventListener('click', function () {
         ['startPeriod_in_second','limit'],
         [0,6666],
     ];
-    console.log('lallalal');
 
     const csvContent = data.map(row => row.join(',')).join('\n');
     const blob = new Blob([csvContent], { type: 'text/csv' });
