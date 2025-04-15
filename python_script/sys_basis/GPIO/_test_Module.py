@@ -89,7 +89,6 @@ class ModbusSerialClient:
         address = str(address)
         with open(self.__json_file_path, 'r', encoding='utf-8') as f:
             json_dict = json.load(f)
-            print(json_dict)
             if address not in json_dict:
                 json_dict[address] = 0
             self.__json_dict = json_dict
