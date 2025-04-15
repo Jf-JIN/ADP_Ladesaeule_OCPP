@@ -53,7 +53,7 @@ class ServerWeb(Thread):
         signal.signal(signal.SIGTERM, self.signal_handler)
 
     def cleanup(self):
-        self.update_data()
+        pass
 
     def signal_handler(self, signum, frame):
         self.cleanup()
