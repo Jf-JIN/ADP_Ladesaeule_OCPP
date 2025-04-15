@@ -2,6 +2,8 @@
 
 import json
 from const.Const_Parameter import *
+from threading import Event
+import time
 
 
 class ModbusPDU:
@@ -49,7 +51,7 @@ class ModbusPDU:
 class ModbusSerialClient:
     def __init__(self, *args, **kwargs):
         self.__json_file_path = os.path.join(os.getcwd(), 'test', 'Modbus_Shelly_Simulator.json')
-
+        # print(self.__json_file_path)
         self.__json_dict = {}
         pass
 
@@ -84,12 +86,14 @@ class ModbusSerialClient:
                                count: int = 1,
                                slave: int = 1,
                                no_response_expected: bool = False):
+        address = str(address)
         with open(self.__json_file_path, 'r', encoding='utf-8') as f:
             json_dict = json.load(f)
+            print(json_dict)
             if address not in json_dict:
-                json_dict[str(address)] = 0
+                json_dict[address] = 0
             self.__json_dict = json_dict
-            return ModbusPDU(json_dict[str(address)])
+            return ModbusPDU(json_dict[address])
 
     def write_registers(
         self,
@@ -99,10 +103,11 @@ class ModbusSerialClient:
         slave: int = 1,
         no_response_expected: bool = False
     ):
-        self.__json_dict[str(address)] = values[0]
+        address = str(address)
+        self.__json_dict[address] = values[0]
         with open(self.__json_file_path, 'w', encoding='utf-8') as f:
             json.dump(self.__json_dict, f, indent=4, ensure_ascii=False)
-        return True
+        return ModbusPDU
 
 
 class LED:
@@ -111,6 +116,8 @@ class LED:
             self.__key = 'latch_lock_pin'
         elif pin == 22:
             self.__key = 'latch_unlock_pin'
+        else:
+            self.__key = 'others'
         self.__fp = os.path.join(os.getcwd(), 'test', 'Modbus_Shelly_Simulator.json')
 
     def on(self):
@@ -135,6 +142,13 @@ class Button:
 
     def when_activated(self):
         ...
+
+    def wait_for_active(self):
+        time.sleep(10000000)
+
+    @property
+    def _active_event(self):
+        return Event()
 
 
 class RPi:
