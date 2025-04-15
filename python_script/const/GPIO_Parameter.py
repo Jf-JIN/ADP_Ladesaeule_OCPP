@@ -53,6 +53,7 @@ class GPIOParams(AnalogDefine):
     ]
     DO_USE_RCD: bool = False
     MAX_VOLTAGE = 230
+    MAX_SHELLY_RETRY = 5
     SELF_CHECK_TIMEOUT = -31
     """ EVSE 自检时间, 单位: 秒. 该值必须 >=30 秒, 否则自检将不会启动 """
     LETCH_MOTOR_RUNTIME = 2
@@ -278,3 +279,12 @@ class BitsFlag(AnalogDefine):
     - `DISABLE_EVSE`: disable EVSE (write 16384)
     - `ENABLE_BOOTLOADER_MODE`: enable bootloader mode (write 32768)
     """
+
+
+class LEDName:
+    LED_SYSTEM_READY = 'led_system_ready'
+    LED_SYSTEM_NOT_READY = 'led_system_not_ready'
+
+
+class LEDGroup:
+    SYSTEM_AVAILABILITY = 'system_availability'
