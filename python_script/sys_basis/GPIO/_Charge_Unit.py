@@ -12,6 +12,7 @@ from DToolslib import EventSignal
 from ._EVSE import Evse
 from ._Shelly import Shelly
 from ._Latch_Motor import LatchMotor
+from ._Manager_LED import *
 
 
 if 0:
@@ -445,6 +446,7 @@ The charging unit is not executable (correct value)
             self.__data_collector.clear_CU_current_charge_action(self.id)
             self.__data_collector.set_CU_charge_start_time(self.id, self.__start_time_str, target_energy=-1, depart_time=-1, custom_data=None, enableDirectCharge=True)
             self.__evse.set_current(self.__current_max)
+            MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable_blink(True, apply_now=True)
             return True
         else:
             _log.info('最大电流为0,不充电\nThe maximum current is 0, no charging')
@@ -509,6 +511,7 @@ The charging unit is not executable (correct value)
                 self.__signal_charging_finished.emit()
                 _log.error("Error setting charging current")
                 return False
+            MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable_blink(True, apply_now=True)
             self.__timer = threading.Timer(phase1_fill_time, self.__charging)
             self.__timer.name = f'ChargeUnit<{self.__id}>.charging'
             self.__timer.start()
@@ -547,6 +550,7 @@ The charging unit is not executable (correct value)
             self.stop_charging()
             _log.error("设置充电电流错误\nError setting charging current")
             return False
+        MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable_blink(True, apply_now=True)
         self.__timer = threading.Timer(charge_duration_sec, self.__charging)
         self.__timer.name = f'ChargeUnit<{self.__id}>.charging'
         self.__timer.start()
@@ -586,6 +590,7 @@ The charging unit is not executable (correct value)
         self.__enableDirectCharge = False
         self.__data_collector.stop_CU_charging(self.id)
         self.signal_hint_message.emit(f'充电单元 <{self.id}> 已停止充电\nCharge unit <{self.id}> has stopped charging', 'info')
+        MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable_blink(False, apply_now=True)
 
     def clear_error(self) -> None:
         """ 慎用, 前端应做提示 """

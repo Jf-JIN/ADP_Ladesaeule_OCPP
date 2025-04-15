@@ -21,6 +21,7 @@ class StructLED:
         self.__led = LED(pin)
         self.__led.off()
         self.__status = False
+        self.__shouldBlink = False
         self.__class__.__leds_name_list__.add(name)
 
     @property
@@ -35,12 +36,21 @@ class StructLED:
     def pin(self) -> int:
         return self.__pin
 
-    def set_enable(self, enable: bool):
+    def set_enable(self, enable: bool) -> typing.Self:
         self.__status = enable
-        if self.__status:
+        if self.__status and not self.__shouldBlink:
             self.__led.on()
+        elif self.__status and self.__shouldBlink:
+            self.__led.blink()
         else:
             self.__led.off()
+        return self
+
+    def set_enable_blink(self, enable: bool, apply_now: bool = False) -> typing.Self:
+        self.__shouldBlink: bool = enable
+        if apply_now:
+            self.set_enable(self.__status)
+        return self
 
 
 class ExclusiveGroupLED:
@@ -121,6 +131,12 @@ class ExclusiveGroupLED:
         else:
             self.__activate_index(-1)
             _log.warning(f"LED <{led}> name or index is not valid, leds are disabled")
+        return self
+
+    def set_enable_blink(self, enable: bool) -> typing.Self:
+        for led in self.__leds_dict_index.values():
+            led: StructLED
+            led.set_enable_blink(enable)
         return self
 
     def __activate_name(self, led_name: str) -> None:

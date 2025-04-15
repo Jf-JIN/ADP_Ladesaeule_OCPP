@@ -60,13 +60,12 @@ class GPIOManager:
         self.__thread_detection_button_start.pressed.connect(self.__on_start_button_pressed)
         self.__thread_detection_button_stop.pressed.connect(self.__on_stop_button_pressed)
         self.__ManagerLED = ManagerLED()
-        MLED.registerGroup(LEDGroup.SYSTEM_AVAILABILITY, LEDName.LED_SYSTEM_READY, RaspPins.BCM_PIN_25)
-        MLED.registerGroup(LEDGroup.SYSTEM_AVAILABILITY, LEDName.LED_SYSTEM_NOT_READY, RaspPins.BCM_PIN_24)
+        MLED.registerLed(LEDName.LED_SYSTEM_READY, RaspPins.BCM_PIN_25)
         Log.GROUP.signal_error.connect(self.__led_handle_system_error)
         Log.GROUP.signal_critical.connect(self.__led_handle_system_error)
 
     def __led_handle_system_error(self, error: str):
-        MLED.getGroup(LEDGroup.SYSTEM_AVAILABILITY).set_enable(LEDName.LED_SYSTEM_NOT_READY)
+        MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable_blink(True, apply_now=True)
 
     def stop(self):
         if self.__thread_polling_evse.is_alive():
@@ -141,7 +140,7 @@ class GPIOManager:
         self.__thread_polling_shelly.start()
         self.__thread_detection_button_start.start()
         self.__thread_detection_button_stop.start()
-        MLED.getGroup(LEDGroup.SYSTEM_AVAILABILITY).set_enable(LEDName.LED_SYSTEM_READY)
+        MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable(True)
 
     def __send_request_charge_plan_calibration(self, request_dict: dict) -> None:
         if self.__timer_send_requeset_calibration.is_alive():
