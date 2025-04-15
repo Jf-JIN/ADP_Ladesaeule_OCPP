@@ -1,8 +1,8 @@
 
-from pymodbus.pdu.pdu import ModbusPDU  # 实际使用
-from pymodbus.client import ModbusSerialClient  # 实际使用
+# from pymodbus.pdu.pdu import ModbusPDU  # 实际使用
+# from pymodbus.client import ModbusSerialClient  # 实际使用
 
-# from ._test_Module import ModbusPDU, ModbusSerialClient  # 用于测试
+from ._test_Module import ModbusPDU, ModbusSerialClient  # 用于测试
 
 from const.Const_Parameter import *
 from const.GPIO_Parameter import BitsFlag, EVSEErrorInfo, EVSERegAddress, ModbusParams
@@ -77,7 +77,7 @@ class ModbusIO(object):
         except AttributeError as e:
             _log.warning(f'ModbusIO read warning: {e}\naddress: {address}')
         except Exception as e:
-            _log.info(f'ModbusIO read ModbusPDU error: {traceback.format_exc()}\naddress: {address}')
+            _log.warning(f'ModbusIO read ModbusPDU error: {traceback.format_exc()}\naddress: {address}')
         finally:
             return result_data
 
@@ -96,7 +96,7 @@ class ModbusIO(object):
             - 当读取过程中发生任何异常时, 会被捕获并返回 None.
         """
         result_data = None
-        _log.info(f'threadlock {self.__thread_lock.locked()}')
+        # _log.info(f'threadlock {self.__thread_lock.locked()}')
         # with self.__thread_lock:
         try:
             result: ModbusPDU = self.__client.read_holding_registers(address=address, slave=self.__id)
@@ -105,10 +105,10 @@ class ModbusIO(object):
             # _log.info(f'function_code: {result.function_code}\naddress: {address}\nresult: {result}')
             if result and not result.isError():
                 result_data: int = result.registers[0]
-                _log.info(f'function_code: {result.function_code}\naddress: {address}\nresult: {result}')
+                # _log.info(f'function_code: {result.function_code}\naddress: {address}\nresult: {result}')
             else:
                 _log.error(f'ModbusIO read error.\naddress: {address}')
-                _log.info(f'function_code: {result.function_code}\naddress: {address}\nresult: {result}\nexception_code: {result.exception_code}')
+                # _log.info(f'function_code: {result.function_code}\naddress: {address}\nresult: {result}\nexception_code: {result.exception_code}')
         except Exception as e:
             _log.exception(f'ModbusIO read error: {e}\naddress: {address}')
         finally:
@@ -147,7 +147,7 @@ class ModbusIO(object):
 
         # with self.__thread_lock:
         try:
-            _log.info(f'threadlock {self.__thread_lock.locked()}')
+            # _log.info(f'threadlock {self.__thread_lock.locked()}')
             result: ModbusPDU = self.__client.write_registers(address=address, values=[value], slave=self.__id)
             _log.info(f'[WRITE] function_code: {result.function_code}\naddress: {address}\nresult: {result}')
             # check_res = self.__client.read_holding_registers(address=address, slave=self.__id)
@@ -156,7 +156,7 @@ class ModbusIO(object):
             if result and result.isError():
                 _log.exception(f'ModbusIO write error.\naddress: {address}\nvalue: {value}')
                 return False
-            _log.info(f'threadlock end {self.__thread_lock.locked()}')
+            # _log.info(f'threadlock end {self.__thread_lock.locked()}')
             return True
         except Exception as e:
             _log.exception(f'ModbusIO write error: {e}\naddress: {address}\nvalue: {value}')
