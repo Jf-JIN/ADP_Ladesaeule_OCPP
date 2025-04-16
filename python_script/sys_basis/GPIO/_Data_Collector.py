@@ -224,7 +224,7 @@ class DataCollector:
         """
         self.__available_charge_units_id_set.add(id)
 
-    def set_evse_data(self, id: int, data: dict) -> None:
+    def set_evse_data(self, id: int, data: dict) -> typing.Self:
         """
         写入 EVSE 数据.
         """
@@ -232,8 +232,9 @@ class DataCollector:
         self.__check_id(id)
         self.__all_data[id]['evse'] = data
         self.__set_CU_status(id, data['vehicle_state'])
+        return self
 
-    def set_shelly_data(self, id: int, data: dict) -> None:
+    def set_shelly_data(self, id: int, data: dict) -> typing.Self:
         """
         写入 Shelly 数据.
         """
@@ -242,9 +243,17 @@ class DataCollector:
         self.__all_data[id]['shelly'] = data
         if not self.__all_data[id].get('current_charge_action', None):
             self.__all_data[id]['current_charge_action'] = {}
-        self.__all_data[id]['current_charge_action']['chargedEnergy'] = data.get('charged_energy', 0)
+        if 'charged_energy' in data:
+            self.__all_data[id]['current_charge_action']['chargedEnergy'] = data['charged_energy']
+        return self
 
-    def set_CU_current_charge_action(self, id: int, plan: dict) -> None:
+    def set_shelly_charged_energy(self, id: int, data: int | float) -> typing.Self:
+        self.__shelly_data[id] = data
+        self.__check_id(id)
+        self.__all_data[id]['current_charge_action']['chargedEnergy'] = data
+        return self
+
+    def set_CU_current_charge_action(self, id: int, plan: dict) -> typing.Self:
         """
         设置充电单元当前充电计划.
 
@@ -259,8 +268,9 @@ class DataCollector:
         plan['chargedEnergy'] = self.__all_data[id]['shelly']['charged_energy']
         self.__all_data[id]['current_charge_action'] = plan
         self.__isRunning = True
+        return self
 
-    def set_CU_charge_start_time(self, id: int, start_time: str, target_energy: int, depart_time: str, custom_data: int | None = None, enableDirectCharge=False) -> None:
+    def set_CU_charge_start_time(self, id: int, start_time: str, target_energy: int, depart_time: str, custom_data: int | None = None, enableDirectCharge=False) -> typing.Self:
         """
         设置充电单元开始充电时间.
 
@@ -274,8 +284,9 @@ class DataCollector:
         self.__all_data[id]['enableDirectCharge'] = enableDirectCharge
         self.__all_data[id]['direct_charge_energy_list'] = []
         self.__all_data[id]['isCharging'] = True
+        return self
 
-    def set_CU_waiting_plan(self, id: int, plan: list, period_start_time: str | None = None) -> None:
+    def set_CU_waiting_plan(self, id: int, plan: list, period_start_time: str | None = None) -> typing.Self:
         """
         设置充电单元等待的充电计划.
         """
@@ -293,6 +304,7 @@ class DataCollector:
         )
         ):
             self.__all_data[id]['period_start_time'] = self.__all_data[id]['start_time']
+        return self
 
     def get_CU_evse_data(self, id: int) -> dict:
         self.__check_id(id)
@@ -306,7 +318,7 @@ class DataCollector:
         self.__check_id(id)
         self.__all_data[id]['waiting_plan'] = []
 
-    def append_CU_finished_plan(self, id: int, plan: dict) -> None:
+    def append_CU_finished_plan(self, id: int, plan: dict) -> typing.Self:
         """
         追加充电单元已完成的充电计划.
         """
@@ -326,6 +338,7 @@ class DataCollector:
         self.__all_data[id]['charged_time'] = charged_time_str
         self.__all_data[id]['current_charge_action'] = {}
         self.__send_figure_data()
+        return self
 
     def clear_CU_finished_plan(self, id: int) -> None:
         """
@@ -345,12 +358,13 @@ class DataCollector:
         self.__check_id(id)
         self.__all_data[id]['isCharging'] = False
 
-    def set_CU_isLatched(self, id: int, flag: bool) -> None:
+    def set_CU_isLatched(self, id: int, flag: bool) -> typing.Self:
         """
         设置充电单元是否上锁.
         """
         self.__check_id(id)
         self.__all_data[id]['isLatched'] = flag
+        return self
 
     def __add_charging_unit(self, id: int) -> None:
         """

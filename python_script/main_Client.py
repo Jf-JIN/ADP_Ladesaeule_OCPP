@@ -4,6 +4,7 @@ from sys_basis.Process_Lock import *
 from const.Const_Parameter import *
 
 from server.Client import Client
+from tools.check_func import *
 import atexit
 import os
 import signal
@@ -58,8 +59,10 @@ main_obj_instance = None
 
 def main():
     if os.path.exists(LOCK_FILE_PATH):
-        print('The program is already running.')
-        return
+        with open(LOCK_FILE_PATH, 'r') as f:
+            pid = int(f.read())
+        if isPidRunning(pid):
+            return
     pl = ProcessLock(LOCK_FILE_PATH)
     pl.acquire()
     global main_obj_instance

@@ -1,19 +1,27 @@
 
+
+from __future__ import annotations
 import copy
 from const.Const_Parameter import *
-import requests
+# import requests
+import time
 from sys_basis.XSignal import XSignal
+
+if 0:
+    from _Charge_Unit import ChargeUnit
 
 _log = Log.GPIO
 
 
 class Shelly:
-    def __init__(self, id: int, address: str) -> None:
+    def __init__(self, parent, id: int, address: str) -> None:
+        self.__parent: ChargeUnit = parent
         self.__id: int = id
         self.__main_address: str = address
         self.__data: dict = {}
         self.__isAvailable: bool = False
         self.__charged_energy: int = 0
+        self.__last_wrote_time: int = time.time()
         self.__signal_current_no = XSignal()
         self.__signal_current_overload = XSignal()
         self.__signal_shelly_error_occurred = XSignal()
@@ -83,27 +91,51 @@ class Shelly:
 
     def set_data(self, data: dict) -> None:
         self.__data = data
-        self.__charged_energy = self.__data['charged_energy']
+        self.__charged_energy = self.__calculate_charged_energy()
+        self.__parent.parent_obj.data_collector.set_shelly_charged_energy(self.id, self.__charged_energy)
         self.__isAvailable = self.__data['is_valid']
-        charged_energy = self.__data['charged_energy']
         if not self.__isAvailable:
             self.signal_shelly_error_occurred.emit(not self.__isAvailable)
             return
-        self.signal_charged_energy.emit(charged_energy)
+        self.signal_charged_energy.emit(self.__charged_energy)
+
+    def __calculate_charged_energy(self) -> None:
+        """ 
+        power: W
+        duration: h
+        self.__charged_energy: Wh
+        """
+        if self.__isAvailable:
+            duration = (time.time() - self.__last_wrote_time) / 3600
+            total = 0
+            for ph_dict in self.__data.values():
+                ph_dict: dict
+                if not isinstance(ph_dict, dict):
+                    continue
+                power = ph_dict.get('power', 0)
+                total += (power*duration)
+            self.__charged_energy = self.__charged_energy + total
+        return self.__charged_energy
 
     def reset(self) -> bool:
-        _log.info('Shelly reset')
-        try:
-            # 发送 POST 请求
-            # reset_token = 'rpc/EMData.ResetCounters?id=0'
-            reset_token = 'rpc/EMData.ResetCounters'
-            data = {
-                "id": 0  # 通道号
-            }
-            response0 = requests.post(self.reset_address, json=data, timeout=5)
-            response0.raise_for_status()
-            _log.info("Shelly 复位成功\nShelly reset successfully")
-            return True
-        except Exception as e:
-            _log.info(f"Shelly 复位失败\nShelly reset failed: {e}")
-            return False
+        self.__last_wrote_time: int = time.time()
+        self.__charged_energy = 0
+        _log.info("Shelly 复位成功\nShelly reset successfully")
+        return True
+
+        # ********************************* [弃用, shelly 不提供总充电量] *********************************
+        # _log.info('Shelly reset')
+        # try:
+        #     # 发送 POST 请求
+        #     # reset_token = 'rpc/EMData.ResetCounters?id=0'
+        #     reset_token = 'rpc/EMData.ResetCounters'
+        #     data = {
+        #         "id": 0  # 通道号
+        #     }
+        #     response0 = requests.post(self.reset_address, json=data, timeout=5)
+        #     response0.raise_for_status()
+        #     _log.info("Shelly 复位成功\nShelly reset successfully")
+        #     return True
+        # except Exception as e:
+        #     _log.info(f"Shelly 复位失败\nShelly reset failed: {e}")
+        #     return False

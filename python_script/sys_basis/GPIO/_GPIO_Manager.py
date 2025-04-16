@@ -75,7 +75,7 @@ class GPIOManager:
         Log.GROUP.signal_critical.connect(self.__led_handle_system_error)
 
     def __led_handle_system_error(self, error: str):
-        MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable_blink(True, apply_now=True)
+        MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable_blink(False, apply_now=True)
 
     def stop(self):
         if self.__thread_polling_evse.is_alive():

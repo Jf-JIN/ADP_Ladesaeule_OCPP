@@ -4,12 +4,15 @@ from const.Const_Parameter import *
 from sys_basis.XSignal import XSignal
 from ._Modbus_IO import ModbusIO
 from ._EVSE_Self_Check import EVSESelfCheck
+from DToolslib import EventSignal
 
-_error = Log.EVSE.error
-_warning = Log.EVSE.warning
+
+_log = Log.EVSE
 
 
 class Evse(object):
+    signal_isInCharging: EventSignal = EventSignal(bool)
+
     def __init__(self, id: int, doUseRCD: bool = False) -> None:
         self.__id: int = id
         self.__vehicle_status: int | None = None
@@ -20,6 +23,9 @@ class Evse(object):
         self.__signal_selftest_finished_result: XSignal = XSignal()
         self.__signal_evse_status_error: XSignal = XSignal()
         self.__signal_vehicle_status_failed_error = XSignal()
+        self.__charging_timeout_counter = -1
+        self.stop_charging()
+        self.set_default_current(13)
 
     @property
     def id(self) -> int:
@@ -53,17 +59,18 @@ class Evse(object):
     def signal_vehicle_status_failed_error(self) -> XSignal:
         return self.__signal_vehicle_status_failed_error
 
-    def set_vehicle_state(self, data: int) -> None:
-        self.__vehicle_status = data
-        if data == VehicleState.FAILURE:
+    def set_vehicle_state(self, state: int) -> None:
+        self.__vehicle_status = state
+        self.__detection_Charging_available(state)
+        if state == VehicleState.FAILURE:
             self.__isEnableCharging = False
-            self.signal_vehicle_status_failed_error.emit(data)
+            self.signal_vehicle_status_failed_error.emit(state)
 
     def set_evse_status_error(self, data: set) -> None:
         if (EVSEErrorInfo.WRITE_ERROR in data
                 or EVSEErrorInfo.READ_ERROR in data):
             self.__isEnableCharging = False
-            _warning(f'EVSE Error WRITE/READ ERROR: {data}')
+            _log.warning(f'EVSE Error WRITE/READ ERROR: {data}')
             return
         self.__evse_status_error = data
         if (
@@ -74,7 +81,7 @@ class Evse(object):
                 or EVSEErrorInfo.WAITING_FOR_PILOT_RELEASE in data
                 or EVSEErrorInfo.VENT_REQUIRED_FAIL in data
         ):
-            _warning(f'EVSE Error: {data}')
+            _log.warning(f'EVSE Error: {data}')
             self.__isEnableCharging = False
             self.__signal_evse_status_error.emit(self.__evse_status_error)
             return
@@ -85,28 +92,38 @@ class Evse(object):
         给1000寄存器赋值,代表充电电流
         """
         if not self.__isEnableCharging:
-            _error(f'EVSE {self.__id} is not enable charging')
+            _log.error(f'EVSE {self.__id} is not enable charging')
             return False
         with self.__modbus as modbus:
-            res0 = modbus.enable_charge(True)
-            if not res0:
-                _error(f'EVSE {self.__id} enable charge failed')
+            res1 = modbus.enable_charge(True)
+            if not res1:
+                _log.error(f'EVSE {self.__id} enable charge failed')
                 return False
             self.__isEnableCharging = True
             m = modbus.set_current(value)
             if not m:
-                _error(f'EVSE {self.__id} set current failed')
-        return m
+                _log.error(f'EVSE {self.__id} set current failed')
+                return False
+        return True
 
     def stop_charging(self) -> bool:
         """
         将1004寄存器的bit0: turn off charging now,置为1,表示立即停止充电
         """
         with self.__modbus as modbus:
+            # res0 = modbus.set_current(0)
+            # if not res0:
+            #     _log.error(f'EVSE {self.__id} set current 0 failed')
+            #     return False
+            # else:
             m = modbus.enable_charge(False)
             if not m:
-                _error(f'EVSE {self.__id} stop charging failed')
-        return m
+                _log.error(f'EVSE {self.__id} stop charging failed')
+            return m
+
+    def set_default_current(self, value: int) -> bool:
+        with self.__modbus as modbus:
+            modbus.set_default_current(value)
 
     def start_self_check(self) -> None:
         selftest = EVSESelfCheck(self.__id, self.__doUseRCD)
@@ -131,3 +148,18 @@ class Evse(object):
             self.__modbus.finish_selftest_and_RCD_test_procedure_with_RCD()
         else:
             self.__modbus.finish_selftest_and_RCD_test_procedure()  # 不能使用with, isSelfChecking是True的状态, 不能进入with
+
+    def __detection_Charging_available(self, status: int) -> bool:
+        """
+        检测充电桩在按计划充电中
+        """
+        _log.info(f'检测充电桩在按计划充电中{status} {self.__charging_timeout_counter}')
+        if status == VehicleState.CHARGING:
+            self.__charging_timeout_counter = GPIOParams.CHARGING_STABLE_COUNTDOWN
+        else:
+            if self.__charging_timeout_counter <= 0:
+                self.signal_isInCharging.emit(False)
+                return False
+            self.__charging_timeout_counter -= 1
+        self.signal_isInCharging.emit(True)
+        return True

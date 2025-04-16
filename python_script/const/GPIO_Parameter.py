@@ -74,6 +74,7 @@ class GPIOParams(AnalogDefine):
     """ 请求间隔, 单位: 秒. 该值必须大于0秒 """
     BOUNCETIME = 200
     """ 树莓派按钮检测防抖时间 """
+    CHARGING_STABLE_COUNTDOWN = POLLING_EVSE_INTERVAL * 10
     WATCHING_REGISTERS = [
         EVSERegAddress.CONFIGURED_AMPS,
         EVSERegAddress.AMPS_OUTPUT,
@@ -98,6 +99,13 @@ class VehicleState(AnalogDefine):
     CHARGING_WITH_VENTILATION = 4  # 充电中, 需要通风
     FAILURE = 5  # 故障
     CRITICAL = 666  # 严重故障
+
+
+class REG1006(AnalogDefine):
+    ACTIVE = 0
+    STEADY = 1
+    PWM_GENERATED = 2
+    OFF = 3
 
 
 class EVSEErrorInfo(AnalogDefine):

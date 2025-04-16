@@ -5,7 +5,7 @@ from pymodbus.client import ModbusSerialClient  # 实际使用
 # from ._test_Module import ModbusPDU, ModbusSerialClient  # 用于测试
 
 from const.Const_Parameter import *
-from const.GPIO_Parameter import BitsFlag, EVSEErrorInfo, EVSERegAddress, ModbusParams
+from const.GPIO_Parameter import BitsFlag, EVSEErrorInfo, EVSERegAddress, ModbusParams, REG1006
 import threading
 
 _log = Log.MODBUS
@@ -59,15 +59,6 @@ class ModbusIO(object):
             self.__client.close()
         self.__thread_lock.release_lock()
         return True
-
-    def is_socket_valid(self) -> bool:
-        try:
-            # 只要访问 in_waiting 就会触发底层检查
-            _ = self.__client.socket.in_waiting
-            return True
-        except Exception as e:
-            _log.warning(f"Modbus socket invalid: {e}")
-            return False
 
     def read_PDU(self, address: int) -> None | ModbusPDU:
         result_data = None
@@ -256,7 +247,12 @@ class ModbusIO(object):
             - 如果写入失败或发生错误, 返回False.
         """
         if flag:
-            return self.write(address=EVSERegAddress.TURN_OFF_SELFTEST_OPERATION, value=BitsFlag.REG1004.TURN_OFF_CHARGING_NOW, bit_operation=0)
+            res_1004 = self.write(address=EVSERegAddress.TURN_OFF_SELFTEST_OPERATION, value=BitsFlag.REG1004.TURN_OFF_CHARGING_NOW, bit_operation=0)
+            if res_1004:
+                res_1006 = self.write(address=EVSERegAddress.CHARGE_OPERATION, value=REG1006.ACTIVE)
+            else:
+                return False
+            return res_1006
         else:
             return self.write(address=EVSERegAddress.TURN_OFF_SELFTEST_OPERATION, value=BitsFlag.REG1004.TURN_OFF_CHARGING_NOW, bit_operation=1)
 
@@ -274,3 +270,9 @@ class ModbusIO(object):
         清除RCD错误
         """
         return self.write(address=EVSERegAddress.TURN_OFF_SELFTEST_OPERATION, value=BitsFlag.REG1004.CLEAR_RCD_ERROR, bit_operation=0)
+
+    def set_default_current(self, value: int) -> None | bool:
+        """ 
+        设置默认电流
+        """
+        return self.write(address=EVSERegAddress.DEFAULT_AMPS, value=value)

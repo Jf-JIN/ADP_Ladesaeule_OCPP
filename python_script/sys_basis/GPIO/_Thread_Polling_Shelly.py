@@ -105,7 +105,6 @@ class PollingShelly(Thread):
                 response_data.raise_for_status()
                 data_dict: dict = response_data.json()
                 shelly_data.update(self.__parse_data_json(data_dict))
-                shelly_data['charged_energy'] = data_dict['total_act_power']
                 shelly_data['is_valid'] = shelly_data[0]['is_valid'] and shelly_data[1]['is_valid'] and shelly_data[2]['is_valid']
             except Exception as e:
                 if self.__retry_count <= self.__max_retry_count:
@@ -137,7 +136,6 @@ class PollingShelly(Thread):
                         'frequncy': 0,
                         'is_valid': False,
                         'total': 0},
-                    'charged_energy': 0,
                     'is_valid': False,
                 }
                 if isinstance(e, requests.exceptions.ConnectionError):

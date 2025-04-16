@@ -4,6 +4,7 @@ from const.Const_Parameter import *
 from gpiozero import LED
 # from ._test_Module import LED
 import typing
+import threading
 
 
 _log = Log.GPIO
@@ -78,6 +79,7 @@ class StructLED:
                 self.__blink_thread.cancel()
         if apply_now:
             self.__blink()
+        _log.info(f'set_enable_blink{self.__shouldBlink}')
         return self
 
 

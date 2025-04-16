@@ -29,7 +29,7 @@ class ChargeUnit:
         self.__parent: GPIOManager = parent
         self.__id: int = id
         self.__evse: Evse = Evse(id=id)
-        self.__shelly: Shelly = Shelly(id=id, address=shelly_address)
+        self.__shelly: Shelly = Shelly(self, id=id, address=shelly_address)
         self.__data_collector: DataCollector = self.__parent.data_collector
         self.__latch_motor: LatchMotor = LatchMotor(self, id=id)
         self.__start_time_str: str = ''
@@ -93,6 +93,7 @@ class ChargeUnit:
         self.evse.signal_vehicle_status_failed_error.connect(self.__handle_evse_error)
         self.evse.signal_evse_status_error.connect(self.__handle_evse_error)
         self.evse.signal_selftest_finished_result.connect(self.__set_isEVSESelfTested)
+        self.evse.signal_isInCharging.connect(self.__check_and_stop_charging)
         self.shelly.signal_shelly_error_occurred.connect(self.__handle_shelly_error)
         self.shelly.signal_charged_energy.connect(self.__handle_shelly_charged_energy)
 
@@ -306,7 +307,7 @@ class ChargeUnit:
         else:
             _log.error(f"""\
 EVSE State abnormal, Unable to start charging (correct value)
-- vehicle_state (=2): {self.__evse.vehicle_state}
+- vehicle_state (={VehicleState.EV_IS_PRESENT}): {self.__evse.vehicle_state}
 - evse_status_error (ONLY 'Relay On'): {self.__evse.evse_status_error}
 - Shelly isAvailable: {self.__shelly.isAvailable}
 - isNoError (True): {self.__isNoError}
@@ -569,6 +570,8 @@ The charging unit is not executable (correct value)
         """
         _log.info(f'停止充电, 当前状态是否在充电: {self.__isCharging}\nStop charging, is charging: {self.__isCharging}')
         if not self.__isCharging:
+            MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable_blink(False)
+            MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable(True)
             return
         _log.info('执行停止充电\nExecute stop charging')
         self.__evse.stop_charging()
@@ -604,6 +607,13 @@ The charging unit is not executable (correct value)
         self.__isNoError = True
         _log.info('已清除错误\nError flag has been cleared')
         self.signal_hint_message.emit('已清除错误\nError flag has been cleared', 'success')
+
+    def __check_and_stop_charging(self, isInCharging: bool) -> None:
+        """ 是否应该停止充电 """
+        if not isInCharging:
+            self.stop_charging()
+            self.signal_hint_message.emit('当前无车辆插入, 请检查并重新启动充电\nNo vehicle is inserted, please check and restart charging', 'info')
+            return
 
     def __convert_value_in_amps(self, charging_limit: int) -> int:
         """

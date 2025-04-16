@@ -1,5 +1,4 @@
 
-from logging import CRITICAL
 import os
 from const.Analog_Define import AnalogDefine
 # from tools.Logger import LogLevel, Logger, LoggerGroup
@@ -9,7 +8,7 @@ from DToolslib import *
 
 os.chdir(os.path.dirname(os.path.dirname(__file__)))
 APP_WORKSPACE_PATH = os.getcwd()
-LOCK_FILE_PATH = os.path.join(APP_WORKSPACE_PATH, '.main_Client.lock')
+LOCK_FILE_PATH = os.path.join(APP_WORKSPACE_PATH, 'main_Client.lock')
 
 
 class FontSize(AnalogDefine):
