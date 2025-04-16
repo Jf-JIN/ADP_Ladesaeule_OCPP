@@ -34,7 +34,7 @@ class PollingEVSE(Thread):
     def isRunning(self) -> bool:
         return self.__isRunning
 
-    def __get_watching_registers_dict(self, io: ModbusIO):
+    def __get_watching_registers_dict(self, io: ModbusIO) -> dict:
         temp = {}
         for register_address in GPIOParams.WATCHING_REGISTERS:
             subtmp = {}
