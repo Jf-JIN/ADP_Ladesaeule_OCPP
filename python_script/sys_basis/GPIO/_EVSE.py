@@ -100,6 +100,7 @@ class Evse(object):
         给1000寄存器赋值,代表充电电流
         """
         self.__isCharging: bool = self.__set_current(value)
+        return self.__isCharging
 
     def __set_current(self, value) -> bool:
         """
@@ -125,6 +126,7 @@ class Evse(object):
         将1004寄存器的bit0: turn off charging now,置为1,表示立即停止充电
         """
         self.__isCharging: bool = not self.__stop_charging()  # 返回值表示是否成功停止充电, 与标志位相反, 如果停止充电成功,则将self.__isCharging置为False
+        return self.__isCharging
 
     def __stop_charging(self) -> bool:
         """
