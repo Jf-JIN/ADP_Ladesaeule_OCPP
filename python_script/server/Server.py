@@ -141,7 +141,10 @@ class Server:
         #     }
         # }))
         self.__coroutine_OCPP_server.send_normal_message(str(json.dumps({
-            "opt_img": opt.get_img_charging(),
+            "opt_result": {
+                "opt_img": opt.get_img_charging(),
+                "result": 1 if self._isopt else 0,
+            }
         })))
         _debug(self._isopt)
         if self._isopt:

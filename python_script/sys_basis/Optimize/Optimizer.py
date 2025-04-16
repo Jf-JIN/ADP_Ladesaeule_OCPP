@@ -5,6 +5,7 @@ from sys_basis.Generator_Ocpp_Std.V2_0_1 import *
 from const.Const_Parameter import *
 from tools.data_gene import DataGene
 import numpy as np
+import copy
 _info = Log.OPT.info
 _error = Log.OPT.error
 _warning = Log.OPT.warning
@@ -76,7 +77,7 @@ class Optimizer:
     def get_charging_schedule(self):
         return self._charging_schedule
 
-    def get_img_charging(self):
+    def get_img_charging(self) -> str | None:
         if self._isopt:
             return DataGene.plot_charging_curve(
                 self._start_time,
@@ -86,7 +87,7 @@ class Optimizer:
         else:
             return None
 
-    def get_img_comparison(self):
+    def get_img_comparison(self) -> str | None:
         if self._isopt:
             return DataGene.plot_usage_comparison(
                 self._start_time,
@@ -98,7 +99,7 @@ class Optimizer:
         else:
             return None
 
-    def IsOpt(self):
+    def IsOpt(self) -> bool:
         return self._isopt
 
     def _get_weight(self) -> list:
@@ -173,7 +174,7 @@ class Optimizer:
         # 输出结果
         if result.success:
             _info("--------------------Optimize Success----------------------")
-            self._charging_list = result.x
+            self._charging_list = copy.deepcopy(result.x)
             cumulative_energy = np.cumsum(self._charging_list) * time_step
             self._over_time = np.argmax(cumulative_energy >= E_target) if np.any(cumulative_energy >= E_target) else self._num_split
             if self._over_time < self._num_split:
@@ -199,7 +200,8 @@ class Optimizer:
             scpr = GenSetChargingProfileRequest()
             charging_schedule_period_list = []
             for i in range(self._num_split):
-                start_period = int(sum(self._time_split[:i]) * 60)   # 缩短60倍用于测试，实际使用请删除
+                # start_period = int(sum(self._time_split[:i]) * 60)  # 缩短60倍用于测试，实际使用请删除
+                start_period = int(sum(self._time_split[:i]))  # test
                 charging_schedule_period_list.append(
                     scpr.get_charging_schedule_period(
                         start_period=start_period,
@@ -250,5 +252,5 @@ if __name__ == "__main__":
     DataGene.plot_usage(his_usage)
     op_dp = Optimizer(charging_needs, eprices, his_usage, 16000, 30, 2)
     # print(op_dp.get_charging_needs())
-    DataGene.plot_charging_curve(op_dp._start_time, op_dp._time_split, op_dp._charging_list)
-    DataGene.plot_usage_comparison(op_dp._start_time, op_dp._time_split, op_dp._charging_list, his_usage, 16000)
+    # DataGene.plot_charging_curve(op_dp._start_time, op_dp._time_split, op_dp._charging_list)
+    # DataGene.plot_usage_comparison(op_dp._start_time, op_dp._time_split, op_dp._charging_list, his_usage, 16000)
