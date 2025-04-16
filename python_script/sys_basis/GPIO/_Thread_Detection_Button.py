@@ -1,6 +1,6 @@
 
 
-from gpiozero import Button
+from ._import_modbus_gpio import *
 from threading import Thread
 from const.Const_Parameter import *
 from const.GPIO_Parameter import *
@@ -25,6 +25,7 @@ class DetectionButton(Thread):
             if self.__isRunning:
                 _log.debug(f'{self.__name} pressed')
                 self.pressed.emit(True)
+            self.__button.wait_for_inactive()
 
     def stop(self) -> None:
         self.__isRunning = False

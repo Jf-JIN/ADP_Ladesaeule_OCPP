@@ -19,11 +19,12 @@ class Evse(object):
         self.__evse_status_error: set = set()
         self.__doUseRCD: bool = doUseRCD
         self.__isEnableCharging: bool = True
+        self.__isCharging = False
         self.__modbus: ModbusIO = ModbusIO(id)
         self.__signal_selftest_finished_result: XSignal = XSignal()
         self.__signal_evse_status_error: XSignal = XSignal()
         self.__signal_vehicle_status_failed_error = XSignal()
-        self.__charging_timeout_counter = -1
+        self.__charging_timeout_counter = GPIOParams.CHARGING_STABLE_COUNTDOWN
         self.stop_charging()
         self.set_default_current(13)
 
@@ -44,6 +45,10 @@ class Evse(object):
         return self.__isEnableCharging
 
     @property
+    def isCharging(self) -> bool:
+        return self.__isCharging
+
+    @property
     def doUseRCD(self) -> bool:
         return self.__doUseRCD
 
@@ -61,7 +66,10 @@ class Evse(object):
 
     def set_vehicle_state(self, state: int) -> None:
         self.__vehicle_status = state
-        self.__detection_Charging_available(state)
+        # _log.info(f'Vehicle state changed 1')
+        if self.__isCharging:
+            self.__detection_Charging_available(state)
+        # _log.info(f'Vehicle state changed 2')
         if state == VehicleState.FAILURE:
             self.__isEnableCharging = False
             self.signal_vehicle_status_failed_error.emit(state)
@@ -91,35 +99,47 @@ class Evse(object):
         """
         给1000寄存器赋值,代表充电电流
         """
+        self.__isCharging: bool = self.__set_current(value)
+
+    def __set_current(self, value) -> bool:
+        """
+        给1000寄存器赋值,代表充电电流
+        """
         if not self.__isEnableCharging:
             _log.error(f'EVSE {self.__id} is not enable charging')
             return False
         with self.__modbus as modbus:
-            res1 = modbus.enable_charge(True)
-            if not res1:
+            res_enable_charge = modbus.enable_charge(True)
+            if not res_enable_charge:
                 _log.error(f'EVSE {self.__id} enable charge failed')
                 return False
             self.__isEnableCharging = True
-            m = modbus.set_current(value)
-            if not m:
+            res_set_current: bool = modbus.set_current(value)
+            if not res_set_current:
                 _log.error(f'EVSE {self.__id} set current failed')
-                return False
-        return True
+            return res_set_current
+        return False
 
     def stop_charging(self) -> bool:
         """
         将1004寄存器的bit0: turn off charging now,置为1,表示立即停止充电
         """
+        self.__isCharging: bool = not self.__stop_charging()  # 返回值表示是否成功停止充电, 与标志位相反, 如果停止充电成功,则将self.__isCharging置为False
+
+    def __stop_charging(self) -> bool:
+        """
+        将1004寄存器的bit0: turn off charging now,置为1,表示立即停止充电
+        """
         with self.__modbus as modbus:
-            # res0 = modbus.set_current(0)
-            # if not res0:
-            #     _log.error(f'EVSE {self.__id} set current 0 failed')
-            #     return False
-            # else:
-            m = modbus.enable_charge(False)
-            if not m:
+            res_set_current = modbus.set_current(0)
+            if not res_set_current:
+                _log.error(f'EVSE {self.__id} set current 0 failed')
+                return False
+            res_enable_charge: bool = modbus.enable_charge(False)
+            if not res_enable_charge:
                 _log.error(f'EVSE {self.__id} stop charging failed')
-            return m
+            return res_enable_charge
+        return False
 
     def set_default_current(self, value: int) -> bool:
         with self.__modbus as modbus:
@@ -139,8 +159,10 @@ class Evse(object):
         """
         limit = [-1, -1]
         with self.__modbus as modbus:
+            _log.info(f'EVSE {self.__id} get current limit')
             limit[0] = modbus.read_current_min()
             limit[1] = modbus.read_current_max()
+            _log.info(f'EVSE {self.__id} get current limit {limit}')
         return limit
 
     def __handle_selftest_finished(self, flag) -> None:
@@ -155,11 +177,21 @@ class Evse(object):
         """
         _log.info(f'检测充电桩在按计划充电中{status} {self.__charging_timeout_counter}')
         if status == VehicleState.CHARGING:
+            _log.info(f'检测充电桩在按计划充电中 1')
             self.__charging_timeout_counter = GPIOParams.CHARGING_STABLE_COUNTDOWN
         else:
+            _log.info(f'检测充电桩在按计划充电中 2')
             if self.__charging_timeout_counter <= 0:
+                _log.info(f'检测充电桩在按计划充电中 3')
                 self.signal_isInCharging.emit(False)
+                self.__charging_timeout_counter = GPIOParams.CHARGING_STABLE_COUNTDOWN
                 return False
+
+            _log.info(f'检测充电桩在按计划充电中 4')
             self.__charging_timeout_counter -= 1
+
+        _log.info(f'检测充电桩在按计划充电中 5')
         self.signal_isInCharging.emit(True)
+
+        _log.info(f'检测充电桩在按计划充电中 6')
         return True

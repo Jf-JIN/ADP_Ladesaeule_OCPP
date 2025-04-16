@@ -103,6 +103,8 @@ class ModbusSerialClient:
         no_response_expected: bool = False
     ):
         address = str(address)
+        with open(self.__json_file_path, 'r', encoding='utf-8') as f:
+            self.__json_dict = json.load(f)
         self.__json_dict[address] = values[0]
         with open(self.__json_file_path, 'w', encoding='utf-8') as f:
             json.dump(self.__json_dict, f, indent=4, ensure_ascii=False)
@@ -115,6 +117,8 @@ class LED:
             self.__key = 'latch_lock_pin'
         elif pin == 22:
             self.__key = 'latch_unlock_pin'
+        elif pin == 25:
+            self.__key = 'led_pin'
         else:
             self.__key = 'others'
         self.__fp = os.path.join(os.getcwd(), 'test', 'Modbus_Shelly_Simulator.json')
@@ -137,12 +141,19 @@ class LED:
 class Button:
     def __init__(self, pin, *args, **kwargs):
         self.__pin = pin
+        if pin == 20:
+            self.__key = 'start_btn'
+        elif pin == 21:
+            self.__key = 'stop_btn'
         self.__fp = os.path.join(os.getcwd(), 'test', 'Modbus_Shelly_Simulator.json')
 
     def when_activated(self):
         ...
 
     def wait_for_active(self):
+        time.sleep(10000000)
+
+    def wait_for_inactive(self):
         time.sleep(10000000)
 
     @property

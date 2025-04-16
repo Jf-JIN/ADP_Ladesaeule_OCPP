@@ -4,10 +4,7 @@ from ._Modbus_IO import ModbusIO
 from const.GPIO_Parameter import *
 from const.Const_Parameter import *
 import time
-
-from pymodbus.pdu.pdu import ModbusPDU  # 实际使用
-
-# from ._test_Module import *  # 用于测试
+from ._import_modbus_gpio import *
 
 
 if 0:
@@ -65,23 +62,37 @@ class PollingEVSE(Thread):
             evse_id: int = evse.id
             evse_data = {}
             with ModbusIO(id=evse_id) as io:
+                _log.info(f'EVSE <{evse_id}> polling 1')
                 evse_data.update(self.__get_watching_registers_dict(io))
+                _log.info(f'EVSE <{evse_id}> polling 2')
                 vehicle_state: int | None = io.read_vehicle_status()  # timeout 由 Modbus 决定
+                _log.info(f'EVSE <{evse_id}> polling 3')
                 if vehicle_state is not None:
+                    _log.info(f'EVSE <{evse_id}> polling 4')
                     evse_data['vehicle_state'] = vehicle_state
                     evse.set_vehicle_state(vehicle_state)
+                    _log.info(f'EVSE <{evse_id}> polling 5')
 
                 evse_error: None | set = io.read_evse_status_fails()
+                _log.info(f'EVSE <{evse_id}> polling 6')
                 if evse_error is not None:
+                    _log.info(f'EVSE <{evse_id}> polling 7')
                     evse_data['evse_error'] = evse_error
                     evse.set_evse_status_error(evse_error)
+                    _log.info(f'EVSE <{evse_id}> polling 8')
                 else:
                     _log.error(f'EVSE {evse_id} read error')
-
+                    _log.info(f'EVSE <{evse_id}> polling 9')
+                _log.info(f'EVSE <{evse_id}> polling 10')
                 if len(evse_data):
+                    _log.info(f'EVSE <{evse_id}> polling 11')
                     self.__data_collector.set_evse_data(evse_id, evse_data)
+                    _log.info(f'EVSE <{evse_id}> polling 12')
+            _log.info(f'EVSE <{evse_id}> polling 13')
             self.__current_index = (self.__current_index + 1) % self.__evse_quantity
+            _log.info(f'EVSE <{evse_id}> polling 14')
             time.sleep(self.__interval)
+            _log.info(f'EVSE <{evse_id}> polling 15')
 
     def stop(self) -> None:
         self.__isRunning = False

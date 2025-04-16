@@ -1,14 +1,27 @@
 
-from pymodbus.pdu.pdu import ModbusPDU  # 实际使用
-from pymodbus.client import ModbusSerialClient  # 实际使用
 
-# from ._test_Module import ModbusPDU, ModbusSerialClient  # 用于测试
+from ._import_modbus_gpio import *
 
 from const.Const_Parameter import *
 from const.GPIO_Parameter import BitsFlag, EVSEErrorInfo, EVSERegAddress, ModbusParams, REG1006
 import threading
+import inspect
+
+from DToolslib import Inner_Decorators
 
 _log = Log.MODBUS
+
+
+class CallerStruct:
+    def __init__(self, data: dict):
+        self.caller = data.get('caller', '')
+        self.caller_name = data.get('caller_name', '')
+        self.class_name = data.get('class_name', '')
+        self.line_num = data.get('line_num', '')
+        self.module_name = data.get('module_name', '')
+        self.script_name = data.get('script_name', '')
+        self.script_path = data.get('script_path', '')
+        self.thread_name = data.get('thread_name', '')
 
 
 class ModbusIO(object):
@@ -39,15 +52,19 @@ class ModbusIO(object):
             retries=ModbusParams.RETRIES,
             name=self.__class__.__name__,
         )
-        self.__thread_lock = threading.Lock()
+        self.__thread_lock = threading.RLock()
 
     def __enter__(self):
         if self.__id in self.__class__.isSelfChecking:
             self.__exit__(None, None, None)
-        self.__thread_lock.acquire_lock()
+        _log.info(f'Enter {self.__class__.__name__} {self.__id} lock')  # {self.__thread_lock.locked()}')
+        self.__thread_lock.acquire()
+        _log.info('已申请锁')
         try:
+            _log.info('尝试连接')
             self.__client.connect()
         except Exception as e:
+            _log.exception(f'ModbusIO {self.__id} 连接失败')
             self.__context_action_error = 'enter'
             self.__exit__(e.__class__, e, e.__traceback__)
         return self
@@ -57,12 +74,12 @@ class ModbusIO(object):
             _log.exception(f'ModbusIO {self.__context_action_error} with error: {exc_val}')
         if self.__client and self.__client.is_socket_open():
             self.__client.close()
-        self.__thread_lock.release_lock()
+        self.__thread_lock.release()
+        _log.info(f'Exit {self.__class__.__name__} {self.__id} lock')  # {self.__thread_lock.locked()}')
         return True
 
     def read_PDU(self, address: int) -> None | ModbusPDU:
         result_data = None
-        # with self.__thread_lock:
         try:
             result_data: ModbusPDU = self.__client.read_holding_registers(address=address, slave=self.__id)
         except AttributeError as e:
@@ -87,13 +104,8 @@ class ModbusIO(object):
             - 当读取过程中发生任何异常时, 会被捕获并返回 None.
         """
         result_data = None
-        # _log.info(f'threadlock {self.__thread_lock.locked()}')
-        # with self.__thread_lock:
         try:
             result: ModbusPDU = self.__client.read_holding_registers(address=address, slave=self.__id)
-            # result: ModbusPDU = self.__client.read_input_registers(address=address, slave=self.__id)
-            # _log.critical(f'function_code: {result.function_code}\naddress: {address}\ndata: result.registers[0]\nresult: {result.registers}')
-            # _log.info(f'function_code: {result.function_code}\naddress: {address}\nresult: {result}')
             if result and not result.isError():
                 result_data: int = result.registers[0]
                 # _log.info(f'function_code: {result.function_code}\naddress: {address}\nresult: {result}')
@@ -105,7 +117,7 @@ class ModbusIO(object):
         finally:
             return result_data
 
-    def write(self, address: int, value: int, bit_operation: int | None = None) -> None | bool:
+    def write(self, address: int, value: int, bit_operation: int | None = None) -> bool:
         """
         写入寄存器
 
@@ -135,19 +147,14 @@ class ModbusIO(object):
             else:  # 置1
                 ori_value |= value
                 value = ori_value
-
-        # with self.__thread_lock:
         try:
-            # _log.info(f'threadlock {self.__thread_lock.locked()}')
             result: ModbusPDU = self.__client.write_registers(address=address, values=[value], slave=self.__id)
             # _log.info(f'[WRITE] function_code: {result.function_code}\naddress: {address}\nresult: {result}')
             # check_res = self.__client.read_holding_registers(address=address, slave=self.__id)
             # _log.info(f'[CHECK] function_code: {check_res.function_code}\naddress: {address}\nresult: {check_res}')
-            # _log.debug(result, result.registers[0])
             if result and result.isError():
                 _log.exception(f'ModbusIO write error.\naddress: {address}\nvalue: {value}')
                 return False
-            # _log.info(f'threadlock end {self.__thread_lock.locked()}')
             return True
         except Exception as e:
             _log.exception(f'ModbusIO write error: {e}\naddress: {address}\nvalue: {value}')
@@ -190,8 +197,8 @@ class ModbusIO(object):
             - 如果读取成功, 返回寄存器中的整数值.
             - 如果读取失败或发生错误, 返回None.
         """
-        # return 2
-        return self.read(address=EVSERegAddress.VEHICLE_STATE)
+        return 2
+        # return self.read(address=EVSERegAddress.VEHICLE_STATE)
 
     def read_current_min(self) -> None | int:
         """
@@ -201,6 +208,7 @@ class ModbusIO(object):
             - 如果读取成功, 返回寄存器中的整数值.
             - 如果读取失败或发生错误, 返回None.
         """
+        _log.info("read_current_min")
         return self.read(address=EVSERegAddress.CURRENT_MIN)
 
     def read_current_max(self) -> None | int:
@@ -211,6 +219,7 @@ class ModbusIO(object):
             - 如果读取成功, 返回寄存器中的整数值.
             - 如果读取失败或发生错误, 返回None.
         """
+        _log.info("read_current_max")
         return self.read(address=EVSERegAddress.CURRENT_MAX)
 
     def run_selftest_and_RCD_test_procedure(self) -> None | bool:
@@ -235,10 +244,10 @@ class ModbusIO(object):
         self.write(address=EVSERegAddress.TURN_OFF_SELFTEST_OPERATION, value=BitsFlag.REG1004.SELFTEST_RCDTEST, bit_operation=0)
         self.write(address=EVSERegAddress.TURN_OFF_SELFTEST_OPERATION, value=BitsFlag.REG1004.CLEAR_RCD_ERROR, bit_operation=0)
 
-    def set_current(self, value: int) -> None | bool:
+    def set_current(self, value: int) -> bool:
         return self.write(address=EVSERegAddress.CONFIGURED_AMPS, value=value)
 
-    def enable_charge(self, flag: bool = True) -> None | bool:
+    def enable_charge(self, flag: bool = True) -> bool:
         """
         允许充电/停止充电
 
@@ -247,9 +256,11 @@ class ModbusIO(object):
             - 如果写入失败或发生错误, 返回False.
         """
         if flag:
-            res_1004 = self.write(address=EVSERegAddress.TURN_OFF_SELFTEST_OPERATION, value=BitsFlag.REG1004.TURN_OFF_CHARGING_NOW, bit_operation=0)
+            res_1004: bool = self.write(address=EVSERegAddress.TURN_OFF_SELFTEST_OPERATION, value=BitsFlag.REG1004.TURN_OFF_CHARGING_NOW, bit_operation=0)
+            _log.info(f"res_1004 write: {res_1004}")
             if res_1004:
-                res_1006 = self.write(address=EVSERegAddress.CHARGE_OPERATION, value=REG1006.ACTIVE)
+                res_1006: bool = self.write(address=EVSERegAddress.EVSE_STATE, value=REG1006.STEADY)
+                _log.info(f"res_1006 write: {res_1006}")
             else:
                 return False
             return res_1006

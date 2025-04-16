@@ -60,9 +60,14 @@ main_obj_instance = None
 def main():
     if os.path.exists(LOCK_FILE_PATH):
         with open(LOCK_FILE_PATH, 'r') as f:
-            pid = int(f.read())
-        if isPidRunning(pid):
-            return
+            pid = f.read()
+            if pid:
+                try:
+                    pid = int(pid)
+                    if isPidRunning(pid):
+                        return
+                except:
+                    pass
     pl = ProcessLock(LOCK_FILE_PATH)
     pl.acquire()
     global main_obj_instance

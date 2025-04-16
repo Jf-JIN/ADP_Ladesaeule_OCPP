@@ -1,6 +1,6 @@
 
 import os
-import fcntl
+import portalocker
 import atexit
 import sys
 from const.Const_Parameter import *
@@ -49,8 +49,7 @@ class ProcessLock:
     def __acquire(self):
         self.__file = open(self.__lock_file_path, 'w')
         try:
-            # 尝试获取独占锁（非阻塞）
-            fcntl.flock(self.__file, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            portalocker.lock(self.__file, portalocker.LOCK_EX | portalocker.LOCK_NB)
             self.__file.write(str(os.getpid()))
             self.__file.flush()
         except BlockingIOError:
@@ -66,7 +65,7 @@ class ProcessLock:
     def __release(self):
         if self.__file and os.path.exists(self.__lock_file_path):
             try:
-                fcntl.flock(self.__file, fcntl.LOCK_UN)
+                portalocker.unlock(self.__file)
                 self.__file.close()
                 os.remove(self.__lock_file_path)
             except Exception as e:

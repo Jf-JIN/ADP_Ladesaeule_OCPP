@@ -2,8 +2,7 @@
 from __future__ import annotations
 import threading
 
-from gpiozero import LED # 用于正常使用
-# from ._test_Module import LED  # 用于测试
+from ._import_modbus_gpio import *
 from const.GPIO_Parameter import *
 from const.Const_Parameter import *
 

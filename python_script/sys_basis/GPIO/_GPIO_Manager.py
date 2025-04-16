@@ -10,9 +10,8 @@ from ._Thread_Polling_Shelly import PollingShelly
 from ._Data_Collector import DataCollector
 from ._Thread_Detection_Button import *
 from ._Manager_LED import *
-from gpiozero import Button, LED
-# from ._test_Module import Button, LED
-# import RPi
+from ._import_modbus_gpio import *
+
 import atexit
 import signal
 
