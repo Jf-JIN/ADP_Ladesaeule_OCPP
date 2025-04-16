@@ -188,6 +188,14 @@ function loadWatchingData (data) {
     watcher_contain.innerHTML = '';
 
     if (!data) return;
+    if (data.current_time) {
+         const watchingDataTime = document.createElement('h1');
+         watchingDataTime.innerHTML = data.current_time;
+         // watchingDataTime.style.textAlign = 'center';
+         watchingDataTime.style.marginBottom = '20px';
+         watchingDataTime.style.fontSize = '20px';
+         watcher_contain.appendChild(watchingDataTime);
+     }
 
     // ========== EVSE 部分 ==========
     if (data.evse) {
@@ -227,7 +235,7 @@ function loadWatchingData (data) {
                 reg_description = lang_dict.reg_description[addr]
             } else {
                 reg_description = `-`
-            };
+            }
             const values = [
                 addr,
                 reg_description,
