@@ -99,7 +99,7 @@ class Shelly:
             return
         self.signal_charged_energy.emit(self.__charged_energy)
 
-    def __calculate_charged_energy(self) -> None:
+    def __calculate_charged_energy(self) -> int | float:
         """ 
         power: W
         duration: h
@@ -118,7 +118,7 @@ class Shelly:
         return self.__charged_energy
 
     def reset(self) -> bool:
-        self.__last_wrote_time: int = time.time()
+        self.__last_wrote_time: float = time.time()
         self.__charged_energy = 0
         _log.info("Shelly 复位成功\nShelly reset successfully")
         return True
