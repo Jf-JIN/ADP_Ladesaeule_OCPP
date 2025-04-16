@@ -146,7 +146,7 @@ class ExclusiveGroupLED:
         self.__leds_dict_name.clear()
         return self
 
-    def get_led(self, led: int | str) -> StructLED:
+    def get_led(self, led: int | str) -> StructLED | None:
         if isinstance(led, int):
             return self.__leds_dict_index.get(led, None)
         elif isinstance(led, str):
@@ -194,7 +194,7 @@ class ExclusiveGroupLED:
 class ManagerLED:
     __instance__ = None
 
-    def __new__(cls, *args, **kwargs) -> typing.Self:
+    def __new__(cls, *args, **kwargs) -> 'ManagerLED':
         if cls.__instance__ is None:
             cls.__instance__ = super().__new__(cls)
             cls.__instance__.__isInitialized__ = False
@@ -208,7 +208,7 @@ class ManagerLED:
         self.__leds_dict_index: dict = {}
         self.__groups_dict_name: dict = {}
 
-    def __register_led(self, name: str, pin: str) -> typing.Self:
+    def __register_led(self, name: str, pin: int) -> typing.Self:
         if name in self.__leds_dict_name or pin in self.__leds_dict_index:
             _log.warning(f"LED {name} already registered, skipped")
             return self
@@ -217,12 +217,13 @@ class ManagerLED:
         self.__leds_dict_name[name] = led
         return self
 
-    def __register_group(self, group_name: str, led_name: str, led_pin: int) -> None:
+    def __register_group(self, group_name: str, led_name: str, led_pin: int) -> typing.Self:
         if group_name not in self.__groups_dict_name:
             self.__groups_dict_name[group_name] = ExclusiveGroupLED(group_name)
         group: ExclusiveGroupLED = self.__groups_dict_name[group_name]
         led = StructLED(led_name, led_pin)
         group.add_led(led)
+        return self
 
     def __get_led(self, name: str) -> StructLED:
         return self.__leds_dict_name.get(name, None)
@@ -239,12 +240,12 @@ class ManagerLED:
             group.set_enable(-1)
 
     @staticmethod
-    def registerLed(name: str, pin: str) -> typing.Self:
+    def registerLed(name: str, pin: int) -> "ManagerLED":
         instance = ManagerLED()
         return instance.__register_led(name, pin)
 
     @staticmethod
-    def registerGroup(group_name: str, led_name: str, led_pin: str) -> typing.Self:
+    def registerGroup(group_name: str, led_name: str, led_pin: int) -> "ManagerLED":
         instance = ManagerLED()
         return instance.__register_group(group_name, led_name, led_pin)
 
