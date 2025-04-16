@@ -21,7 +21,7 @@ class Shelly:
         self.__data: dict = {}
         self.__isAvailable: bool = False
         self.__charged_energy: int = 0
-        self.__last_wrote_time: int = time.time()
+        self.__last_wrote_time: float = time.time()
         self.__signal_current_no = XSignal()
         self.__signal_current_overload = XSignal()
         self.__signal_shelly_error_occurred = XSignal()
