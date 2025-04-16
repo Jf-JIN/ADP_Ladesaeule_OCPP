@@ -167,9 +167,11 @@ class Evse(object):
 
     def __handle_selftest_finished(self, flag) -> None:
         if self.__doUseRCD:
-            self.__modbus.finish_selftest_and_RCD_test_procedure_with_RCD()
+            with self.__modbus as modbus:
+                modbus.finish_selftest_and_RCD_test_procedure_with_RCD()
         else:
-            self.__modbus.finish_selftest_and_RCD_test_procedure()  # 不能使用with, isSelfChecking是True的状态, 不能进入with
+            with self.__modbus as modbus:
+                modbus.finish_selftest_and_RCD_test_procedure()  # 不能使用with, isSelfChecking是True的状态, 不能进入with
 
     def __detection_Charging_available(self, status: int) -> bool:
         """
