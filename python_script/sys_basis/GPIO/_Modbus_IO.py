@@ -52,19 +52,19 @@ class ModbusIO(object):
             retries=ModbusParams.RETRIES,
             name=self.__class__.__name__,
         )
-        self.__thread_lock = threading.RLock()
+        self.__thread_lock = threading.Lock()
 
     def __enter__(self):
         if self.__id in self.__class__.isSelfChecking:
             self.__exit__(None, None, None)
-        _log.info(f'Enter {self.__class__.__name__} {self.__id} lock')  # {self.__thread_lock.locked()}')
+        # _log.info(f'Enter {self.__class__.__name__} {self.__id} lock')  # {self.__thread_lock.locked()}')
         self.__thread_lock.acquire()
-        _log.info('已申请锁')
+        # _log.info('已申请锁')
         try:
-            _log.info('尝试连接')
+            # _log.info('尝试连接')
             self.__client.connect()
         except Exception as e:
-            _log.exception(f'ModbusIO {self.__id} 连接失败')
+            # _log.exception(f'ModbusIO {self.__id} 连接失败')
             self.__context_action_error = 'enter'
             self.__exit__(e.__class__, e, e.__traceback__)
         return self
@@ -75,7 +75,7 @@ class ModbusIO(object):
         if self.__client and self.__client.is_socket_open():
             self.__client.close()
         self.__thread_lock.release()
-        _log.info(f'Exit {self.__class__.__name__} {self.__id} lock')  # {self.__thread_lock.locked()}')
+        # _log.info(f'Exit {self.__class__.__name__} {self.__id} lock')  # {self.__thread_lock.locked()}')
         return True
 
     def read_PDU(self, address: int) -> None | ModbusPDU:
@@ -197,8 +197,8 @@ class ModbusIO(object):
             - 如果读取成功, 返回寄存器中的整数值.
             - 如果读取失败或发生错误, 返回None.
         """
-        return 2
-        # return self.read(address=EVSERegAddress.VEHICLE_STATE)
+        # return 2
+        return self.read(address=EVSERegAddress.VEHICLE_STATE)
 
     def read_current_min(self) -> None | int:
         """

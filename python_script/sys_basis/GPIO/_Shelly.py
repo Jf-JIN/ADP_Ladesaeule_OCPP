@@ -92,7 +92,9 @@ class Shelly:
     def set_data(self, data: dict) -> None:
         self.__data = data
         self.__charged_energy = self.__calculate_charged_energy()
-        self.__parent.parent_obj.data_collector.set_shelly_charged_energy(self.id, self.__charged_energy)
+        self.__data['charged_energy'] = self.__charged_energy
+        self.__parent.parent_obj.data_collector.set_shelly_data(self.id, self.__data)
+        # self.__parent.parent_obj.data_collector.set_shelly_charged_energy(self.id, self.__charged_energy)
         self.__isAvailable = self.__data['is_valid']
         if not self.__isAvailable:
             self.signal_shelly_error_occurred.emit(not self.__isAvailable)

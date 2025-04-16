@@ -143,7 +143,7 @@ class PollingShelly(Thread):
                 else:
                     _log.exception('Shelly read exception')
             shelly.set_data(shelly_data)
-            self.__data_collector.set_shelly_data(shelly_id, shelly_data)
+            # self.__data_collector.set_shelly_data(shelly_id, shelly_data)
             self.__current_index = (self.__current_index + 1) % self.__shelly_quantity
             time.sleep(self.__interval)
 

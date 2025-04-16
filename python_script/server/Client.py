@@ -102,7 +102,7 @@ class Client:
         self.GPIO_Manager.signal_GPIO_info.connect(self.handle_gpio_info)
         self.GPIO_Manager.data_collector.signal_DC_data_display.connect(self.send_web_txt_message)
         self.GPIO_Manager.data_collector.signal_DC_watching_data_display.connect(self.send_web_watching_data_message)
-        self.GPIO_Manager.data_collector.signal_DC_figure_display.connect(self.send_web_fig_message)
+        self.GPIO_Manager.data_collector.signal_DC_figure_display.connect(self.send_web_data_manager_fig_message)
 
     def handle_request(self, request_message) -> None:
         """
@@ -172,7 +172,7 @@ class Client:
         """
         handle_dict = {
             # 接收的消息标签: (给Web发送消息的标签, 处理函数)
-            'opt_img': ('opt_fig', self.send_web_fig_message),
+            'opt_result': ('opt_fig', self.send_web_optimization_result_message),
         }
         for key, value in handle_dict.items():
             if key in normal_message:
@@ -210,7 +210,7 @@ class Client:
         else:
             energy_amount = 0
             depart_time = ''
-        if evse_id not in self.GPIO_Manager.data_collector.available_charge_units_id_set:
+        if evse_id not in self.GPIO_Manager.data_collector.available_charge_units_id_set or self.GPIO_Manager.get_charge_unit(evse_id).isCharging:
             self.send_web_error_message('EVSE_ID不可用\nevse_id is not available')
             return
         charge_unit: ChargeUnit = self.GPIO_Manager.get_charge_unit(evse_id)
@@ -228,6 +228,10 @@ mode:{mode},
 current_limit_list:{current_limit_list},
 voltage_max:{voltage_max}
 """)
+        if mode not in [0, 1, 2]:
+            self.send_web_alert_message('当前模式无需提交数据\nCurrent mode does not need to submit data', message_type='info')
+            return
+
         if current_limit_list is None or len(current_limit_list) == 0:
             self.send_web_error_message('获取电流限制错误\nget current_limit error')
             return
@@ -254,6 +258,8 @@ voltage_max:{voltage_max}
                     custom_data=g.get_custom_data(vendor_id=GPIOParams.VENDOR_ID, mode=mode)
                 )
             )
+            _log.info('已成功向优化器发送请求\nRequest sent to optimizer successfully')
+            self.send_web_alert_message('已成功向优化器发送请求\nRequest sent to optimizer successfully', message_type='info')
         except:
             _log.exception()
             self.send_web_error_message('充电请求失败\nCharging request failed')
@@ -267,13 +273,13 @@ voltage_max:{voltage_max}
         else:
             enableDirectCharge = False
         res = self.GPIO_Manager.get_charge_unit(evse_id).start_charging(enableDirectCharge)
-        if not res:
-            _log.error('立即充电失败\nimmediately charging failed')
+        # if not res:
+        #     _log.error('立即充电失败\nimmediately charging failed')
 
     def web_handle_charge_stop(self, charge_stop_dict: dict):
         _log.info(f'收到停止充电请求:\nReceive the stop charging request\n{charge_stop_dict}')
         evse_id = int(charge_stop_dict['evse_id'])
-        self.GPIO_Manager.get_charge_unit(evse_id).stop_charging()
+        self.GPIO_Manager.get_charge_unit(evse_id).stop_charging(sender='web')
 
     def web_handle_reset_no_error(self, charge_stop_dict: dict):
         _log.info(f'收到重置请求:\nReceive the reset request\n{charge_stop_dict}')
@@ -397,7 +403,18 @@ voltage_max:{voltage_max}
     def send_web_gpio_message(self, message) -> None:
         self.send_message_to_web('gpio_console', message)
 
-    def send_web_fig_message(self, message) -> None:
+    def send_web_optimization_result_message(self, message: dict) -> None:
+        message = message['opt_fig']
+        if 'opt_img' in message:
+            self.send_message_to_web('figure', {'opt_fig': message['opt_img']})
+        _log.info(message)
+        _log.info(message['result'])
+        if message['result'] == 0:  # 失败
+            self.send_web_alert_message('已成功收到充电计划表\nCharging plan received successfully', 'success')
+        elif message['result'] == 1:  # 成功
+            self.send_web_alert_message('充电计划表优化失败\nCharging plan optimization failed', 'error')
+
+    def send_web_data_manager_fig_message(self, message: dict) -> None:
         self.send_message_to_web('figure', message)
 
     def send_web_txt_message(self, message) -> None:
@@ -407,6 +424,7 @@ voltage_max:{voltage_max}
         self.send_message_to_web('watching_data', message)
 
     def send_web_alert_message(self, message: str, message_type='info') -> None:
+        _log.info('message from server to web:\n'+message)
         self.send_message_to_web('alert_message', {"type": message_type, "message": message.replace('\n', '<br>')})
 
     def send_web_error_message(self, message) -> None:

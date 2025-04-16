@@ -184,9 +184,8 @@ class ChargeUnit:
             self.__current_max = self.__current_limit[1]
             return []
         elif VehicleState.EV_IS_PRESENT <= self.__evse.vehicle_state <= VehicleState.CHARGING_WITH_VENTILATION:
-            _log.info('herer')
+            _log.info('here')
             self.__current_limit = self.__evse.get_current_limit()
-            _log.info('dddfdsfadfsadf')
             self.__current_min = self.__current_limit[0]
             self.__current_max = self.__current_limit[1]
             _log.info(f'已获取到车辆充电电流限制范围\nGet the scope of the limitation of the vehicle charging current\n{self.__current_limit}')
@@ -561,7 +560,7 @@ The charging unit is not executable (correct value)
         self.__timer.start()
         return True
 
-    def stop_charging(self, error_code: str = '') -> None:
+    def stop_charging(self, error_code: str = '', sender: str = '') -> None:
         """
         停止充电
         添加结束动作
@@ -574,6 +573,8 @@ The charging unit is not executable (correct value)
         if not self.__isCharging:
             MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable_blink(False)
             MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable(True)
+            if sender == 'web':
+                self.signal_hint_message.emit(f'充电单元 <{self.id}> 未在充电, 无需停止\nCharge unit <{self.id}> is not charging, no need to stop', 'info')
             return
         _log.info('执行停止充电\nExecute stop charging')
         self.__evse.stop_charging()
@@ -612,11 +613,11 @@ The charging unit is not executable (correct value)
 
     def __check_and_stop_charging(self, isInCharging: bool) -> None:
         """ 是否应该停止充电 """
-        _log.info(f'检查是否应该停止充电 {isInCharging}')
+        # _log.info(f'检查是否应该停止充电 {isInCharging}')
         if not isInCharging:
-            _log.info(f'检查是否应该停止充电 1')
+            # _log.info(f'检查是否应该停止充电 1')
             if self.__isCharging:
-                _log.info(f'检查是否应该停止充电 2')
+                # _log.info(f'检查是否应该停止充电 2')
                 self.signal_hint_message.emit('当前无车辆插入, 请检查并重新启动充电\nNo vehicle is inserted, please check and restart charging', 'info')
                 self.stop_charging()
 

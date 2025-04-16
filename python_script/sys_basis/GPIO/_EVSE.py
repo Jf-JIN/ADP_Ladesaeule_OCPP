@@ -11,7 +11,7 @@ _log = Log.EVSE
 
 
 class Evse(object):
-    signal_isInCharging: EventSignal = EventSignal(bool)
+    signal_isInCharging: EventSignal = EventSignal(bool, async_exec=True)
 
     def __init__(self, id: int, doUseRCD: bool = False) -> None:
         self.__id: int = id
@@ -181,21 +181,21 @@ class Evse(object):
         """
         _log.info(f'检测充电桩在按计划充电中{status} {self.__charging_timeout_counter}')
         if status == VehicleState.CHARGING:
-            _log.info(f'检测充电桩在按计划充电中 1')
+            # _log.info(f'检测充电桩在按计划充电中 1')
             self.__charging_timeout_counter = GPIOParams.CHARGING_STABLE_COUNTDOWN
         else:
-            _log.info(f'检测充电桩在按计划充电中 2')
+            # _log.info(f'检测充电桩在按计划充电中 2')
             if self.__charging_timeout_counter <= 0:
-                _log.info(f'检测充电桩在按计划充电中 3')
+                # _log.info(f'检测充电桩在按计划充电中 3')
                 self.signal_isInCharging.emit(False)
                 self.__charging_timeout_counter = GPIOParams.CHARGING_STABLE_COUNTDOWN
                 return False
 
-            _log.info(f'检测充电桩在按计划充电中 4')
+            # _log.info(f'检测充电桩在按计划充电中 4')
             self.__charging_timeout_counter -= 1
 
-        _log.info(f'检测充电桩在按计划充电中 5')
+        # _log.info(f'检测充电桩在按计划充电中 5')
         self.signal_isInCharging.emit(True)
 
-        _log.info(f'检测充电桩在按计划充电中 6')
+        # _log.info(f'检测充电桩在按计划充电中 6')
         return True
