@@ -38,7 +38,7 @@ def main():
     sys.excepthook = exception_handler
     app = QApplication(sys.argv)
     isInitialized = True
-    window = ClientFunction()
+    window = EVSETestUI()
     sys.exit(app.exec_())
 
 

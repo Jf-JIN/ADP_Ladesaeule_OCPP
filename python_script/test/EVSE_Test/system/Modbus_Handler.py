@@ -4,6 +4,10 @@ from pymodbus.client import *
 from pymodbus.pdu.pdu import ModbusPDU
 from const.Const_Logger import *
 from const.Const_Modbus import *
+import threading
+import traceback
+import datetime
+import typing
 
 _log = Log.MODBUS
 
@@ -26,6 +30,7 @@ class ModbusDataStruct:
         self.__address: int = data_dict.get('address', None)
         self.__registers: list = data_dict.get('registers', None)
         self.__status: int = data_dict.get('status', None)
+        self.__bin_value = data_dict.get('bin_value', None)
 
     def __load_ModbusDataUnit(self, ModbusDataUnit: ModbusPDU):
         self.__ModbusDataUnit: ModbusPDU = ModbusDataUnit
@@ -42,6 +47,10 @@ class ModbusDataStruct:
         self.__address: int = ModbusDataUnit.address
         self.__registers: list = ModbusDataUnit.registers
         self.__status: int = ModbusDataUnit.status
+        if len(self.__registers) > 0:
+            self.__bin_value: str = f'0b{self.__registers[0]:016b}'
+        else:
+            self.__bin_value: str = '-'
 
     @property
     def ModbusDataUnit(self) -> ModbusPDU:
@@ -84,6 +93,14 @@ class ModbusDataStruct:
         return self.__status
 
     @property
+    def bin_value(self) -> str:
+        return self.__bin_value
+
+    @property
+    def ctime(self) -> int:
+        return datetime.datetime.now().strftime("%Y.%m.%d|%H:%M:%S.%f")[:-3]
+
+    @property
     def serial_data(self) -> dict:
         return {
             "ModbusDataUnit": self.__ModbusDataUnit,
@@ -96,6 +113,8 @@ class ModbusDataStruct:
             "address": self.__address,
             "registers": self.__registers,
             "status": self.__status,
+            "ctime": self.ctime,
+            "bin_value": self.__bin_value
         }
 
     @property
@@ -111,10 +130,29 @@ class ModbusDataStruct:
             "address": self.__address,
             "registers": self.__registers,
             "status": self.__status,
+            "ctime": self.ctime,
+            "bin_value": self.__bin_value
         }
 
+    def __repr__(self) -> str:
+        return f'''\
+ModbusHandler(
+registers: "{self.__registers}" ,
+function_code: "{self.__function_code}" ,
+isError: "{self.__isError}" ,
+exception_code: "{self.__exception_code}" ,
+status: "{self.__status}" ,
+dev_id: "{self.__dev_id}" ,
+transaction_id: "{self.__transaction_id}" ,
+bits: "{self.__bits}" ,
+address: "{self.__address}" ,
+ctime: "{self.ctime}" ,
+bin_value: "{self.__bin_value}" ,
+)
+'''
 
-class ModbusHandler(object):
+
+class ModbusIO(object):
     __instance__ = None
 
     def __new__(cls, *args, **kwargs):
@@ -129,12 +167,8 @@ class ModbusHandler(object):
         self.__isInitialized__ = True
         self.__id = None
         self.__isConnected = False
-
-    def connect(self) -> ModbusSerialClient:
-        if self.__id is None:
-            _log.warning('Modbus Id is not set, please set Modbus Id first')
-            self.__isConnected = False
-            return None
+        self.__context_action_error: str = 'exit'
+        self.__isInContext = False
         self.__client = ModbusSerialClient(
             port=ModbusParams.PORT,
             baudrate=ModbusParams.BAUDRATE,
@@ -145,87 +179,65 @@ class ModbusHandler(object):
             retries=ModbusParams.RETRIES,
             name=self.__class__.__name__,
         )
-        self.__isConnected = True
-        return self.__client
+        self.__thread_lock = threading.Lock()
 
-    def set_id(self, id: int) -> None:
+    def __enter__(self):
+        self.__thread_lock.acquire_lock()
+        try:
+            self.__client.connect()
+            self.__isConnected = True
+        except Exception as e:
+            self.__context_action_error = 'enter'
+            self.__exit__(e.__class__, e, e.__traceback__)
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb) -> bool:
+        if exc_type is not None:
+            _log.exception(f'ModbusIO {self.__context_action_error} with error: {exc_val}')
+        if self.__client and self.__client.is_socket_open():
+            self.__client.close()
+        self.__isConnected = False
+        self.__thread_lock.release_lock()
+        return True
+
+    def read(self, address: int) -> ModbusDataStruct:
+        if not self.__isConnected:
+            _log.warning('ModbusIO read warning: not connected, it must be called from context manager')
+            return ModbusDataStruct({})
+        if self.__id is None:
+            _log.warning('ModbusIO read warning: id is None')
+            return ModbusDataStruct({})
+        result_data = {}
+        try:
+            result_data: ModbusPDU = self.__client.read_holding_registers(address=address, slave=self.__id)
+        except AttributeError as e:
+            _log.warning(f'ModbusIO read warning: {e}\naddress: {address}')
+        except Exception as e:
+            _log.warning(f'ModbusIO read ModbusPDU error: {traceback.format_exc()}\naddress: {address}')
+        finally:
+            return ModbusDataStruct(result_data)
+
+    def write(self, address: int, value: int) -> None | bool:
+        if not self.__isConnected:
+            _log.warning('ModbusIO read warning: not connected, it must be called from context manager')
+            return False
+        if self.__id is None:
+            _log.warning('ModbusIO read warning: id is None')
+            return False
+        try:
+            result: ModbusPDU = self.__client.write_registers(address=address, values=[value], slave=self.__id)
+            if result and result.isError():
+                _log.exception(f'ModbusIO write error.\naddress: {address}\nvalue: {value}')
+                return False
+            return True
+        except Exception as e:
+            _log.exception(f'ModbusIO write error: {e}\naddress: {address}\nvalue: {value}')
+            return False
+
+    def set_id(self, id: int) -> typing.Self:
         if not isinstance(id, int) or id < 0:
             raise TypeError('Id of ModbusIO must be int and greater than 0')
         if self.__id == id:
             return
         self.__id: int = id
-        if not self.__isConnected:
-            self.connect()
-
-    def read(self, address: int) -> None | ModbusDataStruct:
-        """
-        从指定的Modbus寄存器地址读取数据.
-
-        - 参数:
-            - address(int): 要读取的Modbus寄存器地址.
-
-        - 返回值:
-            - 如果读取成功, 返回寄存器中的整数值.
-            - 如果读取失败或发生错误, 返回None.
-
-        - 异常:
-            - 当读取过程中发生任何异常时, 会被捕获并返回 None.
-        """
-        try:
-            # result: ModbusPDU = self.__client.read_holding_registers(address=address, slave=self.__id)
-            result = {}
-            return ModbusDataStruct(result)
-        except Exception as e:
-            _log.exception(f'ModbusIO read error: {e}\naddress: {address}')
-            return None
-
-    def write(self, address: int, value: int | list) -> None | ModbusDataStruct:
-        if isinstance(value, int):
-            value = [value]
-        try:
-            result: ModbusPDU = self.__client.write_registers(address=address, values=value, slave=self.__id)
-            return ModbusDataStruct(result)
-        except Exception as e:
-            _log.exception(f'ModbusIO write error: {e}\naddress: {address}\nvalue: {value}')
-            return None
-
-        # def write(self, address: int, value: int, bit_operation: int | None = None) -> None | bool:
-        #     """
-        #     写入寄存器
-
-        #     - 参数:
-        #         - address(int): 要写入的Modbus寄存器地址.
-        #         - value(int): 要写入的整数值.
-        #         - bit_operation(int|None): 按位操作, 可选参数, 默认为None.
-        #             - 如果为None, 则直接写入整数值.
-        #             - 如果为0, 则按位置零
-        #             - 如果为1或其他值, 则按位置一
-
-        #     - 返回值:
-        #         - 如果写入成功, 返回True.
-        #         - 如果写入失败或发生错误, 返回False.
-
-        #     - 异常:
-        #         - 当写入过程中发生任何异常时, 会被捕获并返回 False.
-        #     """
-        #     if bit_operation is not None:  # 按位操作
-        #         ori_value = self.read(address=address)
-        #         if ori_value is None:
-        #             _log.error(f'ModbusIO read error by writing.\naddress: {address}')
-        #             return False
-        #         if bit_operation == 0:  # 置0
-        #             ori_value &= ~value
-        #             value = ori_value
-        #         else:  # 置1
-        #             ori_value |= value
-        #             value = ori_value
-        #     try:
-        #         result: ModbusPDU = self.__client.write_registers(address=address, values=[value], slave=self.__id)
-        #         _log.debug(result, result.registers[0])
-        #         if result.isError():
-        #             _log.exception(f'ModbusIO write error.\naddress: {address}\nvalue: {value}')
-        #             return False
-        #         return True
-        #     except Exception as e:
-        #         _log.exception(f'ModbusIO write error: {e}\naddress: {address}\nvalue: {value}')
-        #         return False
+        return self
