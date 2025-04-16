@@ -66,11 +66,11 @@ class ServerFunction:
             'data': PDUStruct.json_data,
             'isSpecific': isSpecific
         }
-        result: bool = self.__socket_core.send(response)
-        if result:
-            _log.info(f'Succeeded: {PDUStruct}')
-        else:
-            _log.error(f'FAILED: {PDUStruct}')
+        result: bool = self.__socket_core.send({'modbus_data_read': response})
+        # if result:
+        #     _log.info(f'Succeeded[{register_address}]: {PDUStruct}')
+        # else:
+        #     _log.error(f'FAILED[{register_address}]: {PDUStruct}')
 
     def __modbus_data_write(self, recv_data: dict) -> None:
         """ 

@@ -226,6 +226,7 @@ class ModbusIO(object):
             return False
         try:
             result: ModbusPDU = self.__client.write_registers(address=address, values=[value], slave=self.__id)
+            _log.info(f'ModbusIO write: address: {address}\nvalue: {value}\nresult: {result}\nfc: {result.function_code}')
             if result and result.isError():
                 _log.exception(f'ModbusIO write error.\naddress: {address}\nvalue: {value}')
                 return False

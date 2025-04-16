@@ -176,9 +176,9 @@ class EVSETestUI(Ui_MainWindow, QMainWindow):
         }
 
         self.__PDF_pixmap = QPixmap()
-        self.__timer = QTimer(self)
-        self.__timer.timeout.connect(self.__send_read_request_loop)
-        self.__timer.start(1000)
+        # self.__timer = QTimer(self)
+        # self.__timer.timeout.connect(self.__send_read_request_loop)
+        # self.__timer.start(1000)
 
     def __init_ui(self) -> None:
         self.setWindowTitle("EVSE Test")
@@ -313,6 +313,7 @@ class EVSETestUI(Ui_MainWindow, QMainWindow):
         unit_count: int = self.__PDU_struct.length
         self.tableWidget_all_register.setRowCount(unit_count)
         data_dict = self.__PDU_struct.get_data()
+        _log.info(data_dict.values())
         for index_row, (register_address, struct) in enumerate(data_dict.items()):
             struct: ModbusDataStruct
             register_address = str(register_address)
@@ -510,7 +511,9 @@ class EVSETestUI(Ui_MainWindow, QMainWindow):
     def __on_json_recv(self, recv_data: dict) -> None:
         for key, value in recv_data.items():
             if key not in self.__reflect_recv_dict:
+                _log.warning(f'Unknown key: {key}')
                 continue
+                # self.__reflect_recv_dict[key] = lambda x: None
             self.__reflect_recv_dict.get(key, lambda x: None)(value)
 
     def __handle_read_response(self, response: dict):
@@ -522,6 +525,7 @@ class EVSETestUI(Ui_MainWindow, QMainWindow):
             isSpecific: bool
         }
         """
+        _log.info(f'Read response: {response}')
         modbus_id: int = response.get('modbus_id', None)
         register_address: int = response.get('register_address', None)
         data: int = response.get('data', {})

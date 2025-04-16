@@ -434,8 +434,8 @@ class SocketCore:
         _log.info('Socket is disconnected')
         self.__thread_socket.stop()
         self.__socket.close()
-        if self.__thread_socket.is_alive():
-            self.__thread_socket.join()
+        # if self.__thread_socket.is_alive():
+        #     self.__thread_socket.join()
         self.__isConnected = False
 
     def __del__(self) -> None:

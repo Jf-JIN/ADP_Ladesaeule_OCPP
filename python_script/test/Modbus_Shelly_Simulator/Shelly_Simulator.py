@@ -268,7 +268,7 @@ class ShellySimulator_Thread(QThread):
 
     def run(self):
         self.signal_ip_address.emit([self.__ip_local_address, self.__ip_remote_address])
-        self.__socketio.run(self.__app, host=self.__host, port=self.__port, debug=False)
+        self.__socketio.run(self.__app, host=self.__host, port=self.__port, debug=False, use_reloader=False)
 
     def stop(self):
         os.kill(os.getpid(), signal.SIGINT)
