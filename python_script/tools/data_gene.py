@@ -20,7 +20,7 @@ class DataGene:
     """
     数据生成类, 用于生成电价, 时间, 家庭用电数据等数据
 
-    静态方法: 
+    静态方法:
         - `gene_eprices`: 生成电价列表(区分日间, 夜间电价)
         - `time2str`: 生成指定字符串格式的柏林时间
         - `str2time`: 将字符串格式时间(柏林时间)转换为 datetime 对象
@@ -40,13 +40,13 @@ class DataGene:
         """
         生成电价列表(区分日间, 夜间电价)
 
-        参数: 
+        参数:
             - price1(float): 日间电价
             - price2(float): 夜间电价(可选, 如果没有提供则默认所有时间段都使用日间电价)
             - time1(int): 夜间电价结束时间(小时, 可选)
             - time2(int): 夜间电价开始时间(小时, 可选)
 
-        返回: 
+        返回:
             - price_schedule(list): 电价列表(每隔15分钟)
         """
 
@@ -65,12 +65,12 @@ class DataGene:
     @staticmethod
     def time2str(time: datetime) -> str:
         """
-        生成指定字符串格式的柏林时间. 
+        生成指定字符串格式的柏林时间.
 
-        参数: 
+        参数:
             - time(datetime): 需要转换的时间对象
 
-        返回: 
+        返回:
             - str: 格式化后的柏林时间字符串(ISO 8601 格式, 德国时区)
         """
         return time.astimezone(pytz.timezone('Europe/Berlin')).strftime('%Y-%m-%dT%H:%M:%SZ')
@@ -80,10 +80,10 @@ class DataGene:
         """
         将字符串格式时间(柏林时间)转换为 datetime 对象
 
-        参数: 
+        参数:
             - time_str(str): 格式化的时间字符串('%Y-%m-%dT%H:%M:%SZ')
 
-        返回: 
+        返回:
             - datetime: 转换后的 datetime 对象
         """
         return datetime.strptime(time_str, '%Y-%m-%dT%H:%M:%SZ')
@@ -92,10 +92,10 @@ class DataGene:
     def gene_his_usage_seed(fixed_user_id: int = None) -> list[int]:
         """
         生成一天家庭的用电数据, 每隔15分钟一个数据点, 单位为W.
-        如果传入固定用户ID, 则生成固定的用电数据. 
+        如果传入固定用户ID, 则生成固定的用电数据.
 
         参数:
-            - fixed_user_id (int): 固定的用户ID, 用于生成固定数据. 为None时, 数据是随机的. 
+            - fixed_user_id (int): 固定的用户ID, 用于生成固定数据. 为None时, 数据是随机的.
 
         返回:
             - list[int]: 一天的用电数据
@@ -161,7 +161,7 @@ class DataGene:
         """
         根据用电记录绘制家庭用电曲线图
 
-        参数: 
+        参数:
             - usage_record: 一个包含每15分钟用电数据的列表(单位: W)
         """
         # 确定时间段, 24小时内, 每小时4个数据点, 总共96个数据点
@@ -298,24 +298,48 @@ class DataGene:
         plt.style.use(['science', 'no-latex'])
 
         charge_plan = [DataGene.convert_dict_keys(charge_item) for charge_item in charge_plan]
-        time = [DataGene.str2time(charge_item['startTime']) + timedelta(seconds=charge_item['startPeriod']) for
-                charge_item in charge_plan] + [DataGene.str2time(charge_plan[-1]['finishedTime'])]
-        # length_time_axis = len(time)
-        time_split = [(time[i + 1] - time[i]).seconds / 60 for i in range(len(time) - 1)]
-        limit = [charge_item['limit'] for charge_item in charge_plan]
+        # time_list = [DataGene.str2time(charge_item['startTime']) + timedelta(seconds=charge_item['startPeriod']) for
+        #  charge_item in charge_plan] + [DataGene.str2time(charge_plan[-1]['finishedTime'])]
+        charge_start_time = DataGene.str2time(charge_plan[0]['startTime'])
+        time_list = []
+        shelly_time = [charge_start_time]
+        shelly_total_energy = [0]
+        limit = []
+        charged_energy_actual = [0]
+        time_f = []
+        for charge_item in charge_plan:
+            time_list.append(DataGene.str2time(charge_item['startTime']) + timedelta(seconds=charge_item['startPeriod']))
+            if charge_start_time <= DataGene.str2time(charge_item['shellyTotalEnergyTimeMinute']):
+                shelly_time.append(DataGene.str2time(charge_item['shellyTotalEnergyTimeMinute']))
+                shelly_total_energy.append(charge_item['shellyTotalEnergy'])
+            limit.append(charge_item['limit'])
+            charged_energy_actual.append(charge_item['chargedEnergy'])
+            time_f.append(DataGene.str2time(charge_item['finishedTime']))
+
+        time_list += [DataGene.str2time(charge_plan[-1]['finishedTime'])]
         limit.append(limit[-1])
+        # shelly_time = [DataGene.str2time(charge_item['shellyTotalEnergyTimeMinute']) for charge_item in charge_plan]
+        # shelly_total_energy = [charge_item['shellyTotalEnergy'] for charge_item in charge_plan]
+        # length_time_axis = len(time)
+        time_split = [(time_list[i + 1] - time_list[i]).seconds / 60 for i in range(len(time_list) - 1)]
+        # limit = [charge_item['limit'] for charge_item in charge_plan]
+        # limit.append(limit[-1])
         charged_energy_predict = [0]
         for duration, power in zip(time_split, limit):
             charged_energy_predict.append(charged_energy_predict[-1] + power * duration / 60)
-        charged_energy_actual = [0] + [charge_item['chargedEnergy'] for charge_item in charge_plan]
-        y_max = max(max(charged_energy_actual), max(charged_energy_predict))
-        time_f = [DataGene.str2time(item['finishedTime']) for item in charge_plan]
+        # charged_energy_actual = [0] + [charge_item['chargedEnergy'] for charge_item in charge_plan]
+        if len(shelly_total_energy) > 0:
+            y_max = max(max(charged_energy_actual), max(charged_energy_predict), max(shelly_total_energy))
+        else:
+            y_max = max(max(charged_energy_actual), max(charged_energy_predict))
+        # time_f = [DataGene.str2time(item['finishedTime']) for item in charge_plan]
         plt.figure(figsize=(12, 6))  # 增加图表分辨率和大小
-        plt.plot(time, charged_energy_actual, marker='o', linestyle='-', color=Color.BLUE, linewidth=2, label='actual charged energy')
+        plt.plot(time_list, charged_energy_actual, marker='.', linestyle='-', color=Color.BLUE, linewidth=2, label='actual charged energy')
+        plt.plot(shelly_time, shelly_total_energy, marker='o', linestyle='-', color=Color.GREEN, linewidth=2, label='shelly charged energy')
         if charge_plan[0]['limit'] > 0:
             # plt.vlines(time, ymin=-1, ymax=y_max+5, colors=Color.GREEN, linestyles='--', linewidth=2, label="START")
             # plt.vlines(time_f, ymin=-1, ymax=y_max+5, colors=Color.RED, linestyles='-', linewidth=2, label="FINISH")
-            plt.plot(time, charged_energy_predict, marker='o', linestyle='--', color=Color.RED, linewidth=2, label='predict charged energy')
+            plt.plot(time_list, charged_energy_predict, marker='o', linestyle='--', color=Color.RED, linewidth=2, label='predict charged energy')
         # _log.info(charge_plan)
         # _log.info(charged_energy_actual, time)
         plt.xticks(fontsize=FontSize.TICKS)
@@ -447,6 +471,14 @@ class DataGene:
             else:
                 new_dict[new_key] = value
         return new_dict
+
+    @staticmethod
+    def getCurrentMinute() -> str:
+        return datetime.now().strftime("%Y-%m-%dT%H:%M:00Z")
+
+    @staticmethod
+    def getLastMinute() -> str:
+        return (datetime.now() - timedelta(minutes=1)).strftime("%Y-%m-%dT%H:%M:00Z")
 
 
 if __name__ == "__main__":
