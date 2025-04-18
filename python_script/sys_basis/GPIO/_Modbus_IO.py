@@ -3,9 +3,9 @@
 from ._import_modbus_gpio import *
 
 from const.Const_Parameter import *
-from const.GPIO_Parameter import BitsFlag, EVSEErrorInfo, EVSERegAddress, ModbusParams, REG1006
+from const.GPIO_Parameter import BitsFlag, EVSEErrorInfo, EVSERegAddress, GPIOParams, ModbusParams, REG1006
 import threading
-import inspect
+import traceback
 
 from DToolslib import Inner_Decorators
 
@@ -78,10 +78,23 @@ class ModbusIO(object):
         # _log.info(f'Exit {self.__class__.__name__} {self.__id} lock')  # {self.__thread_lock.locked()}')
         return True
 
-    def read_PDU(self, address: int) -> None | ModbusPDU:
+    # @Inner_Decorators.time_counter
+    # def read_PDU(self, address: int) -> None | ModbusPDU:
+    #     result_data = None
+    #     try:
+    #         result_data: ModbusPDU = self.__client.read_holding_registers(address=address, slave=self.__id)
+    #     except AttributeError as e:
+    #         _log.warning(f'ModbusIO read warning: {e}\naddress: {address}')
+    #     except Exception as e:
+    #         _log.warning(f'ModbusIO read ModbusPDU error: {traceback.format_exc()}\naddress: {address}')
+    #     finally:
+    #         return result_data
+
+    # @Inner_Decorators.time_counter
+    def read_PDU(self, address: int, count: int) -> None | ModbusPDU:
         result_data = None
         try:
-            result_data: ModbusPDU = self.__client.read_holding_registers(address=address, slave=self.__id)
+            result_data: ModbusPDU = self.__client.read_holding_registers(address=address, count=count, slave=self.__id)
         except AttributeError as e:
             _log.warning(f'ModbusIO read warning: {e}\naddress: {address}')
         except Exception as e:
@@ -110,10 +123,10 @@ class ModbusIO(object):
                 result_data: int = result.registers[0]
                 # _log.info(f'function_code: {result.function_code}\naddress: {address}\nresult: {result}')
             else:
-                _log.error(f'ModbusIO read error.\naddress: {address}')
+                _log.warning(f'ModbusIO read error.\naddress: {address}')
                 # _log.info(f'function_code: {result.function_code}\naddress: {address}\nresult: {result}\nexception_code: {result.exception_code}')
         except Exception as e:
-            _log.exception(f'ModbusIO read error: {e}\naddress: {address}')
+            _log.warning(f'ModbusIO read error: {traceback.format_exc()}\naddress: {address}')
         finally:
             return result_data
 
@@ -153,12 +166,30 @@ class ModbusIO(object):
             # check_res = self.__client.read_holding_registers(address=address, slave=self.__id)
             # _log.info(f'[CHECK] function_code: {check_res.function_code}\naddress: {address}\nresult: {check_res}')
             if result and result.isError():
-                _log.exception(f'ModbusIO write error.\naddress: {address}\nvalue: {value}')
+                _log.warning(f'ModbusIO write error.\naddress: {address}\nvalue: {value}')
                 return False
+            self.__check_write(address=address, value=value)
             return True
         except Exception as e:
-            _log.exception(f'ModbusIO write error: {e}\naddress: {address}\nvalue: {value}')
+            _log.warning(f'ModbusIO write error: {e}\naddress: {address}\nvalue: {value}')
             return False
+
+    def __check_write(self, address: int, value: int) -> bool:
+        retry_count = GPIOParams.EVSE_WRITE_RETRY
+        while retry_count > 0:
+            check_res = self.__client.read_holding_registers(address=address, slave=self.__id)
+            if check_res and check_res.isError():
+                _log.warning(f'ModbusIO write_check error.\naddress: {address}\nvalue: {value}')
+                retry_count -= 1
+                continue
+            if check_res.registers[0] == value:
+                return True
+            else:
+                _log.info(f'retry write {GPIOParams.EVSE_WRITE_RETRY-retry_count} times')
+                result: ModbusPDU = self.__client.write_registers(address=address, values=[value], slave=self.__id)
+                if result.isError():
+                    _log.warning(f'ModbusIO rewrite error.\naddress: {address}\nvalue: {value}')
+            retry_count -= 1
 
     def read_evse_status_fails(self) -> None | set:
         """
@@ -256,16 +287,29 @@ class ModbusIO(object):
             - 如果写入失败或发生错误, 返回False.
         """
         if flag:
+            current_min = self.read_current_min()
+            if current_min is None:
+                current_min = 5
+            res_1000 = self.write(address=EVSERegAddress.CONFIGURED_AMPS, value=current_min)
+            if not res_1000:
+                return False
             res_1004: bool = self.write(address=EVSERegAddress.TURN_OFF_SELFTEST_OPERATION, value=BitsFlag.REG1004.TURN_OFF_CHARGING_NOW, bit_operation=0)
             _log.info(f"res_1004 write: {res_1004}")
-            if res_1004:
-                res_1006: bool = self.write(address=EVSERegAddress.EVSE_STATE, value=REG1006.STEADY)
-                _log.info(f"res_1006 write: {res_1006}")
-            else:
-                return False
+            if not res_1004:
+                _log.warning(f"res_1004 write failed: {res_1004}")
+                # return False
+            res_1006: bool = self.write(address=EVSERegAddress.EVSE_STATE, value=REG1006.STEADY)
+            _log.info(f"res_1006 write: {res_1006}")
             return res_1006
         else:
-            return self.write(address=EVSERegAddress.TURN_OFF_SELFTEST_OPERATION, value=BitsFlag.REG1004.TURN_OFF_CHARGING_NOW, bit_operation=1)
+            res_1004 = self.write(address=EVSERegAddress.TURN_OFF_SELFTEST_OPERATION, value=BitsFlag.REG1004.TURN_OFF_CHARGING_NOW, bit_operation=1)
+            _log.info(f"res_1004 write: {res_1004}")
+            if not res_1004:
+                _log.warning(f"res_1004 write failed: {res_1004}")
+                # return False
+            res_1006: bool = self.write(address=EVSERegAddress.EVSE_STATE, value=REG1006.OFF)
+            _log.info(f"res_1006 write: {res_1006}")
+            return res_1006
 
     def enable_RCD(self, flag: bool) -> None | bool:
         """ 
