@@ -438,6 +438,7 @@ The charging unit is not executable (correct value)
 - waiting_plan_list (>0): {len(self.__waiting_plan)}
 - Shelly isAvailable(True): {self.__shelly.isAvailable}
 """)
+            MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable_blink(True, apply_now=True, speed_s=[0.1, 0.1, 0.1, 2])
             return False
         else:
             return True

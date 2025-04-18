@@ -53,8 +53,19 @@ class StructLED:
             self.__led.off()
         return self
 
-    def __blink(self) -> typing.Self:
-        _log.debug(f'in __blink __shouldBlink {self.__shouldBlink}')
+    def __blink(self, speed_s: float | int | list = 1) -> typing.Self:
+        if not isinstance(speed_s, (float, int, list)) or speed_s <= 0:
+            raise TypeError(f'blink speed must be float or int or list, not {type(speed_s)} and greater than 0, not {speed_s}')
+        if isinstance(speed_s, list):
+            speed_single = speed_s[0]
+            if not isinstance(speed_s, (float, int)) or speed_s <= 0:
+                raise TypeError(f'blink single speed must be float or int, not {type(speed_s)} and greater than 0, not {speed_s}')
+            speed_list = speed_s
+            speed_list.append(speed_list.pop(0))
+        else:
+            speed_single = speed_s
+            speed_list = [speed_single]
+        _log.debug(f'in __blink __shouldBlink {self.__shouldBlink} {speed_s}')
         if self.__shouldBlink and self.__status:
             _log.debug(f'in __blink __blink_led_status {self.__blink_led_status}')
             if self.__blink_led_status:
@@ -68,18 +79,18 @@ class StructLED:
             _log.debug('set blink thread')
             if self.__blink_thread.is_alive():
                 self.__blink_thread.cancel()
-            self.__blink_thread = threading.Timer(1, self.__blink)
+            self.__blink_thread = threading.Timer(speed_single, self.__blink, (speed_list,))
             self.__blink_thread.start()
             _log.debug('start blink thread')
         return self
 
-    def set_enable_blink(self, enable: bool, apply_now: bool = False) -> typing.Self:
+    def set_enable_blink(self, enable: bool, apply_now: bool = False, speed_s: int = 1) -> typing.Self:
         self.__shouldBlink: bool = enable
         if not enable:
             if self.__blink_thread.is_alive():
                 self.__blink_thread.cancel()
         if apply_now:
-            self.__blink()
+            self.__blink(speed_s)
         _log.info(f'set_enable_blink{self.__shouldBlink}')
         return self
 
@@ -164,10 +175,10 @@ class ExclusiveGroupLED:
             _log.warning(f"LED <{led}> name or index is not valid, leds are disabled")
         return self
 
-    def set_enable_blink(self, enable: bool) -> typing.Self:
+    def set_enable_blink(self, enable: bool, speed_s: int = 1) -> typing.Self:
         for led in self.__leds_dict_index.values():
             led: StructLED
-            led.set_enable_blink(enable)
+            led.set_enable_blink(enable, speed_s)
         return self
 
     def __activate_name(self, led_name: str) -> None:
