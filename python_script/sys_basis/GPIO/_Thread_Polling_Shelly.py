@@ -4,6 +4,7 @@ import time
 import requests
 from const.GPIO_Parameter import *
 from const.Const_Parameter import *
+from tools.data_gene import DataGene
 
 if 0:
     from ._GPIO_Manager import GPIOManager
@@ -31,6 +32,8 @@ class PollingShelly(Thread):
         self.__current_index: int = 0
         self.__retry_count: int = 0
         self.__max_retry_count: int = GPIOParams.MAX_SHELLY_RETRY
+        self.__current_shelly_total_energy_minute: str = ''
+        self.__total_energy_dict = {}
 
     @property
     def isRunning(self) -> bool:
@@ -73,39 +76,90 @@ class PollingShelly(Thread):
                 'current': data['a_current'],
                 'voltage': data['a_voltage'],
                 'frequncy': data['a_freq'],
-                'is_valid': True,
-                'total': data['total_act_power']},
+                # 'is_valid': True,
+                # 'total': data['total_act_power'],
+            },
             1: {
                 'power': data['b_act_power'],
                 'pf': data['b_pf'],
                 'current': data['b_current'],
                 'voltage': data['b_voltage'],
                 'frequncy': data['b_freq'],
-                'is_valid': True,
-                'total': data['total_act_power']},
+                # 'is_valid': True,
+                # 'total': data['total_act_power'],
+            },
             2: {
                 'power': data['c_act_power'],
                 'pf': data['c_pf'],
                 'current': data['c_current'],
                 'voltage': data['c_voltage'],
                 'frequncy': data['c_freq'],
-                'is_valid': True,
-                'total': data['total_act_power']},
+                # 'is_valid': True,
+                # 'total': data['total_act_power'],
+            },
+            'is_valid': True,
         }
         return container
+
+    def __parse_total_energy_data(self, data: dict) -> dict:
+        """ 
+        {
+            'a_total_act_energy': 0.0,
+            'a_total_act_ret_energy': 0.0,
+            'b_total_act_energy': 0.0,
+            'b_total_act_ret_energy': 0.0,
+            'c_total_act_energy': 0.0,
+            'c_total_act_ret_energy': 0.0,
+            'id': 0,
+            'total_act': 0.0,
+            'total_act_ret': 0.0
+        }
+        """
+        last_min: str = DataGene.getCurrentMinute()
+        container = {
+            0: {
+                'total_energy': data['a_total_act_energy'],
+            },
+            1: {
+                'total_energy': data['b_total_act_energy'],
+            },
+            2: {
+                'total_energy': data['c_total_act_energy'],
+            },
+            'total_energy': data['total_act'],
+            'total_energy_time_min': last_min,
+        }
+        # self.__total_energy_dict = container
+        return container
+
+    def __update_total_energy_data(self, origin_dict, data: dict) -> None:
+        if not data:
+            return
+        for idx in [0, 1, 2]:
+            origin_dict[idx]['total_energy'] = data[idx]['total_energy']
+        origin_dict['total_energy'] = data['total_energy']
+        origin_dict['total_energy_time_min'] = data['total_energy_time_min']
 
     def run(self) -> None:
         while self.__isRunning:
             shelly: Shelly = self.__shelly_list[self.__current_index]
             shelly_id = shelly.id
             data_address: str = shelly.data_address
+            total_energy_address: str = shelly.total_energy_address
             shelly_data = {}
+            current_minute = DataGene.getCurrentMinute()
             try:
                 response_data: requests.Response = requests.get(data_address, timeout=self.__timeout)
                 response_data.raise_for_status()
                 data_dict: dict = response_data.json()
                 shelly_data.update(self.__parse_data_json(data_dict))
-                shelly_data['is_valid'] = shelly_data[0]['is_valid'] and shelly_data[1]['is_valid'] and shelly_data[2]['is_valid']
+                if current_minute != self.__current_shelly_total_energy_minute:
+                    response_total_energy: requests.Response = requests.get(total_energy_address, timeout=self.__timeout)
+                    response_total_energy.raise_for_status()
+                    total_energy_data_dict: dict = response_total_energy.json()
+                    self.__total_energy_dict = self.__parse_total_energy_data(total_energy_data_dict)
+                    self.__current_shelly_total_energy_minute = current_minute
+                self.__update_total_energy_data(shelly_data, self.__total_energy_dict)
             except Exception as e:
                 if self.__retry_count <= self.__max_retry_count:
                     self.__retry_count += 1
@@ -118,25 +172,33 @@ class PollingShelly(Thread):
                         'current': 0,
                         'voltage': 0,
                         'frequncy': 0,
-                        'is_valid': False,
-                        'total': 0},
+                        'total_energy': 0
+                        # 'is_valid': False,
+                        # 'total': 0,
+                    },
                     1: {
                         'power': 0,
                         'pf': 0,
                         'current': 0,
                         'voltage': 0,
                         'frequncy': 0,
-                        'is_valid': False,
-                        'total': 0},
+                        'total_energy': 0
+                        # 'is_valid': False,
+                        # 'total': 0,
+                    },
                     2: {
                         'power': 0,
                         'pf': 0,
                         'current': 0,
                         'voltage': 0,
                         'frequncy': 0,
-                        'is_valid': False,
-                        'total': 0},
+                        'total_energy': 0
+                        # 'is_valid': False,
+                        # 'total': 0,
+                    },
                     'is_valid': False,
+                    'total_energy': 0,
+                    'total_energy_time_min': '',
                 }
                 if isinstance(e, requests.exceptions.ConnectionError):
                     _log.error(f'Shelly is not connected: {e}')
