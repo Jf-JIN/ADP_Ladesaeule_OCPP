@@ -5,6 +5,7 @@ from const.GPIO_Parameter import *
 from const.Const_Parameter import *
 import time
 from ._import_modbus_gpio import *
+from DToolslib import Inner_Decorators
 
 
 if 0:
@@ -34,26 +35,54 @@ class PollingEVSE(Thread):
     def isRunning(self) -> bool:
         return self.__isRunning
 
+    # @Inner_Decorators.time_counter
+    # def __get_watching_registers_dict(self, io: ModbusIO) -> dict:
+    #     temp = {}
+    #     for register_address in GPIOParams.WATCHING_REGISTERS:
+    #         subtmp = {}
+    #         ModbusPDU_res: ModbusPDU = io.read_PDU(register_address)
+    #         if ModbusPDU_res is None:
+    #             temp[str(register_address)] = {}
+    #             _log.warning(f'EVSE <{register_address}> read error')
+    #             continue
+    #         isError: bool = ModbusPDU_res.isError()
+    #         subtmp['function_code'] = ModbusPDU_res.function_code
+    #         subtmp['registers'] = ModbusPDU_res.registers
+    #         subtmp['status'] = ModbusPDU_res.status
+    #         subtmp['isError'] = isError
+    #         subtmp['exception_code'] = ModbusPDU_res.exception_code if isError else 0
+    #         subtmp['dev_id'] = ModbusPDU_res.dev_id
+    #         subtmp['transaction_id'] = ModbusPDU_res.transaction_id
+    #         subtmp['bits'] = ModbusPDU_res.bits
+    #         subtmp['address'] = ModbusPDU_res.address
+    #         temp[str(register_address)] = subtmp
+    #     return temp
+
+    # @Inner_Decorators.time_counter
     def __get_watching_registers_dict(self, io: ModbusIO) -> dict:
         temp = {}
-        for register_address in GPIOParams.WATCHING_REGISTERS:
-            subtmp = {}
-            ModbusPDU_res: ModbusPDU = io.read_PDU(register_address)
-            if ModbusPDU_res is None:
-                temp[str(register_address)] = {}
+        for (register_address, register_length) in GPIOParams.WATCHING_REGISTERS_GROUP:
+            ModbusPDU_res: ModbusPDU | ExceptionResponse = io.read_PDU(register_address, register_length)
+            if ModbusPDU_res is None or ModbusPDU_res.isError():
+                # temp[str(register_address)] = {}
                 _log.warning(f'EVSE <{register_address}> read error')
                 continue
-            isError: bool = ModbusPDU_res.isError()
-            subtmp['function_code'] = ModbusPDU_res.function_code
-            subtmp['registers'] = ModbusPDU_res.registers
-            subtmp['status'] = ModbusPDU_res.status
-            subtmp['isError'] = isError
-            subtmp['exception_code'] = ModbusPDU_res.exception_code if isError else 0
-            subtmp['dev_id'] = ModbusPDU_res.dev_id
-            subtmp['transaction_id'] = ModbusPDU_res.transaction_id
-            subtmp['bits'] = ModbusPDU_res.bits
-            subtmp['address'] = ModbusPDU_res.address
-            temp[str(register_address)] = subtmp
+            for index, value in enumerate(ModbusPDU_res.registers):
+                act_address = register_address + index
+                subtmp = {}
+                if act_address not in GPIOParams.WATCHING_REGISTERS:
+                    continue
+                isError: bool = ModbusPDU_res.isError()
+                subtmp['function_code'] = ModbusPDU_res.function_code
+                subtmp['registers'] = value
+                subtmp['status'] = ModbusPDU_res.status
+                subtmp['isError'] = isError
+                subtmp['exception_code'] = ModbusPDU_res.exception_code if isError else 0
+                subtmp['dev_id'] = ModbusPDU_res.dev_id
+                subtmp['transaction_id'] = ModbusPDU_res.transaction_id
+                subtmp['bits'] = ModbusPDU_res.bits
+                subtmp['address'] = ModbusPDU_res.address
+                temp[str(act_address)] = subtmp
         return temp
 
     def run(self) -> None:
