@@ -76,6 +76,10 @@ class ChargeUnit:
         #
         self.__timer: threading.Timer = threading.Timer(99, self.__charging)
         self.__timer.name = f'ChargeUnit<{self.__id}>'
+        self.__lock_thread = threading.Timer(GPIOParams.LETCH_MOTOR_RUNTIME+0.5, self.__charging_initial)
+        self.__lock_thread.name = f'ChargeUnit<{self.__id}>.chargingInitial_latchMotor'
+        self.__evse_self_check_thread = threading.Timer(GPIOParams.SELF_CHECK_TIMEOUT+0.5, self.__charging_initial)
+        self.__evse_self_check_thread.name = f'ChargeUnit<{self.__id}>.chargingInitial_evseSelfCheck'
         """ 充电计划定时器, 用于限制每个充电计划表项的执行时间, 确保不会超过计划表项的执行时间 """
         self.__finished_plan: list[dict] = []
         """ 已完成的充电计划项 """
@@ -287,6 +291,7 @@ class ChargeUnit:
 
         - direct_charge: 用于直充
         """
+
         if (
             self.__evse.vehicle_state == VehicleState.EV_IS_PRESENT
             and self.__evse.evse_status_error == {EVSEErrorInfo.RELAY_ON}
@@ -324,6 +329,7 @@ EVSE State abnormal, Unable to start charging (correct value)
         充电前期准备, 此部分主要是处理充电计划表, 将充电计划表与当前时间对齐
         """
         _log.info(f'开始充电前准备...\nPreparing for charging...\nenableDirectCharge: {self.__enableDirectCharge}')
+        MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable_blink(True, apply_now=True, speed_s=0.1)
         if self.__enableDirectCharge:
             self.signal_hint_message.emit('开始直接充电\nStart direct charging', 'success')
             self.__charging_initial()
@@ -384,17 +390,17 @@ EVSE State abnormal, Unable to start charging (correct value)
             # 执行上锁操作, 执行条件: 1.当前未上锁 2. 首次执行充电 3.电机运行时间大于0
             self.__latch_motor.lock()
             _log.info('开始执行上锁\nStart locking')
-            t = threading.Timer(GPIOParams.LETCH_MOTOR_RUNTIME+0.5, self.__charging_initial)
-            t.name = f'ChargeUnit<{self.__id}>.chargingInitial_latchMotor'
-            t.start()
+            self.__lock_thread = threading.Timer(GPIOParams.LETCH_MOTOR_RUNTIME+0.5, self.__charging_initial)
+            self.__lock_thread.name = f'ChargeUnit<{self.__id}>.chargingInitial_latchMotor'
+            self.__lock_thread.start()
             return
         if not self.__isEVSESelfTested and self.__isFistTimeChanging and GPIOParams.SELF_CHECK_TIMEOUT >= 30:
             # 执行自检操作, 执行条件: 1.当前未自检 2. 首次执行充电 3.自检超时时间大于等于30s
             _log.info('开始执行evse自检\nStart EVSE self-check')
             self.__evse.start_self_check()
-            t = threading.Timer(GPIOParams.SELF_CHECK_TIMEOUT+0.5, self.__charging_initial)
-            t.name = f'ChargeUnit<{self.__id}>.chargingInitial_evseSelfCheck'
-            t.start()
+            self.__evse_self_check_thread = threading.Timer(GPIOParams.SELF_CHECK_TIMEOUT+0.5, self.__charging_initial)
+            self.__evse_self_check_thread.name = f'ChargeUnit<{self.__id}>.chargingInitial_evseSelfCheck'
+            self.__evse_self_check_thread.start()
             return
         _log.info('已完成充电前的上锁及EVSE自检\nThe lock and EVSE self -inspection before the charging')
         if self.__enableDirectCharge:
@@ -583,6 +589,10 @@ The charging unit is not executable (correct value)
             self.__data_collector.append_CU_finished_plan(self.id, copy.copy(self.__current_charge_action))
             self.__current_charge_action = None
         self.__waiting_plan.clear()
+        if self.__lock_thread.is_alive():
+            self.__lock_thread.cancel()
+        if self.__evse_self_check_thread.is_alive():
+            self.__evse_self_check_thread.cancel()
         if self.__timer.is_alive():
             self.__timer.cancel()
         self.__signal_charging_finished.emit()
