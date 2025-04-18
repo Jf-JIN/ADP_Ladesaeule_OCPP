@@ -56,7 +56,7 @@ class GPIOParams(AnalogDefine):
     MAX_SHELLY_RETRY = 5
     SELF_CHECK_TIMEOUT = -31
     """ EVSE 自检时间, 单位: 秒. 该值必须 >=30 秒, 否则自检将不会启动 """
-    LETCH_MOTOR_RUNTIME = 2
+    LETCH_MOTOR_RUNTIME = 1
     """ 栓电机运行时间, 单位: 秒. 该值必须大于0秒, 否则电机将不会启动 """
     CALIBRATION_PERIOD = 60
     """ 校准周期, 单位: 秒. 该值必须大于0秒, 否则校准将不会启动 """
@@ -74,6 +74,8 @@ class GPIOParams(AnalogDefine):
     """ 请求间隔, 单位: 秒. 该值必须大于0秒 """
     BOUNCETIME = 200
     """ 树莓派按钮检测防抖时间 """
+    EVSE_WRITE_RETRY = 10
+    """ EVSE 写入重试次数 """
     CHARGING_STABLE_COUNTDOWN = POLLING_EVSE_INTERVAL * 10
     WATCHING_REGISTERS = [
         EVSERegAddress.CONFIGURED_AMPS,
@@ -84,6 +86,10 @@ class GPIOParams(AnalogDefine):
         EVSERegAddress.EVSE_STATE,
         EVSERegAddress.DEFAULT_AMPS,
         EVSERegAddress.CURRENT_MIN,
+    ]
+    WATCHING_REGISTERS_GROUP = [
+        (EVSERegAddress.CONFIGURED_AMPS, 7),
+        (EVSERegAddress.DEFAULT_AMPS, 3)
     ]
 
 
@@ -212,10 +218,10 @@ class BitsFlag(AnalogDefine):
     class _REG1007(AnalogDefine):
         """
         EVSE status and fails:
-            bit0: relay on/off (暂定0 = on, 1 = off)
+            bit0: relay on/off(暂定0=on, 1=off)
             bit1: diode check fail
             bit2: vent required fail
-            bit3: waiting for pilot release (error recovery delay)
+            bit3: waiting for pilot release(error recovery delay)
             bit4: RCD check error
             bit5:
             bit6-bit15: reserved
@@ -243,49 +249,49 @@ class BitsFlag(AnalogDefine):
         ENABLE_BOOTLOADER_MODE: int = 1 << 15
 
     REG1004 = _REG1004()
-    """ 
+    """
     turn off charging | self test operation | clear RCD error
     - `TURN_OFF_CHARGING_NOW`: turn off charging now
-    - `SELFTEST_RCDTEST`: run selftest and RCD test procedure (approx. 30 seconds)
+    - `SELFTEST_RCDTEST`: run selftest and RCD test procedure(approx. 30 seconds)
     - `CLEAR_RCD_ERROR`: clear RCD error
     """
     REG1007 = _REG1007()
-    """ 
+    """
     EVSE status and fails:
     - `RELAY_OFF`: tuple: relay on/off
     - `DIODE_CHECK_FAIL`: tuple: diode check fail
     - `VENT_REQUIRED_FAIL`: tuple: vent required fail
-    - `WAITING_FOR_PILOT_RELEASE`: tuple: waiting for pilot release (error recovery delay)
+    - `WAITING_FOR_PILOT_RELEASE`: tuple: waiting for pilot release(error recovery delay)
     - `RCD_CHECK_ERROR`: tuple: RCD check error
     """
     REG2005 = _REG2005()
-    """ 
+    """
     charge operation
-    - `ENABLE_BUTTON`: Enable button for current change (no sense when 2003 = 0)
+    - `ENABLE_BUTTON`: Enable button for current change(no sense when 2003=0)
         - default: 1
     - `ENABLE_STOP_BUTTON`: Stop charging when button pressed
         - charging will automatically start after you manually unplug and plug the cable to the vehicle
         - default: 0
     - `PILOT_READE_LED`: Pilot ready state LED
         - default: 0
-    - `ENABLE_ON_VEHICLE_STATUS`: enable charging on vehicle status D (ventilation required)
+    - `ENABLE_ON_VEHICLE_STATUS`: enable charging on vehicle status D(ventilation required)
         - default: 1
-    - `ENABLE_RCD_FEEDBACK`: enable RCD feedback on MCLR pin (pin 4)
+    - `ENABLE_RCD_FEEDBACK`: enable RCD feedback on MCLR pin(pin 4)
         - default: 0
     - `AUTO_CLEAR_RCD_ERROR`: auto clear RCD error
         - default: 0
-    - `AN_PULLUP`: AN pullup (rev16 and later)
+    - `AN_PULLUP`: AN pullup(rev16 and later)
         - default: 0
-    - `PWM_DEBUG`: PWM debug bit (rev17 and later)
+    - `PWM_DEBUG`: PWM debug bit(rev17 and later)
         - default: 0
-    - `ERROR_LED`: error LED routing to AN out (rev17 and later)
+    - `ERROR_LED`: error LED routing to AN out(rev17 and later)
         - default: 0
-    - `PILOT_AUTO_RECOVER_DELAY`: pilot auto recover delay (rev17 and later)
+    - `PILOT_AUTO_RECOVER_DELAY`: pilot auto recover delay(rev17 and later)
         - default: 1
     - `ENABLE_STARTUP_DELAY`: enable startup delay
-    - `DISABLE_ESVE_AFTER_CHARGE`: disable EVSE after charge (write 8192)
-    - `DISABLE_EVSE`: disable EVSE (write 16384)
-    - `ENABLE_BOOTLOADER_MODE`: enable bootloader mode (write 32768)
+    - `DISABLE_ESVE_AFTER_CHARGE`: disable EVSE after charge(write 8192)
+    - `DISABLE_EVSE`: disable EVSE(write 16384)
+    - `ENABLE_BOOTLOADER_MODE`: enable bootloader mode(write 32768)
     """
 
 
