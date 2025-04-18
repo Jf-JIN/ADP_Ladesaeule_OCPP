@@ -48,6 +48,10 @@ class ModbusPDU:
         return 0
 
 
+class ExceptionResponse(ModbusPDU):
+    """Base class for a modbus exception PDU."""
+
+
 class ModbusSerialClient:
     def __init__(self, *args, **kwargs):
         self.__json_file_path = os.path.join(os.getcwd(), 'test', 'Modbus_Shelly_Simulator.json')
