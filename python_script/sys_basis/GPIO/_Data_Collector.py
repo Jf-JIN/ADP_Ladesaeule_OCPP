@@ -326,6 +326,8 @@ class DataCollector:
         plan['startTime'] = self.__all_data[id]['period_start_time']
         plan['finishedTime'] = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
         plan['chargedEnergy'] = self.__all_data[id]['shelly']['charged_energy']
+        plan['shellyTotalEnergy'] = self.__all_data[id]['shelly']['total_energy']
+        plan['shellyTotalEnergyTimeMinute'] = self.__all_data[id]['shelly']['total_energy_time_min']
         self.__check_id(id)
         if 'finished_plan' not in self.__all_data[id]:
             self.__all_data[id]['finished_plan'] = []
@@ -494,6 +496,8 @@ class DataCollector:
                         'limit': 0,
                         'startPeriod': (DataGene.str2time(last_finished_time) - DataGene.str2time(self.__all_data[cu_id]['start_time'])).total_seconds(),
                         'startTime': self.__all_data[cu_id]['start_time'],
+                        'shellyTotalEnergy': self.__all_data[cu_id]['shelly']['total_energy'],
+                        'shellyTotalEnergyTimeMinute': self.__all_data[cu_id]['shelly']['total_energy_time_min']
                     }
                     img_list.append(temp)
                 fig: str = DataGene.plan2figure(img_list)
