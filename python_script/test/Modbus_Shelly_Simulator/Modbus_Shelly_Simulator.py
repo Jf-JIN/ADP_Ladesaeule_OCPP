@@ -377,11 +377,11 @@ QDoubleSpinBox {
             self.__isCurrentValueChanged = True
         if data['max_voltage'] != self.max_voltage:
             self.__isMaxVoltageChanged = True
-        self.configured_amps_1000 = data['1000']
-        self.onoff_selftest_1004 = data['1004']
-        self.charge_operation_2005 = data['2005']
-        self.latch_lock_pin = data['latch_lock_pin']
-        self.latch_unlock_pin = data['latch_unlock_pin']
+        self.configured_amps_1000 = int(data['1000'])
+        self.onoff_selftest_1004 = int(data['1004'])
+        self.charge_operation_2005 = int(data['2005'])
+        self.latch_lock_pin = int(data['latch_lock_pin'])
+        self.latch_unlock_pin = int(data['latch_unlock_pin'])
         self.update_display_read()
 
     def handle_ph0_signal(self, data_dict: dict):

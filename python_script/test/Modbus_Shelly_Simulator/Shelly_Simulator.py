@@ -46,6 +46,7 @@ class ShellySimulator_Thread(QThread):
 
         # 添加路由，访问不同的 URL 时返回不同的 JSON 数据
         self.__app.add_url_rule('/rpc/EM.GetStatus', 'em_get_status', self.__phase, methods=['GET', 'POST'])
+        self.__app.add_url_rule('/rpc/EMData.GetStatus', 'emdaata_get_status', self.__total_energy, methods=['GET', 'POST'])
         # self.__app.add_url_rule('/emeter/0', '0', self.__phase0, methods=['GET'])
         # self.__app.add_url_rule('/emeter/1', '1', self.__phase1, methods=['GET'])
         # self.__app.add_url_rule('/emeter/2', '2', self.__phase2, methods=['GET'])
@@ -180,6 +181,17 @@ class ShellySimulator_Thread(QThread):
             "total_aprt_power": self.__power_ori_p0 + self.__power_ori_p1 + self.__power_ori_p2,
             "user_calibrated_phase": []
         }
+        self.__total_energy_dict = {
+            'a_total_act_energy': self.__total_power_p0,
+            'a_total_act_ret_energy': 0.0,
+            'b_total_act_energy': self.__total_power_p1,
+            'b_total_act_ret_energy': 0.0,
+            'c_total_act_energy': self.__total_power_p2,
+            'c_total_act_ret_energy': 0.0,
+            'id': 0,
+            'total_act': self.__total_power,
+            'total_act_ret': 0.0
+        }
         self.__ph0_dict = {
             'power': self.__power_p0,
             'pf': self.__factor_p0,
@@ -248,6 +260,11 @@ class ShellySimulator_Thread(QThread):
         print(f"Received id: {id_param}")
         return jsonify(self.__ph_dict)
 
+    def __total_energy(self):
+        id_param = request.args.get('id')  # 会读取 ?id=0 中的 id
+        print(f"Received id: {id_param} total_energy")
+        return jsonify(self.__total_energy_dict)
+
     def clear0(self):
         self.__total_power_p0 = 0
         return ''
@@ -260,10 +277,18 @@ class ShellySimulator_Thread(QThread):
         self.__total_power_p2 = 0
         return ''
 
+    def clear_total_energy(self):
+        self.__total_power_p0 = 0
+        self.__total_power_p1 = 0
+        self.__total_power_p2 = 0
+        self.__total_power = 0
+        return ''
+
     def clear(self):
         self.clear0()
         self.clear1()
         self.clear2()
+        self.clear_total_energy()
         return ''
 
     def run(self):
