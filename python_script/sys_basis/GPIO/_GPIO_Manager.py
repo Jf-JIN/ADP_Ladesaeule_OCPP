@@ -85,6 +85,9 @@ class GPIOManager:
             self.__thread_detection_button_start.stop()
         if self.__thread_detection_button_stop.is_alive():
             self.__thread_detection_button_stop.stop()
+        for cu in self.__charge_units_dict.values():
+            cu: ChargeUnit
+            cu.stop_charging()
         self.__data_collector.stop()
         MLED.shutdown()
 
@@ -136,7 +139,7 @@ class GPIOManager:
             _log.warning(f'未找到id为{id}的充电单元\nNo charging unit with ID {id} was not found')
         return self.__charge_units_dict[id]
 
-    def stop_charging(self, id: int) -> None:
+    def stop_charging(self, id: int, sender: str = '') -> None:
         charge_unit: ChargeUnit = self.__charge_units_dict[id]
         charge_unit.stop_charging()
 
@@ -181,4 +184,4 @@ class GPIOManager:
         _log.warning('Button Stop pressed')
         for unit in self.__charge_units_dict.values():
             unit: ChargeUnit
-            unit.stop_charging()
+            unit.stop_charging(sender='button')
