@@ -3,7 +3,7 @@
 from __future__ import annotations
 import copy
 from const.Const_Parameter import *
-# import requests
+import requests
 import time
 from sys_basis.XSignal import XSignal
 
@@ -17,10 +17,11 @@ class Shelly:
     def __init__(self, parent, id: int, address: str) -> None:
         self.__parent: ChargeUnit = parent
         self.__id: int = id
-        self.__main_address: str = address
+        self.__main_address: str = address if address.startswith('http') else f'http://{address}'
         self.__data: dict = {}
         self.__isAvailable: bool = False
         self.__charged_energy: int = 0
+        self.__charged_energy_shelly: int = 0
         self.__last_wrote_time: float = time.time()
         self.__signal_current_no = XSignal()
         self.__signal_current_overload = XSignal()
@@ -37,17 +38,15 @@ class Shelly:
 
     @property
     def data_address(self) -> str:
-        if self.__main_address.startswith('http'):
-            return f"{self.__main_address}/rpc/EM.GetStatus?id=0"
-        else:
-            return f"http://{self.__main_address}/rpc/EM.GetStatus?id=0"
+        return f'{self.__main_address}/rpc/EM.GetStatus?id=0'
 
     @property
     def reset_address(self) -> str:
-        if self.__main_address.startswith('http'):
-            return f"{self.__main_address}/rpc/EMData.ResetCounters"
-        else:
-            return f"http://{self.__main_address}/rpc/EMData.ResetCounters"
+        return f'{self.__main_address}/rpc/EMData.ResetCounters'
+
+    @property
+    def total_energy_address(self) -> int | float:
+        return f'{self.__main_address}/rpc/EMData.GetStatus?id=0'
 
     @property
     def isAvailable(self) -> bool:
@@ -93,6 +92,8 @@ class Shelly:
         self.__data = data
         self.__charged_energy = self.__calculate_charged_energy()
         self.__data['charged_energy'] = self.__charged_energy
+        # _log.info(f'Shelly data updated: {self.__charged_energy}')
+        self.__charged_energy_shelly = self.__data['total_energy']
         self.__parent.parent_obj.data_collector.set_shelly_data(self.id, self.__data)
         # self.__parent.parent_obj.data_collector.set_shelly_charged_energy(self.id, self.__charged_energy)
         self.__isAvailable = self.__data['is_valid']
@@ -108,7 +109,7 @@ class Shelly:
         self.__charged_energy: Wh
         """
         if self.__isAvailable:
-            duration = (time.time() - self.__last_wrote_time) / 3600
+            duration: float = (time.time() - self.__last_wrote_time) / 3600
             total = 0
             for ph_dict in self.__data.values():
                 ph_dict: dict
@@ -116,28 +117,23 @@ class Shelly:
                     continue
                 power = ph_dict.get('power', 0)
                 total += (power*duration)
-            self.__charged_energy = self.__charged_energy + total
+            self.__charged_energy += total
+            self.__last_wrote_time = time.time()
         return self.__charged_energy
 
     def reset(self) -> bool:
-        self.__last_wrote_time: float = time.time()
-        self.__charged_energy = 0
-        _log.info("Shelly 复位成功\nShelly reset successfully")
-        return True
-
-        # ********************************* [弃用, shelly 不提供总充电量] *********************************
-        # _log.info('Shelly reset')
-        # try:
-        #     # 发送 POST 请求
-        #     # reset_token = 'rpc/EMData.ResetCounters?id=0'
-        #     reset_token = 'rpc/EMData.ResetCounters'
-        #     data = {
-        #         "id": 0  # 通道号
-        #     }
-        #     response0 = requests.post(self.reset_address, json=data, timeout=5)
-        #     response0.raise_for_status()
-        #     _log.info("Shelly 复位成功\nShelly reset successfully")
-        #     return True
-        # except Exception as e:
-        #     _log.info(f"Shelly 复位失败\nShelly reset failed: {e}")
-        #     return False
+        try:
+            data = {
+                'id': 0  # 通道号
+            }
+            response0 = requests.post(self.reset_address, json=data, timeout=5)
+            response0.raise_for_status()
+            self.__last_wrote_time: float = time.time()
+            self.__charged_energy = 0
+            self.__charged_energy_shelly = 0
+            self.__parent.parent_obj.data_collector.set_shelly_charged_energy(self.id, 0)
+            _log.info('Shelly 复位成功\nShelly reset successfully')
+            return True
+        except Exception as e:
+            _log.info(f'Shelly 复位失败\nShelly reset failed: {e}')
+            return False
