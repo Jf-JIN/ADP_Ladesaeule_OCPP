@@ -5,7 +5,7 @@ from sys_basis.XSignal import XSignal
 from ._Modbus_IO import ModbusIO
 from ._EVSE_Self_Check import EVSESelfCheck
 from DToolslib import EventSignal
-
+import time
 
 _log = Log.EVSE
 
@@ -24,7 +24,7 @@ class Evse(object):
         self.__signal_selftest_finished_result: XSignal = XSignal()
         self.__signal_evse_status_error: XSignal = XSignal()
         self.__signal_vehicle_status_failed_error = XSignal()
-        self.__charging_timeout_counter = GPIOParams.CHARGING_STABLE_COUNTDOWN
+        self.__last_charging_timestamp = GPIOParams.CHARGING_STABLE_COUNTDOWN
         self.stop_charging()
         self.set_default_current(13)
 
@@ -116,6 +116,7 @@ class Evse(object):
                 return False
             self.__isEnableCharging = True
             res_set_current: bool = modbus.set_current(value)
+            self.__last_charging_timestamp = time.time()
             if not res_set_current:
                 _log.error(f'EVSE {self.__id} set current failed')
             return res_set_current
@@ -133,9 +134,12 @@ class Evse(object):
         将1004寄存器的bit0: turn off charging now,置为1,表示立即停止充电
         """
         with self.__modbus as modbus:
-            res_set_current = modbus.set_current(0)
+            res_min_current = modbus.read_current_min()
+            if not res_min_current:
+                res_min_current = 6
+            res_set_current = modbus.set_current(res_min_current)
             if not res_set_current:
-                _log.error(f'EVSE {self.__id} set current 0 failed')
+                _log.error(f'EVSE {self.__id} set current {res_min_current} failed')
                 return False
             res_enable_charge: bool = modbus.enable_charge(False)
             if not res_enable_charge:
@@ -161,10 +165,10 @@ class Evse(object):
         """
         limit = [-1, -1]
         with self.__modbus as modbus:
-            _log.info(f'EVSE {self.__id} get current limit')
+            # _log.info(f'EVSE {self.__id} get current limit')
             limit[0] = modbus.read_current_min()
             limit[1] = modbus.read_current_max()
-            _log.info(f'EVSE {self.__id} get current limit {limit}')
+            # _log.info(f'EVSE {self.__id} get current limit {limit}')
         return limit
 
     def __handle_selftest_finished(self, flag) -> None:
@@ -179,23 +183,19 @@ class Evse(object):
         """
         检测充电桩在按计划充电中
         """
-        _log.info(f'检测充电桩在按计划充电中{status} {self.__charging_timeout_counter}')
+        time_display_current = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
+        time_display_stop = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(self.__last_charging_timestamp + GPIOParams.CHARGING_STABLE_COUNTDOWN))
+        # _log.info(f'检测充电桩在按计划充电中{status} {time_display_stop} {time_display_current}')
         if status == VehicleState.CHARGING:
-            # _log.info(f'检测充电桩在按计划充电中 1')
-            self.__charging_timeout_counter = GPIOParams.CHARGING_STABLE_COUNTDOWN
+            self.__last_charging_timestamp: float = time.time()
         else:
-            # _log.info(f'检测充电桩在按计划充电中 2')
-            if self.__charging_timeout_counter <= 0:
-                # _log.info(f'检测充电桩在按计划充电中 3')
+            current_time = time.time()
+            diff = current_time - self.__last_charging_timestamp
+            if diff > GPIOParams.CHARGING_STABLE_COUNTDOWN:
                 self.signal_isInCharging.emit(False)
-                self.__charging_timeout_counter = GPIOParams.CHARGING_STABLE_COUNTDOWN
+                self.__last_charging_timestamp = time.time()
                 return False
 
-            # _log.info(f'检测充电桩在按计划充电中 4')
-            self.__charging_timeout_counter -= 1
-
-        # _log.info(f'检测充电桩在按计划充电中 5')
         self.signal_isInCharging.emit(True)
 
-        # _log.info(f'检测充电桩在按计划充电中 6')
         return True
