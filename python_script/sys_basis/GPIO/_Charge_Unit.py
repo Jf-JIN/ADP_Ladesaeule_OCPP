@@ -438,7 +438,7 @@ The charging unit is not executable (correct value)
 - waiting_plan_list (>0): {len(self.__waiting_plan)}
 - Shelly isAvailable(True): {self.__shelly.isAvailable}
 """)
-            MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable_blink(True, apply_now=True, speed_s=[0.1, 0.1, 0.1, 2])
+            MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable_blink(True, apply_now=True, speed_s=[0.2, 0.2, 0.2, 2])
             return False
         else:
             return True
@@ -578,10 +578,13 @@ The charging unit is not executable (correct value)
         """
         _log.info(f'停止充电, 当前状态是否在充电: {self.__isCharging}\nStop charging, is charging: {self.__isCharging}')
         if not self.__isCharging:
-            MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable_blink(False)
-            MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable(True)
-            if sender == 'web':
-                self.signal_hint_message.emit(f'充电单元 <{self.id}> 未在充电, 无需停止\nCharge unit <{self.id}> is not charging, no need to stop', 'info')
+            if sender in ['evse', 'shelly']:
+                MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable_blink(True, apply_now=True, speed_s=[0.2, 0.2, 0.2, 2])
+            else:
+                if sender == 'web':
+                    self.signal_hint_message.emit(f'充电单元 <{self.id}> 未在充电, 无需停止\nCharge unit <{self.id}> is not charging, no need to stop', 'info')
+                MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable_blink(False)
+                MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable(True)
             return
         _log.info('执行停止充电\nExecute stop charging')
         self.__evse.stop_charging()
@@ -609,8 +612,11 @@ The charging unit is not executable (correct value)
         self.__enableDirectCharge = False
         self.__data_collector.stop_CU_charging(self.id)
         self.signal_hint_message.emit(f'充电单元 <{self.id}> 已停止充电\nCharge unit <{self.id}> has stopped charging', 'info')
-        MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable_blink(False)
-        MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable(True)
+        if sender in ['evse', 'shelly']:
+            MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable_blink(True, apply_now=True, speed_s=[0.2, 0.2, 0.2, 2])
+        else:
+            MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable_blink(False)
+            MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable(True)
 
     def clear_error(self) -> None:
         """ 慎用, 前端应做提示 """
@@ -619,6 +625,7 @@ The charging unit is not executable (correct value)
             self.signal_hint_message.emit('当前状态无错误, 无需清除\nThere is no error in the current state, no need to clear', 'info')
             return
         self.__isNoError = True
+        self.stop_charging(sender='clear_error')
         _log.info('已清除错误\nError flag has been cleared')
         self.signal_hint_message.emit('已清除错误\nError flag has been cleared', 'success')
 
@@ -710,11 +717,11 @@ The charging unit is not executable (correct value)
         _log.info('error_message: ', error_message)
         for error_item in error_message:
             if error_item in handle_set:
-                self.stop_charging(error_item)
+                self.stop_charging(error_item, sender='evse')
 
     def __handle_shelly_error(self, error_flag: bool) -> None:
         if error_flag:  # True 存在错误
-            self.stop_charging('shelly_error')
+            self.stop_charging('shelly_error', sender='shelly')
 
     def __handle_shelly_charged_energy(self, charged_energy: int | float) -> None:
         if charged_energy >= self.__target_energy and self.__target_energy > 0 and self.__isCharging:

@@ -74,7 +74,8 @@ class GPIOManager:
         Log.GROUP.signal_critical.connect(self.__led_handle_system_error)
 
     def __led_handle_system_error(self, error: str):
-        MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable_blink(True, apply_now=True, speed_s=[0.1, 0.1, 0.1, 2])
+        MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable_blink(True, apply_now=True, speed_s=[0.2, 0.2, 0.2, 2])
+        pass
 
     def stop(self):
         if self.__thread_polling_evse.is_alive():
@@ -152,7 +153,7 @@ class GPIOManager:
         self.__thread_polling_shelly.start()
         self.__thread_detection_button_start.start()
         self.__thread_detection_button_stop.start()
-        # MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable(True)
+        MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable(True)
 
     def __send_request_charge_plan_calibration(self, request_dict: dict) -> None:
         if self.__timer_send_requeset_calibration.is_alive():

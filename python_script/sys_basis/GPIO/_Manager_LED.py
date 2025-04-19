@@ -25,6 +25,7 @@ class StructLED:
         self.__status = False
         self.__blink_led_status = False
         self.__shouldBlink = False
+        self.__blink_plan = 1
         self.__class__.__leds_name_list__.add(name)
         self.__blink_thread = threading.Timer(1, self.__blink)
 
@@ -41,45 +42,52 @@ class StructLED:
         return self.__pin
 
     def set_enable(self, enable: bool) -> typing.Self:
-        self.__status = enable
         _log.debug(f'LED {self.__name} set_enable {self.__status} shouldBlink {self.__shouldBlink}')
-        if self.__status and not self.__shouldBlink:
-            self.__led.on()
-        elif self.__status and self.__shouldBlink:
-            _log.debug('in set_enable')
-            self.__blink()
-        else:
+        if enable and not self.__status:
+            self.__status = True
+            if not self.__shouldBlink:
+                self.__led.on()
+            else:
+                self.__blink_led_status = False
+                self.__blink(self.__blink_plan)
+        elif not enable and self.__status:
             self.__shouldBlink = False
+            self.__status = False
+            self.__blink_led_status = False
             self.__led.off()
         return self
 
     def __blink(self, speed_s: float | int | list = 1) -> typing.Self:
-        if not isinstance(speed_s, (float, int, list)) or speed_s <= 0:
+        if not isinstance(speed_s, (float, int, list)):
             raise TypeError(f'blink speed must be float or int or list, not {type(speed_s)} and greater than 0, not {speed_s}')
         if isinstance(speed_s, list):
             speed_single = speed_s[0]
-            if not isinstance(speed_s, (float, int)) or speed_s <= 0:
-                raise TypeError(f'blink single speed must be float or int, not {type(speed_s)} and greater than 0, not {speed_s}')
+            if not isinstance(speed_single, (float, int)):
+                raise TypeError(f'blink single speed must be float or int, not {type(speed_single)} and greater than 0, not {speed_single}')
             speed_list = speed_s
             speed_list.append(speed_list.pop(0))
         else:
             speed_single = speed_s
             speed_list = [speed_single]
+        if speed_single <= 0:
+            raise ValueError(f'blink speed must be greater than 0, not {speed_s}')
         _log.debug(f'in __blink __shouldBlink {self.__shouldBlink} {speed_s}')
         if self.__shouldBlink and self.__status:
             _log.debug(f'in __blink __blink_led_status {self.__blink_led_status}')
-            if self.__blink_led_status:
-                _log.debug('led_off')
-                self.__led.off()
-                self.__blink_led_status = False
-            else:
+            if not self.__blink_led_status:
                 _log.debug('led_on')
                 self.__led.on()
                 self.__blink_led_status = True
+            else:
+                _log.debug('led_off')
+                self.__led.off()
+                self.__blink_led_status = False
             _log.debug('set blink thread')
             if self.__blink_thread.is_alive():
                 self.__blink_thread.cancel()
+            _log.debug(speed_single, speed_list)
             self.__blink_thread = threading.Timer(speed_single, self.__blink, (speed_list,))
+            self.__blink_thread.name = f'blink_{self.__name}'
             self.__blink_thread.start()
             _log.debug('start blink thread')
         return self
@@ -89,9 +97,17 @@ class StructLED:
         if not enable:
             if self.__blink_thread.is_alive():
                 self.__blink_thread.cancel()
+            self.__blink_plan = 1
+            self.__blink_led_status = False
+            self.set_enable(enable)
+            return self
         if apply_now:
+            self.set_enable(enable)
+            if self.__blink_plan == speed_s:
+                return
+            self.__blink_plan = speed_s
+            self.__blink_led_status = False
             self.__blink(speed_s)
-        _log.info(f'set_enable_blink{self.__shouldBlink}')
         return self
 
 

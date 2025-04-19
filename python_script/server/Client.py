@@ -30,7 +30,6 @@ class Client:
         time.sleep(0.5)
         self.GPIO_Manager.listening_start()
         self.manager_coroutines.start()
-        MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable(True)
 
     def init_parameters(self) -> None:
         self.GPIO_Manager = GPIOManager()
