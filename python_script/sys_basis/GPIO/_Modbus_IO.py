@@ -27,11 +27,14 @@ class CallerStruct:
 class ModbusIO(object):
     isSelfChecking: set = set()
     __instance__: 'ModbusIO' = None
+    __lock__: threading.Lock = threading.Lock()
 
     def __new__(cls, *args, **kwargs):
         if cls.__instance__ is None:
-            cls.__instance__ = super().__new__(cls)
-            cls.__instance__.__isInitialized__ = False
+            with cls.__lock__:
+                if cls.__instance__ is None:
+                    cls.__instance__ = super().__new__(cls)
+                    cls.__instance__.__isInitialized__ = False
         return cls.__instance__
 
     def __init__(self, id: int) -> None:
@@ -239,7 +242,7 @@ class ModbusIO(object):
             - 如果读取成功, 返回寄存器中的整数值.
             - 如果读取失败或发生错误, 返回None.
         """
-        _log.info("read_current_min")
+        # _log.info("read_current_min")
         return self.read(address=EVSERegAddress.CURRENT_MIN)
 
     def read_current_max(self) -> None | int:
@@ -303,12 +306,12 @@ class ModbusIO(object):
             return res_1006
         else:
             res_1004 = self.write(address=EVSERegAddress.TURN_OFF_SELFTEST_OPERATION, value=BitsFlag.REG1004.TURN_OFF_CHARGING_NOW, bit_operation=1)
-            _log.info(f"res_1004 write: {res_1004}")
+            # _log.info(f"res_1004 write: {res_1004}")
             if not res_1004:
                 _log.warning(f"res_1004 write failed: {res_1004}")
                 # return False
             res_1006: bool = self.write(address=EVSERegAddress.EVSE_STATE, value=REG1006.OFF)
-            _log.info(f"res_1006 write: {res_1006}")
+            # _log.info(f"res_1006 write: {res_1006}")
             return res_1006
 
     def enable_RCD(self, flag: bool) -> None | bool:
