@@ -54,16 +54,28 @@ socket.on('update_data', (data) => {
         msg_type = data.alert_message.type
         msg = data.alert_message.message
         if (msg_type == 'success') {
-            Swal.fire(lang_dict.success, msg, 'success');
+            var title = lang_dict.success
         } else if (msg_type == 'error') {
-            Swal.fire(lang_dict.error, msg, 'error');
-        } else if (msg_type == 'warning') {
-            Swal.fire(lang_dict.warning, msg, 'warning');
-        } else if (msg_type == 'info') {
-            Swal.fire(lang_dict.info, msg, 'info');
-        } else if (msg_type == 'question') {
-            Swal.fire(lang_dict.question, msg, 'question');
+            title = lang_dict.error
         }
+        else if (msg_type == 'warning') {
+            title = lang_dict.warning
+        }
+        else if (msg_type == 'info') {
+            title = lang_dict.info
+        }
+        else if (msg_type == 'question') {
+            title = lang_dict.question
+        }
+        if (!isAllowMessageFromServerPopup) {
+            message_in_waiting = {
+                'title': title,
+                'text': msg,
+                'type': msg_type
+            }
+            return;
+        }
+        Swal.fire(title, msg, msg_type);
     }
     // if (data.txt) {
     //     updateConsole(opt_console, data.opt_console);

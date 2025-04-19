@@ -2,6 +2,8 @@
 // This script is mainly used for the common logical parts of the user and administrator interfaces, such as displaying the current time, checking input, etc.
 
 const socket = io();
+var isAllowMessageFromServerPopup = true;
+var message_in_waiting = null;
 
 console.log('Client connected');
 
@@ -26,6 +28,7 @@ const logout_button = document.getElementById('logout');
 //     }
 // })
 logout_button.addEventListener('click', () => {
+    isAllowMessageFromServerPopup = false;
     Swal.fire({
         title: lang_dict.system_operation_question_title,
         text: lang_dict.system_operation_question,
@@ -40,7 +43,8 @@ logout_button.addEventListener('click', () => {
             Swal.fire(lang_dict.question, lang_dict.reboot_question, 'question').then((result_root) => {
                 if (result_root.isConfirmed) {
                     socket.emit('input_data', { 'logout': false });
-                }
+                };
+                isAllowMessageFromServerPopup = true;
             });
         } else if (result.isDenied) {
             Swal.fire(lang_dict.question, lang_dict.shutdown_question, 'question').then((result_shutdown_1) => {
@@ -53,9 +57,13 @@ logout_button.addEventListener('click', () => {
                     });
                 }
             });
+        } else if (result.isDismissed) {
+            isAllowMessageFromServerPopup = true;
+            if (message_in_waiting) {
+                Swal.fire(message_in_waiting.title, message_in_waiting.text, message_in_waiting.type);
+            };
         };
     });
-
 })
 
 
