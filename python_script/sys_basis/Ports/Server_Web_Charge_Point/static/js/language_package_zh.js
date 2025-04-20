@@ -99,6 +99,21 @@ const lang_pkg_zh = {
         "2001": "[R/W] 从站地址",
         "2002": "[R/W] 最小电流值",
     },
-
-
+    "light_description": {
+        "title_status": "指示灯状态", 
+        "title_description": "描述",
+        "title_meaning": "含义",
+        "status_ready": "常亮",
+        "description_ready": "持续亮",
+        "meaning_ready": "未在充电, 设备准备就绪",
+        "status_prepare": "闪烁 0.1s亮 / 0.1s灭",
+        "description_prepare": "快速闪烁",
+        "meaning_prepare": "准备开始充电",
+        "status_charging": "闪烁 1s亮 / 1s灭",
+        "description_charging": "每秒闪一次",
+        "meaning_charging": "正在充电中",
+        "status_evse_shelly_error": "亮0.2s-灭0.2s-亮0.2s-灭2s",
+        "description_evse_shelly_error": "故障模式",
+        "meaning_evse_shelly_error": "充电故障或系统异常",
+    },
 }

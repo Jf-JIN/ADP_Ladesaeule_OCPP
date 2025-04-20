@@ -101,5 +101,21 @@ const lang_pkg_en = {
         "2001": "[R/W] Slave address",
         "2002": "[R/W] Minimum amps value",
     },
-
+    "light_description": {
+        "title_status": "Indicator Light Status",
+        "title_description": "Description",
+        "title_meaning": "Meaning",
+        "status_ready": "Always On",
+        "description_ready": "Steady light",
+        "meaning_ready": "Not charging, device is ready",
+        "status_prepare": "Blinking 0.1s on / 0.1s off",
+        "description_prepare": "Fast blinking",
+        "meaning_prepare": "Preparing to start charging",
+        "status_charging": "Blinking 1s on / 1s off",
+        "description_charging": "Blinks once per second",
+        "meaning_charging": "Charging in progress",
+        "status_evse_shelly_error": "0.2s on - 0.2s off - 0.2s on - 2s off",
+        "description_evse_shelly_error": "Error pattern",
+        "meaning_evse_shelly_error": "Charging error or system fault"
+    },
 }

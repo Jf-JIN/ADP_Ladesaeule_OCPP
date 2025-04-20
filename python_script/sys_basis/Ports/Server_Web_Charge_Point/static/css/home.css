@@ -396,3 +396,20 @@ img {
 #placeholder_csv{
     display: inline;
 }
+
+.light-table {
+    border: 1px solid #aaa;
+    border-collapse: collapse;
+    text-align: center;
+    width: 100%;
+}
+
+.light-table th {
+    background-color: #f0f0f0;
+    padding: 8px;
+}
+
+.light-table td {
+    border: 1px solid #aaa;
+    padding: 8px;
+}

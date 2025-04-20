@@ -101,4 +101,21 @@ const lang_pkg_de = {
         "2001": "[R/W] Slave-Adresse",
         "2002": "[R/W] Minimale Stromstärke",
     },
+    "light_description": {
+        "title_status": "Status der Kontrollleuchte",
+        "title_description": "Beschreibung",
+        "title_meaning": "Bedeutung",
+        "status_ready": "Dauerlicht",
+        "description_ready": "Ständig eingeschaltet",
+        "meaning_ready": "Nicht am Laden, Gerät ist bereit",
+        "status_prepare": "Blinkt 0,1s an / 0,1s aus",
+        "description_prepare": "Schnelles Blinken",
+        "meaning_prepare": "Bereitet Ladevorgang vor",
+        "status_charging": "Blinkt 1s an / 1s aus",
+        "description_charging": "Blinkt einmal pro Sekunde",
+        "meaning_charging": "Wird geladen",
+        "status_evse_shelly_error": "0,2s an - 0,2s aus - 0,2s an - 2s aus",
+        "description_evse_shelly_error": "Fehlermuster",
+        "meaning_evse_shelly_error": "Ladefehler oder Systemstörung"
+    },
 }
