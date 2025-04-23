@@ -197,7 +197,7 @@ class ShellyDataCSVWriter:
 
     def __get_current_calculated_charged_energy(self) -> int:
         current_time: float = time.time()
-        diff_time: float = current_time - self.__last_calculation_time / 3600  # Unit h
+        diff_time: float = (current_time - self.__last_calculation_time) / 3600  # Unit h
         norm_power = self.__convert_value_in_walt(self.__current_action.get('limit', 0))
         self.__total_charged_energy += diff_time * norm_power  # Unit Wh
         return self.__total_charged_energy
