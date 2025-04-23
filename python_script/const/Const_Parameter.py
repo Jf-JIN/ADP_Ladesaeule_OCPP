@@ -54,6 +54,7 @@ class Log(StaticEnum):
     OPT = Logger(log_name='optimize', root_dir=APP_WORKSPACE_PATH)
     GUI = Logger(log_name='gui_port', root_dir=APP_WORKSPACE_PATH)
     CSVLoader = Logger(log_name='CSV_loader', root_dir=APP_WORKSPACE_PATH)
+    CSVWriter = Logger(log_name='CSV_writer', root_dir=APP_WORKSPACE_PATH)
     GROUP = LoggerGroup(root_dir=APP_WORKSPACE_PATH)
 
 
