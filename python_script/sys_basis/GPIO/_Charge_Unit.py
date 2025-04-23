@@ -441,6 +441,7 @@ The charging unit is not executable (correct value)
             MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable_blink(True, apply_now=True, speed_s=[0.2, 0.2, 0.2, 2])
             return False
         else:
+            MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable_blink(True, apply_now=True)
             return True
 
     def __charging_direct(self) -> bool:
@@ -448,7 +449,7 @@ The charging unit is not executable (correct value)
         不做设置直接充电
         """
         self.get_current_limit()
-        if self.__current_max > 0:
+        if self.__current_min is not None and self.__current_max is not None and self.__current_max > 0:
             self.__start_time_str = DataGene.time2str(datetime.now())
             _log.info('清空数据库对应数据\nClear database data corresponding to CU')
             self.__data_collector.clear_CU_finished_plan(self.id)
@@ -462,6 +463,7 @@ The charging unit is not executable (correct value)
         else:
             _log.info('最大电流为0,不充电\nThe maximum current is 0, no charging')
             self.signal_hint_message.emit(f'最大电流为0,不充电\nThe maximum current is 0, no charging', 'info')
+            MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable_blink(False, apply_now=True)
             return False
 
     def __charging(self) -> bool:
