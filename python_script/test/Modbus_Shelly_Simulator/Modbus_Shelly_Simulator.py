@@ -202,6 +202,8 @@ QDoubleSpinBox {
                 }
                 read_data.update(temp_dict)
                 json.dump(read_data, f, indent=4, ensure_ascii=False)
+        except json.JSONDecodeError as e:
+            pass
         except Exception as e:
             QMessageBox.critical(self, '错误', f'写入文件失败\n{traceback.format_exc()}')
 
@@ -372,7 +374,9 @@ QDoubleSpinBox {
         self.lb_ip_local.setText(ip_list[0])
         self.lb_ip_remote.setText(ip_list[1])
 
-    def handle_reader_signal(self, data: dict):
+    def handle_reader_signal(self, data: dict, isSuccess: bool) -> None:
+        if not isSuccess:
+            return
         if data['1000'] != self.configured_amps_1000:
             self.__isCurrentValueChanged = True
         if data['max_voltage'] != self.max_voltage:

@@ -198,7 +198,7 @@ class ShellySimulator_Thread(QThread):
             'current': self.__current_p0,
             'voltage': self.__voltage_p0,
             'is_valid': self.__isVaild,
-            'total': self.__total_power,
+            'total': self.__total_power_p0,
             'total_returned': 0
         }
         self.__ph1_dict = {
@@ -207,7 +207,7 @@ class ShellySimulator_Thread(QThread):
             'current': self.__current_p1,
             'voltage': self.__voltage_p1,
             'is_valid':  self.__isVaild,
-            'total': self.__total_power,
+            'total': self.__total_power_p1,
             'total_returned': 0
         }
         self.__ph2_dict = {
@@ -216,7 +216,7 @@ class ShellySimulator_Thread(QThread):
             'current': self.__current_p2,
             'voltage': self.__voltage_p2,
             'is_valid':  self.__isVaild,
-            'total': self.__total_power,
+            'total': self.__total_power_p2,
             'total_returned': 0
         }
         self.signal_ph0.emit(self.__ph0_dict)

@@ -176,7 +176,7 @@ class PollingShelly(Thread):
                 else:
                     _log.exception('Shelly read exception')
             if shelly_data is not None:
-                _log.info(shelly_data)
+                # _log.info(shelly_data)
                 shelly.set_data(shelly_data)
                 current_list = []
                 voltage_list = []

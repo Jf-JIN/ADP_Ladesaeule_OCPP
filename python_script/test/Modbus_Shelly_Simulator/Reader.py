@@ -8,7 +8,7 @@ class ReaderThread(QThread):
     读取文件线程
     """
 
-    signal_reader = pyqtSignal(dict)
+    signal_reader = pyqtSignal(dict, bool)
 
     def __init__(self, file_path) -> None:
         super().__init__()
@@ -27,6 +27,7 @@ class ReaderThread(QThread):
         self.__timer.timeout.connect(self.read_json)
         self.__timer.start(100)
         self.__file_lock = True
+        self.__isSuccess = True
         self.running = True
 
     def file_lock(self):
@@ -58,15 +59,17 @@ class ReaderThread(QThread):
                     else:
                         latch_unlock_pin = 0
             self.__file_lock = False
+            self.__isSuccess = True
         except:
             self.__file_lock = False
+            self.__isSuccess = False
             evse_state_1007 = self.__evse_state_1007
             vehicle_state_1002 = self.__vehicle_state_1002
             current_max_1003 = self.__current_max_1003
             current_min_2002 = self.__current_min_2002
-            onoff_selftest_1004 = 'Error'
-            configured_amps_1000 = 'Error'
-            charge_operation_2005 = 'Error'
+            onoff_selftest_1004 = -1
+            configured_amps_1000 = -1
+            charge_operation_2005 = -1
             latch_lock_pin = 'Error'
             latch_unlock_pin = 'Error'
             max_voltage = self.__max_voltage
@@ -104,4 +107,4 @@ class ReaderThread(QThread):
             self.__charge_operation_2005 = charge_operation_2005
             self.__latch_lock_pin = latch_lock_pin
             self.__latch_unlock_pin = latch_unlock_pin
-            self.signal_reader.emit(temp)
+            self.signal_reader.emit(temp, self.__isSuccess)

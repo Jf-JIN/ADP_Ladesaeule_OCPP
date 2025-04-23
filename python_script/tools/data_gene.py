@@ -10,6 +10,8 @@ from const.Const_Parameter import *
 import base64
 import io
 import matplotlib
+
+from const.GPIO_Parameter import GPIOParams
 matplotlib.use('Agg')  # 使用非交互式后端
 
 
@@ -296,14 +298,15 @@ class DataGene:
         if len(charge_plan) == 0 or len(charge_plan[0]) == 0 or 'startPeriod' not in charge_plan[0] or 'startTime' not in charge_plan[0]:
             return ''
         plt.style.use(['science', 'no-latex'])
+        # _log.info(f'Generating figure for charge plan: {charge_plan}')
 
         charge_plan = [DataGene.convert_dict_keys(charge_item) for charge_item in charge_plan]
         # time_list = [DataGene.str2time(charge_item['startTime']) + timedelta(seconds=charge_item['startPeriod']) for
         #  charge_item in charge_plan] + [DataGene.str2time(charge_plan[-1]['finishedTime'])]
         charge_start_time = DataGene.str2time(charge_plan[0]['startTime'])
         time_list = []
-        shelly_time = [charge_start_time]
-        shelly_total_energy = [0]
+        shelly_time = []
+        shelly_total_energy = []
         limit = []
         charged_energy_actual = [0]
         time_f = []
@@ -326,12 +329,12 @@ class DataGene:
         # limit.append(limit[-1])
         charged_energy_predict = [0]
         for duration, power in zip(time_split, limit):
-            charged_energy_predict.append(charged_energy_predict[-1] + power * duration / 60)
+            charged_energy_predict.append(charged_energy_predict[-1] + power * duration / 60 * GPIOParams.ASSUMED_PHASE)  # 3 is Phase
         # charged_energy_actual = [0] + [charge_item['chargedEnergy'] for charge_item in charge_plan]
-        if len(shelly_total_energy) > 0:
-            y_max = max(max(charged_energy_actual), max(charged_energy_predict), max(shelly_total_energy))
-        else:
-            y_max = max(max(charged_energy_actual), max(charged_energy_predict))
+        # if len(shelly_total_energy) > 0:
+        #     y_max = max(max(charged_energy_actual), max(charged_energy_predict), max(shelly_total_energy))
+        # else:
+        #     y_max = max(max(charged_energy_actual), max(charged_energy_predict))
         # time_f = [DataGene.str2time(item['finishedTime']) for item in charge_plan]
         plt.figure(figsize=(12, 6))  # 增加图表分辨率和大小
         plt.plot(time_list, charged_energy_actual, marker='.', linestyle='-', color=Color.BLUE, linewidth=2, label='actual charged energy')
@@ -514,7 +517,7 @@ class DataGene:
 
     @staticmethod
     def getCurrentTime() -> str:
-        return datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
+        return DataGene.time2str(datetime.now())
 
 
 # if __name__ == "__main__":
@@ -572,3 +575,19 @@ class DataGene:
     # image_data = base64.b64decode(img)
     # image = Image.open(BytesIO(image_data))
     # image.show()
+""" 
+[{<Key.startPeriod: 'startPeriod'>: 296.1483829021454, 
+<Key.limit: 'limit'>: 2862, 
+'startTime': '2025-04-23T19:51:00Z', 
+'finishedTime': '2025-04-23T19:56:00Z', 
+'chargedEnergy': 6.323544765501813, 
+'shellyTotalEnergy': 205.33183295165483, 
+'shellyTotalEnergyTimeMinute': '2025-04-23T19:55:00Z'}, 
+
+{<Key.startPeriod: 'startPeriod'>: 300, 
+<Key.limit: 'limit'>: 1102, 
+'startTime': '2025-04-23T19:51:00Z', 
+'finishedTime': '2025-04-23T19:56:12Z', 
+'chargedEnergy': 16.876137363353198}]
+
+"""
