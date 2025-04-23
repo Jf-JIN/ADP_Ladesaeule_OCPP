@@ -292,10 +292,12 @@ const downloadButton = document.getElementById('download');
 const num = parseInt(document.getElementById('downloadNum').value);
 
 downloadButton.addEventListener('click', function () {
-    socket.emit('download_csv', {
+    socket.emit('input_data', {
+        'download_csv': {
             'num': num,
             'id': 1,
-        });
+        }
+    });
 });
 
 socket.on('csv_data', function (data) {

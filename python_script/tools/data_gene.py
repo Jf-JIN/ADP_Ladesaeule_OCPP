@@ -309,7 +309,7 @@ class DataGene:
         time_f = []
         for charge_item in charge_plan:
             time_list.append(DataGene.str2time(charge_item['startTime']) + timedelta(seconds=charge_item['startPeriod']))
-            if charge_start_time <= DataGene.str2time(charge_item['shellyTotalEnergyTimeMinute']):
+            if 'shellyTotalEnergyTimeMinute' in charge_item and charge_start_time <= DataGene.str2time(charge_item['shellyTotalEnergyTimeMinute']):
                 shelly_time.append(DataGene.str2time(charge_item['shellyTotalEnergyTimeMinute']))
                 shelly_total_energy.append(charge_item['shellyTotalEnergy'])
             limit.append(charge_item['limit'])

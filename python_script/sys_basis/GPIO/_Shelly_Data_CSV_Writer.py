@@ -111,6 +111,7 @@ class ShellyDataCSVWriter:
         if self.__isSmartCharging:
             _log.info(f'There is already a writer(id: {self.__cu_id}) running, please stop it first')
             return
+        self.__isSmartCharging = True
         self.__start_time = time.time()
         self.__csv_file_path_list.append(self.current_csv_file_path)
         self.__check_folder()
@@ -126,6 +127,7 @@ class ShellyDataCSVWriter:
     def set_current_action(self, plan: dict, value_unit: str):
         if not self.__isSmartCharging:
             return
+        _log.info(f'Current action: {plan}')
         self.__current_action = plan
         self.__value_unit: str = value_unit
 

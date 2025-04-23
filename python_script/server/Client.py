@@ -307,7 +307,7 @@ voltage_max:{voltage_max}
         if evse_id not in self.__cp_info_dict:
             self.__cp_info_dict[evse_id] = {
                 'target_energy': float(manual_input_dict.get('target_energy', 0)),
-                'depart_time': manual_input_dict.get('target_energy', datetime.now().replace(microsecond=0).isoformat() + 'Z'),
+                'depart_time': manual_input_dict.get('depart_time', datetime.now().replace(microsecond=0).isoformat() + 'Z'),
                 'custom_data': {"vendor_id": GPIOParams.VENDOR_ID, "mode": 0},
             }
         res: bool = self.GPIO_Manager.set_charge_plan(
