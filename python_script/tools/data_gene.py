@@ -480,8 +480,12 @@ class DataGene:
     def getLastMinute() -> str:
         return (datetime.now() - timedelta(minutes=1)).strftime("%Y-%m-%dT%H:%M:00Z")
 
+    @staticmethod
+    def getCurrentTime() -> str:
+        return datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
 
-if __name__ == "__main__":
+
+# if __name__ == "__main__":
     # import base64
     # from io import BytesIO
     # from PIL import Image
@@ -524,13 +528,13 @@ if __name__ == "__main__":
     # limit = [charge_item['limit'] for charge_item in charge_plan]
     # img = DataGene.plot_charging_curve(datetime.now(), time_split, limit, Style.BAR)
 
-    charge_plan = [
-        {'startPeriod': 0, 'limit': 9852, 'startTime': '2025-01-26T14:40:29Z', 'finishedTime': '2025-01-26T14:45:21Z', 'chargedEnergy': 780, },
-        {'startPeriod': 300, 'limit': 9724, 'startTime': '2025-01-26T14:40:29Z', 'finishedTime': '2025-01-26T15:00:02Z', 'chargedEnergy': 3500, },
-        {'startPeriod': 0, 'limit': 9852, 'startTime': '2025-01-26T15:00:02Z', 'finishedTime': '2025-01-26T15:05:02Z', 'chargedEnergy': 4108, },
-        {'startPeriod': 300, 'limit': 9724, 'startTime': '2025-01-26T15:00:02Z', 'finishedTime': '2025-01-26T15:20:02Z', 'chargedEnergy': 6958, },
-        {'startPeriod': 1200, 'limit': 8523, 'startTime': '2025-01-26T15:00:02Z', 'finishedTime': '2025-01-26T15:25:02Z', 'chargedEnergy': 7510, },
-    ]
+    # charge_plan = [
+    #     {'startPeriod': 0, 'limit': 9852, 'startTime': '2025-01-26T14:40:29Z', 'finishedTime': '2025-01-26T14:45:21Z', 'chargedEnergy': 780, },
+    #     {'startPeriod': 300, 'limit': 9724, 'startTime': '2025-01-26T14:40:29Z', 'finishedTime': '2025-01-26T15:00:02Z', 'chargedEnergy': 3500, },
+    #     {'startPeriod': 0, 'limit': 9852, 'startTime': '2025-01-26T15:00:02Z', 'finishedTime': '2025-01-26T15:05:02Z', 'chargedEnergy': 4108, },
+    #     {'startPeriod': 300, 'limit': 9724, 'startTime': '2025-01-26T15:00:02Z', 'finishedTime': '2025-01-26T15:20:02Z', 'chargedEnergy': 6958, },
+    #     {'startPeriod': 1200, 'limit': 8523, 'startTime': '2025-01-26T15:00:02Z', 'finishedTime': '2025-01-26T15:25:02Z', 'chargedEnergy': 7510, },
+    # ]
     # img = DataGene.plan2figure(charge_plan)
     # img = DataGene.plan2figure(charge_plan)
     # image_data = base64.b64decode(img)
