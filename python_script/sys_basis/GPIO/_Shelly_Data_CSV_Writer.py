@@ -23,7 +23,8 @@ class ShellyDataCSVWriter:
         self.__isThreadRunning = True
         self.__write_lock = threading.Lock()
         self.__to_write_queue = queue.Queue()
-        self.__thread_write = threading.Thread(target=self.__write_in_loop)
+        self.__thread_write = threading.Thread(target=self.__write_in_loop, name=f'CSV_Writer_{self.__cu_id}', daemon=True)
+        self.__thread_write.start()
         self.__init_parameters()
 
     @property
@@ -40,6 +41,9 @@ class ShellyDataCSVWriter:
     @property
     def current_csv_file_path(self) -> str:
         return os.path.join(self.__csv_file_dir, self.current_csv_file_name)
+
+    def get_csv_files(self, file_num: int) -> str:
+        ...
 
     def write_shelly_data(self, current_list: list, voltage_list: list, power_list: list, energy_list: list, shelly_total_energy: int, actual_calculate_energy) -> None:
         if not self.__isSmartCharging:
@@ -91,7 +95,6 @@ class ShellyDataCSVWriter:
 
     def __init_table_header(self):
         self.__append_msg_in_queue([f'This file is created at {DataGene.getCurrentTime()}. ChargeUnit ID: {self.__cu_id}'])
-
         header = [
             'time',
             'current_a',
