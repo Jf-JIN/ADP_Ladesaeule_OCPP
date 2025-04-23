@@ -257,7 +257,6 @@ class ChargeUnit:
         current_exec_dict = charging_schedule_list[exec_index]
         period_start_time: str = current_exec_dict['startSchedule']
         period_start_datetime: datetime = DataGene.str2time(period_start_time)
-
         if self.__isFistTimeChanging:
             # 首次充电计划, 参数重置
             _log.info(f'首次充电计划, 开始参数重置\nThe first charging plan, start parameter reset')
@@ -482,7 +481,6 @@ The charging unit is not executable (correct value)
             设置电流, 开始充电
             """
             current = self.__convert_value_in_amps(self.__current_charge_action['limit'])
-            self.__shelly_writer.set_current_action(plan=self.__current_charge_action, value_unit=self.__value_unit)
             return self.__evse.set_current(current)
 
         # 1. 检查是否可以执行, 不能则停止充电, 并发出信号
@@ -502,6 +500,7 @@ The charging unit is not executable (correct value)
         self.__current_charge_action = self.__waiting_plan.pop(0)
         _log.info(f'开始充电，当前执行计划为\nStart charging, the current execution plan is\n{self.__current_charge_action}')
         _log.debug(f'剩余计划表\nRemaining planning table\n{self.__waiting_plan}')
+        self.__shelly_writer.set_current_action(plan=self.__current_charge_action, value_unit=self.__value_unit)
         self.__data_collector.set_CU_waiting_plan(self.id, copy.deepcopy(self.__waiting_plan), self.__current_start_time_str)
         self.__data_collector.set_CU_current_charge_action(self.id, copy.copy(self.__current_charge_action))
         if len(self.__waiting_plan) != 0:

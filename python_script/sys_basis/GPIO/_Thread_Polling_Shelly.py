@@ -2,7 +2,6 @@ from __future__ import annotations
 from threading import Thread
 import time
 import requests
-from sympy.physics.units import energy
 
 from const.GPIO_Parameter import *
 from const.Const_Parameter import *
@@ -14,7 +13,6 @@ if 0:
     from ._Data_Collector import DataCollector
     from ._Shelly import Shelly
     from _Shelly_Data_CSV_Writer import ShellyDataCSVWriter
-
 
 
 _log = Log.SHELLY
@@ -211,6 +209,7 @@ class PollingShelly(Thread):
                     _log.error(f'Shelly is not connected: {e}')
                 else:
                     _log.exception('Shelly read exception')
+            _log.info(shelly_data)
             shelly.set_data(shelly_data)
 
             current_list = []
