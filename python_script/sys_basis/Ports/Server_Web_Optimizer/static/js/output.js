@@ -7,17 +7,17 @@ submit_success = document.getElementById("successMessage");
 submit_button.addEventListener('click', () => {
     submit_success.style.display = 'none'; // 隐藏成功提示
 
-    const max_grid_power = document.getElementById("MaxGridPower").value.trim();
-    const interval = document.getElementById("chargeInterval").value.trim();
-    const file_eprices = document.getElementById("eprices").files[0];
+    let max_grid_power = document.getElementById("MaxGridPower").value.trim();
+    let interval = document.getElementById("chargeInterval").value.trim();
+    let file_eprices = document.getElementById("eprices").files[0];
 
-    const errors = [];
+    let errors = [];
 
     // 验证最大电网功率
     if (!max_grid_power) {
         errors.push("■ The maximum power grid power cannot be empty");
     } else {
-        const maxPower = parseInt(max_grid_power, 10);
+        let maxPower = parseInt(max_grid_power, 10);
         if (isNaN(maxPower)) {
             errors.push("■ The maximum power grid power must be effective figures");
         } else if (maxPower <= 0) {
@@ -32,7 +32,7 @@ submit_button.addEventListener('click', () => {
 
     // 验证文件类型
     if (file_eprices) {
-        const fileName = file_eprices.name.toLowerCase();
+        let fileName = file_eprices.name.toLowerCase();
         if (!fileName.endsWith('.csv')) {
             errors.push("■ Only support uploading CSV format files");
         }
@@ -45,14 +45,14 @@ submit_button.addEventListener('click', () => {
     }
 
     // 类型转换
-    const maxPower = parseInt(max_grid_power, 10);
-    const intervalNum = parseInt(interval, 10);
+    let maxPower = parseInt(max_grid_power, 10);
+    let intervalNum = parseInt(interval, 10);
 
     // 文件处理逻辑
     if (file_eprices) {
-        const reader = new FileReader();
+        let reader = new FileReader();
         reader.onload = function(event) {
-            const csvData = event.target.result;
+            let csvData = event.target.result;
             socket.emit('submit', {
                 'max_grid_power': maxPower,
                 'charging_interval': intervalNum,
