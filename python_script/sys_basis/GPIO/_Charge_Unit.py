@@ -648,7 +648,7 @@ The charging unit is not executable (correct value)
         if self.__value_unit == 'W':
             charging_limit = charging_limit / GPIOParams.MAX_VOLTAGE
         round_amps = round(charging_limit)
-        return max(min(round_amps, self.__current_max), self.__current_min)
+        return max(min(round_amps, self.__current_max), 0)  # 限制实际充电电流
 
     def __set_isEVSESelfTested(self, flag: bool) -> None:
         """ 设置是否已经进行过EVSE自检, 给信号使用的 """
