@@ -203,7 +203,7 @@ QDoubleSpinBox {
                 read_data.update(temp_dict)
                 json.dump(read_data, f, indent=4, ensure_ascii=False)
         except Exception as e:
-            QMessageBox.error(self, '错误', f'写入文件失败\n{traceback.format_exc()}')
+            QMessageBox.critical(self, '错误', f'写入文件失败\n{traceback.format_exc()}')
 
     def write_data_by_evse(self, key, value):
         temp_dict: dict = {
