@@ -52,7 +52,7 @@ class GPIOParams(AnalogDefine):
         # (1, 'url1'),
     ]
     DO_USE_RCD: bool = False
-    MAX_VOLTAGE = 230
+    MAX_VOLTAGE = 220
     MAX_SHELLY_RETRY = 5
     SELF_CHECK_TIMEOUT = -31
     """ EVSE 自检时间, 单位: 秒. 该值必须 >=30 秒, 否则自检将不会启动 """
