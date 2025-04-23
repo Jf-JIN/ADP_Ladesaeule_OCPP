@@ -4,12 +4,12 @@ import csv
 from const.Const_Parameter import *
 
 
-class ShellyDataCVSWriter:
+class ShellyDataCSVWriter:
     def __init__(self, cu_id: int):
         self.__cu_id = cu_id
         self.__root_path = APP_WORKSPACE_PATH
-        self.__root_folder_name = 'Data'
-        self.__csv_folder
+        self.__root_folder_name: str = 'Data'
+        self.__csv_folder_name: str = f'ChargeUnit_ID{self.__cu_id}'
         self.__start_time = '00-00-00T00:00:00Z'
         self.__csv_file_path = f"ID{self.__cu_id}_{self.__start_time}data.csv"
 
