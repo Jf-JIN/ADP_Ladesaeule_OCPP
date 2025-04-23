@@ -13,6 +13,7 @@ from ._EVSE import Evse
 from ._Shelly import Shelly
 from ._Latch_Motor import LatchMotor
 from ._Manager_LED import *
+from ._Shelly_Data_CSV_Writer import *
 
 
 if 0:
@@ -30,6 +31,7 @@ class ChargeUnit:
         self.__id: int = id
         self.__evse: Evse = Evse(id=id)
         self.__shelly: Shelly = Shelly(self, id=id, address=shelly_address)
+        self.__shelly_writer: ShellyDataCSVWriter = ShellyDataCSVWriter(cu_id=id)
         self.__data_collector: DataCollector = self.__parent.data_collector
         self.__latch_motor: LatchMotor = LatchMotor(self, id=id)
         self.__start_time_str: str = ''
