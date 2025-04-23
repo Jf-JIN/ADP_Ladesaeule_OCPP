@@ -92,7 +92,7 @@ class StructLED:
             _log.debug('start blink thread')
         return self
 
-    def set_enable_blink(self, enable: bool, apply_now: bool = False, speed_s: int = 1) -> typing.Self:
+    def set_enable_blink(self, enable: bool, apply_now: bool = False, speed_s: int | float | list = 1) -> typing.Self:
         self.__shouldBlink: bool = enable
         if not enable:
             if self.__blink_thread.is_alive():
@@ -191,7 +191,7 @@ class ExclusiveGroupLED:
             _log.warning(f"LED <{led}> name or index is not valid, leds are disabled")
         return self
 
-    def set_enable_blink(self, enable: bool, speed_s: int = 1) -> typing.Self:
+    def set_enable_blink(self, enable: bool, speed_s: int | float | list = 1) -> typing.Self:
         for led in self.__leds_dict_index.values():
             led: StructLED
             led.set_enable_blink(enable, speed_s)
