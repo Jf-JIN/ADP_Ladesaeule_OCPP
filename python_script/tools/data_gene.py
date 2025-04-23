@@ -105,19 +105,19 @@ class DataGene:
             """根据小时和种子生成用电量(单位: Wh). """
             np.random.seed(seed)
             if 6 <= hour < 18:  # 白天
-                usage = np.random.normal(5000, 500)
+                usage = np.random.normal(2500, 250)
                 if 7 <= hour < 9:  # 早餐时间
-                    usage += np.random.normal(2000, 300)
+                    usage += np.random.normal(1000, 150)
                 elif 12 <= hour < 14:  # 午餐时间
-                    usage += np.random.normal(1600, 200)
+                    usage += np.random.normal(800, 100)
             else:  # 夜间
-                usage = np.random.normal(1000, 300)
+                usage = np.random.normal(500, 150)
                 if 19 <= hour < 22:  # 晚上电视和照明
-                    usage += np.random.normal(2400, 500)
+                    usage += np.random.normal(1200, 250)
                 if 20 <= hour < 22:  # 晚上洗澡
-                    usage += np.random.normal(3000, 400)
+                    usage += np.random.normal(1500, 200)
                 elif 22 <= hour < 23:  # 晚上用电渐低
-                    usage += np.random.normal(1200, 300)
+                    usage += np.random.normal(600, 150)
             return max(0, int(usage))  # 确保用电量非负
 
         # 如果有固定的用户ID, 使用该ID生成固定的种子
@@ -138,19 +138,19 @@ class DataGene:
         def generate_usage(hour: int) -> int:
             """根据小时生成用电量(单位: W). """
             if 6 <= hour < 18:  # 白天
-                usage = np.random.normal(5000, 500)
+                usage = np.random.normal(2500, 250)
                 if 7 <= hour < 9:  # 早餐时间
-                    usage += np.random.normal(2000, 300)
+                    usage += np.random.normal(1000, 150)
                 elif 12 <= hour < 14:  # 午餐时间
-                    usage += np.random.normal(1600, 200)
+                    usage += np.random.normal(800, 100)
             else:  # 夜间
-                usage = np.random.normal(1000, 300)
+                usage = np.random.normal(500, 150)
                 if 19 <= hour < 22:  # 晚上电视和照明
-                    usage += np.random.normal(2400, 500)
+                    usage += np.random.normal(1200, 250)
                 if 20 <= hour < 22:  # 晚上洗澡
-                    usage += np.random.normal(3000, 400)
+                    usage += np.random.normal(1500, 200)
                 elif 22 <= hour < 23:  # 晚上用电渐低
-                    usage += np.random.normal(1200, 300)
+                    usage += np.random.normal(600, 150)
             return max(0, int(usage))  # 确保用电量非负
 
         # 每天有96个15分钟数据点
@@ -383,7 +383,7 @@ class DataGene:
             - max_grid_power(int): 最大电网功率
             - max_power(int): 最大功率
             - min_power(int): 最小功率
-            - interval(int): 分割间隔(可选15, 30, 60, 120分钟)
+            - interval(int): 分割间隔(可选2, 15, 30, 60, 120分钟)
 
         返回:
             - list: 包含每段时间的持续时间、电价和可用功率的列表
@@ -391,46 +391,78 @@ class DataGene:
         # if interval not in [15, 30, 60, 120]:
         #     _log.error("Interval must be one of [15, 30, 60, 120]")
 
-        if interval not in [15, 30, 60, 120]:
-            _log.error("Interval must be one of [15, 30, 60, 120]")
+        if interval not in [2, 15, 30, 60, 120]:
+            _log.error("Interval must be one of [2, 15, 30, 60, 120]")
 
         result_time = []
         result_eprices = []
         max_power_list = []
 
-        # 初始化第一个分割点
-        time_next = start_time + timedelta(minutes=interval - start_time.minute % interval)
+        if interval == 2:
+            time_next = start_time + timedelta(minutes=interval)
+            while start_time < end_time:
+                # 确定当前时间段的结束时间
+                segment_end = min(time_next, end_time)
+                duration = (segment_end - start_time).seconds // 60
+                result_time.append(duration)
 
-        while start_time < end_time:
-            # 确定当前时间段的结束时间
-            segment_end = min(time_next, end_time)
-            duration = (segment_end - start_time).seconds // 60
-            result_time.append(duration)
+                # 计算索引范围
+                start_index = round((start_time.hour * 60 + start_time.minute) // 15)
+                end_index = round((segment_end.hour * 60 + segment_end.minute) // 15)
+                # _info(f"start_index: {start_index}, end_index: {end_index}")
 
-            # 计算索引范围
-            start_index = (start_time.hour * 60 + start_time.minute) // 15
-            end_index = (segment_end.hour * 60 + segment_end.minute) // 15
-            # _info(f"start_index: {start_index}, end_index: {end_index}")
+                # 避免除以零的错误
+                if end_index > start_index:
+                    avg_price = sum(eprices[start_index:end_index]) / (end_index - start_index)
+                    avg_usage = sum(his_usage[start_index:end_index]) / (end_index - start_index)
+                else:
+                    avg_price = eprices[start_index]
+                    avg_usage = his_usage[start_index]
 
-            # 避免除以零的错误
-            if end_index > start_index:
-                avg_price = sum(eprices[start_index:end_index]) / (end_index - start_index)
-                avg_usage = sum(his_usage[start_index:end_index]) / (end_index - start_index)
-            else:
-                avg_price = eprices[start_index]
-                avg_usage = his_usage[start_index]
+                result_eprices.append(avg_price)
 
-            result_eprices.append(avg_price)
+                # 计算可用功率
+                available_power = max(min_power, max(0, max_grid_power - avg_usage))
+                max_power_list.append(min(max_power, available_power))
 
-            # 计算可用功率
-            available_power = max(min_power, max(0, max_grid_power - avg_usage))
-            max_power_list.append(min(max_power, available_power))
+                # 更新时间
+                start_time = segment_end
+                time_next += timedelta(minutes=interval)
+            return [result_time, result_eprices, max_power_list]
+        else:
+            # 初始化第一个分割点
+            time_next = start_time + timedelta(minutes=interval - start_time.minute % interval)
 
-            # 更新时间
-            start_time = segment_end
-            time_next += timedelta(minutes=interval)
+            while start_time < end_time:
+                # 确定当前时间段的结束时间
+                segment_end = min(time_next, end_time)
+                duration = (segment_end - start_time).seconds // 60
+                result_time.append(duration)
 
-        return [result_time, result_eprices, max_power_list]
+                # 计算索引范围
+                start_index = (start_time.hour * 60 + start_time.minute) // 15
+                end_index = (segment_end.hour * 60 + segment_end.minute) // 15
+                # _info(f"start_index: {start_index}, end_index: {end_index}")
+
+                # 避免除以零的错误
+                if end_index > start_index:
+                    avg_price = sum(eprices[start_index:end_index]) / (end_index - start_index)
+                    avg_usage = sum(his_usage[start_index:end_index]) / (end_index - start_index)
+                else:
+                    avg_price = eprices[start_index]
+                    avg_usage = his_usage[start_index]
+
+                result_eprices.append(avg_price)
+
+                # 计算可用功率
+                available_power = max(min_power, max(0, max_grid_power - avg_usage))
+                max_power_list.append(min(max_power, available_power))
+
+                # 更新时间
+                start_time = segment_end
+                time_next += timedelta(minutes=interval)
+
+            return [result_time, result_eprices, max_power_list]
 
     @staticmethod
     def snake_to_camel_string(snake_str) -> str:

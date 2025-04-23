@@ -6,6 +6,7 @@ from const.Const_Parameter import *
 from tools.data_gene import DataGene
 import numpy as np
 import copy
+
 _info = Log.OPT.info
 _error = Log.OPT.error
 _warning = Log.OPT.warning
@@ -152,9 +153,10 @@ class Optimizer:
             cumulative_energy = np.cumsum(P) * time_step
             over = np.argmax(cumulative_energy >= E_target) if np.any(cumulative_energy >= E_target) else self._num_split
             cost_time = over * self._interval / 15
-            cost = np.sum(P * self._eprices_split * time_step)
+            cost = np.sum(P * self._eprices_split * time_step) / np.mean(self._eprices)
             if self._mode == 0:
-                self._weight = self._adjust_weights(cost_time, cost)
+                # self._weight = self._adjust_weights(cost_time, cost)
+                pass
             return self._weight[0] * cost_time + self._weight[1] * cost
 
         # 约束条件
@@ -200,8 +202,8 @@ class Optimizer:
             scpr = GenSetChargingProfileRequest()
             charging_schedule_period_list = []
             for i in range(self._num_split):
-                # start_period = int(sum(self._time_split[:i]) * 60)  # 缩短60倍用于测试，实际使用请删除
-                start_period = int(sum(self._time_split[:i]))  # test
+                start_period = int(sum(self._time_split[:i]) * 60)  # 缩短60倍用于测试，实际使用请删除
+                # start_period = int(sum(self._time_split[:i]))  # test
                 charging_schedule_period_list.append(
                     scpr.get_charging_schedule_period(
                         start_period=start_period,
@@ -237,20 +239,21 @@ if __name__ == "__main__":
     charging_needs = {
         "requestedEnergyTransfer": EnergyTransferModeType.ac_three_phase,
         "acChargingParameters": {
-            "energyAmount": 70000,
-            "evMaxCurrent": 32,
+            "energyAmount": 4000,
+            "evMaxCurrent": 13,
             "evMinCurrent": 6,
-            "evMaxVoltage": 400,
+            "evMaxVoltage": 230,
         },
-        "departureTime": DataGene.time2str(datetime.now() + timedelta(hours=10))
+        "departureTime": DataGene.time2str(datetime.now() + timedelta(hours=2))
     }
     eprices = DataGene.gene_eprices(0.33, 0.3, 6, 22)
     # print(eprices)
     his_usage = DataGene.gene_his_usage()
     # his_usage = DataGene.gene_his_usage_seed(3456)
     # print(his_usage)
-    DataGene.plot_usage(his_usage)
-    op_dp = Optimizer(charging_needs, eprices, his_usage, 16000, 30, 2)
+    # DataGene.plot_usage(his_usage)
+    op_dp = Optimizer(charging_needs, eprices, his_usage, 5000, 2, 1)
     # print(op_dp.get_charging_needs())
     # DataGene.plot_charging_curve(op_dp._start_time, op_dp._time_split, op_dp._charging_list)
     # DataGene.plot_usage_comparison(op_dp._start_time, op_dp._time_split, op_dp._charging_list, his_usage, 16000)
+    op_dp.get_img_comparison()
