@@ -170,67 +170,33 @@ class PollingShelly(Thread):
                     self.__retry_count += 1
                     time.sleep(self.__interval)
                     continue
-                shelly_data = {
-                    0: {
-                        'power': 0,
-                        'pf': 0,
-                        'current': 0,
-                        'voltage': 0,
-                        'frequncy': 0,
-                        'total_energy': 0
-                        # 'is_valid': False,
-                        # 'total': 0,
-                    },
-                    1: {
-                        'power': 0,
-                        'pf': 0,
-                        'current': 0,
-                        'voltage': 0,
-                        'frequncy': 0,
-                        'total_energy': 0
-                        # 'is_valid': False,
-                        # 'total': 0,
-                    },
-                    2: {
-                        'power': 0,
-                        'pf': 0,
-                        'current': 0,
-                        'voltage': 0,
-                        'frequncy': 0,
-                        'total_energy': 0
-                        # 'is_valid': False,
-                        # 'total': 0,
-                    },
-                    'is_valid': False,
-                    'total_energy': 0,
-                    'total_energy_time_min': '',
-                }
+                shelly_data = None
                 if isinstance(e, requests.exceptions.ConnectionError):
                     _log.error(f'Shelly is not connected: {e}')
                 else:
                     _log.exception('Shelly read exception')
-            _log.info(shelly_data)
-            shelly.set_data(shelly_data)
-
-            current_list = []
-            voltage_list = []
-            power_list = []
-            energy_list = []
-            for i in range(3):
-                current_list.append(shelly_data[i]['current'])
-                voltage_list.append(shelly_data[i]['voltage'])
-                power_list.append(shelly_data[i]['power'])
-                energy_list.append(shelly_data[i]['total_energy'])
-            CSV_writer.write_shelly_data(
-                current_list=current_list,
-                voltage_list=voltage_list,
-                power_list=power_list,
-                energy_list=energy_list,
-                shelly_total_energy=shelly_data['total_energy'],
-                actual_calculate_energy=shelly.data['charged_energy'],
-            )
-            # self.__data_collector.set_shelly_data(shelly_id, shelly_data)
-            self.__current_index = (self.__current_index + 1) % self.__shelly_quantity
+            if shelly_data is not None:
+                _log.info(shelly_data)
+                shelly.set_data(shelly_data)
+                current_list = []
+                voltage_list = []
+                power_list = []
+                energy_list = []
+                for i in range(3):
+                    current_list.append(shelly_data[i]['current'])
+                    voltage_list.append(shelly_data[i]['voltage'])
+                    power_list.append(shelly_data[i]['power'])
+                    energy_list.append(shelly_data[i]['total_energy'])
+                CSV_writer.write_shelly_data(
+                    current_list=current_list,
+                    voltage_list=voltage_list,
+                    power_list=power_list,
+                    energy_list=energy_list,
+                    shelly_total_energy=shelly_data['total_energy'],
+                    actual_calculate_energy=shelly.data['charged_energy'],
+                )
+                # self.__data_collector.set_shelly_data(shelly_id, shelly_data)
+                self.__current_index = (self.__current_index + 1) % self.__shelly_quantity
             time.sleep(self.__interval)
 
     def stop(self, ) -> None:
