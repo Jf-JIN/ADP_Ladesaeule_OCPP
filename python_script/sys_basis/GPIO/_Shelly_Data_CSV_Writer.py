@@ -23,6 +23,7 @@ class _ZipThread(threading.Thread):
         self.__file_paths: list = file_paths
 
     def __zip_files(self, zip_file_path, file_paths) -> None:
+        _log.info(f"Zip files to {zip_file_path}")
         with zipfile.ZipFile(zip_file_path, 'a', zipfile.ZIP_DEFLATED) as zipf:
             for file_path in file_paths:
                 arcname = os.path.basename(file_path)
@@ -45,6 +46,7 @@ class ShellyDataCSVWriter:
         self.__root_folder_name: str = 'Data'
         self.__csv_folder_name: str = f'ChargeUnit_ID{self.__cu_id}'
         self.__csv_file_dir: str = os.path.join(self.__root_dir, self.__root_folder_name, self.__csv_folder_name)
+        os.makedirs(self.__csv_file_dir, exist_ok=True)
         self.__csv_file_path_list: list = []
         self.__max_csv_file_count: int = 10
         self.__last_calculation_time = time.time()
@@ -58,10 +60,7 @@ class ShellyDataCSVWriter:
 
     @property
     def csv_file_path_list(self) -> list:
-        if not self.__csv_file_path_list:
-            res: list = os.listdir(self.__csv_file_dir)
-            sorted_list: list = sorted(res, key=os.path.getctime)
-            self.__csv_file_path_list = [f for f in sorted_list if f.endswith('.csv')]
+        self.__check_folder()
         return self.__csv_file_path_list
 
     @property
@@ -79,13 +78,16 @@ class ShellyDataCSVWriter:
             self.signal_exported_file_path.emit(self.current_csv_file_path)
             return
         else:
-            zip_file_path = os.path.join(self.__csv_file_dir, f"Data_ID{self.__cu_id}_{self.__start_time}.zip")
-            self.__zip_thread = _ZipThread(zip_file_path, self.csv_file_path_list[-file_num:], name=f'zip_thread_ID_{self.__cu_id}')
-            self.__zip_thread.signal_finished.emit(functools.partial(self.signal_exported_file_path.emit, zip_file_path))
+            self.__zip_file_path = os.path.join(self.__csv_file_dir, f"Data_ID{self.__cu_id}_{self.__start_time}.zip")
+            self.__zip_thread = _ZipThread(self.__zip_file_path, self.csv_file_path_list[-file_num:], name=f'zip_thread_ID_{self.__cu_id}')
+            self.__zip_thread.signal_finished.emit(self.__thread_zip_finished)
             self.__zip_thread.start()
             return
 
-    def write_shelly_data(self, current_list: list, voltage_list: list, power_list: list, energy_list: list, shelly_total_energy: int, actual_calculate_energy) -> None:
+    def __thread_zip_finished(self) -> None:
+        self.signal_exported_file_path.emit(self.__zip_file_path)
+
+    def write_shelly_data(self, current_list: list, voltage_list: list, power_list: list, energy_list: list, shelly_total_energy: int, actual_calculate_energy: int) -> None:
         if not self.__isSmartCharging:
             return
         if len(current_list) != 3 or len(voltage_list) != 3 or len(power_list) != 3 or len(energy_list) != 3:
@@ -109,6 +111,7 @@ class ShellyDataCSVWriter:
         if self.__isSmartCharging:
             _log.info(f'There is already a writer(id: {self.__cu_id}) running, please stop it first')
             return
+        self.__start_time = time.time()
         self.__csv_file_path_list.append(self.current_csv_file_path)
         self.__check_folder()
         self.__set_start_charging_time(time.time())
