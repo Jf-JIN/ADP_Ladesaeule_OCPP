@@ -144,6 +144,10 @@ class ChargeUnit:
         return self.__shelly
 
     @property
+    def shelly_writer(self) -> ShellyDataCSVWriter:
+        return self.__shelly_writer
+
+    @property
     def waiting_plan(self) -> list:
         return self.__waiting_plan
 
@@ -408,6 +412,7 @@ EVSE State abnormal, Unable to start charging (correct value)
         if self.__enableDirectCharge:
             self.__charging_direct()
         else:
+            self.__shelly_writer.start_writing()
             self.__charging()
 
     def __isExecutable(self) -> bool:
@@ -615,6 +620,7 @@ The charging unit is not executable (correct value)
         self.__isFistTimeChanging = True
         self.__enableDirectCharge = False
         self.__data_collector.stop_CU_charging(self.id)
+        self.__shelly_writer.stop_writing()
         self.signal_hint_message.emit(f'充电单元 <{self.id}> 已停止充电\nCharge unit <{self.id}> has stopped charging', 'info')
         if sender in ['evse', 'shelly']:
             MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable_blink(True, apply_now=True, speed_s=[0.2, 0.2, 0.2, 2])

@@ -2,6 +2,8 @@ from __future__ import annotations
 from threading import Thread
 import time
 import requests
+from sympy.physics.units import energy
+
 from const.GPIO_Parameter import *
 from const.Const_Parameter import *
 from tools.data_gene import DataGene
@@ -11,6 +13,8 @@ if 0:
     from ._Charge_Unit import ChargeUnit
     from ._Data_Collector import DataCollector
     from ._Shelly import Shelly
+    from _Shelly_Data_CSV_Writer import ShellyDataCSVWriter
+
 
 
 _log = Log.SHELLY
@@ -21,9 +25,11 @@ class PollingShelly(Thread):
         super().__init__(name='PollingShelly')
         self.__parent: GPIOManager = parent
         self.__shelly_list: list = []
+        self.__CSV_writer_list: list = []
         for item in charge_unit_dict.values():
             item: ChargeUnit
             self.__shelly_list.append(item.shelly)
+            self.__CSV_writer_list.append(item.shelly_writer)
         self.__shelly_quantity: int = len(self.__shelly_list)
         self.__interval: int | float = intervall
         self.__timeout: int | float = timeout
@@ -143,6 +149,7 @@ class PollingShelly(Thread):
     def run(self) -> None:
         while self.__isRunning:
             shelly: Shelly = self.__shelly_list[self.__current_index]
+            CSV_writer: ShellyDataCSVWriter = self.__CSV_writer_list[self.__current_index]
             shelly_id = shelly.id
             data_address: str = shelly.data_address
             total_energy_address: str = shelly.total_energy_address
@@ -205,6 +212,18 @@ class PollingShelly(Thread):
                 else:
                     _log.exception('Shelly read exception')
             shelly.set_data(shelly_data)
+            current_list = [shelly_data[i]['current'] for i in range(3)]
+            voltage_list = [shelly_data[i]['voltage'] for i in range(3)]
+            power_list = [shelly_data[i]['power'] for i in range(3)]
+            energy_list = [shelly_data[i]['total_energy'] for i in range(3)]
+            CSV_writer.write_shelly_data(
+                current_list=current_list,
+                voltage_list=voltage_list,
+                power_list=power_list,
+                energy_list=energy_list,
+                shelly_total_energy=shelly_data['total_energy'],
+                actual_calculate_energy=shelly.data['charged_energy'],
+            )
             # self.__data_collector.set_shelly_data(shelly_id, shelly_data)
             self.__current_index = (self.__current_index + 1) % self.__shelly_quantity
             time.sleep(self.__interval)
