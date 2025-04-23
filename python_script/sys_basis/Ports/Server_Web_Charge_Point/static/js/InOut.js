@@ -287,3 +287,37 @@ btn_create_csv.addEventListener('click', function () {
     a.click();
     URL.revokeObjectURL(url);
 })
+
+const downloadButton = document.getElementById('download');
+const num = parseInt(document.getElementById('downloadNum').value);
+
+downloadButton.addEventListener('click', function () {
+    socket.emit('download_csv', {
+            'num': num,
+            'id': 1,
+        });
+});
+
+socket.on('csv_data', function (data) {
+      if (data.error) {
+        console.error('Error:', data.error);
+        return;
+      }
+
+      console.log('File:', data.filename);
+      console.log('Content:', data.content);
+
+      var blob;
+
+      if (data.filename.endsWith(".csv")) {
+          blob = new Blob([data.content], { type: 'text/csv' });
+      }
+      else if (data.filename.endsWith(".zip")) {
+          blob = new Blob([data.content], { type: 'text/zip' });
+      }
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = data.filename;
+      a.click();
+});

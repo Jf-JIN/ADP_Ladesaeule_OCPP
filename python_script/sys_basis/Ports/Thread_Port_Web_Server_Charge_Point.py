@@ -45,6 +45,9 @@ class PortWebServerChargePoint:
     def send_message(self, message: dict):
         self.__web_server.update_data(message)
 
+    def send_csv_data(self, message: dict):
+        self.__web_server.send_csv_data(message)
+
     def __send_signal_info(self, *args) -> None:
         """
         发送/打印 信息信号
