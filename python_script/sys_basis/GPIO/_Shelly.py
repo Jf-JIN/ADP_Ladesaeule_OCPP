@@ -45,7 +45,7 @@ class Shelly:
         return f'{self.__main_address}/rpc/EMData.ResetCounters'
 
     @property
-    def total_energy_address(self) -> int | float:
+    def total_energy_address(self) -> str:
         return f'{self.__main_address}/rpc/EMData.GetStatus?id=0'
 
     @property
