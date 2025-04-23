@@ -482,6 +482,7 @@ The charging unit is not executable (correct value)
             设置电流, 开始充电
             """
             current = self.__convert_value_in_amps(self.__current_charge_action['limit'])
+            self.__shelly_writer.set_current_action(plan=self.__current_charge_action, value_unit=self.__value_unit)
             return self.__evse.set_current(current)
 
         # 1. 检查是否可以执行, 不能则停止充电, 并发出信号

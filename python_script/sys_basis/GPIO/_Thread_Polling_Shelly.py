@@ -212,10 +212,16 @@ class PollingShelly(Thread):
                 else:
                     _log.exception('Shelly read exception')
             shelly.set_data(shelly_data)
-            current_list = [shelly_data[i]['current'] for i in range(3)]
-            voltage_list = [shelly_data[i]['voltage'] for i in range(3)]
-            power_list = [shelly_data[i]['power'] for i in range(3)]
-            energy_list = [shelly_data[i]['total_energy'] for i in range(3)]
+
+            current_list = []
+            voltage_list = []
+            power_list = []
+            energy_list = []
+            for i in range(3):
+                current_list.append(shelly_data[i]['current'])
+                voltage_list.append(shelly_data[i]['voltage'])
+                power_list.append(shelly_data[i]['power'])
+                energy_list.append(shelly_data[i]['total_energy'])
             CSV_writer.write_shelly_data(
                 current_list=current_list,
                 voltage_list=voltage_list,
