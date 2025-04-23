@@ -28,7 +28,7 @@ class ShellyDataCSVWriter:
         self.__init_parameters()
 
     @property
-    def cvs_file_path_list(self) -> list:
+    def csv_file_path_list(self) -> list:
         if not self.__csv_file_path_list:
             res = os.listdir(self.__csv_file_dir)
             self.__csv_file_path_list = [f for f in res if f.endswith('.csv')]
@@ -42,7 +42,8 @@ class ShellyDataCSVWriter:
     def current_csv_file_path(self) -> str:
         return os.path.join(self.__csv_file_dir, self.current_csv_file_name)
 
-    def get_csv_files(self, file_num: int) -> str:
+    def get_exported_csv_files_path(self, file_num: int) -> str:
+        """ 返回的是处理后有可能是打包的文件，也有可能是单个文件 """
         ...
 
     def write_shelly_data(self, current_list: list, voltage_list: list, power_list: list, energy_list: list, shelly_total_energy: int, actual_calculate_energy) -> None:
