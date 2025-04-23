@@ -16,6 +16,7 @@ from tools.data_gene import DataGene
 from const.Const_Parameter import *
 from const.Charge_Point_Parameters import *
 import json
+from sys_basis.GPIO._Shelly_Data_CSV_Writer import ShellyDataCSVWriter
 
 _log: Logger = Log.RAS
 
@@ -196,6 +197,7 @@ class Client:
             'manual_input': self.web_handle_manual_input,
             'manual_input_csv': self.web_handle_manual_input_csv,
             'logout': self.web_handle_logout,
+            'download_csv': self.web_handle_download_csv,
         }
         for key, value in handle_dict.items():
             if key in web_message:
@@ -343,6 +345,34 @@ voltage_max:{voltage_max}
         else:
             # os.execv(sys.executable, ['python'] + sys.argv)
             self.send_web_alert_message('Not suported yet.')
+
+    def web_handle_download_csv(self, download_num: dict) -> None:
+        _log.info('下载shelly_CSV文件 Download the shelly CSV file')
+        if 'num' in download_num:
+            num = download_num['num']
+        else:
+            num = 1
+        if 'id' in download_num:
+            id = download_num['id']
+        else:
+            id = 1
+        self.send_web_alert_message('打包CSV文件中...\nPacked in CSV file...', 'info')
+        self.GPIO_Manager.get_charge_unit(id).shelly_writer.signal_exported_file_path.connect(self.web_send_download_csv)
+        self.GPIO_Manager.get_charge_unit(id).shelly_writer.request_exported_csv_files_path(num)
+
+    def web_send_download_csv(self, path: str) -> None:
+        _log.info('打包完成，准备发送文件 Packed, ready to send file')
+        if not os.path.exists(path):
+            self.thread_web_server.send_csv_data({'error': 'File not found'})
+            self.send_web_error_message('文件未找到\nFile not found')
+            return
+        filename = os.path.basename(path)
+        with open(path, 'r', encoding='utf-8') as f:
+            content = f.read()
+        self.thread_web_server.send_csv_data({
+            'filename': filename,
+            'content': content
+        })
 
     def handle_computer_message(self, computer_message) -> None:
         """

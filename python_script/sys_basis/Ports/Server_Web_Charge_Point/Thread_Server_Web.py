@@ -43,6 +43,7 @@ class ServerWeb(Thread):
         # self.__app.add_url_rule('/user', 'user', self.__user_route, methods=['GET', 'POST'])
         self.__start_timer()
         self.__listening_input_data()
+        self.__listening_download()
         self.__logout()
         self.__shutdow_route()
         self.__ip_local: str = '127.0.0.1' if host == '0.0.0.0' else '[::1]'
@@ -118,6 +119,17 @@ class ServerWeb(Thread):
         def handle_input_data(message):
             # self.__send_signal_info(f'->>> Web Received> {message}')
             self.signal_web_server_recv.emit(message)
+
+    def __listening_download(self):
+        @self.__socketio.on('download_csv', namespace='/')
+        def handle_submit(message):
+            # self.__send_signal_info(f'->>> Web Received> {message}')
+            self.signal_web_server_recv.emit(message)
+
+    def send_csv_data(self, message: dict):
+        if not message:
+            return
+        self.__socketio.emit('csv_data', message)
 
     def __logout(self):
         @self.__socketio.on('logout', namespace='/')

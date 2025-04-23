@@ -20,7 +20,7 @@
                 <span id="text_console">控制台</span>
             </li>
             <li id="title_image" class="title_item">
-                <span id="text_image">图像</span>
+                <span id="text_image">数据</span>
             </li>
             <li id="title_manual_input" class="title_item">
                 <span id="text_manual_input">图像</span>
@@ -163,6 +163,23 @@
     </div>
 
     <div id="page_image">
+        <div id="csv_downloader" style="display: flex; align-items: center; gap: 5px; margin: 10px 0;">
+            <label for="downloadNum" style="margin: 0;">The last</label>
+            <select id="downloadNum" name="downloadNum" required style="margin: 0;">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+            <label for="downloadNum" style="display: inline-block; width: 60px; text-align: left; margin: 0 50px 0 0;">files</label>
+            <input type="button" value="Download" id="download" style="margin: 0 60px 0 10px ;">
+        </div>
         <div id="watcher_contain"></div>
         <div id="image_contain" class="image_group">
             <img id="cp_fig" class="image_widget" src="./static/blank.png" alt="Display_Charge_Point">
@@ -215,6 +232,7 @@ Non-json format is not supported."></textarea>
     <script src="./static/js/language_package_en.js"></script>
     <script src="./static/js/language_package_de.js"></script>
     <script src="./static/js/language_setting.js"></script>
+    <script src="./static/js/jszip.min.js"></script>
     <script src="./static/js/InOut.js"></script>
     <script src="./static/js/home.js"></script>
 </body>
