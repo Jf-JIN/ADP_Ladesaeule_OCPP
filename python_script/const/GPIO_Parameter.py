@@ -4,6 +4,7 @@ GPIO 枚举类
 
 """
 from const.Analog_Define import AnalogDefine
+from tools.check_func import import_data
 
 
 class EVSERegAddress(AnalogDefine):
@@ -38,47 +39,50 @@ class EVSERegAddress(AnalogDefine):
     AMPS8 = 2017
 
 
+_dct = import_data()
+
+
 class GPIOParams(AnalogDefine):
     VENDOR_ID = 'Darmstadt'
     MESSAGE_SEND_INTERVAL = 60  # seconds
     CHARGE_UNITS = [
         # (EVSE_Id, Shelly_main_url)
-        (1, 'shellypro3em-2cbcbbb2e0b8.local'),
+        # (1, 'shellypro3em-2cbcbbb2e0b8.local'),
         # (1, '172.18.25.49:6666'),
         # (1, '172.18.20.152:6666'),
-        # (1, 'http://192.168.124.9:6666'),
+        (1, 'http://192.168.124.9:6666'),
         # (1, 'http://130.83.148.29:6666'),
 
         # (0, '192.168.1.100'),
         # (1, 'url1'),
-    ]
+    ] if 'charge_units' not in _dct else _dct['charge_units']
     DO_USE_RCD: bool = False
-    MAX_VOLTAGE = 220
-    MAX_SHELLY_RETRY = 5
-    ASSUMED_PHASE = 3
-    SELF_CHECK_TIMEOUT = -31
+    MAX_VOLTAGE = 220 if 'max_voltage' not in _dct else _dct['max_voltage']
+    MAX_SHELLY_RETRY = 5 if 'max_shelly_retry' not in _dct else _dct['max_shelly_retry']
+    ASSUMED_PHASE = 3 if 'assumed_phase' not in _dct else _dct['assumed_phase']
+    SELF_CHECK_TIMEOUT = -31 if 'self_check_timeout' not in _dct else _dct['self_check_timeout']
     """ EVSE 自检时间, 单位: 秒. 该值必须 >=30 秒, 否则自检将不会启动 """
-    LETCH_MOTOR_RUNTIME = 1
+    LETCH_MOTOR_RUNTIME = 1 if 'letch_motor_runtime' not in _dct else _dct['letch_motor_runtime']
     """ 栓电机运行时间, 单位: 秒. 该值必须大于0秒, 否则电机将不会启动 """
-    CALIBRATION_PERIOD = 60
+    CALIBRATION_PERIOD = 60 if 'calibration_period' not in _dct else _dct['calibration_period']
     """ 校准周期, 单位: 秒. 该值必须大于0秒, 否则校准将不会启动 """
-    POLLING_EVSE_INTERVAL = 1
+    POLLING_EVSE_INTERVAL = 1 if 'polling_evse_interval' not in _dct else _dct['polling_evse_interval']
     """ 轮询 EVSE 间隔, 单位: 秒. 该值必须大于0秒 """
-    POLLING_SHELLY_INTERVAL = 1
+    POLLING_SHELLY_INTERVAL = 1 if 'polling_shelly_interval' not in _dct else _dct['polling_shelly_interval']
     """ 轮询 Shelly 间隔, 单位: 秒. 该值必须大于0秒 """
-    POLLING_SHELLY_TIMEOUT = 10
+    POLLING_SHELLY_TIMEOUT = 10 if 'polling_shelly_timeout' not in _dct else _dct['polling_shelly_timeout']
     """ Shelly 超时时间, 单位: 秒. 该值必须大于0秒 """
-    DATACOLLECTOR_DATA_INTERVAL = 1
+    DATACOLLECTOR_DATA_INTERVAL = 1 if 'datacollector_data_interval' not in _dct else _dct['datacollector_data_interval']
     """ 文字数据发送间隔, 单位: 秒. 该值必须大于0秒 """
-    DATACOLLECTOR_FIG_INTERVAL = 1
+    DATACOLLECTOR_FIG_INTERVAL = 1 if 'datacollector_fig_interval' not in _dct else _dct['datacollector_fig_interval']
     """ 图像数据发送间隔, 单位: 秒. 该值必须大于0秒 """
     REQUEST_INTERVAL = 1
     """ 请求间隔, 单位: 秒. 该值必须大于0秒 """
     BOUNCETIME = 200
     """ 树莓派按钮检测防抖时间 """
-    EVSE_WRITE_RETRY = 10
+    EVSE_WRITE_RETRY = 10 if 'evse_write_retry' not in _dct else _dct['evse_write_retry']
     """ EVSE 写入重试次数 """
-    CHARGING_STABLE_COUNTDOWN = POLLING_EVSE_INTERVAL * 10
+    CHARGING_STABLE_COUNTDOWN = POLLING_EVSE_INTERVAL * 10 if 'charging_stable_countdown' not in _dct else _dct['charging_stable_countdown']
     WATCHING_REGISTERS = [
         EVSERegAddress.CONFIGURED_AMPS,
         EVSERegAddress.AMPS_OUTPUT,
