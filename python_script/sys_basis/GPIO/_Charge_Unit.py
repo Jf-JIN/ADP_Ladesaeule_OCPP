@@ -226,7 +226,7 @@ class ChargeUnit:
                     'id': 1,
                     'chargingRateUnit': 'W',
                     'chargingSchedulePeriod': [
-                        {'startPeriod': 0, 'limit': 9852},
+                        {'startPeriod': 0, 'limit': 9852, 'numberPhases': 3},
                         ...
                     ],
                     'startSchedule': '2025-01-26T14:40:29Z'
@@ -282,6 +282,7 @@ class ChargeUnit:
         self.__current_start_datetime = period_start_datetime
         self.__depart_time_str = depart_time
         self.__waiting_plan = current_exec_dict['chargingSchedulePeriod']
+        self.__shelly_writer.set_charge_plan(self.__start_time_str, copy.deepcopy(self.__waiting_plan))
         self.__isTimeSynchronized = False  # 强制对齐时间
         # 数据类重置
         _log.info('数据类重置更新\nData reset update')
@@ -500,15 +501,16 @@ The charging unit is not executable (correct value)
         self.__current_charge_action = self.__waiting_plan.pop(0)
         _log.info(f'开始充电，当前执行计划为\nStart charging, the current execution plan is\n{self.__current_charge_action}')
         _log.debug(f'剩余计划表\nRemaining planning table\n{self.__waiting_plan}')
-        self.__shelly_writer.set_current_action(plan=self.__current_charge_action, value_unit=self.__value_unit)
+        self.__phase_num = self.__current_charge_action.get('phase_num', GPIOParams.ASSUMED_PHASE)
+        self.__shelly_writer.set_current_action(plan=self.__current_charge_action, value_unit=self.__value_unit, phase_num=self.__phase_num)
         self.__data_collector.set_CU_waiting_plan(self.id, copy.deepcopy(self.__waiting_plan), self.__current_start_time_str)
         self.__data_collector.set_CU_current_charge_action(self.id, copy.copy(self.__current_charge_action))
         if len(self.__waiting_plan) != 0:
             charge_duration_sec: int | float = self.__waiting_plan[0]['startPeriod'] + DataGene.str2time(self.__current_start_time_str).timestamp() - datetime.now().timestamp()
         else:
             # charge_duration_sec: int | float = DataGene.str2time(self.__depart_time).timestamp() - self.__current_start_datetime.timestamp() - self.__current_charge_action['startPeriod']
-            charge_duration_sec: int | float = (DataGene.str2time(self.__depart_time).timestamp() - self.__current_start_datetime.timestamp()) / \
-                30 - self.__current_charge_action['startPeriod']  # [MODIFY] 该段代码仅用于测试，为了缩短时长而设置的，可通过修改 / 后的数字
+            charge_duration_sec: int | float = (DataGene.str2time(self.__depart_time).timestamp() - self.__current_start_datetime.timestamp())
+            30 - self.__current_charge_action['startPeriod']  # [MODIFY] 该段代码仅用于测试，为了缩短时长而设置的，可通过修改 / 后的数字
         _log.info(f'当前充电动作时长为 {charge_duration_sec} 秒\nCurrent charge action duration is {charge_duration_sec} seconds')
         current_time: float = datetime.now().timestamp()
         current_index = current_time // self.__index_period_sec

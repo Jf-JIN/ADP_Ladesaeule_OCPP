@@ -43,9 +43,10 @@ class GPIOParams(AnalogDefine):
     MESSAGE_SEND_INTERVAL = 60  # seconds
     CHARGE_UNITS = [
         # (EVSE_Id, Shelly_main_url)
-        # (1, 'shellypro3em-2cbcbbb2e0b8.local'),
+        (1, 'shellypro3em-2cbcbbb2e0b8.local'),
         # (1, '172.18.25.49:6666'),
-        (1, 'http://192.168.124.9:6666'),
+        # (1, '172.18.20.152:6666'),
+        # (1, 'http://192.168.124.9:6666'),
         # (1, 'http://130.83.148.29:6666'),
 
         # (0, '192.168.1.100'),
@@ -54,6 +55,7 @@ class GPIOParams(AnalogDefine):
     DO_USE_RCD: bool = False
     MAX_VOLTAGE = 220
     MAX_SHELLY_RETRY = 5
+    ASSUMED_PHASE = 3
     SELF_CHECK_TIMEOUT = -31
     """ EVSE 自检时间, 单位: 秒. 该值必须 >=30 秒, 否则自检将不会启动 """
     LETCH_MOTOR_RUNTIME = 1

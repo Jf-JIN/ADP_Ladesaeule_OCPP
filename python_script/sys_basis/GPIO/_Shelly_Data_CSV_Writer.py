@@ -4,7 +4,6 @@ import csv
 import time
 import queue
 import zipfile
-import functools
 
 from const.Const_Parameter import *
 from const.GPIO_Parameter import *
@@ -44,7 +43,7 @@ class ShellyDataCSVWriter:
         self.__cu_id: int = cu_id
         self.__root_dir: str = APP_WORKSPACE_PATH
         self.__root_folder_name: str = 'Data'
-        self.__csv_folder_name: str = f'ChargeUnit_ID{self.__cu_id}'
+        self.__csv_folder_name: str = f'ChargeUnit_ID_{self.__cu_id}'
         self.__csv_file_dir: str = os.path.join(self.__root_dir, self.__root_folder_name, self.__csv_folder_name)
         os.makedirs(self.__csv_file_dir, exist_ok=True)
         self.__csv_file_path_list: list = []
@@ -56,7 +55,9 @@ class ShellyDataCSVWriter:
         self.__thread_write = threading.Thread(target=self.__write_in_loop, name=f'CSV_Writer_ID_{self.__cu_id}', daemon=True)
         self.__thread_write.start()
         self.__zip_thread = None
+        self.__phase_num = 3
         self.__init_parameters()
+        self.__init_folder()
 
     @property
     def csv_file_path_list(self) -> list:
@@ -65,7 +66,7 @@ class ShellyDataCSVWriter:
 
     @property
     def current_csv_file_name(self) -> str:
-        return f"Data_ID{self.__cu_id}_{self.__start_time}.csv"
+        return f"Data_ID_{self.__cu_id}_{self.__file_start_time.replace(':', '-')}.csv"
 
     @property
     def current_csv_file_path(self) -> str:
@@ -78,7 +79,7 @@ class ShellyDataCSVWriter:
             self.signal_exported_file_path.emit(self.current_csv_file_path)
             return
         else:
-            self.__zip_file_path = os.path.join(self.__csv_file_dir, f"Data_ID{self.__cu_id}_{self.__start_time}.zip")
+            self.__zip_file_path = os.path.join(self.__csv_file_dir, f"Data_ID_{self.__cu_id}_{self.__file_start_time}.zip")
             self.__zip_thread = _ZipThread(self.__zip_file_path, self.csv_file_path_list[-file_num:], name=f'zip_thread_ID_{self.__cu_id}')
             self.__zip_thread.signal_finished.emit(self.__thread_zip_finished)
             self.__zip_thread.start()
@@ -93,13 +94,13 @@ class ShellyDataCSVWriter:
         if len(current_list) != 3 or len(voltage_list) != 3 or len(power_list) != 3 or len(energy_list) != 3:
             raise ValueError("The length of the list must be 3")
         current_time: str = DataGene.getCurrentTime()
-        total_calculated_energy = self.__get_current_calculated_charged_energy()
+        plan_charged_energy = self.__get_current_calculated_charged_energy()
         action_limit = self.__current_action.get('limit', -1)
         action_periode = self.__current_action.get('startPeriod', -1)
         data: list = [
             current_time,
             *current_list, *voltage_list, *power_list, *energy_list,
-            shelly_total_energy, actual_calculate_energy, total_calculated_energy,
+            shelly_total_energy, actual_calculate_energy, plan_charged_energy,
             action_periode, action_limit, self.__value_unit]
         self.__append_msg_in_queue(data)
 
@@ -112,30 +113,37 @@ class ShellyDataCSVWriter:
             _log.info(f'There is already a writer(id: {self.__cu_id}) running, please stop it first')
             return
         self.__isSmartCharging = True
-        self.__start_time = time.time()
+        self.__file_start_time = DataGene.getCurrentTime()
+        self.__plan_charged_energy = self.__calculate_passed_energy()
         self.__csv_file_path_list.append(self.current_csv_file_path)
         self.__check_folder()
-        self.__set_start_charging_time(time.time())
         self.__set_enable_charge(True)
         self.__init_table_header()
+
+    def set_charge_plan(self, start_time: str, charge_plan: list):
+        self.__start_time_str = start_time
+        self.__start_time: float = DataGene.str2time(start_time).timestamp()
+        self.__charge_plan = charge_plan
 
     def stop(self) -> None:
         self.__set_enable_charge(False)
         self.__isThreadRunning = False
         self.__append_msg_in_queue(None)
 
-    def set_current_action(self, plan: dict, value_unit: str):
+    def set_current_action(self, plan: dict, value_unit: str, phase_num: int) -> None:
         if not self.__isSmartCharging:
             return
-        _log.info(f'Current action: {plan}')
+        if phase_num not in [1, 2, 3]:
+            raise ValueError(f'Invalid phase number: {phase_num}')
+        self.__phase_num: int = phase_num
         self.__current_action = plan
         self.__value_unit: str = value_unit
 
     def __check_folder(self):
-        if not self.__csv_file_path_list or len(self.__csv_file_path_list) >= self.__max_csv_file_count:
+        if len(self.__csv_file_path_list) >= self.__max_csv_file_count:
             res: list = os.listdir(self.__csv_file_dir)
             sorted_list: list = sorted(res, key=os.path.getctime)
-            temp = [f for f in sorted_list if f.endswith('.csv')]
+            temp = [f for f in sorted_list if f.endswith('.csv') and not f.startswith('.')]
             self.__csv_file_path_list = temp[-self.__max_csv_file_count:]
             for f in temp[:-self.__max_csv_file_count]:
                 try:
@@ -143,17 +151,28 @@ class ShellyDataCSVWriter:
                 except:
                     pass
 
+    def __init_folder(self):
+        res: list = [os.path.join(self.__csv_file_dir, fn) for fn in os.listdir(self.__csv_file_dir)]
+        sorted_list: list = sorted(res, key=os.path.getctime)
+        temp = [f for f in sorted_list if f.endswith('.csv') and not f.startswith('.')]
+        self.__csv_file_path_list = temp[-self.__max_csv_file_count:]
+        for f in temp[:-self.__max_csv_file_count]:
+            try:
+                os.remove(f)
+            except:
+                pass
+
     def __init_parameters(self):
         self.__current_action: dict = {
             'limit': 0,
             'startPeriod': 0,
         }
         self.__value_unit = 'W'
-        self.__total_charged_energy: int = 0
+        self.__plan_charged_energy: int = 0
         self.__isSmartCharging = False
 
     def __init_table_header(self):
-        self.__append_msg_in_queue([f'This file is created at {DataGene.getCurrentTime()}. ChargeUnit ID: {self.__cu_id}'])
+        self.__append_msg_in_queue([f'This file is created at {self.__file_start_time}. The Charging plan started at {self.__start_time_str}. ChargeUnit ID: {self.__cu_id}'])
         header = [
             'time',
             'current_a',
@@ -184,9 +203,6 @@ class ShellyDataCSVWriter:
     def __set_enable_charge(self, enable: bool):
         self.__isSmartCharging: bool = enable
 
-    def __set_start_charging_time(self, start_time: str):
-        self.__start_time = start_time
-
     def __convert_value_in_walt(self, charging_limit: int) -> int:
         if self.__value_unit in ['W', 'w']:
             return charging_limit
@@ -197,10 +213,11 @@ class ShellyDataCSVWriter:
 
     def __get_current_calculated_charged_energy(self) -> int:
         current_time: float = time.time()
-        diff_time: float = current_time - self.__last_calculation_time / 3600  # Unit h
+        diff_time: float = (current_time - self.__last_calculation_time) / 3600  # Unit h
         norm_power = self.__convert_value_in_walt(self.__current_action.get('limit', 0))
-        self.__total_charged_energy += diff_time * norm_power  # Unit Wh
-        return self.__total_charged_energy
+        self.__plan_charged_energy += diff_time * norm_power * self.__phase_num  # Unit Wh
+        self.__last_calculation_time = current_time
+        return self.__plan_charged_energy
 
     def __write_in_loop(self):
         while self.__isThreadRunning:
@@ -209,3 +226,26 @@ class ShellyDataCSVWriter:
                 with open(self.current_csv_file_path, 'a', newline='') as csv_file:
                     f = csv.writer(csv_file)
                     f.writerow(data)
+
+    def __calculate_passed_energy(self) -> int | float:
+        self.__last_calculation_time: float = time.time()
+        passed_energy = [0]
+        period = 0
+        last_limit_value = 0
+        last_period = 0
+        for action in self.__charge_plan:
+            cuurent_period = action['startPeriod']
+            diff = cuurent_period - period
+            period = cuurent_period
+            plan_time = self.__start_time + period
+            if plan_time <= self.__last_calculation_time:
+                limit_value = self.__convert_value_in_walt(action['limit'])
+                passed_energy.append(limit_value * diff / 3600 * self.__phase_num)
+                last_limit_value = limit_value
+                last_period = period
+            else:
+                passed_energy.pop(-1)
+                energy = last_limit_value * (self.__last_calculation_time - (self.__start_time + last_period)) / 3600 * self.__phase_num
+                passed_energy.append(energy)
+                break
+        return sum(passed_energy)

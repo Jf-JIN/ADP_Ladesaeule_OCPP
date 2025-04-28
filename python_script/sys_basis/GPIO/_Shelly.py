@@ -109,16 +109,20 @@ class Shelly:
         self.__charged_energy: Wh
         """
         if self.__isAvailable:
-            duration: float = (time.time() - self.__last_wrote_time) / 3600
+            current_time = time.time()
+            duration: float = (current_time - self.__last_wrote_time) / 3600
             total = 0
             for ph_dict in self.__data.values():
                 ph_dict: dict
                 if not isinstance(ph_dict, dict):
                     continue
                 power = ph_dict.get('power', 0)
-                total += (power*duration)
+                single_energy = power * duration
+                total += single_energy
+                # _log.info(f'power: {power}, duration: {duration}, single_energy: {single_energy} total: {total}')
+
             self.__charged_energy += total
-            self.__last_wrote_time = time.time()
+            self.__last_wrote_time = current_time
         return self.__charged_energy
 
     def reset(self) -> bool:
