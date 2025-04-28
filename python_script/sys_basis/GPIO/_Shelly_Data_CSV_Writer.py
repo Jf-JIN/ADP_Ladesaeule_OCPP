@@ -142,7 +142,8 @@ class ShellyDataCSVWriter:
     def __check_folder(self):
         if len(self.__csv_file_path_list) >= self.__max_csv_file_count:
             res: list = os.listdir(self.__csv_file_dir)
-            sorted_list: list = sorted(res, key=os.path.getctime)
+            res_full_path: list = [os.path.join(self.__csv_file_dir, f) for f in res]
+            sorted_list: list = sorted(res_full_path, key=os.path.getctime)
             temp = [f for f in sorted_list if f.endswith('.csv') and not f.startswith('.')]
             self.__csv_file_path_list = temp[-self.__max_csv_file_count:]
             for f in temp[:-self.__max_csv_file_count]:
