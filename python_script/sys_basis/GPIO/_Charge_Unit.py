@@ -78,6 +78,7 @@ class ChargeUnit:
         #
         self.__timer: threading.Timer = threading.Timer(99, self.__charging)
         self.__timer.name = f'ChargeUnit<{self.__id}>'
+        self.__isTimerRunning = False
         self.__lock_thread = threading.Timer(GPIOParams.LETCH_MOTOR_RUNTIME+0.5, self.__charging_initial)
         self.__lock_thread.name = f'ChargeUnit<{self.__id}>.chargingInitial_latchMotor'
         self.__evse_self_check_thread = threading.Timer(GPIOParams.SELF_CHECK_TIMEOUT+0.5, self.__charging_initial)
@@ -194,7 +195,6 @@ class ChargeUnit:
             self.__current_max = self.__current_limit[1]
             return []
         elif VehicleState.EV_IS_PRESENT <= self.__evse.vehicle_state <= VehicleState.CHARGING_WITH_VENTILATION:
-            _log.info('here')
             self.__current_limit = self.__evse.get_current_limit()
             self.__current_min = self.__current_limit[0]
             self.__current_max = self.__current_limit[1]
@@ -286,7 +286,7 @@ class ChargeUnit:
         self.__isTimeSynchronized = False  # 强制对齐时间
         # 数据类重置
         _log.info('数据类重置更新\nData reset update')
-        self.__data_collector.set_CU_waiting_plan(self.id, copy.deepcopy(self.__waiting_plan), self.__current_start_time_str)
+        self.__data_collector.set_CU_waiting_plan(self.id, copy.deepcopy(self.__waiting_plan), self.__current_start_time_str, self.__value_unit)
         self.__data_collector.set_CU_charge_start_time(self.id, self.__start_time_str, self.__target_energy, self.__depart_time, self.__custom_data)
         self.__execute_start_charging()
         return True
@@ -297,7 +297,6 @@ class ChargeUnit:
 
         - direct_charge: 用于直充
         """
-
         if (
             self.__evse.vehicle_state == VehicleState.EV_IS_PRESENT
             and self.__evse.evse_status_error == {EVSEErrorInfo.RELAY_ON}
@@ -306,6 +305,7 @@ class ChargeUnit:
             and (enableDirectCharge or len(self.__waiting_plan) > 0)
         ):
             self.__isCharging = True
+            self.__isTimerRunning = True
             self.__enableDirectCharge = enableDirectCharge
         elif (
                 self.__evse.vehicle_state == VehicleState.EV_IS_PRESENT
@@ -340,7 +340,7 @@ EVSE State abnormal, Unable to start charging (correct value)
             self.signal_hint_message.emit('开始直接充电\nStart direct charging', 'success')
             self.__charging_initial()
             return True
-        if not self.__isCharging:
+        if not self.__isCharging or not self.__isTimerRunning:
             # 如果当前没有充电计划, 则直接返回.
             # 保证新充电启动只会从外部触发, 内部函数不能启动.
             _log.warning(f'未点击开始，尚不执行充电\nThe Charge will not be executed without clicking start button')
@@ -371,9 +371,10 @@ EVSE State abnormal, Unable to start charging (correct value)
                 return False
             else:
                 _log.info('已完成充电前的计划表准备\nPlanning table preparation before charging')
-                self.__data_collector.set_CU_waiting_plan(self.id, copy.deepcopy(self.__waiting_plan), self.__current_start_time_str)
+                self.__data_collector.set_CU_waiting_plan(self.id, copy.deepcopy(self.__waiting_plan), self.__current_start_time_str, self.__value_unit)
                 self.__charging_initial()
-        self.signal_hint_message.emit('充电前准备完成, 开始准备充电\nPreparation for charging is complete, start preparing for charging', 'success')
+        if not self.__timer.is_alive():
+            self.signal_hint_message.emit('充电前准备完成, 开始准备充电\nPreparation for charging is complete, start preparing for charging', 'success')
         return True
 
     def __charging_initial(self) -> None:
@@ -427,7 +428,10 @@ EVSE State abnormal, Unable to start charging (correct value)
                 - 当前已无充电计划 / 充电计划全部完成
                 - Shelly设备不可用
         """
-        if (
+        if not self.__isTimerRunning:
+            _log.warning('The timer is not running')
+            return False
+        elif (
             not self.__isCharging
             or not self.__shelly.isAvailable
             or self.__evse.vehicle_state == VehicleState.FAILURE
@@ -494,7 +498,7 @@ The charging unit is not executable (correct value)
         # 2. 先存入上次的计划
         if self.__current_charge_action:
             self.__finished_plan.append(copy.copy(self.__current_charge_action))
-            self.__data_collector.append_CU_finished_plan(self.id, copy.copy(self.__current_charge_action))
+            self.__data_collector.append_CU_finished_plan(self.id, copy.copy(self.__current_charge_action), self.__current_start_time_str)
             _log.info(f'充电计划\t{self.__current_charge_action}\t已存入历史计划\nThe charging plan\t{self.__current_charge_action}\t has been saved into the historical plan')
 
         # 3. 取出充电动作, 计算单次充电时间
@@ -503,7 +507,7 @@ The charging unit is not executable (correct value)
         _log.debug(f'剩余计划表\nRemaining planning table\n{self.__waiting_plan}')
         self.__phase_num = self.__current_charge_action.get('phase_num', GPIOParams.ASSUMED_PHASE)
         self.__shelly_writer.set_current_action(plan=self.__current_charge_action, value_unit=self.__value_unit, phase_num=self.__phase_num)
-        self.__data_collector.set_CU_waiting_plan(self.id, copy.deepcopy(self.__waiting_plan), self.__current_start_time_str)
+        self.__data_collector.set_CU_waiting_plan(self.id, copy.deepcopy(self.__waiting_plan), self.__current_start_time_str, self.__value_unit)
         self.__data_collector.set_CU_current_charge_action(self.id, copy.copy(self.__current_charge_action))
         if len(self.__waiting_plan) != 0:
             charge_duration_sec: int | float = self.__waiting_plan[0]['startPeriod'] + DataGene.str2time(self.__current_start_time_str).timestamp() - datetime.now().timestamp()
@@ -527,6 +531,8 @@ The charging unit is not executable (correct value)
             _log.info(f'时间同步, 首个充电动作时间: {phase1_fill_time} 秒')
             self.__isTimeSynchronized = True
             # 4.1 执行充电操作, 同时检查是否成功设置电流, 若否则停止充电
+            if not self.__isTimerRunning:
+                return False
             result: bool = set_charging_current()
             if not result:
                 self.stop_charging()
@@ -534,8 +540,13 @@ The charging unit is not executable (correct value)
                 _log.error("Error setting charging current")
                 return False
             MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable_blink(True, apply_now=True)
+            if not self.__isTimerRunning:
+                return False
+            if self.__timer:
+                self.__timer.cancel()
             self.__timer = threading.Timer(phase1_fill_time, self.__charging)
             self.__timer.name = f'ChargeUnit<{self.__id}>.charging'
+            self.__isTimerRunning = True
             self.__timer.start()
             _log.info('充电时间同步完成, 开始等待至第一个周期开始\nThe charging time synchronization is completed, starting to wait for the first cycle')
             self.__isFistTimeChanging = False
@@ -567,26 +578,25 @@ The charging unit is not executable (correct value)
             _log.info('充电计划校正请求发送\nsending charging plan calibration request')
 
         # 6. 执行充电操作, 同时检查是否成功设置电流, 若否则停止充电
+        if not self.__isTimerRunning:
+            return False
         result: bool = set_charging_current()
         if not result:
             self.stop_charging()
             _log.error("设置充电电流错误\nError setting charging current")
             return False
         MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable_blink(True, apply_now=True)
+        if not self.__isTimerRunning:
+            return False
+        if self.__timer:
+            self.__timer.cancel()
         self.__timer = threading.Timer(charge_duration_sec, self.__charging)
         self.__timer.name = f'ChargeUnit<{self.__id}>.charging'
+        self.__isTimerRunning = True
         self.__timer.start()
         return True
 
     def stop_charging(self, error_code: str = '', sender: str = '') -> None:
-        """
-        停止充电
-        添加结束动作
-        关闭定时器
-        发送充电结束信号
-        解锁
-        重置参数
-        """
         _log.info(f'停止充电, 当前状态是否在充电: {self.__isCharging}\nStop charging, is charging: {self.__isCharging}')
         if not self.__isCharging:
             if sender in ['evse', 'shelly']:
@@ -597,19 +607,30 @@ The charging unit is not executable (correct value)
                 MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable_blink(False)
                 MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable(True)
             return
+        if not self.__isTimerRunning:
+            _log.warning(f'充电单元 <{self.__id}> 未启动定时器, 无法停止充电\nCharge unit <{self.__id}> timer not started, cannot stop charging')
+            return
         _log.info('执行停止充电\nExecute stop charging')
-        self.__evse.stop_charging()
-        if self.__current_charge_action:
-            self.__finished_plan.append(copy.copy(self.__current_charge_action))
-            self.__data_collector.append_CU_finished_plan(self.id, copy.copy(self.__current_charge_action))
-            self.__current_charge_action = None
-        self.__waiting_plan.clear()
         if self.__lock_thread.is_alive():
             self.__lock_thread.cancel()
         if self.__evse_self_check_thread.is_alive():
             self.__evse_self_check_thread.cancel()
         if self.__timer.is_alive():
             self.__timer.cancel()
+        if self.__timer.is_alive():
+            _log.info('定时器未停止, 强制停止\nTimer is not stopped, force stop')
+            stop_num = 0
+            while self.__timer.is_alive():
+                self.__timer.cancel()
+                stop_num += 1
+            _log.info(f'定时器强制停止 {stop_num} 次\nTimer force stop {stop_num} times')
+        self.__isTimerRunning = False
+        self.__evse.stop_charging()
+        if self.__current_charge_action:
+            self.__finished_plan.append(copy.copy(self.__current_charge_action))
+            self.__data_collector.append_CU_finished_plan(self.id, copy.copy(self.__current_charge_action), self.__current_start_time_str)
+            self.__current_charge_action = None
+        self.__waiting_plan.clear()
         self.__signal_charging_finished.emit()
         self.__latch_motor.unlock()
         # 进行初始化参数
