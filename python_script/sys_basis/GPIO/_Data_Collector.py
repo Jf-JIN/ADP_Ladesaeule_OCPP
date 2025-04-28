@@ -115,12 +115,13 @@ class DataCollector:
             'start_time': '2025-01-26T14:40:29Z', # 此开始时间指的是整个充电过程, 校正的计划表中的开始一时间不会记录
             'period_start_time': '2025-01-26T15:00:02Z', # 此开始时间指一个充电表的开始时间, 校正的计划表中的开始时间会被记录
             'depart_time': '2025-01-30T13:39:00Z',
+            'limit_units': 'W',
             'charged_time': '00:43:01,'
             'target_energy': 700000,
             'isLatched': True,
             'custom_data': {'mode': 0, 'vendorId'='1234'},
             'enableDirectCharge': False,
-            'direct_charge_energy_list':[]
+            'direct_charge_energy_list':[],
         },
         2:{
             ...
@@ -286,7 +287,7 @@ class DataCollector:
         self.__all_data[id]['isCharging'] = True
         return self
 
-    def set_CU_waiting_plan(self, id: int, plan: list, period_start_time: str | None = None) -> typing.Self:
+    def set_CU_waiting_plan(self, id: int, plan: list, period_start_time: str | None = None, limit_unit: str | None = None) -> typing.Self:
         """
         设置充电单元等待的充电计划.
         """
@@ -296,6 +297,10 @@ class DataCollector:
             self.__all_data[id]['period_start_time'] = period_start_time
         elif 'period_start_time' not in self.__all_data[id] and 'start_time' in self.__all_data[id]:
             self.__all_data[id]['period_start_time'] = self.__all_data[id]['start_time']
+        if limit_unit:
+            self.__all_data[id]['limit_units'] = limit_unit
+        else:
+            self.__all_data[id]['limit_units'] = 'W'
         # 如果开始时间大于计划开始时间, 则将开始时间设置为计划开始时间
         if ('period_start_time' in self.__all_data and 'start_time' in self.__all_data[id]
             and (
@@ -318,16 +323,18 @@ class DataCollector:
         self.__check_id(id)
         self.__all_data[id]['waiting_plan'] = []
 
-    def append_CU_finished_plan(self, id: int, plan: dict) -> typing.Self:
+    def append_CU_finished_plan(self, id: int, plan: dict, current_start_time: str) -> typing.Self:
         """
         追加充电单元已完成的充电计划.
         """
         plan = copy.deepcopy(plan)
+        self.__all_data[id]['period_start_time'] = current_start_time
         plan['startTime'] = self.__all_data[id]['period_start_time']
         plan['finishedTime'] = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
         plan['chargedEnergy'] = self.__all_data[id]['shelly']['charged_energy']
         plan['shellyTotalEnergy'] = self.__all_data[id]['shelly']['total_energy']
         plan['shellyTotalEnergyTimeMinute'] = self.__all_data[id]['shelly']['total_energy_time_min']
+        plan['limitUnit'] = self.__all_data[id]['limit_units']
         self.__check_id(id)
         if 'finished_plan' not in self.__all_data[id]:
             self.__all_data[id]['finished_plan'] = []
@@ -422,6 +429,7 @@ class DataCollector:
                 'depart_time': '',
                 'charged_time': '',
                 'target_energy': 0,
+                'limitUnits': 'W',
                 'custom_data': {},
                 'enableDirectCharge': False,
             }
@@ -497,7 +505,8 @@ class DataCollector:
                         'startPeriod': (DataGene.str2time(last_finished_time) - DataGene.str2time(self.__all_data[cu_id]['start_time'])).total_seconds(),
                         'startTime': self.__all_data[cu_id]['start_time'],
                         'shellyTotalEnergy': self.__all_data[cu_id]['shelly']['total_energy'],
-                        'shellyTotalEnergyTimeMinute': self.__all_data[cu_id]['shelly']['total_energy_time_min']
+                        'shellyTotalEnergyTimeMinute': self.__all_data[cu_id]['shelly']['total_energy_time_min'],
+                        'limitUnit': 'W',
                     }
                     img_list.append(temp)
                 fig: str = DataGene.plan2figure(img_list)
@@ -507,6 +516,7 @@ class DataCollector:
                 current_charge_action: dict = self.__all_data[cu_id].get('current_charge_action', {})
                 if current_charge_action and 'startTime' in current_charge_action:
                     current_charge_action['finishedTime'] = current_time
+                    current_charge_action['limitUnits'] = self.__all_data[cu_id]['limit_units']
                     img_list = finished_plan + [current_charge_action]
                 else:
                     img_list = finished_plan
