@@ -302,44 +302,31 @@ class DataGene:
         if len(charge_plan) == 0 or len(charge_plan[0]) == 0 or 'startPeriod' not in charge_plan[0] or 'startTime' not in charge_plan[0]:
             return ''
         plt.style.use(['science', 'no-latex'])
-        # _log.info(f'Generating figure for charge plan: {charge_plan}')
 
         charge_plan = [DataGene.convert_dict_keys(charge_item) for charge_item in charge_plan]
-        # time_list = [DataGene.str2time(charge_item['startTime']) + timedelta(seconds=charge_item['startPeriod']) for
-        #  charge_item in charge_plan] + [DataGene.str2time(charge_plan[-1]['finishedTime'])]
         charge_start_time = DataGene.str2time(charge_plan[0]['startTime'])
-        time_list = []
+        time_list = [DataGene.str2time(charge_plan[0]['startTime']) + timedelta(seconds=charge_plan[0]['startPeriod'])]
         shelly_time = []
         shelly_total_energy = []
         limit = []
         charged_energy_actual = [0]
         time_f = []
         for charge_item in charge_plan:
-            time_list.append(DataGene.str2time(charge_item['startTime']) + timedelta(seconds=charge_item['startPeriod']))
+            time_list.append(DataGene.str2time(charge_item['finishedTime']))
             if 'shellyTotalEnergyTimeMinute' in charge_item and charge_start_time <= DataGene.str2time(charge_item['shellyTotalEnergyTimeMinute']):
                 shelly_time.append(DataGene.str2time(charge_item['shellyTotalEnergyTimeMinute']))
                 shelly_total_energy.append(charge_item['shellyTotalEnergy'])
-            limit.append(charge_item['limit'])
+            if 'limitUnits' in charge_item and charge_item['limitUnits'] in ['A', 'a']:
+                limit.append(charge_item['limit'] * GPIOParams.MAX_VOLTAGE)
+            else:
+                limit.append(charge_item['limit'])
             charged_energy_actual.append(charge_item['chargedEnergy'])
             time_f.append(DataGene.str2time(charge_item['finishedTime']))
-
-        time_list += [DataGene.str2time(charge_plan[-1]['finishedTime'])]
         limit.append(limit[-1])
-        # shelly_time = [DataGene.str2time(charge_item['shellyTotalEnergyTimeMinute']) for charge_item in charge_plan]
-        # shelly_total_energy = [charge_item['shellyTotalEnergy'] for charge_item in charge_plan]
-        # length_time_axis = len(time)
-        time_split = [(time_list[i + 1] - time_list[i]).seconds / 60 for i in range(len(time_list) - 1)]
-        # limit = [charge_item['limit'] for charge_item in charge_plan]
-        # limit.append(limit[-1])
+        time_duration = [(time_list[i + 1] - time_list[i]).seconds / 3660 for i in range(len(time_list) - 1)]
         charged_energy_predict = [0]
-        for duration, power in zip(time_split, limit):
-            charged_energy_predict.append(charged_energy_predict[-1] + power * duration / 60 * GPIOParams.ASSUMED_PHASE)  # 3 is Phase
-        # charged_energy_actual = [0] + [charge_item['chargedEnergy'] for charge_item in charge_plan]
-        # if len(shelly_total_energy) > 0:
-        #     y_max = max(max(charged_energy_actual), max(charged_energy_predict), max(shelly_total_energy))
-        # else:
-        #     y_max = max(max(charged_energy_actual), max(charged_energy_predict))
-        # time_f = [DataGene.str2time(item['finishedTime']) for item in charge_plan]
+        for duration, power in zip(time_duration, limit):
+            charged_energy_predict.append(charged_energy_predict[-1] + power * duration * GPIOParams.ASSUMED_PHASE)  # 3 is Phase
         plt.figure(figsize=(12, 6))  # 增加图表分辨率和大小
         plt.plot(time_list, charged_energy_actual, marker='.', linestyle='-', color=Color.BLUE, linewidth=2, label='actual charged energy')
         plt.plot(shelly_time, shelly_total_energy, marker='o', linestyle='-', color=Color.GREEN, linewidth=2, label='shelly charged energy')
@@ -348,7 +335,12 @@ class DataGene:
             # plt.vlines(time_f, ymin=-1, ymax=y_max+5, colors=Color.RED, linestyles='-', linewidth=2, label="FINISH")
             plt.plot(time_list, charged_energy_predict, marker='o', linestyle='--', color=Color.RED, linewidth=2, label='predict charged energy')
         # _log.info(charge_plan)
-        # _log.info(charged_energy_actual, time)
+        # _log.info(time_list)
+        # _log.info(time_duration, limit)
+        # _log.info(charged_energy_predict)
+        # _log.info(charged_energy_actual)
+        # _log.info(shelly_time)
+        # _log.info(shelly_total_energy)
         plt.xticks(fontsize=FontSize.TICKS)
         plt.grid(True, linestyle='--', alpha=0.7)
         plt.xlabel('Time', fontsize=FontSize.LABEL)
