@@ -78,19 +78,24 @@ function isValidNumber (input) {
 const submit_btn = document.getElementById('save_settings');
 submit_btn.addEventListener('click', () => {
     function collect_data () {
+        let depart_time = document.getElementById('depart_time').value;
         let res = {
             'charge_request': {
                 'evse_id': document.getElementById('evse_id').value,
                 'charge_mode': document.getElementById('charge_mode').value,
                 'charge_power': document.getElementById('charge_power').value,
-                'depart_time': document.getElementById('depart_time').value,
+                'depart_time': depart_time,
             }
         }
-        return res
+        return JSON.stringify(res)
     }
     
     function check_data (data) {
         let check_res = true;
+        if (typeof data === 'string' && data.trim() != '') { 
+            data = JSON.parse(data)
+        }
+        console.log(data)
         if (!('charge_request' in data)) {
             return false;
         }
@@ -124,6 +129,7 @@ submit_btn.addEventListener('click', () => {
                     }
                 } else if (key == 'depart_time') {
                     let currentTime = new Date();
+                    value = value
                     let selectedTime = new Date(value);
                     if (selectedTime < currentTime) {
                         Swal.fire(lang_dict.error, window.lang_dict.time_in_past, 'error');
@@ -132,8 +138,8 @@ submit_btn.addEventListener('click', () => {
                         check_res = false;
                         return check_res;
                     }
-                    let isoDate = new Date(value).toISOString().split('.')[0] + 'Z'; // 去掉毫秒部分
-                    data[key] = isoDate;
+                    // let isoDate = new Date(value).toISOString().split('.')[0] + 'Z'; // 去掉毫秒部分
+                    data[key] = value;
                 }
             } else {
                 console.error(`Element with id '${key}' not found.`);

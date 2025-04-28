@@ -183,7 +183,7 @@ function loadImage (data) {
     figChargePoint.onerror = () => {
         figChargePoint.src = blank_pic;
     };
-    if ('opt_fig' in data) {
+    if ('opt_fig' in data && data.opt_fig) {
         figOptimisation.src = data.opt_fig.startsWith("data:image/png;base64,")
             ? data.opt_fig
             : `data:image/png;base64,${data.opt_fig}`;
