@@ -198,8 +198,12 @@ class ChargeUnit:
             self.__current_limit = self.__evse.get_current_limit()
             self.__current_min = self.__current_limit[0]
             self.__current_max = self.__current_limit[1]
-            _log.info(f'已获取到车辆充电电流限制范围\nGet the scope of the limitation of the vehicle charging current\n{self.__current_limit}')
-            return self.__current_limit
+            if self.__current_max is None or self.__current_min is None:
+                _log.error('获取电流限制范围失败\nFailed to obtain the current limit range')
+                return None
+            else:
+                _log.info(f'已获取到车辆充电电流限制范围\nGet the scope of the limitation of the vehicle charging current\n{self.__current_limit}')
+                return self.__current_limit
         else:
             _log.error(f'The current vehicle status of ChargeUnit {self.id} is: {self.__evse.vehicle_state}. Unable to obtain current limit')
             self.__current_limit = [0, 0]
@@ -468,9 +472,13 @@ The charging unit is not executable (correct value)
             self.__data_collector.clear_CU_current_charge_action(self.id)
             self.__data_collector.set_CU_charge_start_time(self.id, self.__start_time_str, target_energy=-1, depart_time='-1', custom_data=None, enableDirectCharge=True)
             _log.info('设置电流, 开始充电\nSet current, start charging')
-            self.__evse.set_current(self.__current_max)
-            MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable_blink(True, apply_now=True)
-            return True
+            res = self.__evse.set_current(self.__current_max)
+            if res:
+                MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable_blink(True, apply_now=True)
+                return True
+            else:
+                MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable_blink(False, apply_now=True)
+                return False
         else:
             _log.info('最大电流为0,不充电\nThe maximum current is 0, no charging')
             self.signal_hint_message.emit(f'最大电流为0,不充电\nThe maximum current is 0, no charging', 'info')
@@ -506,7 +514,7 @@ The charging unit is not executable (correct value)
         _log.info(f'开始充电，当前执行计划为\nStart charging, the current execution plan is\n{self.__current_charge_action}')
         _log.debug(f'剩余计划表\nRemaining planning table\n{self.__waiting_plan}')
         self.__phase_num = self.__current_charge_action.get('phase_num', GPIOParams.ASSUMED_PHASE)
-        self.__shelly_writer.set_current_action(plan=self.__current_charge_action, value_unit=self.__value_unit, phase_num=self.__phase_num)
+        self.__shelly_writer.set_current_action(plan=self.__current_charge_action, value_unit=self.__value_unit, phase_num=self.__phase_num, current_start_time=self.__current_start_time_str)
         self.__data_collector.set_CU_waiting_plan(self.id, copy.deepcopy(self.__waiting_plan), self.__current_start_time_str, self.__value_unit)
         self.__data_collector.set_CU_current_charge_action(self.id, copy.copy(self.__current_charge_action))
         if len(self.__waiting_plan) != 0:
@@ -521,7 +529,7 @@ The charging unit is not executable (correct value)
         # _log.info(f'当前时间\t{current_time}\t当前充电周期戳\t{current_index}\t充电单位充电周期戳\t{self.__charge_index}\nCurrent timet{current_time}\tcurrent index{current_index}\tCU index{self.__charge_index}')
         # 4. 如果时间未同步, 则同步时间, 每个计划表的第一个充电周期都要进行时间同步/对齐
         if not self.__isTimeSynchronized:
-            _log.info('时间未同步, 进行时间同步')
+            _log.info('时间未同步, 进行时间同步\nTime not synchronized, time synchronization')
             if current_index != self.__charge_index:
                 self.__charge_index = current_index
                 _log.info('首次充电周期, 跳过校正, 更新充电周期戳\nThe first charging cycle, skips calibration, updates the charging cycle stamp')
@@ -617,14 +625,17 @@ The charging unit is not executable (correct value)
             self.__evse_self_check_thread.cancel()
         if self.__timer.is_alive():
             self.__timer.cancel()
+            self.__isTimerRunning = False
         if self.__timer.is_alive():
-            _log.info('定时器未停止, 强制停止\nTimer is not stopped, force stop')
+            _log.info('定时器未停止, 尝试停止\nTimer is not stopped, try to stop')
             stop_num = 0
             while self.__timer.is_alive():
                 self.__timer.cancel()
+                self.__isTimerRunning = False
                 stop_num += 1
-            _log.info(f'定时器强制停止 {stop_num} 次\nTimer force stop {stop_num} times')
-        self.__isTimerRunning = False
+            self.__isTimerRunning = False
+            _log.info(f'定时器尝试停止 {stop_num} 次\nTimer tried to stop {stop_num} times')
+
         self.__evse.stop_charging()
         if self.__current_charge_action:
             self.__finished_plan.append(copy.copy(self.__current_charge_action))
