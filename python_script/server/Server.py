@@ -17,7 +17,7 @@ _warning = Log.CSMS.warning
 class Server:
     def __init__(self):
         self._max_grid_power = 6000
-        self._charging_interval = 2
+        self._charging_interval = 2  # minute
         self._eprices = OptParams.EPRICES
         self._send_request_list = []
         self._isopt = False
@@ -149,15 +149,15 @@ class Server:
         _debug(self._isopt)
         if self._isopt:
             temp_request = GenSetChargingProfileRequest.generate(
-                        message['data']['evseId'],
-                        GenSetChargingProfileRequest.get_charging_profile(
-                            1,
-                            1,
-                            ChargingProfilePurposeType.tx_profile,
-                            ChargingProfileKindType.absolute,
-                            [opt.get_charging_schedule()]
-                        )
-                    )
+                message['data']['evseId'],
+                GenSetChargingProfileRequest.get_charging_profile(
+                    1,
+                    1,
+                    ChargingProfilePurposeType.tx_profile,
+                    ChargingProfileKindType.absolute,
+                    [opt.get_charging_schedule()]
+                )
+            )
             self._send_request_list.append({
                 'action': Action.SetChargingProfile,
                 'data': temp_request
