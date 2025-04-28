@@ -51,6 +51,7 @@ class ShellyDataCSVWriter:
         self.__last_calculation_time = time.time()
         self.__isThreadRunning = True
         self.__write_lock = threading.Lock()
+        self.__data_lock = threading.Lock()
         self.__to_write_queue = queue.Queue()
         self.__thread_write = threading.Thread(target=self.__write_in_loop, name=f'CSV_Writer_ID_{self.__cu_id}', daemon=True)
         self.__thread_write.start()
@@ -97,11 +98,12 @@ class ShellyDataCSVWriter:
         plan_charged_energy = self.__get_current_calculated_charged_energy()
         action_limit = self.__current_action.get('limit', -1)
         action_periode = self.__current_action.get('startPeriod', -1)
-        data: list = [
-            current_time,
-            *current_list, *voltage_list, *power_list, *energy_list,
-            shelly_total_energy, actual_calculate_energy, plan_charged_energy,
-            action_periode, action_limit, self.__value_unit]
+        with self.__data_lock:
+            data: list = [
+                current_time,
+                *current_list, *voltage_list, *power_list, *energy_list,
+                shelly_total_energy, actual_calculate_energy, plan_charged_energy,
+                self.__current_start_time, action_periode, action_limit, self.__value_unit]
         self.__append_msg_in_queue(data)
 
     def stop_writing(self):
@@ -121,23 +123,26 @@ class ShellyDataCSVWriter:
         self.__init_table_header()
 
     def set_charge_plan(self, start_time: str, charge_plan: list):
-        self.__start_time_str = start_time
-        self.__start_time: float = DataGene.str2time(start_time).timestamp()
-        self.__charge_plan = charge_plan
+        with self.__data_lock:
+            self.__start_time_str = start_time
+            self.__start_time: float = DataGene.str2time(start_time).timestamp()
+            self.__charge_plan = charge_plan
 
     def stop(self) -> None:
         self.__set_enable_charge(False)
         self.__isThreadRunning = False
         self.__append_msg_in_queue(None)
 
-    def set_current_action(self, plan: dict, value_unit: str, phase_num: int) -> None:
+    def set_current_action(self, plan: dict, value_unit: str, phase_num: int, current_start_time: str) -> None:
         if not self.__isSmartCharging:
             return
         if phase_num not in [1, 2, 3]:
             raise ValueError(f'Invalid phase number: {phase_num}')
-        self.__phase_num: int = phase_num
-        self.__current_action = plan
-        self.__value_unit: str = value_unit
+        with self.__data_lock:
+            self.__phase_num: int = phase_num
+            self.__current_action = plan
+            self.__current_start_time = current_start_time
+            self.__value_unit: str = value_unit
 
     def __check_folder(self):
         if len(self.__csv_file_path_list) >= self.__max_csv_file_count:
@@ -191,6 +196,7 @@ class ShellyDataCSVWriter:
             'total_energy_shelly',
             'total_energy_calculated',
             'total_energy_desired',
+            'current_plan_startTime',
             'action_startPeriod',
             'action_limit',
             'action_value_unit',
