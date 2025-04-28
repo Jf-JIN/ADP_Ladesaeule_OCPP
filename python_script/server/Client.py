@@ -199,6 +199,16 @@ class Client:
             'logout': self.web_handle_logout,
             'download_csv': self.web_handle_download_csv,
         }
+        if not isinstance(web_message, dict):
+            if isinstance(web_message, str):
+                try:
+                    web_message = json.loads(web_message)
+                except:
+                    _log.warning(f"消息格式错误 Message format error\n{web_message}")
+                    return
+            else:
+                _log.warning(f"消息格式错误 Message format error\n{web_message}")
+                return
         for key, value in handle_dict.items():
             if key in web_message:
                 value(web_message[key])
@@ -213,6 +223,11 @@ class Client:
         else:
             energy_amount = 0
             depart_time = ''
+        if not depart_time.endswith('Z'):
+            if depart_time.count(':') == 1:
+                depart_time += ':00Z'
+            elif depart_time.count(':') == 2:
+                depart_time += 'Z'
         if evse_id not in self.GPIO_Manager.data_collector.available_charge_units_id_set or self.GPIO_Manager.get_charge_unit(evse_id).isCharging:
             self.send_web_error_message('EVSE_ID不可用\nevse_id is not available')
             return
@@ -438,12 +453,12 @@ voltage_max:{voltage_max}
         message = message['opt_fig']
         if 'opt_img' in message:
             self.send_message_to_web('figure', {'opt_fig': message['opt_img']})
-        _log.info(message)
+        # _log.info(message)
         _log.info(message['result'])
         if message['result'] == 0:  # 失败
-            self.send_web_alert_message('已成功收到充电计划表\nCharging plan received successfully', 'success')
-        elif message['result'] == 1:  # 成功
             self.send_web_alert_message('充电计划表优化失败\nCharging plan optimization failed', 'error')
+        elif message['result'] == 1:  # 成功
+            self.send_web_alert_message('已成功收到充电计划表\nCharging plan received successfully', 'success')
 
     def send_web_data_manager_fig_message(self, message: dict) -> None:
         self.send_message_to_web('figure', message)
