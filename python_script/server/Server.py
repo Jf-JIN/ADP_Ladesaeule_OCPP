@@ -16,8 +16,8 @@ _warning = Log.CSMS.warning
 
 class Server:
     def __init__(self):
-        self._max_grid_power = 16000
-        self._charging_interval = 15
+        self._max_grid_power = 6000
+        self._charging_interval = 2
         self._eprices = OptParams.EPRICES
         self._send_request_list = []
         self._isopt = False
@@ -70,7 +70,7 @@ class Server:
             self._max_grid_power = int(message['max_grid_power'])
             self.__thread_web_server.send_console_message({'web_console': 'max_grid_power updated to ' + str(self._max_grid_power) + '\n'})
         if 'charging_interval' in message:
-            self._charging_interval = int(message['charging_interval'])
+            self._charging_interval = float(message['charging_interval'])
             self.__thread_web_server.send_console_message({'web_console': 'charging_interval updated to ' + str(self._charging_interval) + '\n'})
         if 'eprices' in message:
             self._eprices = message['eprices']

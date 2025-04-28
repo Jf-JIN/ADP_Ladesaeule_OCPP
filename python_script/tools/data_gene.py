@@ -86,7 +86,11 @@ class DataGene:
         返回:
             - datetime: 转换后的 datetime 对象
         """
-        return datetime.strptime(time_str, '%Y-%m-%dT%H:%M:%SZ')
+        try:
+            return datetime.strptime(time_str, '%Y-%m-%dT%H:%M:%SZ')
+        except ValueError:
+            _log.error(f"The time string format is incorrect, it should be '%Y-%m-%dT%H:%M:%SZ', received: {time_str}")
+            return datetime.now()
 
     @staticmethod
     def gene_his_usage_seed(fixed_user_id: int = None) -> list[int]:
@@ -370,7 +374,7 @@ class DataGene:
             max_grid_power: int,
             max_power: int,
             min_power: int,
-            interval: int = 15
+            interval: float = 15
     ) -> list:
         """
         将开始时间和结束时间按照给定的分钟间隔分割, 返回每段时间的持续时间、电价和可用功率.
@@ -388,22 +392,23 @@ class DataGene:
         返回:
             - list: 包含每段时间的持续时间、电价和可用功率的列表
         """
-        # if interval not in [15, 30, 60, 120]:
-        #     _log.error("Interval must be one of [15, 30, 60, 120]")
 
-        if interval not in [2, 15, 30, 60, 120]:
-            _log.error("Interval must be one of [2, 15, 30, 60, 120]")
+        # if interval not in [1, 2, 15, 30, 60, 120]:
+        #     _log.error("Interval must be one of [1, 2, 15, 30, 60, 120]")
 
         result_time = []
         result_eprices = []
         max_power_list = []
 
-        if interval == 2:
-            time_next = start_time + timedelta(minutes=interval)
+        if interval not in [15, 30, 60, 120]:
+            if interval < 1:
+                time_next = start_time + timedelta(seconds=interval * 60)
+            else:
+                time_next = start_time + timedelta(minutes=interval)
             while start_time < end_time:
                 # 确定当前时间段的结束时间
                 segment_end = min(time_next, end_time)
-                duration = (segment_end - start_time).seconds // 60
+                duration = (segment_end - start_time).seconds / 60
                 result_time.append(duration)
 
                 # 计算索引范围

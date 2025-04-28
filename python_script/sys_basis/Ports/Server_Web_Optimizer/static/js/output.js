@@ -46,7 +46,7 @@ submit_button.addEventListener('click', () => {
 
     // 类型转换
     let maxPower = parseInt(max_grid_power, 10);
-    let intervalNum = parseInt(interval, 10);
+    let intervalNum = parseFloat(interval);
 
     // 文件处理逻辑
     if (file_eprices) {

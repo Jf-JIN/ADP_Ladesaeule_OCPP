@@ -32,7 +32,7 @@ class Optimizer:
     """
 
     def __init__(self, charging_needs: dict, eprices: list, his_usage: list, max_grid_power: int = 3000,
-                 interval: int = 15, mode: int = 0):
+                 interval: float = 15, mode: int = 0):
         _info("--------------------Optimizer init--------------------")
         self._charging_needs = charging_needs
         self._energy_amount = self._charging_needs['acChargingParameters']['energyAmount']
@@ -202,7 +202,7 @@ class Optimizer:
             scpr = GenSetChargingProfileRequest()
             charging_schedule_period_list = []
             for i in range(self._num_split):
-                start_period = int(sum(self._time_split[:i]) * 60)  # 缩短60倍用于测试，实际使用请删除
+                start_period = int(sum(self._time_split[:i]) * 60)
                 # start_period = int(sum(self._time_split[:i]))  # test
                 charging_schedule_period_list.append(
                     scpr.get_charging_schedule_period(
@@ -252,8 +252,9 @@ if __name__ == "__main__":
     # his_usage = DataGene.gene_his_usage_seed(3456)
     # print(his_usage)
     # DataGene.plot_usage(his_usage)
-    op_dp = Optimizer(charging_needs, eprices, his_usage, 5000, 2, 1)
+    op_dp = Optimizer(charging_needs, eprices, his_usage, 5000, 0.5, 1)
     # print(op_dp.get_charging_needs())
     # DataGene.plot_charging_curve(op_dp._start_time, op_dp._time_split, op_dp._charging_list)
     # DataGene.plot_usage_comparison(op_dp._start_time, op_dp._time_split, op_dp._charging_list, his_usage, 16000)
-    op_dp.get_img_comparison()
+    # op_dp.get_img_comparison()
+    print(op_dp.get_charging_schedule())
