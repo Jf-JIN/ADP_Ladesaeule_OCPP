@@ -17,7 +17,7 @@ _warning = Log.CSMS.warning
 class Server:
     def __init__(self):
         self._max_grid_power = 6000
-        self._charging_interval = 2  # minute
+        self._charging_interval = 15  # minute
         self._eprices = OptParams.EPRICES
         self._send_request_list = []
         self._isopt = False
