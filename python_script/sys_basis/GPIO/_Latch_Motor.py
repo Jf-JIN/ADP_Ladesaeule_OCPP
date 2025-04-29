@@ -32,6 +32,7 @@ class LatchMotor:
         self.__timer: threading.Timer = threading.Timer(99, self.__off_lock_pin)
         self.__timer.name = 'LatchMotor'
         self.__timer_intervall: int | float = GPIOParams.LETCH_MOTOR_RUNTIME  # 引脚状态转换的时间
+        self.unlock()  # 初始化时解锁
 
     @property
     def id(self) -> int:

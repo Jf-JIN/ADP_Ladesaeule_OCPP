@@ -47,6 +47,7 @@ class ShellyDataCSVWriter:
         self.__csv_file_dir: str = os.path.join(self.__root_dir, self.__root_folder_name, self.__csv_folder_name)
         os.makedirs(self.__csv_file_dir, exist_ok=True)
         self.__csv_file_path_list: list = []
+        self.__file_start_time = ''
         self.__max_csv_file_count: int = 10
         self.__last_calculation_time = time.time()
         self.__isThreadRunning = True

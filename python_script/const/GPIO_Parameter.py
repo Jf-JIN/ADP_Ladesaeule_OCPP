@@ -47,10 +47,10 @@ class GPIOParams(AnalogDefine):
     MESSAGE_SEND_INTERVAL = 60  # seconds
     CHARGE_UNITS = [
         # (EVSE_Id, Shelly_main_url)
-        # (1, 'shellypro3em-2cbcbbb2e0b8.local'),
+        (1, 'shellypro3em-2cbcbbb2e0b8.local'),
         # (1, '172.18.25.49:6666'),
         # (1, '172.18.20.152:6666'),
-        (1, 'http://192.168.124.9:6666'),
+        # (1, 'http://192.168.124.9:6666'),
         # (1, 'http://130.83.148.29:6666'),
 
         # (0, '192.168.1.100'),

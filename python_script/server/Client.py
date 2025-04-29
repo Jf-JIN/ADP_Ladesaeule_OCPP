@@ -1,6 +1,7 @@
 
 
 import functools
+import subprocess
 import time
 from const.GPIO_Parameter import *
 from tools.Logger import Logger
@@ -198,6 +199,7 @@ class Client:
             'manual_input_csv': self.web_handle_manual_input_csv,
             'logout': self.web_handle_logout,
             'download_csv': self.web_handle_download_csv,
+            'time_synchronize': self.web_handle_time_synchronize,
         }
         if not isinstance(web_message, dict):
             if isinstance(web_message, str):
@@ -374,6 +376,23 @@ voltage_max:{voltage_max}
         self.send_web_alert_message('打包CSV文件中...\nPacked in CSV file...', 'info')
         self.GPIO_Manager.get_charge_unit(id).shelly_writer.signal_exported_file_path.connect(self.web_send_download_csv)
         self.GPIO_Manager.get_charge_unit(id).shelly_writer.request_exported_csv_files_path(num)
+
+    def web_handle_time_synchronize(self, sync_time_dict: dict) -> None:
+        if 'target_time' not in sync_time_dict:
+            return
+        target_time = sync_time_dict['target_time']
+        try:
+            result = subprocess.run(['date', '-s', target_time], capture_output=True, text=True)
+
+            if result.returncode == 0:
+                res_str = result.stdout.strip()
+                _log.info(f"Time synchronized: {res_str}")
+            else:
+                _log.error("Error: %s", result.stderr.strip())
+                self.send_web_alert_message('同步时间失败\nFailed to synchronize time', 'error')
+        except:
+            self.send_web_alert_message('同步时间失败\nFailed to synchronize time', 'error')
+            return
 
     def web_send_download_csv(self, path: str) -> None:
         _log.info('打包完成，准备发送文件 Packed, ready to send file')

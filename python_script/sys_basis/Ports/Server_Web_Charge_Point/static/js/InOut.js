@@ -2,6 +2,7 @@
 // This script is mainly used for the common logical parts of the user and administrator interfaces, such as displaying the current time, checking input, etc.
 
 const socket = io();
+console.log('loaded')
 var isAllowMessageFromServerPopup = true;
 var message_in_waiting = null;
 

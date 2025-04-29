@@ -301,6 +301,8 @@ class ModbusIO(object):
             if not res_1004:
                 _log.warning(f"res_1004 write failed: {res_1004}")
                 # return False
+            if self.read(address=EVSERegAddress.EVSE_STATE) == REG1006.STEADY:
+                return True
             res_1006: bool = self.write(address=EVSERegAddress.EVSE_STATE, value=REG1006.STEADY)
             _log.info(f"res_1006 write: {res_1006}")
             return res_1006
