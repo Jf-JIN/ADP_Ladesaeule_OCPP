@@ -90,6 +90,7 @@ class Shelly:
 
     def set_data(self, data: dict) -> None:
         self.__data = data
+        self.__shelly_total_energy = data.get('total_energy', -1)
         self.__charged_energy = self.__calculate_charged_energy()
         self.__data['charged_energy'] = self.__charged_energy
         # _log.info(f'Shelly data updated: {self.__charged_energy}')
@@ -100,7 +101,8 @@ class Shelly:
         if not self.__isAvailable:
             self.signal_shelly_error_occurred.emit(not self.__isAvailable)
             return
-        self.signal_charged_energy.emit(self.__charged_energy)
+        self.signal_charged_energy.emit(self.__shelly_total_energy)
+        # self.signal_charged_energy.emit(self.__charged_energy)
 
     def __calculate_charged_energy(self) -> int | float:
         """ 
