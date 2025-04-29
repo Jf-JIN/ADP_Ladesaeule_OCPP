@@ -89,7 +89,9 @@ class PollingEVSE(Thread):
         while self.__isRunning:
             evse: Evse = self.__evse_list[self.__current_index]
             evse_id: int = evse.id
-            evse_data = {}
+            evse_data = {
+                'vehicle_state': 0,
+            }
             with ModbusIO(id=evse_id) as io:
                 # _log.info(f'EVSE <{evse_id}> polling 1')
                 evse_data.update(self.__get_watching_registers_dict(io))
@@ -101,6 +103,11 @@ class PollingEVSE(Thread):
                     evse_data['vehicle_state'] = vehicle_state
                     evse.set_vehicle_state(vehicle_state)
                     # _log.info(f'EVSE <{evse_id}> polling 5')
+                else:
+                    if '1002' in evse_data:
+                        evse_data['vehicle_state'] = evse_data['1002']
+                    else:
+                        _log.error('evse_read_error, 1002 cannot be read')
 
                 evse_error: None | set = io.read_evse_status_fails()
                 # _log.info(f'EVSE <{evse_id}> polling 6')
