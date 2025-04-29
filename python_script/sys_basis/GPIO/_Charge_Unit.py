@@ -772,6 +772,10 @@ The charging unit is not executable (correct value)
             _log.info(f'已完成充电电量\nCharge finished, charged_energy\n{charged_energy}')
             self.signal_hint_message.emit(f'已完成充电, 充电电量{charged_energy}Wh\nCharge finished, charged_energy\n{charged_energy}Wh')
             self.stop_charging()
+        elif charged_energy < 0:
+            _log.info(f'Shelly 检测充电量异常\n Shelly check charge energy abnormal\n{charged_energy}')
+            self.signal_hint_message.emit(f'Shelly 检测充电量异常\n Shelly check charge energy abnormal\n{charged_energy}')
+            self.stop_charging()
 
     def __trim_charge_plan(self, lag_sec: int | float, plan_list: list) -> list:
         if lag_sec > plan_list[-1]['startPeriod']:
