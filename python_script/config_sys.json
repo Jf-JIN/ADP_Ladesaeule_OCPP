@@ -1,0 +1,23 @@
+{
+    "ocpp_opt_host": "ws://127.0.0.1",
+    "ocpp_opt_port": 80,
+    "charge_units": [
+        [
+            1,
+            "192.168.124.9:6666"
+        ]
+    ],
+    "max_voltage": 220,
+    "max_shelly_retry": 5,
+    "assumed_phase": 3,
+    "self_check_timeout": -31,
+    "letch_motor_runtime": 1,
+    "calibration_period": 120,
+    "polling_evse_interval": 1,
+    "polling_shelly_interval": 1,
+    "polling_shelly_timeout": 10,
+    "datacollector_data_interval": 1,
+    "datacollector_fig_interval": 1,
+    "evse_write_retry": 10,
+    "charging_stable_countdown": 10
+}
