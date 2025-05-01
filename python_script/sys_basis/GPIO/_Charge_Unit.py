@@ -520,13 +520,10 @@ The charging unit is not executable (correct value)
         if len(self.__waiting_plan) != 0:
             charge_duration_sec: int | float = self.__waiting_plan[0]['startPeriod'] + DataGene.str2time(self.__current_start_time_str).timestamp() - datetime.now().timestamp()
         else:
-            # charge_duration_sec: int | float = DataGene.str2time(self.__depart_time).timestamp() - self.__current_start_datetime.timestamp() - self.__current_charge_action['startPeriod']
-            charge_duration_sec: int | float = (DataGene.str2time(self.__depart_time).timestamp() - self.__current_start_datetime.timestamp())
-            30 - self.__current_charge_action['startPeriod']  # [MODIFY] 该段代码仅用于测试，为了缩短时长而设置的，可通过修改 / 后的数字
+            charge_duration_sec: int | float = (DataGene.str2time(self.__depart_time).timestamp() - self.__current_start_datetime.timestamp()) - self.__current_charge_action['startPeriod']
         _log.info(f'当前充电动作时长为 {charge_duration_sec} 秒\nCurrent charge action duration is {charge_duration_sec} seconds')
         current_time: float = datetime.now().timestamp()
         current_index = current_time // self.__index_period_sec
-        # _log.info(f'当前时间\t{current_time}\t当前充电周期戳\t{current_index}\t充电单位充电周期戳\t{self.__charge_index}\nCurrent timet{current_time}\tcurrent index{current_index}\tCU index{self.__charge_index}')
         # 4. 如果时间未同步, 则同步时间, 每个计划表的第一个充电周期都要进行时间同步/对齐
         if not self.__isTimeSynchronized:
             _log.info('时间未同步, 进行时间同步\nTime not synchronized, time synchronization')
@@ -614,9 +611,13 @@ The charging unit is not executable (correct value)
                     self.signal_hint_message.emit(f'充电单元 <{self.id}> 未在充电, 无需停止\nCharge unit <{self.id}> is not charging, no need to stop', 'info')
                 MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable_blink(False)
                 MLED.getLed(LEDName.LED_SYSTEM_READY).set_enable(True)
+            if self.__latch_motor.isLocked:
+                self.__latch_motor.unlock()
             return
         if not self.__isTimerRunning:
             _log.warning(f'充电单元 <{self.__id}> 未启动定时器, 无法停止充电\nCharge unit <{self.__id}> timer not started, cannot stop charging')
+            if self.__latch_motor.isLocked:
+                self.__latch_motor.unlock()
             return
         _log.info('执行停止充电\nExecute stop charging')
         if self.__lock_thread.is_alive():
@@ -624,12 +625,14 @@ The charging unit is not executable (correct value)
         if self.__evse_self_check_thread.is_alive():
             self.__evse_self_check_thread.cancel()
         if self.__timer.is_alive():
+            self.__isTimerRunning = False
             self.__timer.cancel()
             self.__isTimerRunning = False
         if self.__timer.is_alive():
             _log.info('定时器未停止, 尝试停止\nTimer is not stopped, try to stop')
             stop_num = 0
             while self.__timer.is_alive():
+                self.__isTimerRunning = False
                 self.__timer.cancel()
                 self.__isTimerRunning = False
                 stop_num += 1
@@ -643,7 +646,8 @@ The charging unit is not executable (correct value)
             self.__current_charge_action = None
         self.__waiting_plan.clear()
         self.__signal_charging_finished.emit()
-        self.__latch_motor.unlock()
+        if self.__latch_motor.isLocked:
+            self.__latch_motor.unlock()
         # 进行初始化参数
         if error_code:
             self.__isNoError = False
