@@ -16,11 +16,6 @@ _warning = Log.CSMS.warning
 
 class Server:
     def __init__(self):
-        self._max_grid_power = 6000
-        self._charging_interval = 15  # minute
-        self._eprices = OptParams.EPRICES
-        self._send_request_list = []
-        self._isopt = False
         self.__init_signals()
         self.__init_parameters()
         self.__init_threads()
@@ -45,7 +40,13 @@ class Server:
         # LoggerGroup.signal_all_color.connect(self.__send_web_console_message)
 
     def __init_parameters(self):
-        pass
+        self._max_grid_power = OptParams.MAX_GRID_POWER
+        self._charging_interval = OptParams.CHARGING_INTERVAL  # minute
+        self._eprices = OptParams.EPRICES
+        self._send_request_list = []
+        self._isopt = False
+        self._num_retry_max = OptParams.NUM_RETRY_MAX
+        self._num_retry = 0
 
     def __init_threads(self):
         self.__thread_web_server = PortWebServerOptimizer()
@@ -188,12 +189,19 @@ class Server:
         # _info("receive response message:", message, "\n", self._send_request_list)
         if len(self._send_request_list) > 0 and message['action'] == self._send_request_list[-1]['action']:
             if self._isopt:
-                if message['result'] == CP_Params.RESPONSE_RESULT.SUCCESS or message['result'] == CP_Params.RESPONSE_RESULT.ERROR:
+                if message['result'] == CP_Params.RESPONSE_RESULT.SUCCESS:
                     _info("-------------send request success-------------")
                     self._send_request_list.pop(-1)
-                if message['result'] == CP_Params.RESPONSE_RESULT.TIMEOUT:
+                    self._num_retry = 0
+                elif message['result'] == CP_Params.RESPONSE_RESULT.ERROR:
+                    _info("-------------send request error-------------")
+                    self._send_request_list.pop(-1)
+                    self._num_retry = 0
+                elif message['result'] == CP_Params.RESPONSE_RESULT.TIMEOUT:
                     _info("-------------send request timeout-------------")
-                    self.__coroutine_OCPP_server.send_request_message(self._send_request_list[-1]['data'])
+                    if self._num_retry < self._num_retry_max:
+                        self.__coroutine_OCPP_server.send_request_message(self._send_request_list[-1]['data'])
+                        self._num_retry += 1
         # pass
 
     def __handle_response_result_message(self, message):
