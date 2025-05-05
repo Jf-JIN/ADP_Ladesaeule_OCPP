@@ -9,7 +9,7 @@ _info = Log.WEB.info
 
 
 class PortWebServerOptimizer(Thread):
-    def __init__(self, host='0.0.0.0', port=2311, info_title='Web_Server_Port'):
+    def __init__(self, host='0.0.0.0', port=1132, info_title='Web_Server_Port'):
         super().__init__(name='PortWebServerOptimizer')
         self.__signal_thread_web_server_info = XSignal()
         self.__signal_thread_web_server_recv = XSignal()
