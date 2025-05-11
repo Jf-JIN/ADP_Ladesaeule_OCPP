@@ -175,3 +175,4 @@ cython_debug/
 python_script/test/Modbus_Shelly_Simulator.json
 python_script/test/Modbus_Shelly_Simulator/Modbus_Shelly_Simulator.json
 *.csv
+/ppt/JIN
