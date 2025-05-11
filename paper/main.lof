@@ -1,25 +1,36 @@
 \babel@toc {english}{}\relax 
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Electric vehicle sales increasing over the years (Source: \blx@tocontentsinit {0}\cite {EAutostatistik})}}{9}{figure.caption.6}%
+\contentsline {figure}{\numberline {1.2}{\ignorespaces Charge station sales increasing over the years (Source: \blx@tocontentsinit {0}\cite {EAutostatistik})}}{10}{figure.caption.7}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces AF30-30-00-13 (Source: \blx@tocontentsinit {0}\cite {AF30-30-00-13})}}{12}{figure.caption.4}%
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Shelly Pro 3EM (Source: \blx@tocontentsinit {0}\cite {Shelly})}}{13}{figure.caption.5}%
-\contentsline {figure}{\numberline {2.3}{\ignorespaces Raspberry Pi 3b and its pin-out overview (Source: \blx@tocontentsinit {0}\cite {RaspberryPiOverview})}}{14}{figure.caption.6}%
-\contentsline {figure}{\numberline {2.4}{\ignorespaces pin-out for both standards(Source: \blx@tocontentsinit {0}\cite {SAEJ1772} and \blx@tocontentsinit {0}\cite {SAEJ3400})}}{15}{figure.caption.7}%
-\contentsline {figure}{\numberline {2.5}{\ignorespaces pin-out for typ2 connector (Source: \blx@tocontentsinit {0}\cite {typ2connector})}}{16}{figure.caption.8}%
+\contentsline {figure}{\numberline {2.1}{\ignorespaces simple circuit}}{14}{figure.caption.10}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Raspberry Pi 3B and its pin-out overview (Source: \blx@tocontentsinit {0}\cite {RaspberryPiOverview})}}{15}{figure.caption.12}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces AF30-30-00-13 (Source: \blx@tocontentsinit {0}\cite {AF30-30-00-13})}}{18}{figure.caption.21}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Shelly Pro 3EM (Source: \blx@tocontentsinit {0}\cite {Shelly})}}{18}{figure.caption.22}%
+\contentsline {figure}{\numberline {2.5}{\ignorespaces RaspberryPi board}}{19}{figure.caption.23}%
+\contentsline {figure}{\numberline {2.6}{\ignorespaces pin-out for typ2 connector (Source: \blx@tocontentsinit {0}\cite {IECStandard})}}{20}{figure.caption.24}%
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces System Frame}}{23}{figure.caption.25}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Message Communication}}{28}{figure.caption.26}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces System Frame}}{21}{figure.caption.10}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Message Communication}}{26}{figure.caption.11}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Charging comparison under different strategies}}{44}{figure.caption.30}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Power usage comparison with Dynamic adjustment}}{44}{figure.caption.31}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Power usage comparison with shortest charging time}}{45}{figure.caption.32}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Power usage comparison with minimum charging cost}}{45}{figure.caption.33}%
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Charging Plan Request Process}}{51}{figure.caption.34}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Charging Process}}{53}{figure.caption.35}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Time synchronize and split}}{58}{figure.caption.36}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {6.1}{\ignorespaces RaspberryPi board}}{45}{figure.caption.20}%
-\contentsline {figure}{\numberline {6.2}{\ignorespaces Charging Plan Request Process}}{48}{figure.caption.25}%
-\contentsline {figure}{\numberline {6.3}{\ignorespaces Charging Process}}{51}{figure.caption.26}%
-\contentsline {figure}{\numberline {6.4}{\ignorespaces Time synchronize and split}}{55}{figure.caption.29}%
+\contentsline {figure}{\numberline {6.1}{\ignorespaces CSMS front-end page}}{68}{figure.caption.37}%
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {7.1}{\ignorespaces Simulation VS. reality}}{70}{figure.caption.40}%
+\contentsline {figure}{\numberline {7.2}{\ignorespaces GUI of Simulator}}{71}{figure.caption.43}%
+\contentsline {figure}{\numberline {7.3}{\ignorespaces Conduct on-site EV charging station testing}}{72}{figure.caption.44}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {8.1}{\ignorespaces Simulation VS. reality}}{66}{figure.caption.38}%
-\contentsline {figure}{\numberline {8.2}{\ignorespaces GUI of Simulator}}{67}{figure.caption.41}%
+\contentsline {figure}{\numberline {8.1}{\ignorespaces Execution of Charging Schedule}}{74}{figure.caption.45}%
+\contentsline {figure}{\numberline {8.2}{\ignorespaces Graphical User Interface}}{75}{figure.caption.46}%
+\contentsline {figure}{\numberline {8.3}{\ignorespaces Charging Station Hardware}}{76}{figure.caption.47}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

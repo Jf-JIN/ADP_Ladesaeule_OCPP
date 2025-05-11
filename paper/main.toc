@@ -1,79 +1,65 @@
 \babel@toc {english}{}\relax 
 \contentsline {chapter}{\numberline {1}Introduction}{9}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Background}{9}{section.1.1}%
-\contentsline {section}{\numberline {1.2}Research Significance}{9}{section.1.2}%
-\contentsline {section}{\numberline {1.3}Objectives}{10}{section.1.3}%
-\contentsline {section}{\numberline {1.4}Overview}{10}{section.1.4}%
-\contentsline {chapter}{\numberline {2}Hardware Introduction}{12}{chapter.2}%
-\contentsline {section}{\numberline {2.1}EVSE and AF30-30-00-13}{12}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Shelly}{13}{section.2.2}%
-\contentsline {section}{\numberline {2.3}Raspberry Pi 3 Model B+}{13}{section.2.3}%
-\contentsline {section}{\numberline {2.4}Power Supply (3.3V 5V 12V)}{14}{section.2.4}%
-\contentsline {section}{\numberline {2.5}Connector (Typ 2)}{15}{section.2.5}%
-\contentsline {section}{\numberline {2.6}Motor and relay}{16}{section.2.6}%
-\contentsline {chapter}{\numberline {3}Software Introduction}{17}{chapter.3}%
-\contentsline {section}{\numberline {3.1}OCPP}{17}{section.3.1}%
-\contentsline {section}{\numberline {3.2}WebSocket}{17}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Modbus}{18}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Coroutine and Thread}{18}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Signal and Slot}{19}{section.3.5}%
-\contentsline {chapter}{\numberline {4}System Base}{20}{chapter.4}%
-\contentsline {section}{\numberline {4.1}System Frame}{20}{section.4.1}%
-\contentsline {section}{\numberline {4.2}WebSocket ContextManager}{22}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Python Library OCPP}{23}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Method to get OCPP data}{25}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Method to generate OCPP data}{27}{section.4.5}%
-\contentsline {section}{\numberline {4.6}Signal}{29}{section.4.6}%
-\contentsline {section}{\numberline {4.7}Asynchronous Isolation}{30}{section.4.7}%
-\contentsline {chapter}{\numberline {5}CSMS}{33}{chapter.5}%
-\contentsline {section}{\numberline {5.1}DataGene utility class}{33}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Optimizer class}{35}{section.5.2}%
-\contentsline {subsection}{\numberline {5.2.1}Optimization considerations}{35}{subsection.5.2.1}%
-\contentsline {subsection}{\numberline {5.2.2}Optimization methode}{37}{subsection.5.2.2}%
-\contentsline {subsection}{\numberline {5.2.3}optimization problems}{40}{subsection.5.2.3}%
-\contentsline {section}{\numberline {5.3}Main function Server}{40}{section.5.3}%
-\contentsline {chapter}{\numberline {6}Charge Station}{42}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Hardware}{42}{section.6.1}%
-\contentsline {subsection}{\numberline {6.1.1}raspberry pi}{42}{subsection.6.1.1}%
-\contentsline {paragraph}{\nonumberline Remote control of Raspberry Pi}{42}{paragraph*.13}%
-\contentsline {paragraph}{\nonumberline Connection between Raspberry Pi and Shelly pro 3EM}{43}{paragraph*.15}%
-\contentsline {subsection}{\numberline {6.1.2}EVSE}{43}{subsection.6.1.2}%
-\contentsline {subsection}{\numberline {6.1.3}Shelly Pro 3EM}{44}{subsection.6.1.3}%
-\contentsline {subsection}{\numberline {6.1.4}Contactor}{44}{subsection.6.1.4}%
-\contentsline {subsection}{\numberline {6.1.5}Original CP}{44}{subsection.6.1.5}%
-\contentsline {subsection}{\numberline {6.1.6}Other component}{45}{subsection.6.1.6}%
-\contentsline {paragraph}{\nonumberline power supply}{45}{paragraph*.17}%
-\contentsline {paragraph}{\nonumberline level shifter}{45}{paragraph*.19}%
-\contentsline {paragraph}{\nonumberline Dual channel relay and DC motor}{45}{paragraph*.22}%
-\contentsline {section}{\numberline {6.2}Software}{46}{section.6.2}%
-\contentsline {subsection}{\numberline {6.2.1}Charge unit}{46}{subsection.6.2.1}%
-\contentsline {paragraph}{\nonumberline Charge logic}{47}{paragraph*.24}%
-\contentsline {paragraph}{\nonumberline Time synchronize and split}{52}{paragraph*.28}%
-\contentsline {paragraph}{\nonumberline Charge plan calibration}{56}{paragraph*.31}%
-\contentsline {subsection}{\numberline {6.2.2}Data manager}{57}{subsection.6.2.2}%
-\contentsline {subsection}{\numberline {6.2.3}ModBus Communication}{58}{subsection.6.2.3}%
-\contentsline {subsection}{\numberline {6.2.4}Thread Management (Polling)}{59}{subsection.6.2.4}%
-\contentsline {subsection}{\numberline {6.2.5}GPIO Manager}{60}{subsection.6.2.5}%
-\contentsline {chapter}{\numberline {7}Front-end Data Display}{61}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Charging Station Web Interface}{61}{section.7.1}%
-\contentsline {paragraph}{\nonumberline Web Implementation}{61}{paragraph*.33}%
-\contentsline {paragraph}{\nonumberline Web Functionality}{62}{paragraph*.35}%
-\contentsline {section}{\numberline {7.2}Optimizer Web Interface}{63}{section.7.2}%
-\contentsline {subsection}{\numberline {7.2.1}Web Page Layout and Functions}{63}{subsection.7.2.1}%
-\contentsline {chapter}{\numberline {8}Simulation and test}{65}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Simulator}{65}{section.8.1}%
-\contentsline {paragraph}{\nonumberline Simulator Structure}{65}{paragraph*.37}%
-\contentsline {paragraph}{\nonumberline Simulator Implementation}{67}{paragraph*.40}%
-\contentsline {section}{\numberline {8.2}Charging Point Assembly and Testing}{67}{section.8.2}%
-\contentsline {chapter}{\numberline {9}Results \& Discussion}{68}{chapter.9}%
-\contentsline {section}{\numberline {9.1}Results}{68}{section.9.1}%
-\contentsline {section}{\numberline {9.2}Discussion}{69}{section.9.2}%
-\contentsline {chapter}{\numberline {10}Appendices}{74}{chapter.10}%
-\contentsline {section}{Ladestation\_v2R}{74}{section*.43}%
-\contentsline {section}{Use Case Diagram}{78}{section*.43}%
-\contentsline {section}{Classes Diagram 1}{79}{section*.43}%
-\contentsline {section}{Classes Diagram 2}{80}{section*.43}%
-\contentsline {section}{Components Diagram}{81}{section*.43}%
-\contentsline {section}{Flow Diagram}{82}{section*.43}%
-\contentsline {section}{Simulation test cases}{83}{section*.43}%
+\contentsline {section}{\numberline {1.2}Research Significance}{11}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Objectives}{11}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Overview}{12}{section.1.4}%
+\contentsline {chapter}{\numberline {2}Hardware Introduction}{14}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Raspberry Pi}{15}{section.2.1}%
+\contentsline {paragraph}{\nonumberline Remote control of Raspberry Pi}{15}{paragraph*.14}%
+\contentsline {paragraph}{\nonumberline Connection between Raspberry Pi and Shelly pro 3EM}{16}{paragraph*.16}%
+\contentsline {section}{\numberline {2.2}EVSE and Contactor}{16}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Shelly Pro 3EM}{17}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Power Supply (3.3V 5V 12V)}{18}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Level shifter}{19}{section.2.5}%
+\contentsline {section}{\numberline {2.6}Dual channel relay and DC motor}{19}{section.2.6}%
+\contentsline {section}{\numberline {2.7}Connector}{20}{section.2.7}%
+\contentsline {chapter}{\numberline {3}System Base}{22}{chapter.3}%
+\contentsline {section}{\numberline {3.1}System Frame}{22}{section.3.1}%
+\contentsline {section}{\numberline {3.2}WebSocket}{24}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Python Library OCPP}{25}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Method to get OCPP data}{27}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Method to generate OCPP data}{29}{section.3.5}%
+\contentsline {section}{\numberline {3.6}Signal}{31}{section.3.6}%
+\contentsline {section}{\numberline {3.7}Asynchronous Isolation}{33}{section.3.7}%
+\contentsline {chapter}{\numberline {4}CSMS}{36}{chapter.4}%
+\contentsline {section}{\numberline {4.1}DataGene utility class}{36}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Optimizer class}{38}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Optimization considerations}{38}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Optimization method}{40}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}optimization results}{43}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.4}optimization problems}{46}{subsection.4.2.4}%
+\contentsline {section}{\numberline {4.3}Main function Server}{46}{section.4.3}%
+\contentsline {chapter}{\numberline {5}Charge Station}{48}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Charge unit}{48}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Charge mode}{49}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}Smart charging logic}{50}{subsection.5.1.2}%
+\contentsline {subsection}{\numberline {5.1.3}Time synchronize and split}{55}{subsection.5.1.3}%
+\contentsline {subsection}{\numberline {5.1.4}Charge plan correction}{58}{subsection.5.1.4}%
+\contentsline {section}{\numberline {5.2}Data manager}{60}{section.5.2}%
+\contentsline {section}{\numberline {5.3}ModBus Communication}{61}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Thread Management (Polling)}{63}{section.5.4}%
+\contentsline {section}{\numberline {5.5}GPIO Manager}{63}{section.5.5}%
+\contentsline {chapter}{\numberline {6}Front-end Data Display}{65}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Web Implementation}{65}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Web Functionality}{66}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}Charging Station Web Interface}{66}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}CSMS Web Interface}{67}{subsection.6.2.2}%
+\contentsline {chapter}{\numberline {7}Simulation and test}{69}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Simulator}{69}{section.7.1}%
+\contentsline {paragraph}{\nonumberline Simulator Structure}{69}{paragraph*.39}%
+\contentsline {paragraph}{\nonumberline Simulator Implementation}{71}{paragraph*.42}%
+\contentsline {section}{\numberline {7.2}Charging Point Assembly and Testing}{71}{section.7.2}%
+\contentsline {chapter}{\numberline {8}Results \& Discussion}{74}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Results}{74}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Discussion}{76}{section.8.2}%
+\contentsline {chapter}{\numberline {9}Acknowledgements}{79}{chapter.9}%
+\contentsline {chapter}{\numberline {10}Appendices}{82}{chapter.10}%
+\contentsline {section}{Ladestation\_v2R}{82}{section*.49}%
+\contentsline {section}{Use Case Diagram}{86}{section*.49}%
+\contentsline {section}{Classes Diagram 1}{87}{section*.49}%
+\contentsline {section}{Classes Diagram 2}{88}{section*.49}%
+\contentsline {section}{Components Diagram}{89}{section*.49}%
+\contentsline {section}{Flow Diagram}{90}{section*.49}%
+\contentsline {section}{Simulation test cases}{91}{section*.49}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

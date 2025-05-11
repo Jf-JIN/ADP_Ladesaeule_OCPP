@@ -2372,26 +2372,28 @@
     <bcf:datasource type="file" datatype="bibtex">bibliography.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
-    <bcf:citekey order="7" intorder="1">EVSEdatasheet</bcf:citekey>
-    <bcf:citekey order="8" intorder="1">typ2connector</bcf:citekey>
-    <bcf:citekey order="9" intorder="1">AF30-30-00-13</bcf:citekey>
-    <bcf:citekey order="10" intorder="1">AF30-30-00-13</bcf:citekey>
-    <bcf:citekey order="11" intorder="1">Shelly</bcf:citekey>
-    <bcf:citekey order="12" intorder="1">Shelly</bcf:citekey>
-    <bcf:citekey order="13" intorder="1">RaspberryPiOverview</bcf:citekey>
-    <bcf:citekey order="14" intorder="1">SAEJ1772</bcf:citekey>
-    <bcf:citekey order="15" intorder="1">SAEJ3400</bcf:citekey>
-    <bcf:citekey order="16" intorder="1">typ2connector</bcf:citekey>
-    <bcf:citekey order="17" intorder="1">OCPP</bcf:citekey>
-    <bcf:citekey order="18" intorder="1">ocpplibrary</bcf:citekey>
+    <bcf:citekey order="7" intorder="1">EAutostatistik</bcf:citekey>
+    <bcf:citekey order="8" intorder="1">EAutostatistik</bcf:citekey>
+    <bcf:citekey order="9" intorder="1">EAutostatistik</bcf:citekey>
+    <bcf:citekey order="10" intorder="1">innovationOutlookSmartChargingForEV</bcf:citekey>
+    <bcf:citekey order="11" intorder="1">RaspberryPiOverview</bcf:citekey>
+    <bcf:citekey order="12" intorder="1">serialport</bcf:citekey>
+    <bcf:citekey order="13" intorder="1">EVSEdatasheet</bcf:citekey>
+    <bcf:citekey order="14" intorder="1">AF30-30-00-13</bcf:citekey>
+    <bcf:citekey order="15" intorder="1">AF30-30-00-13</bcf:citekey>
+    <bcf:citekey order="16" intorder="1">Shelly</bcf:citekey>
+    <bcf:citekey order="17" intorder="1">IECStandard</bcf:citekey>
+    <bcf:citekey order="18" intorder="1">Softwarearchitecture</bcf:citekey>
     <bcf:citekey order="19" intorder="1">websockets</bcf:citekey>
-    <bcf:citekey order="20" intorder="1">modbus</bcf:citekey>
-    <bcf:citekey order="21" intorder="1">coroutinewiki</bcf:citekey>
-    <bcf:citekey order="22" intorder="1">threadcoroutine</bcf:citekey>
-    <bcf:citekey order="23" intorder="1">CSMS</bcf:citekey>
-    <bcf:citekey order="24" intorder="1">miniUART</bcf:citekey>
-    <bcf:citekey order="25" intorder="1">AF30-30-00-13</bcf:citekey>
-    <bcf:citekey order="26" intorder="1">Contactor</bcf:citekey>
+    <bcf:citekey order="20" intorder="1">OCPP</bcf:citekey>
+    <bcf:citekey order="21" intorder="1">ocpplibrary</bcf:citekey>
+    <bcf:citekey order="22" intorder="1">DesignPatterns</bcf:citekey>
+    <bcf:citekey order="23" intorder="1">Qt</bcf:citekey>
+    <bcf:citekey order="24" intorder="1">DesignPatterns</bcf:citekey>
+    <bcf:citekey order="25" intorder="1">DesignPatterns</bcf:citekey>
+    <bcf:citekey order="26" intorder="1">coroutinetutorial</bcf:citekey>
+    <bcf:citekey order="27" intorder="1">CSMS</bcf:citekey>
+    <bcf:citekey order="28" intorder="1">modbus</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nty">

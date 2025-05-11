@@ -35,7 +35,34 @@
       \verb https://new.abb.com/products/1SBL277001R1300/af30-30-00-13
       \endverb
     \endentry
-    \entry{miniUART}{online}{}{}
+    \entry{IECStandard}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=eaeeae4d6904d10dda1d1f3b33ed11c6}{%
+           family={Commission},
+           familyi={C\bibinitperiod},
+           given={International\bibnamedelima Electrotechnical},
+           giveni={I\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {International Electrotechnical Commission}%
+      }
+      \strng{namehash}{eaeeae4d6904d10dda1d1f3b33ed11c6}
+      \strng{fullhash}{eaeeae4d6904d10dda1d1f3b33ed11c6}
+      \strng{fullhashraw}{eaeeae4d6904d10dda1d1f3b33ed11c6}
+      \strng{bibnamehash}{eaeeae4d6904d10dda1d1f3b33ed11c6}
+      \strng{authorbibnamehash}{eaeeae4d6904d10dda1d1f3b33ed11c6}
+      \strng{authornamehash}{eaeeae4d6904d10dda1d1f3b33ed11c6}
+      \strng{authorfullhash}{eaeeae4d6904d10dda1d1f3b33ed11c6}
+      \strng{authorfullhashraw}{eaeeae4d6904d10dda1d1f3b33ed11c6}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{9782832259313}
+      \field{title}{IEC 62196-2:2022}
+      \field{year}{2022}
+    \endentry
+    \entry{serialport}{online}{}{}
       \field{sortinit}{C}
       \field{sortinithash}{4d103a86280481745c9c897c925753c0}
       \field{labeltitlesource}{title}
@@ -49,38 +76,6 @@
       \endverb
       \verb{url}
       \verb https://www.raspberrypi.com/documentation/computers/configuration.html#configure-uarts
-      \endverb
-    \endentry
-    \entry{Contactor}{online}{}{}
-      \field{sortinit}{C}
-      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
-      \field{labeltitlesource}{title}
-      \field{title}{Contactor - Wikipedia}
-      \field{urlday}{24}
-      \field{urlmonth}{3}
-      \field{urlyear}{2024}
-      \field{urldateera}{ce}
-      \verb{urlraw}
-      \verb https://en.wikipedia.org/wiki/Contactor
-      \endverb
-      \verb{url}
-      \verb https://en.wikipedia.org/wiki/Contactor
-      \endverb
-    \endentry
-    \entry{coroutinewiki}{online}{}{}
-      \field{sortinit}{C}
-      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
-      \field{labeltitlesource}{title}
-      \field{title}{Coroutine - Wikipedia}
-      \field{urlday}{23}
-      \field{urlmonth}{3}
-      \field{urlyear}{2025}
-      \field{urldateera}{ce}
-      \verb{urlraw}
-      \verb https://en.wikipedia.org/wiki/Coroutine
-      \endverb
-      \verb{url}
-      \verb https://en.wikipedia.org/wiki/Coroutine
       \endverb
     \endentry
     \entry{CSMS}{online}{}{}
@@ -115,6 +110,21 @@
       \verb https://wayleadr.com/blog/ev-charging-station-management-systems-a-comprehensive-guide-for-workplaces/
       \endverb
     \endentry
+    \entry{EAutostatistik}{online}{}{}
+      \field{sortinit}{E}
+      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
+      \field{labeltitlesource}{title}
+      \field{title}{Electric Vehicles}
+      \field{urlmonth}{1}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.statista.com/outlook/mmo/electric-vehicles/worldwide
+      \endverb
+      \verb{url}
+      \verb https://www.statista.com/outlook/mmo/electric-vehicles/worldwide
+      \endverb
+    \endentry
     \entry{EVSEdatasheet}{online}{}{}
       \field{sortinit}{e}
       \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
@@ -132,6 +142,90 @@
       \verb https://evracing.cz/evse/evse-wallbox/evse-wb-din_latest.pdf
       \endverb
     \endentry
+    \entry{Softwarearchitecture}{book}{}{}
+      \name{author}{4}{}{%
+        {{hash=5ffeeeb533dfcb3c39bada5fdcf44fc0}{%
+           family={Ford},
+           familyi={F\bibinitperiod},
+           given={Neal},
+           giveni={N\bibinitperiod}}}%
+        {{hash=8e3c0b09130cc7c13c7cda6ef28a7d48}{%
+           family={Richards},
+           familyi={R\bibinitperiod},
+           given={Mark},
+           giveni={M\bibinitperiod}}}%
+        {{hash=919fd0475641c5cbd58f72d166699af9}{%
+           family={Sadalage},
+           familyi={S\bibinitperiod},
+           given={Pramod},
+           giveni={P\bibinitperiod}}}%
+        {{hash=f5bad3a4e3ac23c8c5479f8323bd1a01}{%
+           family={Dehghani},
+           familyi={D\bibinitperiod},
+           given={Zhamak},
+           giveni={Z\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {O'Reilly Media}%
+      }
+      \strng{namehash}{19c890e394f0c8cea55b88e24ea7e9c4}
+      \strng{fullhash}{586249ff205249fd2a5b7e3d5043a631}
+      \strng{fullhashraw}{586249ff205249fd2a5b7e3d5043a631}
+      \strng{bibnamehash}{19c890e394f0c8cea55b88e24ea7e9c4}
+      \strng{authorbibnamehash}{19c890e394f0c8cea55b88e24ea7e9c4}
+      \strng{authornamehash}{19c890e394f0c8cea55b88e24ea7e9c4}
+      \strng{authorfullhash}{586249ff205249fd2a5b7e3d5043a631}
+      \strng{authorfullhashraw}{586249ff205249fd2a5b7e3d5043a631}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-1-492-08689-5}
+      \field{title}{Software Architecture: The Hard Parts: Modern Trade-Off Analyses for Distributed Architectures}
+      \field{year}{2021}
+    \endentry
+    \entry{DesignPatterns}{book}{}{}
+      \name{author}{4}{}{%
+        {{hash=abd927bf30d6566be0ac66a66e893fdd}{%
+           family={Gamma},
+           familyi={G\bibinitperiod},
+           given={Erich},
+           giveni={E\bibinitperiod}}}%
+        {{hash=233f891813bda0f3920985f97a4a7554}{%
+           family={Helm},
+           familyi={H\bibinitperiod},
+           given={Richard},
+           giveni={R\bibinitperiod}}}%
+        {{hash=fd79e5e249b219ff553fc2d811104d78}{%
+           family={Johnson},
+           familyi={J\bibinitperiod},
+           given={Ralph},
+           giveni={R\bibinitperiod}}}%
+        {{hash=e032589f0b9a38804483ab7cf5ccad7f}{%
+           family={Vlissides},
+           familyi={V\bibinitperiod},
+           given={John},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Addison-Wesley Professional}%
+      }
+      \strng{namehash}{4d2492409a24d4ed208ae6670cb91945}
+      \strng{fullhash}{5cb4a6d7baf30d11bae6682eca698b4f}
+      \strng{fullhashraw}{5cb4a6d7baf30d11bae6682eca698b4f}
+      \strng{bibnamehash}{4d2492409a24d4ed208ae6670cb91945}
+      \strng{authorbibnamehash}{4d2492409a24d4ed208ae6670cb91945}
+      \strng{authornamehash}{4d2492409a24d4ed208ae6670cb91945}
+      \strng{authorfullhash}{5cb4a6d7baf30d11bae6682eca698b4f}
+      \strng{authorfullhashraw}{5cb4a6d7baf30d11bae6682eca698b4f}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{0-201-63361-2}
+      \field{title}{Design Patterns: elements of reusable object-oriented software}
+      \field{year}{2009}
+    \endentry
     \entry{OCPP}{online}{}{}
       \field{sortinit}{I}
       \field{sortinithash}{8d291c51ee89b6cd86bf5379f0b151d8}
@@ -148,10 +242,35 @@
       \verb https://openchargealliance.org/whitepapers/
       \endverb
     \endentry
+    \entry{innovationOutlookSmartChargingForEV}{report}{}{}
+      \name{author}{1}{}{%
+        {{hash=500fd0a7c7f8d18ffb0f19871508b45d}{%
+           family={{International Renewable Energy Agency(IRENA)}},
+           familyi={I\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {International Renewable Energy Agency(IRENA)}%
+      }
+      \strng{namehash}{500fd0a7c7f8d18ffb0f19871508b45d}
+      \strng{fullhash}{500fd0a7c7f8d18ffb0f19871508b45d}
+      \strng{fullhashraw}{500fd0a7c7f8d18ffb0f19871508b45d}
+      \strng{bibnamehash}{500fd0a7c7f8d18ffb0f19871508b45d}
+      \strng{authorbibnamehash}{500fd0a7c7f8d18ffb0f19871508b45d}
+      \strng{authornamehash}{500fd0a7c7f8d18ffb0f19871508b45d}
+      \strng{authorfullhash}{500fd0a7c7f8d18ffb0f19871508b45d}
+      \strng{authorfullhashraw}{500fd0a7c7f8d18ffb0f19871508b45d}
+      \field{sortinit}{I}
+      \field{sortinithash}{8d291c51ee89b6cd86bf5379f0b151d8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Innovation Outlook Smart Charging For Electric Vehicles}
+      \field{type}{techreport}
+      \field{year}{2019}
+    \endentry
     \entry{ocpplibrary}{online}{}{}
       \name{author}{1}{}{%
         {{hash=45f81eb8b4e47ddc77dafbadaf071d7c}{%
-           family={mobilityhouse},
+           family={{mobilityhouse}},
            familyi={m\bibinitperiod}}}%
       }
       \strng{namehash}{45f81eb8b4e47ddc77dafbadaf071d7c}
@@ -166,7 +285,7 @@
       \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{title}{mobilityhouse/ocpp: Python implementation of the Open Charge Point Protocol (OCPP).}
+      \field{title}{Github: mobilityhouse/ocpp}
       \field{urlday}{24}
       \field{urlmonth}{3}
       \field{urlyear}{2025}
@@ -178,84 +297,63 @@
       \verb https://github.com/mobilityhouse/ocpp
       \endverb
     \endentry
-    \entry{modbus}{online}{}{}
-      \field{sortinit}{M}
-      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
-      \field{labeltitlesource}{title}
-      \field{title}{Modbus - Wikipedia}
-      \field{urlday}{23}
-      \field{urlmonth}{3}
-      \field{urlyear}{2025}
-      \field{urldateera}{ce}
-      \verb{urlraw}
-      \verb https://en.wikipedia.org/wiki/Modbus
-      \endverb
-      \verb{url}
-      \verb https://en.wikipedia.org/wiki/Modbus
-      \endverb
-    \endentry
-    \entry{SAEJ3400}{online}{}{}
-      \field{sortinit}{N}
-      \field{sortinithash}{22369a73d5f88983a108b63f07f37084}
-      \field{labeltitlesource}{title}
-      \field{title}{North American Charging System - Wikipedia}
-      \field{urlday}{24}
-      \field{urlmonth}{3}
-      \field{urlyear}{2024}
-      \field{urldateera}{ce}
-      \verb{urlraw}
-      \verb https://en.wikipedia.org/wiki/North_American_Charging_System
-      \endverb
-      \verb{url}
-      \verb https://en.wikipedia.org/wiki/North_American_Charging_System
-      \endverb
-    \endentry
-    \entry{threadcoroutine}{online}{}{}
+    \entry{modbus}{report}{}{}
       \name{author}{1}{}{%
-        {{hash=d70a23efaa110bd7bc37376417a18a5e}{%
-           family={Patel},
-           familyi={P\bibinitperiod},
-           given={Jay},
-           giveni={J\bibinitperiod}}}%
+        {{hash=47ceb7b6eacbf95c33239ad4b5f874a9}{%
+           family={Organization},
+           familyi={O\bibinitperiod},
+           given={Modbus},
+           giveni={M\bibinitperiod}}}%
       }
-      \strng{namehash}{d70a23efaa110bd7bc37376417a18a5e}
-      \strng{fullhash}{d70a23efaa110bd7bc37376417a18a5e}
-      \strng{fullhashraw}{d70a23efaa110bd7bc37376417a18a5e}
-      \strng{bibnamehash}{d70a23efaa110bd7bc37376417a18a5e}
-      \strng{authorbibnamehash}{d70a23efaa110bd7bc37376417a18a5e}
-      \strng{authornamehash}{d70a23efaa110bd7bc37376417a18a5e}
-      \strng{authorfullhash}{d70a23efaa110bd7bc37376417a18a5e}
-      \strng{authorfullhashraw}{d70a23efaa110bd7bc37376417a18a5e}
-      \field{sortinit}{P}
-      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \list{institution}{1}{%
+        {Modbus Organization}%
+      }
+      \strng{namehash}{47ceb7b6eacbf95c33239ad4b5f874a9}
+      \strng{fullhash}{47ceb7b6eacbf95c33239ad4b5f874a9}
+      \strng{fullhashraw}{47ceb7b6eacbf95c33239ad4b5f874a9}
+      \strng{bibnamehash}{47ceb7b6eacbf95c33239ad4b5f874a9}
+      \strng{authorbibnamehash}{47ceb7b6eacbf95c33239ad4b5f874a9}
+      \strng{authornamehash}{47ceb7b6eacbf95c33239ad4b5f874a9}
+      \strng{authorfullhash}{47ceb7b6eacbf95c33239ad4b5f874a9}
+      \strng{authorfullhashraw}{47ceb7b6eacbf95c33239ad4b5f874a9}
+      \field{sortinit}{O}
+      \field{sortinithash}{2cd7140a07aea5341f9e2771efe90aae}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{title}{Coroutine vs. Thread: Understanding the Differences | by Jay Patel | Medium}
-      \field{urlday}{23}
-      \field{urlmonth}{3}
-      \field{urlyear}{2025}
-      \field{urldateera}{ce}
-      \verb{urlraw}
-      \verb https://impateljay.medium.com/coroutine-vs-thread-understanding-the-differences-4b98a5a22a3a
-      \endverb
-      \verb{url}
-      \verb https://impateljay.medium.com/coroutine-vs-thread-understanding-the-differences-4b98a5a22a3a
-      \endverb
+      \field{title}{Modbus Application Protocol V1.1b3}
+      \field{type}{techreport}
+      \field{year}{2012}
     \endentry
-    \entry{SAEJ1772}{online}{}{}
-      \field{sortinit}{S}
-      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+    \entry{coroutinetutorial}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=e8c9cbd6419c1b75a2e9d78844a09b1c}{%
+           family={Robinson},
+           familyi={R\bibinitperiod},
+           given={Scott},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{e8c9cbd6419c1b75a2e9d78844a09b1c}
+      \strng{fullhash}{e8c9cbd6419c1b75a2e9d78844a09b1c}
+      \strng{fullhashraw}{e8c9cbd6419c1b75a2e9d78844a09b1c}
+      \strng{bibnamehash}{e8c9cbd6419c1b75a2e9d78844a09b1c}
+      \strng{authorbibnamehash}{e8c9cbd6419c1b75a2e9d78844a09b1c}
+      \strng{authornamehash}{e8c9cbd6419c1b75a2e9d78844a09b1c}
+      \strng{authorfullhash}{e8c9cbd6419c1b75a2e9d78844a09b1c}
+      \strng{authorfullhashraw}{e8c9cbd6419c1b75a2e9d78844a09b1c}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{title}{SAE J1772 - Wikipedia}
-      \field{urlday}{24}
-      \field{urlmonth}{3}
-      \field{urlyear}{2024}
+      \field{title}{Coroutine - Tutorial}
+      \field{urlday}{29}
+      \field{urlmonth}{12}
+      \field{urlyear}{2015}
       \field{urldateera}{ce}
       \verb{urlraw}
-      \verb https://en.wikipedia.org/wiki/SAE_J1772
+      \verb https://stackabuse.com/python-async-await-tutorial/
       \endverb
       \verb{url}
-      \verb https://en.wikipedia.org/wiki/SAE_J1772
+      \verb https://stackabuse.com/python-async-await-tutorial/
       \endverb
     \endentry
     \entry{Shelly}{online}{}{}
@@ -274,39 +372,47 @@
       \verb https://www.shelly.com/de/products/shelly-pro-3em-x1?srsltid=AfmBOopAsMzkel_HYApY229XHyU0HtRgCnETvK_sRnCDi0549gWNNiaw
       \endverb
     \endentry
-    \entry{typ2connector}{online}{}{}
-      \list{organization}{1}{%
-        {Wikipedia}%
+    \entry{Qt}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=8695094391c90b9ff83be411050bc465}{%
+           family={Thelin},
+           familyi={T\bibinitperiod},
+           given={Johan},
+           giveni={J\bibinitperiod}}}%
       }
+      \list{publisher}{1}{%
+        {Apress}%
+      }
+      \strng{namehash}{8695094391c90b9ff83be411050bc465}
+      \strng{fullhash}{8695094391c90b9ff83be411050bc465}
+      \strng{fullhashraw}{8695094391c90b9ff83be411050bc465}
+      \strng{bibnamehash}{8695094391c90b9ff83be411050bc465}
+      \strng{authorbibnamehash}{8695094391c90b9ff83be411050bc465}
+      \strng{authornamehash}{8695094391c90b9ff83be411050bc465}
+      \strng{authorfullhash}{8695094391c90b9ff83be411050bc465}
+      \strng{authorfullhashraw}{8695094391c90b9ff83be411050bc465}
       \field{sortinit}{T}
       \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{title}{Type 2 connector - Wikipedia}
-      \field{urlday}{19}
-      \field{urlmonth}{2}
-      \field{urlyear}{2025}
-      \field{urldateera}{ce}
-      \verb{urlraw}
-      \verb https://en.wikipedia.org/wiki/Type_2_connector
-      \endverb
-      \verb{url}
-      \verb https://en.wikipedia.org/wiki/Type_2_connector
-      \endverb
+      \field{isbn}{978-1-59059-831-3}
+      \field{title}{Foundations of Qt Development}
+      \field{year}{2007}
     \endentry
     \entry{websockets}{online}{}{}
       \field{sortinit}{W}
       \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
       \field{labeltitlesource}{title}
-      \field{title}{WebSocket - Wikipedia}
-      \field{urlday}{23}
-      \field{urlmonth}{3}
-      \field{urlyear}{2025}
+      \field{issn}{2070-1721}
+      \field{title}{WebSocket - Standard}
+      \field{urlmonth}{12}
+      \field{urlyear}{2011}
       \field{urldateera}{ce}
       \verb{urlraw}
-      \verb https://en.wikipedia.org/wiki/WebSocket
+      \verb https://datatracker.ietf.org/doc/html/rfc6455
       \endverb
       \verb{url}
-      \verb https://en.wikipedia.org/wiki/WebSocket
+      \verb https://datatracker.ietf.org/doc/html/rfc6455
       \endverb
     \endentry
     \entry{RaspberryPiOverview}{online}{}{}
